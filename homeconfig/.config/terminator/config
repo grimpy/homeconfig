@@ -1,0 +1,19 @@
+[global_config]
+  focus = mouse
+[keybindings]
+[profiles]
+  [[default]]
+    background_darkness = 0.04
+    urgent_bell = True
+    visible_bell = True
+    cursor_color = "#ffff00000000"
+    foreground_color = "#AAAAAA"
+[layouts]
+  [[default]]
+    [[[child1]]]
+      type = Terminal
+      parent = window0
+    [[[window0]]]
+      type = Window
+      parent = ""
+[plugins]

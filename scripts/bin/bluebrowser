@@ -1,0 +1,6 @@
+#!/bin/bash
+blueadd=$1
+MNTPOINT=$HOME/mnt/$blueadd
+mkdir -p $MNTPOINT
+obexfs -b $blueadd $MNTPOINT
+thunar $MNTPOINT 

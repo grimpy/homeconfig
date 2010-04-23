@@ -1,0 +1,70 @@
+
+[Google]
+name=Google
+text=Web Search
+uri=http://www.google.com/search?q=%s
+icon=
+token=g
+
+[Wikipedia]
+name=Wikipedia
+text=The free encyclopedia
+uri=http://en.wikipedia.org/wiki/Special:Search/%s
+icon=
+token=wp
+
+[The Free Dictionary]
+name=The Free Dictionary
+text=Dictionary, Encyclopedia and Thesaurus
+uri=http://www.thefreedictionary.com/%s
+icon=
+token=fd
+
+[Gentoo Portage]
+name=Gentoo Portage
+text=
+uri=http://gentoo-portage.com/Search?search=%s
+icon=
+token=l
+
+[Irc search]
+name=Irc search
+text=
+uri=http://www.packetfind.com/search.php?Description=%s
+icon=
+token=p
+
+[IsoHunt]
+name=IsoHunt
+text=
+uri=http://isohunt.com/torrents?ihq=%s
+icon=
+token=t
+
+[Google Fight]
+name=Google Fight
+text=
+uri=javascript:var%C2%A0s='%s';%20url='http://googlefight.com/index.php?lang=en_GB&word1=%s&word2=%s';%20t='';%20qc=0;%20chunks=url.split('%s');%20for(i=0;%20i<s.length;%20i++){if(s.charAt(i)=='%22')qc=qc^1;%20t+=((s.charAt(i)=='%20'&&qc)?'^':s.charAt(i));%20}args=t.split(/\\s/);%20nurl='';%20for(i=0;%20i<chunks.length;%20i++){nurl+=chunks[i];%20if(args[i]!=undefined)%C2%A0{args[i]=args[i].replace(/\\^/g,'%20');%20nurl+=args[i];%20}}location.replace(nurl,'<%20BR>');
+icon=
+token=gf
+
+[Google Translate]
+name=Google Translate
+text=
+uri=http://translate.google.com/translate_t#nl|en|%s
+icon=
+token=gt
+
+[Subtitles]
+name=Subtitles
+text=Subscene
+uri=http://subscene.com/filmsearch.aspx?q=%s
+icon=
+token=s
+
+[IMDB]
+name=IMDB
+text=imdb
+uri=http://www.imdb.com/find?s=all&q=%s
+icon=
+token=m

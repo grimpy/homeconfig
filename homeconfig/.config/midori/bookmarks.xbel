@@ -1,0 +1,351 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE xbel PUBLIC "+//IDN python.org//DTD XML Bookmark Exchange Language 1.0//EN//XML" "http://www.python.org/topics/xml/dtds/xbel-1.0.dtd">
+<xbel version="1.0" xmlns:midori="http://www.twotoasts.de">
+<bookmark href="http://www.ict-blue.be/">
+<title>ICT-Blue</title>
+<desc></desc>
+<info>
+<metadata midori:toolbar="1" owner="http://www.twotoasts.de"/>
+</info>
+</bookmark>
+<folder>
+<title>BM</title>
+<desc></desc>
+<folder>
+<title>Nieuws</title>
+<folder>
+<title>Sport</title>
+<bookmark href="http://www.sport.be/nl/jupilerleague/">
+<title>Voetbal</title>
+<desc>JupilerLeague.be, de officiÃ«le website van het Belgisch voetbal</desc>
+</bookmark>
+<bookmark href="http://www.sport.be/">
+<title>Voetbal</title>
+<desc>JupilerLeague.be, de officiÃ«le website van het Belgisch voetbal</desc>
+</bookmark>
+</folder>
+<bookmark href="http://tweakers.net/">
+<title>Tweakers.net</title>
+</bookmark>
+<bookmark href="http://tweakers.net/meuktracker/meukcat/77">
+<title>T.Net Meuktracker</title>
+</bookmark>
+</folder>
+<folder>
+<title>Films</title>
+<bookmark href="http://subscene.com/filmsearch.aspx?q=%s">
+<title>Divxstation - subtitles [subscene.com]</title>
+</bookmark>
+<bookmark href="http://www.nlondertitels.com/search/q/%s/1">
+<title>Ondertitels - Download hier Nederlandse Ondertitels - NLondertitels.com</title>
+</bookmark>
+<bookmark href="http://www.divxsubtitles.net/">
+<title>DivX SubTitles - Best place on the net for DivX and DVD subtitles!</title>
+</bookmark>
+<bookmark href="http://imdb.com/find?q=%s">
+<title>IMDb Search</title>
+<desc>IMDb</desc>
+</bookmark>
+<bookmark href="http://grimpy.gotdns.org/film/index.php?search=%s">
+<title>Film Database</title>
+</bookmark>
+<bookmark href="http://www.ondertitel.com/">
+<title>Ondertitels | Ondertitel.com | Nederlandse Ondertitels Downloaden Uploaden voor Video / Film / Divx / DVD | 15863 Ondertitels</title>
+</bookmark>
+</folder>
+<folder>
+<title>TV</title>
+<bookmark href="http://teveblad.be/FS_index.htm">
+<title>TeveBlad</title>
+<desc>TeVe-Blad. Alle tv-programma&apos;s in Ã©Ã©n oogopslag. Jouw eigen gepersonaliseerde programmakeuze in je mailbox!</desc>
+</bookmark>
+<bookmark href="http://epguides.com/lost/">
+<title>EpGuide</title>
+</bookmark>
+</folder>
+<folder>
+<title>Dev</title>
+<bookmark href="http://www.tldp.org/HOWTO/Bash-Prog-Intro-HOWTO.html#toc11">
+<title>BASH Programming - Introduction HOW-TO</title>
+</bookmark>
+<bookmark href="http://www.arachnoid.com/linux/shell_programming.html">
+<title>Bash Shell Programming in Linux</title>
+</bookmark>
+</folder>
+<folder>
+<title>School</title>
+<bookmark href="http://cisco.netacad.net/cnams/public/Login.jsp">
+<title>Academy Connection | Log In</title>
+</bookmark>
+<bookmark href="http://www.ict-blue.be/">
+<title>ICT-Blue :: Index</title>
+</bookmark>
+</folder>
+<folder>
+<title>Shops</title>
+<bookmark href="http://www.itware.be/">
+<title>ITWare, UW PC-winkel!</title>
+</bookmark>
+<bookmark href="http://www.jaha.be/ashop/?mod=myaccount⊂=orders_history">
+<title>Welkom bij JAHA hardware shop</title>
+</bookmark>
+<bookmark href="http://www.descom.be/shop.php">
+<title>DESCOM computer services (Online computerwinkel)</title>
+</bookmark>
+<bookmark href="http://www.2compute.net/shop.aspx?RMP=net/CatBrowser.aspx?Type=2COM">
+<title>2compute</title>
+</bookmark>
+<bookmark href="http://www.egprices.com/category.php?cat=8">
+<title>EGPrices.com - Cars category:</title>
+</bookmark>
+</folder>
+<folder>
+<title>Warez</title>
+<bookmark href="http://www.pspiso.com/index.php?topic=3851.0">
+<title>PSP ISO</title>
+</bookmark>
+<bookmark href="http://isohunt.com/torrents?ihq=%s">
+<title>isoHunt - IRC and Bit Torrent Search Engine</title>
+</bookmark>
+<bookmark href="http://beta.binaries.nl/">
+<title>alt.binaries.nl v2 - Usenet binaries search</title>
+</bookmark>
+<bookmark href="http://www.warez-bb.org/login.php">
+<title>Warez-BB.org :: Log in</title>
+</bookmark>
+<bookmark href="http://snesorama.us/board/">
+<title>Racing - Page 2 - SnesOrama Emulation Community</title>
+</bookmark>
+</folder>
+<folder>
+<title>Email</title>
+<bookmark href="https://e-care.skynet.be/index.cfm?function=login.welcome">
+<title>Belgacom - Online Support</title>
+</bookmark>
+<bookmark href="http://gmail.google.com/gmail">
+<title>Gmail - Inbox</title>
+</bookmark>
+</folder>
+<folder>
+<title>Linux</title>
+<bookmark href="http://gentoo-portage.com/Search?search=%s">
+<title>Gentoo Linux -- The Fresh Ebuilds</title>
+</bookmark>
+<bookmark href="http://forums.gentoo.org/">
+<title>Gentoo Forums :: Index</title>
+</bookmark>
+<bookmark href="http://gentoo-wiki.com/">
+<title>Gentoo WIKI</title>
+</bookmark>
+<bookmark href="http://www.mjmwired.net/kernel/Documentation/sysrq.txt">
+<title>Linux Kernel Documentation :: sysrq.txt</title>
+</bookmark>
+<bookmark href="http://www.worldtimzone.com/res/vi.html">
+<title>My vi/vim cheatsheet</title>
+</bookmark>
+</folder>
+<folder>
+<title>RandApp</title>
+<bookmark href="http://www.rockbox.org/">
+<title>Rockbox - Open Source Jukebox Firmware</title>
+</bookmark>
+<bookmark href="http://www.psp-hacks.com/">
+<title>PSP Hacks Â· Hacks, Cracks, Mods, Homebrew, Utilities Â· Hack Sony Play Station Portable</title>
+</bookmark>
+<bookmark href="http://www.xbox-scene.be/">
+<title>Xbox</title>
+<desc>De Belgische xbox-scene</desc>
+</bookmark>
+<bookmark href="http://www.francemu.com/roms/n64/lettre-T.html">
+<title>Roms</title>
+</bookmark>
+<bookmark href="http://www.dgemu.com/nds-list--asc-name---M.html">
+<title>DGEmu.com :: Nintendo DS (NDS) ROMs List</title>
+</bookmark>
+<bookmark href="http://www.getjar.com/software/universal/all/Search/pet/set1">
+<title>Java Games</title>
+<desc>Free Java, Symbian, Palm and Pocket PC Software :: GetJar.com :: Search :: pet (page 1)</desc>
+</bookmark>
+<bookmark href="http://forum.gsmhosting.com/vbb/showthread.php?t=211674&amp;page=7&amp;pp=15">
+<title>Gsm Warez</title>
+</bookmark>
+</folder>
+<folder>
+<title>Pers</title>
+<bookmark href="https://www.fortisbanking.be/private/Start.asp?target=sys-logon&amp;currentmodule=general">
+<title>Fortis BelgiÃ«, uw bankier en verzekeraar</title>
+</bookmark>
+<bookmark href="https://www.vodafone.com.eg/My010App/login.jsp">
+<title>Vodafone Login Page</title>
+</bookmark>
+<bookmark href="http://www.socmut.be/SocMut/WoordenLijst/B/Bond+Moyson.htm">
+<title>Socialistische Mutualiteiten : Bond Moyson</title>
+</bookmark>
+<bookmark href="https://mijndossier.rrn.fgov.be/">
+<title>mijndossier.rrn.fgov.be</title>
+</bookmark>
+</folder>
+<folder>
+<title>Software</title>
+<bookmark href="http://pidgin.im/">
+<title>News - Pidgin</title>
+</bookmark>
+</folder>
+<folder>
+<title>Andere</title>
+<bookmark href="http://guides.ign.com/guides/853822/page_13.html">
+<title>Guides: Super Paper Mario Guide (Wii), Super Paper Mario Walkthrough</title>
+</bookmark>
+<bookmark href="javascript:(function(){function%20I(u){var%20t=u.split(&apos;.&apos;),e=t[t.length-1].toLowerCase();return%20{gif:1,jpg:1,jpeg:1,png:1,mng:1}[e]}function%20hE(s){return%20s.replace(/&amp;/g,&apos;&amp;&apos;).replace(/&gt;/g,&apos;&gt;&apos;).replace(/&lt;/g,&apos;&lt;&apos;).replace(/%22/g,&apos;%22&apos;);}var%20q,h,i,z=open().document;z.write(&apos;&lt;p&gt;Images%20linked%20to%20by%20&apos;+hE(location.href)+&apos;:&lt;/p&gt;&lt;hr&gt;&apos;);for(i=0;q=document.links[i];++i){h=q.href;if(h&amp;&amp;I(h))z.write(&apos;&lt;p&gt;&apos;+q.innerHTML+&apos;%20(&apos;+hE(h)+&apos;)&lt;br&gt;&lt;img%20src=%22&apos;+hE(h)+&apos;%22&gt;&apos;);}z.close();})()">
+<title>linked i</title>
+</bookmark>
+</folder>
+<bookmark href="http://etherpad.com/">
+<title>EtherPad: Realtime Collaborative Text Editing</title>
+</bookmark>
+<bookmark href="http://www.google.be/search?hl=nl&amp;q=intitle%3A%22index.of%22+%28mp3%7Cwma%29+%s+-html+-htm+-php+-cf+-js&amp;btnG=Zoeken&amp;meta=">
+<title>Google mp3</title>
+</bookmark>
+<folder>
+<title>Islam</title>
+<bookmark href="http://www.rasoulallah.net/index_english.asp">
+<title>Prophet Muhammed The Prophet of Islam</title>
+</bookmark>
+<bookmark href="http://transliteration.org/quran/WebSite_CD/MixDutch/Fram2E.htm">
+<title>Quraan Transliteration</title>
+</bookmark>
+<bookmark href="http://www.imaanstar.com/juz30.php">
+<title>ImaanStar: Juz30 - memorize the whole quran!</title>
+</bookmark>
+<bookmark href="http://www.redouan.nl/koran/koran003.htm">
+<title>De Heilige Koran</title>
+</bookmark>
+<bookmark href="http://www.islamicinvitationcentre.com/audio/gary_miller/amazing_quran/amazing_quran.html">
+<title>Islamic Invitation Centre - talk on the amazing Qur&apos;an - by Gary Miller</title>
+</bookmark>
+<bookmark href="http://www.quranexplorer.com/quran/">
+<title>Quran Explorer</title>
+</bookmark>
+<bookmark href="http://www.buildmyislam.com/">
+<title>Welcome to BuildMyIslam.com</title>
+</bookmark>
+</folder>
+<info>
+<metadata midori:toolbar="1" owner="http://www.twotoasts.de"/>
+</info>
+</folder>
+<folder>
+<title>Work</title>
+<desc></desc>
+<bookmark href="http://tracking.qlayer.com/browse/%s">
+<title>Q-layer Jira</title>
+</bookmark>
+<bookmark href="http://172.17.1.18/">
+<title>BuildServer</title>
+</bookmark>
+<bookmark href="http://docs.xensource.com/XenServer/4.1.0/1.0/en_gb/api/docs/html/browser.html">
+<title>http://docs.xensource.com/XenServer/4.1.0/1.0/en_gb/api/docs/html/browser.html</title>
+</bookmark>
+<bookmark href="http://trac.qlayer.com/proj/code/">
+<title>Code - Trac</title>
+</bookmark>
+<bookmark href="http://trac.qlayer.com/proj/index.html">
+<title>.::Qlayer TRAC::.</title>
+</bookmark>
+<bookmark href="http://software.qlayer.com/display/SOFT/Welcome">
+<title>Q-layer Confluence</title>
+</bookmark>
+<bookmark href="http://cheat.errtheblog.com/s/git">
+<title>$ cheat git</title>
+</bookmark>
+<bookmark href="http://192.168.96.125/cgi-bin/gitweb.cgi">
+<title>Local Git</title>
+<desc></desc>
+</bookmark>
+<info>
+<metadata midori:toolbar="1" owner="http://www.twotoasts.de"/>
+</info>
+</folder>
+<folder>
+<title>Temp</title>
+<desc></desc>
+<bookmark href="http://www.helpbytes.co.uk/smileys.php">
+<title>Yahoo! Smileys</title>
+</bookmark>
+<bookmark href="http://git.or.cz/course/svn.html">
+<title>Git - SVN Crash Course</title>
+</bookmark>
+<bookmark href="http://ccff02.minfin.fgov.be/taxonweb/app/citizen/public/taxbox/home.do">
+<title>Tax-on-Web</title>
+</bookmark>
+<bookmark href="http://www.alchemistmatt.com/cube/rubiksteps2and3.html">
+<title>Solving the Rubik&apos;s Cube, Steps 2 and 3</title>
+</bookmark>
+<bookmark href="http://www.mafiawarstrategy.com/charts/mafia-wars-job-loot-items/">
+<title>Myspace Mafia Wars Looted Item List | Myspace Mafia Wars Strategy // Cheats // Guides // Recruitment</title>
+</bookmark>
+<bookmark href="http://projecteuler.net/index.php?section=problems">
+<title>Project Euler</title>
+</bookmark>
+<bookmark href="http://sheepoo.wordpress.com/">
+<title>Internals</title>
+</bookmark>
+<bookmark href="http://learn.dvorak.nl/?lang=nl&amp;lesson=2&amp;input=dvorak">
+<title>Dvorak keyboard training - experimental</title>
+</bookmark>
+<bookmark href="http://www.typeonline.co.uk/typingspeed.php">
+<title>free online touch typing speed test - wpm words per minute</title>
+</bookmark>
+<bookmark href="http://app3.hongkongpost.com/CGI/mt/genresult.jsp?tracknbr=RB288846589HK">
+<title>‪Hongkong Post - Mail Tracking</title>
+<desc></desc>
+<info>
+<metadata owner="http://www.twotoasts.de"/>
+</info>
+</bookmark>
+<bookmark href="http://app3.hongkongpost.com/CGI/mt/genresult.jsp?tracknbr=RB085700712HK">
+<title>Phone</title>
+<desc></desc>
+<info>
+<metadata owner="http://www.twotoasts.de"/>
+</info>
+</bookmark>
+<info>
+<metadata midori:toolbar="1" owner="http://www.twotoasts.de"/>
+</info>
+</folder>
+<folder>
+<title>Search</title>
+<desc></desc>
+<bookmark href="javascript:var%C2%A0s=&apos;%s&apos;;%20url=&apos;http://googlefight.com/index.php?lang=en_GB&amp;word1=%s&amp;word2=%s&apos;;%20t=&apos;&apos;;%20qc=0;%20chunks=url.split(&apos;%s&apos;);%20for(i=0;%20i&lt;s.length;%20i++){if(s.charAt(i)==&apos;%22&apos;)qc=qc^1;%20t+=((s.charAt(i)==&apos;%20&apos;&amp;&amp;qc)?&apos;^&apos;:s.charAt(i));%20}args=t.split(/\s/);%20nurl=&apos;&apos;;%20for(i=0;%20i&lt;chunks.length;%20i++){nurl+=chunks[i];%20if(args[i]!=undefined)%C2%A0{args[i]=args[i].replace(/\^/g,&apos;%20&apos;);%20nurl+=args[i];%20}}location.replace(nurl,&apos;&lt;%20BR&gt;&apos;);">
+<title>Google Fight : Make this fight with googleFight triologie VS trilogie</title>
+</bookmark>
+<bookmark href="http://www.google.com/search?q=%s">
+<title>Google</title>
+</bookmark>
+<bookmark href="http://translate.google.com/translate_t#nl|en|%s">
+<title>Google Translate</title>
+<desc>Google&apos;s free online language translation service instantly translates text and web pages. This translator supports: English, Arabic, Bulgarian, Catalan, Chinese, Croatian, Czech, Danish, Dutch, Filipino, Finnish, French, German, Greek, Hebrew, Hindi, Indonesian, Italian, Japanese, Korean, Latvian, Lithuanian, Norwegian, Polish, Portuguese, Romanian, Russian, Serbian, Slovak, Slovenian, Spanish, Swedish, Ukrainian, Vietnamese</desc>
+</bookmark>
+<info>
+<metadata midori:toolbar="1" owner="http://www.twotoasts.de"/>
+</info>
+</folder>
+<bookmark href="http://projecteuler.net/index.php?section=problems">
+<title>Project Euler</title>
+<desc></desc>
+<info>
+<metadata midori:toolbar="1" owner="http://www.twotoasts.de"/>
+</info>
+</bookmark>
+<bookmark href="http://nl.wikigta.org/">
+<title>GTA</title>
+<desc></desc>
+</bookmark>
+<bookmark href="http://atmail.com/kb/2009/throttling-bandwidth/">
+<title>TC stuff</title>
+</bookmark>
+<bookmark href="http://www.google.com">
+<title>Search the web</title>
+</bookmark>
+</xbel>

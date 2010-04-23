@@ -1,0 +1,3 @@
+#!/bin/bash
+pkill -9 osd_cat
+osd_cat --font="-adobe-helvetica-bold-*-*-*-34-*-*-*-*-*-*-*" --shadow=2 --pos=middle --align=center --colour=green --delay=1 -b percentage -P $1 -T "Volume ${1}"

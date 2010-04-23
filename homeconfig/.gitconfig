@@ -1,0 +1,13 @@
+[color]
+ ui = true
+[user]
+	name = Jo De Boeck
+	email = deboeck.jo@gmail.com
+[push]
+	default = current
+[giggle]
+	main-window-maximized = false
+	main-window-geometry = 1220x879+195+38
+	history-view-vpane-position = 274
+	main-window-view = HistoryView
+	file-view-vpane-position = 398

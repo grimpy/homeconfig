@@ -1,0 +1,10 @@
+#! /bin/bash
+
+for i in *.mp3
+do
+   mplayer "$i"  -ao pcm:fast:file="`basename "$i" .mp3`.wav" 1>info.txt 2>/dev/null
+      name=`cat info.txt | grep name`
+         artist=`cat info.txt | grep author`
+	    lame -h "`basename "$i" .wma`.wav" -o "`basename "$i" .wma`.mp3" --id3v2-only --tt "${name:7}" --ta "${artist:9}"
+       rm "`basename "$i" .wma`.wav" && rm info.txt
+done

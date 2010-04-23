@@ -1,0 +1,2 @@
+#!/bin/bash -x
+cdrecord -v fs=8m speed=10 dev=/dev/sr0 blank=fast

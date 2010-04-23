@@ -1,0 +1,10 @@
+if [ ! -e /tmp/scrolllock ];then
+	touch /tmp/scrolllock
+	while [ -e /tmp/scrolllock ]; do
+		xset led 3
+		sleep 0.5
+		xset -led 3
+		sleep 0.5 
+	done
+	xset -led 3
+fi

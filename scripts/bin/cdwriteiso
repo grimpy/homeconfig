@@ -1,0 +1,6 @@
+#!/bin/bash
+if [ -z "$1" ]; then
+    echo "Usage: $0 <iso-image>"
+    exit 0
+fi 
+cdrecord -v -eject speed=16 dev=/dev/sr0 driveropts=burnfree $1

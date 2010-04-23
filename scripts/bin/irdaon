@@ -1,0 +1,5 @@
+sudo /etc/init.d/irda start
+sudo setserial /dev/ttyS1 uart none
+sudo /sbin/modprobe irtty-sir
+sudo irattach /dev/ttyS1
+sudo /etc/init.d/irda restart

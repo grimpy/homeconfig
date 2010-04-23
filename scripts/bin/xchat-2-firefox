@@ -1,0 +1,2 @@
+#!/bin/bash
+xchat --existing --url=$@

@@ -1,0 +1,100 @@
+#!/bin/bash
+
+if [ `whoami` != "root" ]; then
+      echo "You must run this as root"
+      exit
+fi
+
+# testing args
+if [ $# -ne 1 ]; then
+  echo "usage : $0 <device_or_directory_to_unmount>"
+  exit
+fi
+
+dir=$1
+
+# first try unmounting it without doing anything special
+testumount=`umount $dir 2>&1`
+if [ `echo $testumount | grep "not mounted" | wc -l` -gt 0 ]; then
+      echo "$1 isn't mounted, exiting"
+      exit
+fi
+if [ `echo $testumount | grep "not found" | wc -l` -gt 0 ]; then
+  echo "$1 does not exists, exiting"
+  exit
+fi
+
+if [ `echo $testumount | grep busy | wc -l` -gt 0 ]; then
+       echo "Having trouble, checking famd..."
+else
+     echo "unmounted $dir without any trouble..."
+     exit
+fi
+
+# check famd
+if [ `ps -e |grep famd|wc -l` -gt 0 ]; then
+      /etc/init.d/famd restart
+      # try unmounting again
+      if [ `umount $dir 2>&1 | wc -l` -gt 0 ]; then
+            echo "I tried restarting famd, but that didn't work. 
+checking xinetd"
+      else
+            echo "Unmounted $dir by restarting famd"
+            exit
+      fi
+else
+      echo "famd isn't running so it couldn't be that.."
+fi
+
+
+# check xinetd
+if [ `ps -e | grep xinetd | wc -l` -gt 0 ]; then
+      /etc/init.d/xinetd stop
+      # try unmounting again
+      if [ `umount $dir 2>&1 | wc -l` -lt 1 ]; then
+            /etc/init.d/xinetd start
+            echo "Unmounted $1 by restarting xinetd"
+            exit
+      fi
+      /etc/init.d/xinetd start
+      echo "I tried stopping xinetd, but that didn't work."
+
+else
+      echo "xinetd isn't running so it couldn't be that.."
+fi
+
+echo
+echo "I'm going to list processes that are using the folder you are 
+trying to umount. Answer whether you'd like to kill them or not. 
+You should look up each process before you answer. use the 
+following command in a separate shell:"
+echo
+echo "	ps -e | grep <pid>"
+echo
+echo "where <pid> is the number of the process."
+echo
+fuser -ki $dir
+echo
+if [ `echo $testumount | grep busy | wc -l` -gt 0 ]; then
+      echo "OK, this is the last resort. Do you want to umount the 
+volume using "
+      echo "the -l option? According to the umount man page -l means:"
+      echo
+      echo "	Lazy unmount. Detach the filesystem from the 
+filesystem 
+      hierarchy now, and cleanup all references to the filesystem as 
+      soon as	it is not busy anymore.  (Requires kernel 2.4.11 or 
+later.)"
+      echo
+      echo "Use -l option? (y\n)"
+      read yn
+      if [ $yn == "y" ]; then
+            umount -l $dir
+      else
+            echo "OK. Sorry I couldn't help"
+      fi
+else
+      echo "You're all good :)"
+fi
+
+exit

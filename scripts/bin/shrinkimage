@@ -1,0 +1,2 @@
+#!/bin/bash
+convert -resize 800x600 "$1" ~/Desktop/`basename "$1"`
