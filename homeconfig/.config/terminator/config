@@ -3,11 +3,13 @@
 [keybindings]
 [profiles]
   [[default]]
+    use_system_font = False
+    visible_bell = True
     background_darkness = 0.04
     urgent_bell = True
-    visible_bell = True
     cursor_color = "#ffff00000000"
     foreground_color = "#AAAAAA"
+    font = Courier New 10
 [layouts]
   [[default]]
     [[[child1]]]
