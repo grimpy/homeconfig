@@ -30,7 +30,7 @@ function build()
 	local browser = (env.browser or "chromium-bin") .. " "
 
 	freedesktop_utils.terminal = terminal
-	freedesktop_utils.icon_theme = beautiful.icon_theme
+	freedesktop_utils.icon_theme = "Tango"
 	freedesktop_utils.icon_sizes = {beautiful.icon_theme_size}
 
 	local mymainmenu_items_head = {
