@@ -8,4 +8,4 @@ urxvt.foreground: white
 *tintingType: true
 *tinting: #ffffff
 *tintColor: #FFFFFF
-*shading: 40
+*shading: 10

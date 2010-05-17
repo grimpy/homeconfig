@@ -17,7 +17,7 @@ beautiful.init("/usr/share/awesome/themes/default/theme.lua")
 
 -- This is used later as the default terminal and editor to run.
 terminal = "terminator"
-browser = "chromium-bin"
+browser = "chromium"
 editor = os.getenv("EDITOR") or "vim"
 editor_cmd = terminal .. " -e " .. editor
 confdir = awful.util.getdir("config")
@@ -55,7 +55,7 @@ shifty.config.tags = {
     ["1:term"] = { position = 1, exclusive = true, spawn = terminal, layout = awful.layout.suit.fair},
     ["2:im"]  = { position = 2, exclusive = true, spawn = "pidgin", layout = "float", },
     ["3:web"]  = { position = 3, exclusive = true, spawn = browser, layout = "max", icon="/usr/share/icons/Tango/16x16/apps/web-browser.png"},
-    ["4:mail"]  = { position = 4, exclusive = true, spawn = "thunderbird", layout = "max", screen = 1},
+    ["4:mail"]  = { position = 4, exclusive = true, spawn = "thunderbird", layout = awful.layout.suit.max, screen = 1},
     ["5:fs"]  = { position = 5, exclusive = true, spawn = "thunar", layout = "float", },
     ["6:edit"]  = { position = 6, exclusive = true, spawn = "geany", nopopup = true, layout = awful.layout.suit.max, },
 }
@@ -63,7 +63,7 @@ shifty.config.tags = {
 -- client settings
 -- order here matters, early rules will be applied first
 shifty.config.apps = {
-         { match = { "Chrome","Gran Paradiso","Firefox"} , tag = "3:web" } ,
+         { match = { "Chrome", "Chromium", "Navigator", "Namoroka","Firefox"} , tag = "3:web" } ,
          { match = { "Thunderbird"} , tag = "4:mail" } ,
          { match = { "Pidgin", "Skype"} , tag = "2:im" } ,
          { match = { "xterm", "urxvt", "Terminator"} , honorsizehints = false, slave = true, tag = "1:term" } ,
@@ -220,7 +220,7 @@ globalkeys = awful.util.table.join(
     awful.key({ modkey,           }, "u", awful.client.urgent.jumpto),
 
     -- Standard program
-    awful.key({ modkey,           }, "Return", function () awful.util.spawn(terminal) end),
+    awful.key({ modkey,           }, "Return", function () awful.util.spawn("urxvt") end),
     awful.key({ modkey2, "Control" }, "c", function () awful.util.spawn(terminal) end),
     awful.key({ modkey,           }, "e", function () awful.util.spawn("thunar") end),
     awful.key({ modkey2, "Control" }, "s", function () awful.util.spawn("skype") end),
