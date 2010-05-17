@@ -53,15 +53,18 @@ layouts =
 -- tag settings
 shifty.config.tags = {
     ["1:term"] = { position = 1, exclusive = true, spawn = terminal, layout = awful.layout.suit.fair},
-    ["2:im"]  = { position = 2, exclusive = true, spawn = "pidgin", layout = "float", },
-    ["3:web"]  = { position = 3, exclusive = true, spawn = browser, layout = "max", icon="/usr/share/icons/Tango/16x16/apps/web-browser.png"},
+    ["2:im"]  = { position = 2, exclusive = true, spawn = "pidgin", layout = awful.layout.suit.floating, },
+    ["3:web"]  = { position = 3, exclusive = true, spawn = browser, layout = awful.layout.suit.max, icon="/usr/share/icons/Tango/16x16/apps/web-browser.png"},
     ["4:mail"]  = { position = 4, exclusive = true, spawn = "thunderbird", layout = awful.layout.suit.max, screen = 1},
-    ["5:fs"]  = { position = 5, exclusive = true, spawn = "thunar", layout = "float", },
+    ["5:fs"]  = { position = 5, exclusive = true, spawn = "thunar", layout = awful.layout.suit.floating, },
     ["6:edit"]  = { position = 6, exclusive = true, spawn = "geany", nopopup = true, layout = awful.layout.suit.max, },
 }
 
 -- client settings
 -- order here matters, early rules will be applied first
+mousebuttons = { button({ }, 1, function (c) client.focus = c; c:raise() end),
+                 button({ modkey2 }, 1, function (c) awful.mouse.client.move() end),
+                 button({ modkey2 }, 3, function (c) awful.mouse.client.resize() end ), }
 shifty.config.apps = {
          { match = { "Chrome", "Chromium", "Navigator", "Namoroka","Firefox"} , tag = "3:web" } ,
          { match = { "Thunderbird"} , tag = "4:mail" } ,
@@ -70,11 +73,10 @@ shifty.config.apps = {
          { match = { "Thunar" }, tag = "5:fs" } ,
          { match = { "Geany" }, tag = "6:edit" } ,
          { match = { "Eclipse" }, tag = "6:edit" } ,
-         { match = { "" }, buttons = {
+        { match = { "" }, buttons = {
                              button({ }, 1, function (c) client.focus = c; c:raise() end),
-                             button({ modkey2 }, 1, function (c) awful.mouse.client.move() end),
-                             button({ modkey2 }, 3, function (c) awful.mouse.client.resize() end ), },
-        },
+                             button({ modkey }, 1, function (c) awful.mouse.client.move() end),
+                             button({ modkey }, 3, awful.mouse.client.resize ), }, },
 }
 
 -- tag defaults
@@ -293,11 +295,6 @@ clientkeys = awful.util.table.join(
             c.maximized_vertical   = not c.maximized_vertical
         end)
 )
-
-clientbuttons = awful.util.table.join(
-    awful.button({ }, 1, function (c) client.focus = c; c:raise() end),
-    awful.button({ modkey2 }, 1, awful.mouse.client.move),
-    awful.button({ modkey2 }, 3, awful.mouse.client.resize))
 
 -- Set keys
 root.keys(globalkeys)

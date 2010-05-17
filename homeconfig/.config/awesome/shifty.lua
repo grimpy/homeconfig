@@ -457,7 +457,11 @@ function match(c, startup)
       end
     end
   end
-
+  
+  clientbuttons = awful.util.table.join(
+    awful.button({ }, 1, function (c) client.focus = c; c:raise() end),
+    awful.button({ "Mod1" }, 1, awful.mouse.client.move),
+    awful.button({ "Mod1" }, 3, awful.mouse.client.resize))
   -- set key bindings
   c:keys(keys)
 
@@ -552,7 +556,7 @@ function match(c, startup)
   else
     c:lower()
   end
-
+  c:buttons(clientbuttons)
   -- execute run function if specified
   if run then run(c, target) end
 end
