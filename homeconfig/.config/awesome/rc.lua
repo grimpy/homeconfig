@@ -9,6 +9,7 @@ require("shifty")
 require("myrc.mainmenu")
 require("myrc.autostart")
 require("myrc.calendar2")
+require("myrc.custom")
 require("vicious")
 
 -- {{{ Variable definitions
@@ -16,13 +17,15 @@ require("vicious")
 beautiful.init("/usr/share/awesome/themes/default/theme.lua")
 
 -- This is used later as the default terminal and editor to run.
-terminal = "terminator"
-browser = "chromium"
+terminal = myrc.custom.terminal
+browser = myrc.custom.browser
 editor = os.getenv("EDITOR") or "vim"
 editor_cmd = terminal .. " -e " .. editor
 confdir = awful.util.getdir("config")
 
-myrc.autostart.init(os.getenv("HOME") .. "/.config/autostart/")
+if myrc.custom.autostart then
+    myrc.autostart.init(os.getenv("HOME") .. "/.config/autostart/")
+end
 
 -- Default modkey.
 -- Usually, Mod4 is the key with a logo between Control and Alt.
@@ -51,41 +54,12 @@ layouts =
 -- }}}
 
 -- tag settings
-shifty.config.tags = {
-    ["1:term"] = { position = 1, exclusive = true, spawn = terminal, layout = awful.layout.suit.fair},
-    ["2:im"]  = { position = 2, exclusive = true, spawn = "pidgin", layout = awful.layout.suit.floating, },
-    ["3:web"]  = { position = 3, exclusive = true, spawn = browser, layout = awful.layout.suit.max, icon="/usr/share/icons/Tango/16x16/apps/web-browser.png"},
-    ["4:mail"]  = { position = 4, exclusive = true, spawn = "thunderbird", layout = awful.layout.suit.max, screen = 1},
-    ["5:fs"]  = { position = 5, exclusive = true, spawn = "thunar", layout = awful.layout.suit.floating, },
-    ["6:edit"]  = { position = 6, exclusive = true, spawn = "geany", nopopup = true, layout = awful.layout.suit.max, },
-}
+shifty.config.tags = myrc.custom.shiftytags
 
--- client settings
--- order here matters, early rules will be applied first
-mousebuttons = { button({ }, 1, function (c) client.focus = c; c:raise() end),
-                 button({ modkey2 }, 1, function (c) awful.mouse.client.move() end),
-                 button({ modkey2 }, 3, function (c) awful.mouse.client.resize() end ), }
-shifty.config.apps = {
-         { match = { "Chrome", "Chromium", "Navigator", "Namoroka","Firefox"} , tag = "3:web" } ,
-         { match = { "Thunderbird"} , tag = "4:mail" } ,
-         { match = { "Pidgin", "Skype"} , tag = "2:im" } ,
-         { match = { "xterm", "urxvt", "Terminator"} , honorsizehints = false, slave = true, tag = "1:term" } ,
-         { match = { "Thunar" }, tag = "5:fs" } ,
-         { match = { "Geany" }, tag = "6:edit" } ,
-         { match = { "Eclipse" }, tag = "6:edit" } ,
-        { match = { "" }, buttons = {
-                             button({ }, 1, function (c) client.focus = c; c:raise() end),
-                             button({ modkey }, 1, function (c) awful.mouse.client.move() end),
-                             button({ modkey }, 3, awful.mouse.client.resize ), }, },
-}
+shifty.config.apps = myrc.custom.shiftyapps
 
 -- tag defaults
-shifty.config.defaults = {
-  layout = awful.layout.suit.tile.floating,
-  ncol = 1,
-  mwfact = 0.60,
-  floatBars=true,
-}
+shifty.config.defaults = myrc.custom.shiftydefaults
 
 shifty.init()
 
@@ -222,12 +196,7 @@ globalkeys = awful.util.table.join(
     awful.key({ modkey,           }, "u", awful.client.urgent.jumpto),
 
     -- Standard program
-    awful.key({ modkey,           }, "Return", function () awful.util.spawn("urxvt") end),
-    awful.key({ modkey2, "Control" }, "c", function () awful.util.spawn(terminal) end),
-    awful.key({ modkey,           }, "e", function () awful.util.spawn("thunar") end),
-    awful.key({ modkey2, "Control" }, "s", function () awful.util.spawn("skype") end),
-    awful.key({ modkey2, "Control" }, "m", function () awful.util.spawn("pidgin") end),
-    awful.key({ modkey2, "Control" }, "k", function () awful.util.spawn("geany") end),
+    myrc.custom.keybindings,
     awful.key({ modkey, "Control" }, "r", awesome.restart),
     awful.key({ modkey, "Shift"   }, "q", awesome.quit),
 
