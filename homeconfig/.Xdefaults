@@ -3,6 +3,10 @@ urxvt*urgentOnBell: True
 urxvt.saveLines: 10000
 urxvt.background: black
 urxvt.foreground: white
+*cursorColor: red
+*cursorBlink: true
+*scrollBar: false
+*boarderColor: red
 *loginShell: true
 *transparent: true
 *tintingType: true

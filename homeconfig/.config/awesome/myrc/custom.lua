@@ -46,6 +46,7 @@ keybindings = awful.util.table.join(
     awful.key({ modkey,           }, "F3", function () awful.util.spawn("mpc prev") end),
     awful.key({ modkey,           }, "F4", function () awful.util.spawn("mpc next") end),
     awful.key({ modkey,           }, "e", function () awful.util.spawn("thunar") end),
+    awful.key({ modkey, }, "l", function () awful.util.spawn("alock -auth pam -bg blank") end),
     awful.key({ modkey2, "Control" }, "s", function () awful.util.spawn("skype") end),
     awful.key({ modkey2, "Control" }, "m", function () awful.util.spawn("pidgin") end),
     awful.key({ modkey2, "Control" }, "k", function () awful.util.spawn("geany") end))
