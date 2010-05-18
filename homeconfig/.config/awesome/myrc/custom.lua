@@ -1,4 +1,5 @@
 local awful = require("awful")
+local client = require("client")
 module("myrc.custom")
 
 browser = "chromium"
