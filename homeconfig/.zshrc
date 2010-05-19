@@ -253,7 +253,7 @@ bindkey "$(echotc kr)" forward-char
 
 bindkey '\e[3~' delete-char # Delete
 
-if [[ "$TERM" == "rxvt-unicode" ]]; then
+if [[ "$TERM" == "rxvt" ]]; then
     bindkey '\e[7~' beginning-of-line # Home
     bindkey '\e[8~' end-of-line # End
 else # At least xterm; probably other terms too
