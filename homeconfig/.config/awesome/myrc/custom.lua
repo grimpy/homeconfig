@@ -1,5 +1,7 @@
 local awful = require("awful")
 local client = require("client")
+local naughty = require("naughty")
+local tag = require("tag")
 module("myrc.custom")
 
 browser = "chromium"
@@ -38,6 +40,7 @@ shiftydefaults = {
   ncol = 1,
   mwfact = 0.60,
   floatBars=true,
+  run = function(tag) naughty.notify({ text = tag.name }) end
 }
 
 keybindings = awful.util.table.join(

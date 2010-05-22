@@ -1,8 +1,8 @@
 urxvt*termName: rxvt
 urxvt*urgentOnBell: True
 urxvt.saveLines: 10000
-urxvt.background: black
-urxvt.foreground: white
+*background: black
+*foreground: white
 *cursorColor: red
 *cursorBlink: true
 *scrollBar: false
