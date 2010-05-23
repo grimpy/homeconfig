@@ -1,7 +1,7 @@
 local awful = require("awful")
 local beautiful = require("beautiful")
 local freedesktop_utils = require("freedesktop.utils")
-local freedesktop_menu = require("freedesktop.menu")
+local xdg_menu = require("myrc.xdg_menu")
 
 local io = io
 local table = table
@@ -66,7 +66,7 @@ function build()
 
 	local mymainmenu_items = {}
 	for _, item in ipairs(mymainmenu_items_head) do table.insert(mymainmenu_items, item) end
-	for _, item in ipairs(freedesktop_menu.new()) do table.insert(mymainmenu_items, item) end
+	for _, item in ipairs(xdg_menu.menu) do table.insert(mymainmenu_items, item) end
 	for _, item in ipairs(mymainmenu_items_tail) do table.insert(mymainmenu_items, item) end
 
 	return awful.menu.new({ items = mymainmenu_items,
