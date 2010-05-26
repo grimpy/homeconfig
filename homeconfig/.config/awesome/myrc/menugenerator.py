@@ -31,7 +31,7 @@ def get_command_line(entry):
     return cmd
 
 xdg.Config.setIconTheme('Tango')
-for appdir in xdg.BaseDirectory.xdg_data_dirs:
+for appdir in set(xdg.BaseDirectory.xdg_data_dirs):
     appdir = os.path.join(appdir, 'applications')
     print appdir
     if os.path.isdir(appdir):
@@ -42,8 +42,13 @@ for appdir in xdg.BaseDirectory.xdg_data_dirs:
                 if not entry.getHidden():
                     for cat in entry.getCategories():
                         if cat in valid_cat:
-                            args = cat, entry.getName(), get_command_line(entry), xdg.IconTheme.getIconPath(entry.getIcon(), extensions=["png"])
-                            filecontents.append('table.insert(programs["%s"], { "%s", "%s", "%s" })' % (args))
+                            icon =  xdg.IconTheme.getIconPath(entry.getIcon(), extensions=["png"])
+                            if not icon or not icon.endswith("png"):
+                                icon = 'nil'
+                            else:
+                                icon = '"%s"' % icon
+                            args = cat, entry.getName(), get_command_line(entry), icon
+                            filecontents.append('table.insert(programs["%s"], { "%s", "%s", %s })' % (args))
                             used_cat.add(cat)
                             break
 
