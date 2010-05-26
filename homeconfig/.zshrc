@@ -256,6 +256,9 @@ bindkey '\e[3~' delete-char # Delete
 if [[ "$TERM" == "rxvt" ]]; then
     bindkey '\e[7~' beginning-of-line # Home
     bindkey '\e[8~' end-of-line # End
+elif [[ "$TERM" == "linux" ]]; then
+    bindkey '\e[1~' beginning-of-line #Home
+    bindkey '\e[4~' end-of-line #End
 else # At least xterm; probably other terms too
     bindkey '\eOH' beginning-of-line # Home
     bindkey '\eOF' end-of-line # End
