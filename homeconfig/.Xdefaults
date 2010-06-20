@@ -41,4 +41,4 @@ urxvt.saveLines: 10000
 *perl-ext-common: default,matcher
 *urlLauncher: chromium
 *matcher.button: 1
-*colorUL: #86a2b
+*colorUL: #86A2BB

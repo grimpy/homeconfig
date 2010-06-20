@@ -11,14 +11,13 @@ modkey = "Mod4"
 modkey2 = "Mod1"
 
 shiftytags = {
-    ["1:term"] = { position = 1, exclusive = true, spawn = terminal, layout = awful.layout.suit.fair},
+    ["1:term"] = { position = 1, exclusive = true, max_clients = 4, spawn = terminal, layout = awful.layout.suit.fair},
     ["2:im"]  = { position = 2, exclusive = true, spawn = "pidgin", layout = awful.layout.suit.floating, },
-    ["3:web"]  = { position = 3, exclusive = true, spawn = browser, layout = awful.layout.suit.max, icon="/usr/share/icons/Tango/16x16/apps/web-browser.png"},
+    ["3:web"]  = { position = 3, exclusive = true, spawn = browser, screen = 2, layout = awful.layout.suit.max, icon="/usr/share/icons/Tango/16x16/apps/web-browser.png"},
     ["4:mail"]  = { position = 4, exclusive = true, spawn = "thunderbird", layout = awful.layout.suit.max, screen = 1},
     ["5:fs"]  = { position = 5, exclusive = true, spawn = "thunar", layout = awful.layout.suit.floating, },
     ["6:edit"]  = { position = 6, exclusive = true, spawn = "geany", nopopup = true, layout = awful.layout.suit.max, },
 }
-
 clientbuttons = awful.util.table.join(
     awful.button({ }, 1, function (c) client.focus = c; c:raise() end),
     awful.button({ "Mod1" }, 1, awful.mouse.client.move),
