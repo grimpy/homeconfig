@@ -361,6 +361,7 @@ zstyle ':completion:*:history-words' remove-all-dups yes
 zstyle ':completion:*:history-words' list false
 
 export PATH=$PATH:$HOME/mygit/scripts/bin
+export EDITOR=/usr/bin/vim
 
 # Options
 setopt				\
