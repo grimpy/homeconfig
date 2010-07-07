@@ -1,0 +1,15 @@
+
+[Desktop Entry]
+Type=Application
+Name=Notes
+Name[en_GB]=Notes
+Name[nl]=Notities
+Comment=Ideal for your quick notes
+Comment[en_GB]=Ideal for your quick notes
+Comment[nl]=Ideaal voor snelle notities
+TryExec=xfce4-notes
+Exec=xfce4-notes
+Icon=xfce4-notes-plugin
+OnlyShowIn=XFCE;GNOME;
+Terminal=false
+Hidden=false

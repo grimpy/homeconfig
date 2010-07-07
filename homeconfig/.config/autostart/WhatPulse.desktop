@@ -1,0 +1,11 @@
+[Desktop Entry]
+Encoding=UTF-8
+Version=0.9.4
+Type=Application
+Name=WhatPulse
+Comment=
+Exec=/home/grimpy/opt/bin/WhatPulse
+StartupNotify=false
+Terminal=false
+Hidden=false
+
