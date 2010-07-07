@@ -1,0 +1,10 @@
+[Desktop Entry]
+Encoding=UTF-8
+Type=Application
+Name=Urxvt deamon
+Comment=Bleh
+Exec=urxvtd -q -f -o
+StartupNotify=false
+Terminal=false
+Hidden=false
+
