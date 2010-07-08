@@ -5,7 +5,7 @@ local tag = require("tag")
 module("myrc.custom")
 
 browser = "chromium"
-terminal = "urxvt"
+terminal = "urxvtc"
 autostart = true
 modkey = "Mod4"
 modkey2 = "Mod1"

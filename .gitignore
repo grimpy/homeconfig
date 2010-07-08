@@ -1,3 +1,6 @@
 *.so
 *.pyc
 homeconfig/.ssh/id_rsa
+homeconfig/.config/awesome/freedesktop
+homeconfig/.config/awesome/myrc/xdg_menu.lua
+homeconfig/.config/awesome/vicious
