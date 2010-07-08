@@ -157,6 +157,22 @@ for s = 1, screen.count() do
         mytasklist[s],
         layout = awful.widget.layout.horizontal.rightleft
     }
+    screen[s]:add_signal("arrange", function (scr)
+        i = scr.index
+        local layout = awful.layout.getname(awful.layout.get(i))
+        if layout and beautiful["layout_" ..layout] then
+            mylayoutbox[i].image = image(beautiful["layout_" .. layout])
+        else
+            mylayoutbox[i].image = nil
+        end
+
+        -- Give focus to the latest client in history if no window has focus
+        -- or if the current window is a desktop or a dock one.
+        if not client.focus then
+            local c = awful.client.focus.history.get(i, 0)
+            if c then client.focus = c end
+        end
+    end)
 end
 shifty.taglist = mytaglist
 -- }}}
@@ -174,6 +190,7 @@ function focusWindow(idx)
     awful.client.focus.byidx( idx)
     if client.focus then client.focus:raise() end
 end
+
 function getPrevousWindow() focusWindow( -1) end
 function getNextWindow() focusWindow(1) end
 
@@ -271,54 +288,5 @@ shifty.config.globalkeys = globalkeys
 shifty.config.clientkeys = clientkeys
 -- }}}
 
--- {{{ Hooks
--- Hook function to execute when focusing a client.
-awful.hooks.focus.register(function (c)
-    if not awful.client.ismarked(c) then
-        c.border_color = beautiful.border_focus
-    end
-end)
-
--- Hook function to execute when unfocusing a client.
-awful.hooks.unfocus.register(function (c)
-    if not awful.client.ismarked(c) then
-        c.border_color = beautiful.border_normal
-    end
-end)
-
--- Hook function to execute when marking a client
-awful.hooks.marked.register(function (c)
-    c.border_color = beautiful.border_marked
-end)
-
--- Hook function to execute when unmarking a client.
-awful.hooks.unmarked.register(function (c)
-    c.border_color = beautiful.border_focus
-end)
-
--- Hook function to execute when the mouse enters a client.
-awful.hooks.mouse_enter.register(function (c)
-    -- Sloppy focus, but disabled for magnifier layout
-    if awful.layout.get(c.screen) ~= awful.layout.suit.magnifier
-        and awful.client.focus.filter(c) then
-        client.focus = c
-    end
-end)
-
--- Hook function to execute when arranging the screen.
--- (tag switch, new client, etc)
-awful.hooks.arrange.register(function (screen)
-    local layout = awful.layout.getname(awful.layout.get(screen))
-    if layout and beautiful["layout_" ..layout] then
-        mylayoutbox[screen].image = image(beautiful["layout_" .. layout])
-    else
-        mylayoutbox[screen].image = nil
-    end
-
-    -- Give focus to the latest client in history if no window has focus
-    -- or if the current window is a desktop or a dock one.
-    if not client.focus then
-        local c = awful.client.focus.history.get(screen, 0)
-        if c then client.focus = c end
-    end
-end)
+client.add_signal("focus", function(c) c.border_color = beautiful.border_focus end)
+client.add_signal("unfocus", function(c) c.border_color = beautiful.border_normal end)
