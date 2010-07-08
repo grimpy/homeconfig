@@ -1,5 +1,6 @@
 -- Standard awesome library
 require("awful")
+require("awful.autofocus")
 -- Theme handling library
 require("beautiful")
 -- Notification library
@@ -67,6 +68,7 @@ shifty.init()
 mymainmenu = myrc.mainmenu.build()
 mylauncher = awful.widget.launcher({ image = image(beautiful.awesome_icon),
                                      menu = mymainmenu })
+
 -- }}}
 
 mybaticon = widget({ type = "imagebox", name = "mybaticon" })
@@ -157,22 +159,6 @@ for s = 1, screen.count() do
         mytasklist[s],
         layout = awful.widget.layout.horizontal.rightleft
     }
-    screen[s]:add_signal("arrange", function (scr)
-        i = scr.index
-        local layout = awful.layout.getname(awful.layout.get(i))
-        if layout and beautiful["layout_" ..layout] then
-            mylayoutbox[i].image = image(beautiful["layout_" .. layout])
-        else
-            mylayoutbox[i].image = nil
-        end
-
-        -- Give focus to the latest client in history if no window has focus
-        -- or if the current window is a desktop or a dock one.
-        if not client.focus then
-            local c = awful.client.focus.history.get(i, 0)
-            if c then client.focus = c end
-        end
-    end)
 end
 shifty.taglist = mytaglist
 -- }}}
