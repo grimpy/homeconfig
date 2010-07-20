@@ -60,4 +60,4 @@ Exec=xfce4-clipman
 Icon=xfce4-clipman-plugin
 OnlyShowIn=XFCE;
 Terminal=false
-Hidden=true
+Hidden=false

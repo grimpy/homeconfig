@@ -65,7 +65,7 @@ def toggleMute():
     value = mixer.getmute()[0]
     mixer.setmute(not value)
     notifyDelta(0)
-
+#format = "llHHi"
 def main():
     con = xcb.connect()
     setup = con.get_setup()
@@ -78,7 +78,7 @@ def main():
             cookie = con.core.GrabKeyChecked(True, rootwin, mod, key, XCB_GRAB_MODE_ASYNC, XCB_GRAB_MODE_ASYNC)
             if cookie.check():
                 raise Exception("Could not connect to X")
-    
+
     while True:
         event = con.wait_for_event()
         if isinstance(event, xcb.xproto.KeyReleaseEvent):
