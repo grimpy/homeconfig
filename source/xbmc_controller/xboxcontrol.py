@@ -25,7 +25,6 @@ if '__main__' == __name__:
     while True:
         event = xev.getNextEvent()
         if isinstance(event, KeyPressEvent):
-            print 'Key %d pressed' % event.detail
             if event.detail == 24:
                 break
             sendCommand(event.detail)

@@ -17,6 +17,7 @@ shiftytags = {
     ["4:mail"]  = { position = 4, exclusive = true, spawn = "thunderbird", layout = awful.layout.suit.max, screen = 1},
     ["5:fs"]  = { position = 5, exclusive = true, spawn = "thunar", layout = awful.layout.suit.floating, },
     ["6:edit"]  = { position = 6, exclusive = true, spawn = "geany", screen = 1, nopopup = true, layout = awful.layout.suit.max, },
+    ["7:media"]  = { position = 7, exclusive = true, screen = 2, nopopup = true, layout = awful.layout.suit.floating, },
 }
 clientbuttons = awful.util.table.join(
     awful.button({ }, 1, function (c) client.focus = c; c:raise() end),
@@ -31,6 +32,8 @@ shiftyapps = {
          { match = { "Thunar" }, tag = "5:fs" } ,
          { match = { "Geany" }, tag = "6:edit" } ,
          { match = { "Eclipse" }, tag = "6:edit" } ,
+         { match = { "MPlayer" }, tag = "7:media" } ,
+         { match = { "Audacious" }, tag = "7:media" } ,
          { match = { "" }, buttons =  clientbuttons },
 }
 
