@@ -1,0 +1,14 @@
+[ui]
+username = Jo De Boeck <jo.deboeck@aserver.com>
+[extensions]
+fetch = 
+color = 
+extdiff = 
+bookmarks = 
+transplant = 
+
+[extdiff]
+cmd.meld = 
+
+[bookmarks]
+track.current = True
