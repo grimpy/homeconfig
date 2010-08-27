@@ -1,0 +1,6 @@
+#change the hardstatus settings to give an window list at the bottom of the                                                                 
+hardstatus alwayslastline
+hardstatus string '%{= kG}[ %{G}%H %{g}][%= %{= kw}%?%-Lw%?%{r}(%{W}%n*%f%t%?(%u)%?%{r})%{w}%?%+Lw%?%?%= %{g}][%{B} %d/%m %{W}%c %{g}]'
+shelltitle "$ |bash"
+##
+#
