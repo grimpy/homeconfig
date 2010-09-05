@@ -1,0 +1,24 @@
+#! /bin/zsh
+
+bindkey "^[[3~" delete-char
+bindkey "^[[5~" backward-word
+bindkey "^[[6~" forward-word
+
+bindkey "^[[A" history-beginning-search-backward
+bindkey "^[[B" history-beginning-search-forward
+
+bindkey "^A" beginning-of-line
+bindkey "^E" end-of-line
+bindkey "^K" kill-line
+bindkey "^L" clear-screen
+bindkey "^R" history-incremental-search-backward
+bindkey "^U" kill-whole-line
+bindkey "^V" quoted-insert
+bindkey "^W" backward-kill-word
+
+bindkey "^N" down-history
+bindkey "^P" up-history
+
+bindkey "^[H" run-help
+bindkey "^[h" run-help
+
