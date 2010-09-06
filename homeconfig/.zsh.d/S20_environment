@@ -24,7 +24,7 @@ CTAGS="--c++-kinds=+p --fields=+iaS --extra=+q"
 
 export LUA_PATH="./?.lua;/usr/local/share/lua/5.1/?.lua;/usr/local/share/lua/5.1/?/init.lua;/usr/local/lib/lua/5.1/?.lua;/usr/local/lib/lua/5.1/?/init.lua;/usr/share/lua/5.1/?.lua;/usr/share/lua/5.1/?/init.lua;/usr/share/awesome/lib/?.lua;/usr/share/awesome/lib/awful/?.lua"
 
-export TERM=xterm
+#export TERM=xterm
 
 export PATH=$PATH:$HOME/mygit/scripts/bin
 export EDITOR=/usr/bin/vim
