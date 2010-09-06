@@ -1,7 +1,7 @@
 #!/usr/bin/env /usr/bin/python
 import os, sys, shutil
 fullpath = os.path.abspath(os.path.dirname(sys.argv[0]))
-linkfolders = ['.config/awesome','.config/autostart', '.zsh.d']
+linkfolders = ['.config/awesome','.config/autostart', '.zsh.d', '.ssh']
 fullpath = os.path.join(fullpath, 'homeconfig')
 striplen = len(fullpath)+1
 target = os.environ['HOME']
