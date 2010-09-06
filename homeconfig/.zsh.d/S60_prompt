@@ -74,7 +74,7 @@ if [ $UID -eq 0 ]; then
     RPROMPT="$rst%{$fg[red]%}(%B%{$fg[red]%}%~%b%{$fg[red]%})$rst "
 else
     case $HOST in
-        lap008)
+        kwak*)
             lprompt '[]' bold green
             rprompt '()' yellow white
             ;;
@@ -87,7 +87,7 @@ else
             lprompt '<>' red yellow
             rprompt '<>' red white
             ;;
-        muon*)
+        aberlour*)
             lprompt '<>' red blue
             rprompt '<>' red white
             ;;
@@ -97,12 +97,12 @@ else
             ;;
 
         *)
-            if [ ${$(hostname -f)#*.} = "jukie.net" ]; then
+            if [ ${$(hostname -s)#*.} = "jukie.net" ]; then
                 lprompt '[]' bold white
                 rprompt '()' bold white
             else
-                lprompt '{}' white white
-                rprompt '()' white white
+                lprompt '{}' green blue
+                rprompt '()' green blue
             fi
             ;;
     esac

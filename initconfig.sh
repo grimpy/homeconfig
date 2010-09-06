@@ -1,4 +1,10 @@
 #!/bin/bash
+remoteip=$1
+if [ "x$remoteip" != "x" ]; then
+	scp $0 $remoteip:/tmp
+	ssh $remoteip /tmp/initconfig.sh
+	exit 0
+fi
 cd
 mkdir mygit
 cd mygit
