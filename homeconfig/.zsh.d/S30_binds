@@ -13,8 +13,14 @@ rxvt)
     bindkey '\e[8~' end-of-line # End
     ;;
 xterm)
-    bindkey '\e[H' beginning-of-line # Home
-    bindkey '\e[F' end-of-line # End
+    if [[ "x$COLORTERM" = "xgnome-terminal" ]]; then
+        bindkey '\eOH' beginning-of-line # Home
+        bindkey '\eOF' end-of-line # End
+
+    else
+        bindkey '\e[H' beginning-of-line # Home
+        bindkey '\e[F' end-of-line # End
+    fi
     ;;
 linux|screen*)
     bindkey '\e[1~' beginning-of-line # Home
