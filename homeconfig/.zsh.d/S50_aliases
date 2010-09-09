@@ -37,18 +37,6 @@ alias qsearch="sudo /usr/bin/qsearch"
 alias modprobe="sudo /sbin/modprobe"
 alias rmmod="sudo /sbin/rmmod"
 
-# Networking aliases
-alias tcpdump="sudo /usr/sbin/tcpdump"
-alias route="sudo /sbin/route"
-alias ifconfig="sudo /sbin/ifconfig"
-alias ip="sudo /sbin/ip"
-alias iwlist="sudo /sbin/iwlist"
-alias iwconfig="sudo /sbin/iwconfig"
-alias dhcpcd="sudo /sbin/dhcpcd"
-alias iptables="sudo /sbin/iptables"
-alias showmount="sudo /usr/sbin/showmount"
-alias brctl="sudo /sbin/brctl"
-
 export LANG="en_US.utf8"
 #export LANG="en_UK.ISO_8859_1"
 
