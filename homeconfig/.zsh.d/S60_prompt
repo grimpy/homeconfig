@@ -104,7 +104,7 @@ else
             lprompt '<>' red blue
             rprompt '<>' red white
             ;;
-        Daredevil*)
+        DareDevil*)
             lprompt '<>' red green
             rprompt '<>' red white
             ;;
