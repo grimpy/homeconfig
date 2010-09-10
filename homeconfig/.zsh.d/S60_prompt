@@ -88,16 +88,19 @@ else
             lprompt '[]' bold green
             rprompt '()' yellow white
             ;;
-        IronMan*)
+        JackJack*)
             lprompt '[]' white green
             rprompt '()' yellow white
             ;;
-
-        JackJack*)
+        Wolverine*)
+            lprompt '[]' white green
+            rprompt '()' yellow white
+            ;;
+        IronMan*)
             lprompt '<>' red yellow
             rprompt '<>' red white
             ;;
-        tiron*)
+        triton*)
             lprompt '<>' red blue
             rprompt '<>' red white
             ;;
