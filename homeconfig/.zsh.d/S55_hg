@@ -25,12 +25,6 @@ export __ZSH_HG_BRANCH=
 export __ZSH_HG_STATE=
 export __ZSH_HG_VARS_INVALID=1
 
-# get the name of the branch we are on
-parse_hg_branch() {
-        hg branch --no-color 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/(\1) -- /'
-}
-
-# http://blog.madism.org/index.php/2008/05/07/173-hg-prompt
 new_parse_hg_branch() {
     local hg_dir branch
 
@@ -40,7 +34,10 @@ new_parse_hg_branch() {
     __ZSH_HG_FULL_DIR=${hg_dir:h}
     __ZSH_HG_DIR="${__ZSH_HG_FULL_DIR/$HOME/~}"
     branch=$(hg branch)
-    __ZSH_HG_BRANCH="${branch#refs/heads/}"
+    if test -e "${hg_dir}/bookmarks.current"; then
+        branch="${branch} $(cat ${hg_dir}/bookmarks.current)"
+    fi
+    __ZSH_HG_BRANCH="${branch}"
 
     export __ZSH_HG_FULL_DIR
     export __ZSH_HG_DIR

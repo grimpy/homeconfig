@@ -84,24 +84,24 @@ if [ $UID -eq 0 ]; then
     RPROMPT="$rst%{$fg[red]%}(%B%{$fg[red]%}%~%b%{$fg[red]%})$rst "
 else
     case $HOST in
-        kwak*)
+        Hulk*)
             lprompt '[]' bold green
             rprompt '()' yellow white
             ;;
-        oxygen*)
+        IronMan*)
             lprompt '[]' white green
             rprompt '()' yellow white
             ;;
 
-        meson*)
+        JackJack*)
             lprompt '<>' red yellow
             rprompt '<>' red white
             ;;
-        aberlour*)
+        tiron*)
             lprompt '<>' red blue
             rprompt '<>' red white
             ;;
-        quark*)
+        Daredevil*)
             lprompt '<>' red green
             rprompt '<>' red white
             ;;
