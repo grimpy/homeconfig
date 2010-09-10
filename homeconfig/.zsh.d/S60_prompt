@@ -22,15 +22,15 @@ function lprompt {
     git_s='$(get_git_prompt_info '%s')'
     hg_b='$(get_hg_prompt_info '%b')'
     hg_s='$(get_hg_prompt_info '%s')'
- 
+
     col_b="%{$fg[green]%}"
     col_s="%{$fg[red]%}"
 
     PROMPT="\
 $bgc$ch1\
 $col_b$git_b\
-$col_b$git_s\
-$col_s$hg_b\
+$col_s$git_s\
+$col_b$hg_b\
 $col_s$hg_s\
 $bgc$col2%B%1~%b\
 $ch2$rst \
@@ -40,18 +40,23 @@ $col2%#$rst "
 function _rprompt_dir {
     local col_b col_s
     git_p=${$(get_git_prompt_info '%p')%% }
+    hg_p=${$(get_hg_prompt_info '%p')%% }
     col_p="%{$fg[yellow]%}"
 
     local short
     short="${PWD/$HOME/~}"
 
-    if test -z "$git_p" ; then
-            echo -n "$short"
-            return
+    if test -n "$git_p" ; then
+        local lead rest
+        lead=$git_p
+    elif test -n "$hg_p"; then
+        local lead rest
+        lead=$hg_p
+    else
+        echo -n "$short"
+        return
     fi
 
-    local lead rest
-    lead=$git_p
     rest=${${short#$lead}#/}
 
     echo -n "$lead$col_p/$rest"
@@ -133,7 +138,7 @@ if [[ "$TERM" != "linux" ]]; then
 
   # this updates title bar before prompt is printed
   precmd () {
-    echo  -n \\033\]2\;$USER@$HOST:$_\\07; 
+    echo  -n \\033\]2\;$USER@$HOST:$_\\07;
   }
 
   # this updates title bar while command is running
