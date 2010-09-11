@@ -74,7 +74,12 @@ mylauncher = awful.widget.launcher({ image = image(beautiful.awesome_icon),
 mybaticon = widget({ type = "imagebox", name = "mybaticon" })
 mybaticon.image = image(confdir .. "/icons/bat.png")
 mybatwidget     = widget({ type = "textbox", name = "mybatwidget" })
-vicious.register(mybatwidget, vicious.widgets.bat, "$1$2%", 61, "BAT1")
+hostname = os.getenv("HOSTNAME")
+battery = "BAT0"
+if hostname == "Hulk" then
+    battery = "BAT1"
+end
+vicious.register(mybatwidget, vicious.widgets.bat, "$1$2%", 61, "BAT0")
 
 -- {{{ Wibox
 -- Create a textclock widget
