@@ -9,6 +9,11 @@ UP_ARROW = 111
 DOWN_ARROW = 116
 ZERO_KEY = 19
 
+MUTE = 121
+VOL_DOWN = 122
+VOL_UP=123
+
+
 METAMOD = xcb.xproto.ModMask._4
 NUMLOCK = xcb.xproto.ModMask._2
 CAPSLOCK = xcb.xproto.ModMask.Lock
@@ -66,27 +71,32 @@ def toggleMute():
     mixer.setmute(not value)
     notifyDelta(0)
 #format = "llHHi"
+
+def registerKey(con, rootwin, mods, mymod, key):
+    for mod in mods:
+        mod = mod | mymod
+        cookie = con.core.GrabKeyChecked(True, rootwin, mod, key, XCB_GRAB_MODE_ASYNC, XCB_GRAB_MODE_ASYNC)
+        if cookie.check():
+            raise Exception("Could not connect to X")
+
 def main():
     con = xcb.connect()
     setup = con.get_setup()
     rootwin = setup.roots[0].root
-    keys = (UP_ARROW, DOWN_ARROW, ZERO_KEY)
-    mods = (NUMLOCK, CAPSLOCK, 0)
-    for key in keys:
-        for mod in mods:
-            mod = mod | METAMOD
-            cookie = con.core.GrabKeyChecked(True, rootwin, mod, key, XCB_GRAB_MODE_ASYNC, XCB_GRAB_MODE_ASYNC)
-            if cookie.check():
-                raise Exception("Could not connect to X")
+    mods = (NUMLOCK, CAPSLOCK, 0, NUMLOCK | CAPSLOCK)
+    for key in (UP_ARROW, DOWN_ARROW, ZERO_KEY):
+        registerKey(con, rootwin, mods, METAMOD, key)
+    for key in (VOL_DOWN, VOL_UP, MUTE):
+        registerKey(con, rootwin, mods, 0, key)
 
     while True:
         event = con.wait_for_event()
         if isinstance(event, xcb.xproto.KeyReleaseEvent):
-            if event.detail == UP_ARROW:
+            if event.detail in (UP_ARROW, VOL_UP):
                 notifyDelta(+5)
-            elif event.detail == DOWN_ARROW:
+            elif event.detail in (DOWN_ARROW, VOL_DOWN):
                 notifyDelta(-5)
-            elif event.detail == ZERO_KEY:
+            elif event.detail in (ZERO_KEY, MUTE):
                 toggleMute()
 
 
