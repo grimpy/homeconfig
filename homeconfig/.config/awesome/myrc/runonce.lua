@@ -59,9 +59,14 @@ end
 
 -- run Once per real awesome start (config reload works)
 -- does not cover "pkill awesome && awesome"
+
+function M.shallExecute()
+    return shallExecute(M.oldPid, M.currentPid)
+end
+
 function M.run(shellCommand)
     -- check and Execute
-    if shallExecute(M.oldPid, M.currentPid) then
+    if M.shallExecute() then
         awful.util.spawn_with_shell(shellCommand)
     end
 end

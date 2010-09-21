@@ -6,9 +6,11 @@ local r = require("myrc.runonce")
 module("myrc.autostart")
 
 function init(startdir)
-    for i, program in ipairs(utils.parse_desktop_files({dir = startdir} )) do
-        if program.cmdline then
-            r.run(program.cmdline)
+    if r.shallExecute() then
+        for i, program in ipairs(utils.parse_desktop_files({dir = startdir} )) do
+            if program.cmdline then
+                r.run(program.cmdline)
+            end
         end
     end
 end
