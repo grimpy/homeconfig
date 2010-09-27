@@ -15,7 +15,8 @@ require("vicious")
 
 -- {{{ Variable definitions
 -- Themes define colours, icons, and wallpapers
-beautiful.init("/usr/share/awesome/themes/default/theme.lua")
+home = os.getenv("HOME")
+beautiful.init(home .. "/.config/awesome/theme.lua")
 
 -- This is used later as the default terminal and editor to run.
 terminal = myrc.custom.terminal
@@ -25,7 +26,7 @@ editor_cmd = terminal .. " -e " .. editor
 confdir = awful.util.getdir("config")
 
 if myrc.custom.autostart then
-    myrc.autostart.init(os.getenv("HOME") .. "/.config/autostart/")
+    myrc.autostart.init(home .. "/.config/autostart/")
 end
 
 -- Default modkey.
@@ -79,7 +80,7 @@ battery = "BAT0"
 if hostname == "Hulk" then
     battery = "BAT1"
 end
-vicious.register(mybatwidget, vicious.widgets.bat, "$1$2%", 61, "BAT0")
+vicious.register(mybatwidget, vicious.widgets.bat, "$1$2%", 61, battery)
 
 -- {{{ Wibox
 -- Create a textclock widget
