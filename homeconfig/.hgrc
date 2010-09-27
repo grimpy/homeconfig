@@ -1,5 +1,6 @@
 [ui]
-username = Jo De Boeck <jo.deboeck@aserver.com>
+username = deboeckj
+
 [extensions]
 fetch = 
 color = 
@@ -12,3 +13,6 @@ cmd.meld =
 
 [bookmarks]
 track.current = True
+
+[alias]
+duw = push -r .

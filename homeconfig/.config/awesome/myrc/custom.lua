@@ -29,7 +29,7 @@ shiftyapps = {
          { match = { "Thunderbird"} , tag = "4:mail" } ,
          { match = { "Pidgin", "Skype"} , tag = "2:im" } ,
          { match = { "xterm", "urxvt", "Terminator"} , honorsizehints = false, slave = true, tag = "1:term" } ,
-         { match = { "Thunar" }, tag = "5:fs" } ,
+         { match = { "Thunar", "pcmanfm", "xarchiver" }, tag = "5:fs" } ,
          { match = { "Geany" }, tag = "6:edit" } ,
          { match = { "Eclipse" }, tag = "6:edit" } ,
          { match = { "MPlayer" }, tag = "7:media" } ,
