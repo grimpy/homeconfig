@@ -32,8 +32,7 @@ shiftyapps = {
          { match = { "Thunar", "pcmanfm", "xarchiver" }, tag = "5:fs" } ,
          { match = { "Geany" }, tag = "6:edit" } ,
          { match = { "Eclipse" }, tag = "6:edit" } ,
-         { match = { "MPlayer" }, tag = "7:media" } ,
-         { match = { "Audacious" }, tag = "7:media" } ,
+         { match = { "MPlayer", "ario", "Audacious" }, tag = "7:media" } ,
          { match = { "" }, buttons =  clientbuttons },
 }
 
