@@ -4,7 +4,7 @@ local naughty = require("naughty")
 local tag = require("tag")
 module("myrc.custom")
 
-browser = "chromium"
+browser = "firefox"
 terminal = "urxvtc"
 autostart = true
 modkey = "Mod4"
