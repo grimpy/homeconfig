@@ -75,7 +75,7 @@ mylauncher = awful.widget.launcher({ image = image(beautiful.awesome_icon),
 mybaticon = widget({ type = "imagebox", name = "mybaticon" })
 mybaticon.image = image(confdir .. "/icons/bat.png")
 mybatwidget     = widget({ type = "textbox", name = "mybatwidget" })
-hostname = os.getenv("HOSTNAME")
+hostname = string.sub(awful.util.pread("hostname"), 0, -2)
 battery = "BAT0"
 if hostname == "Hulk" then
     battery = "BAT1"
