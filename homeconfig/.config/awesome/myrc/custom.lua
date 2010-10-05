@@ -46,6 +46,7 @@ shiftydefaults = {
 
 keybindings = awful.util.table.join(
     awful.key({ modkey2, "Control" }, "c", function () awful.util.spawn(terminal) end),
+    awful.key({ }, "Print", function () awful.util.spawn("/home/grimpy/mygit/scripts/bin/caputereimg.sh /home/grimpy/Media/Pictures/SS") end),
     awful.key({ modkey,           }, "F2", function () awful.util.spawn("mpc toggle") end),
     awful.key({ modkey,           }, "F3", function () awful.util.spawn("mpc prev") end),
     awful.key({ modkey,           }, "F4", function () awful.util.spawn("mpc next") end),
