@@ -8,8 +8,11 @@ fi
 cd
 mkdir mygit
 cd mygit
-git clone http://github.com/grimpy/homeconfig.git .
+git clone git://github.com/grimpy/homeconfig.git .
 cd homeconfig/.ssh
-unzip id_rsa.zip && sed -i s#http://github.com/#git@github.com:# ../../.git/config
+unzip id_rsa.zip && sed -i s#git://github.com/#git@github.com:# ../../.git/config
 cd ../..
 ./linkfiles.py
+if [ -f /bin/zsh ]; then
+    usermod -s /bin/zsh $USER
+fi
