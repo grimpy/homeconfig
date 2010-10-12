@@ -24,15 +24,19 @@ end
 -- Note: Uses beautiful.icon_theme and beautiful.icon_theme_size
 -- env - table with string constants - command line to different apps
 
-function send_dbus(command, timeout)
-    cli = "dbus-send --system --print-reply --dest=org.freedesktop.Hal \
-    /org/freedesktop/Hal/devices/computer \
-    org.freedesktop.Hal.Device.SystemPowerManagement.".. command
-    if timeout then
-     cli = cli .. " int32:0"
-    end
+function send_dbus(command)
+    cli = "dbus-send --system --print-reply --dest=org.freedesktop.UPower \
+    /org/freedesktop/UPower \
+    org.freedesktop.UPower.".. command
     awful.util.spawn(cli)
 end
+function send_dbus2(command)
+    cli = "dbus-send --system --print-reply --dest=org.freedesktop.ConsoleKit \
+    /org/freedesktop/ConsoleKit/Manager \
+    org.freedesktop.ConsoleKit.Manager.".. command
+    awful.util.spawn(cli)
+end
+
 
 function build()
     local terminal = (env.terminal or "terminator") .. " "
@@ -46,10 +50,10 @@ function build()
 
     local shutdown_menu = {
         { "Logout", awesome.quit, freedesktop_utils.lookup_icon({ icon = 'gnome-logout' }) },
-        { "Reboot", function () send_dbus("Reboot", false) end, freedesktop_utils.lookup_icon({ icon = 'gtk-refresh' }) },
-        { "Suspend", function () send_dbus("Suspend", true) end, freedesktop_utils.lookup_icon({ icon = 'xfsm-suspend' }) },
-        { "Hibernate", function () send_dbus("Hibernate", false) end, freedesktop_utils.lookup_icon({ icon = 'xfsm-hibernate' }) },
-        { "Shutdown", function () send_dbus("Shutdown", false) end, freedesktop_utils.lookup_icon({ icon = 'gtk-stop' }) },
+        { "Reboot", function () send_dbus2("Restart") end, freedesktop_utils.lookup_icon({ icon = 'gtk-refresh' }) },
+        { "Suspend", function () send_dbus("Suspend") end, freedesktop_utils.lookup_icon({ icon = 'xfsm-suspend' }) },
+        { "Hibernate", function () send_dbus("Hibernate") end, freedesktop_utils.lookup_icon({ icon = 'xfsm-hibernate' }) },
+        { "Shutdown", function () send_dbus2("Stop") end, freedesktop_utils.lookup_icon({ icon = 'gtk-stop' }) },
     }
 
     local mymainmenu_items_head = {
