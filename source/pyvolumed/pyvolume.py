@@ -3,6 +3,7 @@ import alsaaudio
 import sys
 import xcb, xcb.xproto
 import pynotify
+import gtk
 import pdb
 XCB_GRAB_MODE_ASYNC = 1
 UP_ARROW = 111
@@ -18,13 +19,27 @@ METAMOD = xcb.xproto.ModMask._4
 NUMLOCK = xcb.xproto.ModMask._2
 CAPSLOCK = xcb.xproto.ModMask.Lock
 
+def generatePixBuf(percentage, mute=False):
+    BIT = 8
+    HEIGHT= 10
+    WIDTH = 100
+    fillcolor = [0, 125, 255] if not mute else [255,0,0]
+    emptycolor = [0,0,0]
+    pixbuf = gtk.gdk.Pixbuf(gtk.gdk.COLORSPACE_RGB, False, 8, WIDTH, HEIGHT)
+    data = pixbuf.get_pixels_array()
+    for y in xrange(HEIGHT):
+        for x in xrange(WIDTH):
+            color = fillcolor if x < percentage else emptycolor
+            data[y][x] = color
+    return pixbuf
+
 
 MIXER = 'Master'
 mixer = alsaaudio.Mixer(MIXER)
 maxvolumescale = 100
 
 pynotify.init("volumecontroller")
-nt = pynotify.Notification("Volume muted")
+nt = pynotify.Notification(" ")
 nt.set_hint_int32("value",50)
 nt.set_hint_string("x-canonical-private-synchronous","")
 
@@ -62,8 +77,10 @@ def createbar(percentage):
 def notifyDelta(delta):
     vol = newVolume(delta)
     nt.set_hint_int32("value",vol)
-    muted = "" if not mixer.getmute()[0] else "Muted"
-    nt.update("%s Volume %s %d%%" % (MIXER, muted, vol), createbar(vol), getNotificationIcon(vol))
+    muted = mixer.getmute()[0]
+    mutestring = "" if not muted else "Muted"
+    nt.set_icon_from_pixbuf(generatePixBuf(vol, muted))
+    #nt.update(" ","\n%s Volume %s %d%%" % (MIXER, mutestring, vol))
     nt.show()
 
 def toggleMute():
