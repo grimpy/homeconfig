@@ -27,9 +27,9 @@ def generatePixBuf(percentage, mute=False):
     emptycolor = [0,0,0]
     pixbuf = gtk.gdk.Pixbuf(gtk.gdk.COLORSPACE_RGB, False, 8, WIDTH, HEIGHT)
     data = pixbuf.get_pixels_array()
-    for y in xrange(HEIGHT):
-        for x in xrange(WIDTH):
-            color = fillcolor if x < percentage else emptycolor
+    for x in xrange(WIDTH):
+        color = fillcolor if x < percentage else emptycolor
+        for y in xrange(HEIGHT):
             data[y][x] = color
     return pixbuf
 
