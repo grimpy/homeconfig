@@ -101,6 +101,6 @@ ssh2(){
 }
 
 xbox(){
-        lftp -u xbox,xbox 1.1.3/F/
+        lftp -u xbox,xbox xbox.skynet/F/
 }
 
