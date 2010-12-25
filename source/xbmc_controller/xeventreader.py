@@ -35,7 +35,7 @@ class XeventReader:
                                WindowClass.InputOutput,
                                visual,
                                CW.BackPixel | CW.EventMask,
-                               [ white, EventMask.ButtonPress | EventMask.KeyPress | EventMask.EnterWindow | EventMask.LeaveWindow | EventMask.Exposure ])
+                               [ white, EventMask.KeyRelease | EventMask.KeyPress ])
         self.conn.core.ChangeProperty(PropMode.Replace, self.root.root, xcb.XA_WM_CLASS, xcb.XA_STRING, 8, len(name), name)
 
         cookie = self.conn.render.QueryPictFormats()

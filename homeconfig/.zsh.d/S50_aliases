@@ -3,11 +3,6 @@
 autoload zmv
 alias mmv='noglob zmv -W'
 
-if ( which sudo >/dev/null 2>/dev/null ) ; then
-#        alias su='export XAUTHORITY=${HOME}/.Xauthority ; sudo -s'
-        alias sudo='export XAUTHORITY=${HOME}/.Xauthority ; sudo'
-fi
-
 # For giggles
 alias du="du -hcs"
 alias df="df -h"
