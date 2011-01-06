@@ -25,7 +25,7 @@ clientbuttons = awful.util.table.join(
     awful.button({ "Mod1" }, 3, awful.mouse.client.resize))
 
 shiftyapps = {
-         { match = { "Chrome", "Chromium", "Navigator", "Namoroka","Firefox"} , tag = "3:web" } ,
+         { match = { "Chrome", "Chromium", "Midori", "Navigator", "Namoroka","Firefox"} , tag = "3:web" } ,
          { match = { "Thunderbird"} , tag = "4:mail" } ,
          { match = { "Pidgin", "Skype"} , tag = "2:im" } ,
          { match = { "xterm", "urxvt", "Terminator"} , honorsizehints = false, slave = true, tag = "1:term" } ,
@@ -46,7 +46,7 @@ shiftydefaults = {
 
 keybindings = awful.util.table.join(
     awful.key({ modkey2, "Control" }, "c", function () awful.util.spawn(terminal) end),
-    awful.key({ }, "Print", function () awful.util.spawn("/home/grimpy/mygit/scripts/bin/caputereimg.sh /home/grimpy/Media/Pictures/SS") end),
+    awful.key({ }, "Print", function () awful.util.spawn("/home/grimpy/mygit/scripts/bin/caputereimg.sh /home/grimpy/Pictures/SS") end),
     awful.key({ modkey,           }, "F2", function () awful.util.spawn("mpc toggle") end),
     awful.key({ modkey,           }, "F3", function () awful.util.spawn("mpc prev") end),
     awful.key({ modkey,           }, "F4", function () awful.util.spawn("mpc next") end),

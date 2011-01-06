@@ -25,7 +25,7 @@ for cat in categories.itervalues():
     filecontents.append('programs["%s"] = {}' % cat)
 
 def get_command_line(entry):
-    cmd = entry.getExec()
+    cmd = entry.getExec().split(" ")[0]
     if entry.getTerminal():
         cmd = terminal + " -e " + cmd
     return cmd
