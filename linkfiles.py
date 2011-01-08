@@ -1,4 +1,4 @@
-#!/usr/bin/env /usr/bin/python
+#!/usr/bin/env /usr/bin/python2
 import os, sys, shutil
 from optparse import OptionParser
 parser = OptionParser()
