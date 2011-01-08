@@ -8,7 +8,6 @@ urxvt.saveLines: 10000
 *scrollBar: false
 *boarderColor: red
 *loginShell: true
-*transparent: true
 *tintingType: true
 *tinting: #ffffff
 *tintColor: #FFFFFF
@@ -42,3 +41,4 @@ urxvt.saveLines: 10000
 *urlLauncher: firefox
 *matcher.button: 3
 *colorUL: #86A2BB
+*font: xft:Bitstream Vera Sans Mono:pixelsize=12
