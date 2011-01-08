@@ -1,0 +1,10 @@
+#!/bin/bash
+for i in $(sed -e 's,.*:,,g' /etc/auto.usb)
+do 
+    if [ -n "$i" -a ! -e "$i" ] 
+    then
+        k=$(echo "$i"|sed 's,/,\\/,g')
+        sed -ic -e "/:$k\$/d" /etc/auto.usb
+    fi
+done
+/etc/init.d/autofs reload

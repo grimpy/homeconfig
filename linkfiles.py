@@ -1,11 +1,25 @@
 #!/usr/bin/env /usr/bin/python
 import os, sys, shutil
+from optparse import OptionParser
+parser = OptionParser()
+parser.add_option("-r", "--root", dest="root",action="store_true", default=False,
+                  help="Do root")
+(options, args) = parser.parse_args()
 fullpath = os.path.abspath(os.path.dirname(sys.argv[0]))
 linkfolders = ['.config/awesome','.config/autostart', '.zsh.d', '.ssh']
-fullpath = os.path.join(fullpath, 'homeconfig')
-striplen = len(fullpath)+1
 target = os.environ['HOME']
-#target = "/home/grimpy/temper/"
+
+if options.root:
+    if os.getuid() != 0:
+        print "Use sudo not root"
+        sys.exit(1)
+    else:
+        fullpath = os.path.join(fullpath, 'osconfig')
+        target = "/"
+else:
+    fullpath = os.path.join(fullpath, 'homeconfig')
+
+striplen = len(fullpath)+1
 #do folders defined in linkfolders
 def createDir(folder1, folderb):
     folder = os.path.join(os.sep, folder1, folderb)

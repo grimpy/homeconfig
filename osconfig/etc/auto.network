@@ -1,0 +1,5 @@
+IronMan 	-rsize=8192,wsize=8192,soft,timeo=30,rw	ironman.skynet:/home/grimpy
+IronMan_smb -fstype=cifs,credentials=/etc/smb.auth  ://ironman.skynet/MediaDisk
+usbdisk 	-rsize=8192,wsize=8192,soft,timeo=30,rw	ironman.skynet:/home/grimpy/usb
+daredevil 	-rsize=8192,wsize=8192,soft,timeo=30,rw	192.168.1.2:/home/leech
+xbox    -fstype=fuse,allow_other,user=xbox:xbox curlftpfs#ftp://xbox.skynet
