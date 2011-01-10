@@ -55,7 +55,7 @@ for appdir in set(xdg.BaseDirectory.xdg_data_dirs):
 icons = ('applications-accessories.png', 'applications-development.png', 'applications-science.png',
         'applications-games.png', 'applications-graphics.png', 'applications-internet.png',
         'applications-multimedia.png', 'applications-office.png', 'applications-other.png',
-        'applications-utilities.png', 'applications-system.png')
+        'package_utilities.png', 'applications-system.png')
 filecontents.append("menu = {")
 for (menu_name, category), icon in zip(sorted(categories.items()), icons):
     if category in used_cat:
