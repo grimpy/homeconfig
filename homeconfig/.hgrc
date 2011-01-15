@@ -1,5 +1,6 @@
 [ui]
 username = deboeckj
+merge = meld
 
 [extensions]
 fetch = 
@@ -7,6 +8,7 @@ color =
 extdiff = 
 bookmarks = 
 transplant = 
+rebase =
 
 [extdiff]
 cmd.meld = 

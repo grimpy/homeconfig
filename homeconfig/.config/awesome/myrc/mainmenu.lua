@@ -36,10 +36,10 @@ function build()
 
     local shutdown_menu = {
         { "Logout", awesome.quit, freedesktop_utils.lookup_icon({ icon = 'gnome-logout' }) },
-        { "Reboot", function () awful.util.spawn("sudo reboot") end, freedesktop_utils.lookup_icon({ icon = 'gtk-refresh' }) },
-        { "Suspend", function () awful.util.spawn("sudo pm-suspend") end, freedesktop_utils.lookup_icon({ icon = 'xfsm-suspend' }) },
-        { "Hibernate", function () awful.util.spawn("sudo pm-hibernate") end, freedesktop_utils.lookup_icon({ icon = 'xfsm-hibernate' }) },
-        { "Shutdown", function () awful.util.spawn("sudo poweroff") end, freedesktop_utils.lookup_icon({ icon = 'gtk-stop' }) },
+        { "Reboot", function () awful.util.spawn("sudo /sbin/reboot") end, freedesktop_utils.lookup_icon({ icon = 'gtk-refresh' }) },
+        { "Suspend", function () awful.util.spawn("sudo /usr/sbin/pm-suspend") end, freedesktop_utils.lookup_icon({ icon = 'xfsm-suspend' }) },
+        { "Hibernate", function () awful.util.spawn("sudo /usr/sbin/pm-hibernate") end, freedesktop_utils.lookup_icon({ icon = 'xfsm-hibernate' }) },
+        { "Shutdown", function () awful.util.spawn("sudo /sbin/poweroff") end, freedesktop_utils.lookup_icon({ icon = 'gtk-stop' }) },
     }
 
     local mymainmenu_items_head = {

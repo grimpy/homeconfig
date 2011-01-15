@@ -1,0 +1,23 @@
+#!/bin/bash
+command=$1
+
+function auda() {
+    c=""
+    case $command in
+        "next" ) c="-f" ;;
+        "prev" ) c="-r" ;;
+        "toggle") c="-t" ;;
+        *) return 1;
+   esac
+   audacious $c
+
+}
+function mpd() {
+    mpc $command
+}
+
+if ps -eaf | grep -v grep | grep audacious; then
+    auda
+else
+    mpd
+fi
