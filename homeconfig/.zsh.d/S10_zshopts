@@ -42,7 +42,7 @@ setopt case_glob            # case sensitive globbing
 setopt c_bases              # understand 12#120 as 120 in base 12
 setopt no_cdable_vars       # dont add ~ automagically
 setopt no_chase_dots        # foo/bar/.. is foo/ even if bar is a symlink
-setopt chase_links          # cd to a symlink is in fact cd to the true dir
+#setopt chase_links          # cd to a symlink is in fact cd to the true dir
 setopt check_jobs           # check jobs on exit
 setopt no_clobber           # redirection cannot create files
 setopt complete_aliases     # dont replace alias before completion
