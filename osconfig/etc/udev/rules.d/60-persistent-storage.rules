@@ -71,4 +71,4 @@ ENV{DEVTYPE}=="disk", ENV{ID_WWN_WITH_EXTENSION}=="?*", SYMLINK+="disk/by-id/wwn
 ENV{DEVTYPE}=="partition", ENV{ID_WWN_WITH_EXTENSION}=="?*", SYMLINK+="disk/by-id/wwn-$env{ID_WWN_WITH_EXTENSION}-part%n"
 
 LABEL="persistent_storage_end"
-ACTION=="remove", ENV{REMOVE_CMD}="/lib/udev/usb_automount_clean"
+ACTION=="remove", ENV{REMOVE_CMD}="/usr/local/bin/usb_automount_clean"

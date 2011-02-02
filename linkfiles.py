@@ -7,6 +7,7 @@ parser.add_option("-r", "--root", dest="root",action="store_true", default=False
 (options, args) = parser.parse_args()
 fullpath = os.path.abspath(os.path.dirname(sys.argv[0]))
 linkfolders = ['.config/awesome','.config/autostart', '.zsh.d', '.ssh']
+copydirs = ['etc/udev/rules.d']
 target = os.environ['HOME']
 
 if options.root:
@@ -21,11 +22,6 @@ else:
 
 striplen = len(fullpath)+1
 #do folders defined in linkfolders
-def createDir(folder1, folderb):
-    folder = os.path.join(os.sep, folder1, folderb)
-    if not os.path.exists(folder):
-        os.mkdir(folder)
-    return folder
 #cleanuppath
 def cleanuppath(targetfolder):
     if os.path.islink(targetfolder):
@@ -37,15 +33,14 @@ def cleanuppath(targetfolder):
 #createParentFolder
 def createRecusiveFolder(folder):
     if not os.path.isdir(folder):
-        #make parenttarget
-        reduce(createDir, folder.split(os.sep)[1:])
+        os.makedirs(folder)
 
 def createParentFolder(targetfolder):
     parenttarget = os.path.abspath(os.path.join(targetfolder,'..'))
     createRecusiveFolder(parenttarget)
 
-#do normal files in root
 for curdir, dirs, files in os.walk(fullpath):
+#do normal files in root
     relativedir = curdir[striplen:]
     targetdir = os.path.join(target, relativedir)
     if relativedir not in linkfolders:
@@ -55,7 +50,10 @@ for curdir, dirs, files in os.walk(fullpath):
             targetfile = os.path.join(targetdir, file)
             sourcefile = os.path.join(curdir, file)
             cleanuppath(targetfile)
-            os.symlink(sourcefile, targetfile)
+            if relativedir in copydirs:
+                shutil.copy(sourcefile, targetfile)
+            else:
+                os.symlink(sourcefile, targetfile)
     else:
         cleanuppath(targetdir)
         createParentFolder(targetdir)
