@@ -99,3 +99,6 @@ xbox(){
         lftp -u xbox,xbox xbox.skynet/F/
 }
 
+loadkey(){
+    eval `keychain -q --eval --agents ssh id_rsa`
+}

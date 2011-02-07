@@ -22,4 +22,3 @@ export LESS_TERMCAP_us=$'\E[01;32m'
 export PATH=$PATH:$HOME/mygit/scripts/bin
 export EDITOR=/usr/bin/vim
 
-eval `keychain -q --eval --agents ssh id_rsa`
