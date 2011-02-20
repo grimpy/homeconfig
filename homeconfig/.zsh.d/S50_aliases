@@ -32,6 +32,10 @@ alias qsearch="sudo /usr/bin/qsearch"
 alias modprobe="sudo /sbin/modprobe"
 alias rmmod="sudo /sbin/rmmod"
 
+#rsa stuff
+alias ssh="loadrsa; ssh"
+alias scp="loadrsa; scp"
+
 export LANG="en_US.utf8"
 #export LANG="en_UK.ISO_8859_1"
 
