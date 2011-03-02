@@ -1,5 +1,6 @@
 [ui]
 username = deboeckj
+editor = /usr/bin/vim -c "r ~/.hgtemplate"
 merge = meld
 
 [extensions]
@@ -8,13 +9,19 @@ color =
 extdiff = 
 bookmarks = 
 transplant = 
+pager =
 rebase =
 
 [extdiff]
 cmd.meld = 
+
+[pager]
+pager = less -R
+attend = annotate, cat, df, diff, glog, help, in-diff, incoming, log, out-diff, outgoing, qdiff, show, tip, grep
 
 [bookmarks]
 track.current = True
 
 [alias]
 duw = push -r .
+blame = annotate -u
