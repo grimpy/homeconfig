@@ -25,12 +25,30 @@ export __ZSH_HG_BRANCH=
 export __ZSH_HG_STATE=
 export __ZSH_HG_VARS_INVALID=1
 
+
+hgroot() {
+    dir=$1
+    if [ -d "${dir}/.hg" ]; then
+        echo "${dir}"
+    else
+        dir=$(readlink -f ${dir}/..)
+        if [ ${dir} = "/" ]; then
+            return 1
+        else
+            out=$(hgroot "${dir}")
+            exit=$?
+            echo $out
+            return $exit
+        fi
+    fi
+}
+
 new_parse_hg_branch() {
     local hg_dir branch
 
     psvar=()
-    hg_dir_=$(hg root 2> /dev/null) || return
-    hg_dir=$(cd $hg_dir_/.hg && pwd)
+    hg_dir_=$(hgroot `pwd`) || return
+    hg_dir=$(readlink -f $hg_dir_/.hg)
     __ZSH_HG_FULL_DIR=${hg_dir:h}
     __ZSH_HG_DIR="${__ZSH_HG_FULL_DIR/$HOME/~}"
     branch=$(hg branch)
