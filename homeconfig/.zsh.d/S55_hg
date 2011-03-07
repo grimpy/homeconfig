@@ -51,7 +51,7 @@ new_parse_hg_branch() {
     hg_dir=$(readlink -f $hg_dir_/.hg)
     __ZSH_HG_FULL_DIR=${hg_dir:h}
     __ZSH_HG_DIR="${__ZSH_HG_FULL_DIR/$HOME/~}"
-    branch=$(hg branch)
+    branch=$(cat ${hg_dir}/branch)
     if test -e "${hg_dir}/bookmarks.current"; then
         branch="${branch} $(cat ${hg_dir}/bookmarks.current)"
     fi
