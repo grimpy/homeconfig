@@ -25,22 +25,19 @@ export __ZSH_HG_BRANCH=
 export __ZSH_HG_STATE=
 export __ZSH_HG_VARS_INVALID=1
 
-
 hgroot() {
     dir=$1
-    if [ -d "${dir}/.hg" ]; then
-        echo "${dir}"
-    else
-        dir=$(readlink -f ${dir}/..)
+    while true; do
+        if [ -d "${dir}/.hg" ]; then
+            echo "${dir}"
+            return 0
+        else
+            dir=$(readlink -f ${dir}/..)
+        fi
         if [ ${dir} = "/" ]; then
             return 1
-        else
-            out=$(hgroot "${dir}")
-            exit=$?
-            echo $out
-            return $exit
         fi
-    fi
+    done
 }
 
 new_parse_hg_branch() {
