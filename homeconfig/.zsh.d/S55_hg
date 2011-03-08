@@ -32,9 +32,9 @@ hgroot() {
             echo "${dir}"
             return 0
         else
-            dir=$(readlink -f ${dir}/..)
+            dir=$(readlink -f "${dir}/..")
         fi
-        if [ ${dir} = "/" ]; then
+        if [ "${dir}" = "/" ]; then
             return 1
         fi
     done
@@ -44,7 +44,7 @@ new_parse_hg_branch() {
     local hg_dir branch
 
     psvar=()
-    hg_dir_=$(hgroot `pwd`) || return
+    hg_dir_=$(hgroot "`pwd`") || return
     hg_dir=$(readlink -f $hg_dir_/.hg)
     __ZSH_HG_FULL_DIR=${hg_dir:h}
     __ZSH_HG_DIR="${__ZSH_HG_FULL_DIR/$HOME/~}"
