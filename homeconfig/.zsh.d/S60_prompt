@@ -16,15 +16,16 @@ function lprompt {
     col2="%{$4$fg[$3]%}"
     ch1=$col1${1[1]}
     ch2=$col1${1[2]}
-
     local git_b git_s col_b col_s hg_b hg_s
+    parse_hg
+    parse_git
     git_b='$(get_git_prompt_info '%b')'
     git_s='$(get_git_prompt_info '%s')'
     hg_b='$(get_hg_prompt_info '%b')'
     hg_s='$(get_hg_prompt_info '%s')'
-
     col_b="%{$fg[green]%}"
     col_s="%{$fg[red]%}"
+
 
     PROMPT="\
 $bgc$ch1\

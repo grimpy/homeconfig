@@ -7,10 +7,10 @@ colors
 # various hg scripts
 
 hgize() {
-        hg init \
-        && hg add . \
-        && hg commit -a -m"initial commit" \
-        && hg gc
+    hg init \
+    && hg add . \
+    && hg commit -a -m"initial commit" \
+    && hg gc
 }
 
 # ----------------------------------------------------------------------
@@ -23,7 +23,6 @@ hgize() {
 export __ZSH_HG_DIR=
 export __ZSH_HG_BRANCH=
 export __ZSH_HG_STATE=
-export __ZSH_HG_VARS_INVALID=1
 
 hgroot() {
     dir=$1
@@ -40,34 +39,28 @@ hgroot() {
     done
 }
 
-new_parse_hg_branch() {
+parse_hg() {
     local hg_dir branch
-
     psvar=()
-    hg_dir_=$(hgroot "`pwd`") || return
+    hg_dir_=$(hgroot "`pwd`")
+    if [ -z "$hg_dir_" ]; then
+        export __ZSH_HG_DIR=
+        return
+    fi
     hg_dir=$(readlink -f $hg_dir_/.hg)
     __ZSH_HG_FULL_DIR=${hg_dir:h}
     __ZSH_HG_DIR="${__ZSH_HG_FULL_DIR/$HOME/~}"
-    branch=$(cat ${hg_dir}/branch)
+    branch=$(cat ${hg_dir}/branch 2>/dev/null || echo default)
     if test -e "${hg_dir}/bookmarks.current"; then
         branch="${branch} $(cat ${hg_dir}/bookmarks.current)"
     fi
     __ZSH_HG_BRANCH="${branch}"
-
     export __ZSH_HG_FULL_DIR
     export __ZSH_HG_DIR
     export __ZSH_HG_BRANCH
     export __ZSH_HG_STATE
-    export __ZSH_HG_VARS_INVALID=
 }
 
-
-zsh_hg_invalidate_vars() {
-        export __ZSH_HG_VARS_INVALID=1
-}
-zsh_hg_compute_vars() {
-        new_parse_hg_branch
-}
 
 # on each chdir update the cached hg variable(s)
 preexec_functions+='zsh_hg_preexec_update_vars'
@@ -75,12 +68,12 @@ chpwd_functions+='zsh_hg_chpwd_update_vars'
 #precmd_functions+='zsh_hg_precmd_update_vars'
 
 zsh_hg_chpwd_update_vars() {
-        zsh_hg_invalidate_vars
+    parse_hg
 }
 zsh_hg_preexec_update_vars() {
-        case "$(history $HISTCMD)" in
-                *hg*) zsh_hg_invalidate_vars ;;
-        esac
+    case "$(history $HISTCMD)" in
+        *hg*) parse_hg ;;
+    esac
 }
 
 # this function returns the current hg branch
@@ -92,19 +85,18 @@ zsh_hg_preexec_update_vars() {
 #   '%%'     a '%' character
 # providing no arguments is equivalent to "%p %b %s".
 get_hg_prompt_info() {
-        test -n "$__ZSH_HG_VARS_INVALID" && zsh_hg_compute_vars
-        test -n "$__ZSH_HG_DIR" || return
-        local def fmt res
-        def='%p %b %s'
-        fmt=$@
-        res=${fmt:-$def}
-        res=${res//\%P/$__ZSH_HG_FULL_DIR }
-        res=${res//\%p/$__ZSH_HG_DIR }
-        res=${res//\%b/$__ZSH_HG_BRANCH }
-        test -n "$__ZSH_HG_STATE" && \
-                res=${res//\%s/$__ZSH_HG_STATE }
-        res=${res//\%%/%}
+    test -n "$__ZSH_HG_DIR" || return
+    local def fmt res
+    def='%p %b %s'
+    fmt=$@
+    res=${fmt:-$def}
+    res=${res//\%P/$__ZSH_HG_FULL_DIR }
+    res=${res//\%p/$__ZSH_HG_DIR }
+    res=${res//\%b/$__ZSH_HG_BRANCH }
+    test -n "$__ZSH_HG_STATE" && \
+            res=${res//\%s/$__ZSH_HG_STATE }
+    res=${res//\%%/%}
 
-        echo -n "${res}"
+    echo -n "${res}"
 }
 

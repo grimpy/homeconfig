@@ -7,10 +7,10 @@ colors
 # various git scripts
 
 gitize() {
-        git init \
-        && git add . \
-        && git commit -a -m"initial commit" \
-        && git gc
+    git init \
+    && git add . \
+    && git commit -a -m"initial commit" \
+    && git gc
 }
 
 # ----------------------------------------------------------------------
@@ -23,20 +23,18 @@ gitize() {
 export __ZSH_GIT_DIR=
 export __ZSH_GIT_BRANCH=
 export __ZSH_GIT_STATE=
-export __ZSH_GIT_VARS_INVALID=1
-
-# get the name of the branch we are on
-parse_git_branch() {
-        git branch --no-color 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/(\1) -- /'
-}
 
 # http://blog.madism.org/index.php/2008/05/07/173-git-prompt
-new_parse_git_branch() {
+parse_git() {
     local git_dir branch
 
     psvar=()
-    git_dir_=$(git rev-parse --git-dir 2> /dev/null) || return
-    git_dir=$(cd $git_dir_ && pwd)
+    git_dir_=$(git rev-parse --git-dir 2> /dev/null)
+    if [ -z "$git_dir_" ]; then
+        export __ZSH_GIT_DIR=
+        return
+    fi
+    git_dir=$(readlink -f $git_dir_)
     if test -d "$git_dir/../.dotest"; then
         if test -f "$git_dir/../.dotest/rebasing"; then
             __ZSH_GIT_STATE="rebase"
@@ -70,15 +68,6 @@ new_parse_git_branch() {
     export __ZSH_GIT_DIR
     export __ZSH_GIT_BRANCH
     export __ZSH_GIT_STATE
-    export __ZSH_GIT_VARS_INVALID=
-}
-
-
-zsh_git_invalidate_vars() {
-        export __ZSH_GIT_VARS_INVALID=1
-}
-zsh_git_compute_vars() {
-        new_parse_git_branch
 }
 
 # on each chdir update the cached git variable(s)
@@ -87,12 +76,12 @@ chpwd_functions+='zsh_git_chpwd_update_vars'
 #precmd_functions+='zsh_git_precmd_update_vars'
 
 zsh_git_chpwd_update_vars() {
-        zsh_git_invalidate_vars
+    parse_git
 }
 zsh_git_preexec_update_vars() {
-        case "$(history $HISTCMD)" in 
-                *git*) zsh_git_invalidate_vars ;;
-        esac
+    case "$(history $HISTCMD)" in
+            *git*) parse_git ;;
+    esac
 }
 
 # this function returns the current git branch
@@ -104,7 +93,6 @@ zsh_git_preexec_update_vars() {
 #   '%%'     a '%' character
 # providing no arguments is equivalent to "%p %b %s".
 get_git_prompt_info() {
-        test -n "$__ZSH_GIT_VARS_INVALID" && zsh_git_compute_vars
         test -n "$__ZSH_GIT_DIR" || return
         local def fmt res
         def='%p %b %s'
@@ -116,7 +104,7 @@ get_git_prompt_info() {
         test -n "$__ZSH_GIT_STATE" && \
                 res=${res//\%s/$__ZSH_GIT_STATE }
         res=${res//\%%/%}
-        
+
         echo -n "${res}"
 }
 
