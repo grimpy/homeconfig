@@ -1,0 +1,9 @@
+
+[build-menu]
+FT_01_LB=Pylint
+FT_01_CM=PYTHONPATH=${PYTHONPATH}:$(dirname %d) pylint -d C0111,C0301 --output-format=parseable --reports=n "%f"
+FT_01_WD=
+error_regex=^(.+?):([0-9]+):.+
+FT_02_LB=Pyflakes
+FT_02_CM=PYTHONPATH=${PYTHONPATH}:$(dirname %d) pyflakes "%d"
+FT_02_WD=
