@@ -6,7 +6,7 @@ parser.add_option("-r", "--root", dest="root",action="store_true", default=False
                   help="Do root")
 (options, args) = parser.parse_args()
 fullpath = os.path.abspath(os.path.dirname(sys.argv[0]))
-linkfolders = ['.config/awesome','.config/autostart', '.zsh.d', '.ssh']
+linkfolders = ['.config/awesome','.config/autostart', '.zsh.d', '.ssh', '.vim' ]
 copydirs = ['etc/udev/rules.d']
 target = os.environ['HOME']
 
