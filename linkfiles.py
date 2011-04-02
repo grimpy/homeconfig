@@ -2,11 +2,11 @@
 import os, sys, shutil
 from optparse import OptionParser
 parser = OptionParser()
-parser.add_option("-r", "--root", dest="root",action="store_true", default=False,
+parser.add_option("-r", "--root", dest="root", action="store_true", default=False,
                   help="Do root")
 (options, args) = parser.parse_args()
 fullpath = os.path.abspath(os.path.dirname(sys.argv[0]))
-linkfolders = ['.config/awesome','.config/autostart', '.zsh.d', '.ssh', '.vim' ]
+linkfolders = ['.config/awesome', '.config/autostart', '.zsh.d', '.ssh', '.vim' ]
 copydirs = ['etc/udev/rules.d']
 target = os.environ['HOME']
 
@@ -46,9 +46,9 @@ for curdir, dirs, files in os.walk(fullpath):
     if relativedir not in linkfolders:
         print 'Creating links files for folder', relativedir
         createRecusiveFolder(targetdir)
-        for file in files:
-            targetfile = os.path.join(targetdir, file)
-            sourcefile = os.path.join(curdir, file)
+        for file_ in files:
+            targetfile = os.path.join(targetdir, file_)
+            sourcefile = os.path.join(curdir, file_)
             cleanuppath(targetfile)
             if relativedir in copydirs:
                 shutil.copy(sourcefile, targetfile)
@@ -59,5 +59,5 @@ for curdir, dirs, files in os.walk(fullpath):
         createParentFolder(targetdir)
         print 'Link dir', relativedir
         os.symlink(curdir, targetdir)
-        for dir in dirs[::-1]:
-            dirs.remove(dir)
+        for dir_ in dirs[::-1]:
+            dirs.remove(dir_)
