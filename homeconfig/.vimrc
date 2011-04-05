@@ -19,5 +19,5 @@ let g:pylint_onwrite = 0
 if has('gui_running')
     colorscheme  desert
 else
-    colorscheme  elflord
+    colorscheme  evening
 endif

@@ -1,6 +1,6 @@
 IronMan 	-rsize=8192,wsize=8192,soft,timeo=30,rw	ironman.skynet:/home/grimpy
-IronMan_smb -fstype=cifs,credentials=/etc/smb.auth,uid=grimpy,gid=grimpy  ://ironman.skynet/MediaDisk
-HDMAX -fstype=cifs,credentials=/etc/smb.auth,uid=grimpy,gid=grimpy  ://hdmax.skynet/HDD
-Daredevil -fstype=cifs,user=leech,password=leech,uid=grimpy,gid=grimpy  ://192.168.1.2/downloads
+IronMan_smb -fstype=cifs,credentials=/etc/smb.auth,uid=Jo,gid=Jo  ://ironman.skynet/MediaDisk
+HDMAX -fstype=cifs,credentials=/etc/smb.auth,uid=Jo,gid=Jo  ://hdmax.skynet/HDD
+Daredevil -fstype=cifs,user=leech,password=leech,uid=Jo,gid=Jo  ://192.168.1.2/downloads
 usbdisk 	-rsize=8192,wsize=8192,soft,timeo=30,rw	ironman.skynet:/home/grimpy/usb
 xbox    -fstype=fuse,allow_other,user=xbox:xbox curlftpfs#ftp://xbox.skynet
