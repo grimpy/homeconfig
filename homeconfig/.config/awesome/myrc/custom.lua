@@ -98,7 +98,7 @@ end
 
 keybindings = awful.util.table.join(
     awful.key({ modkey2, "Control" }, "c", function () awful.util.spawn(terminal) end),
-    awful.key({ }, "Print", function () awful.util.spawn("/home/Jo/mygit/scripts/bin/caputereimg.sh /home/grimpy/Pictures/SS") end),
+    awful.key({ }, "Print", function () awful.util.spawn("/home/Jo/mygit/scripts/bin/caputereimg.sh /home/Jo/Pictures/SS") end),
     awful.key({ modkey,           }, "F2", function () awful.util.spawn("/home/Jo/mygit/scripts/bin/musiccontrol toggle") end),
     awful.key({ modkey,           }, "F3", function () awful.util.spawn("/home/Jo/mygit/scripts/bin/musiccontrol prev") end),
     awful.key({ modkey,           }, "F4", function () awful.util.spawn("/home/Jo/mygit/scripts/bin/musiccontrol next") end),
