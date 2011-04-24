@@ -1,5 +1,5 @@
 [ui]
-username = deboeckj
+username = Jo De Boeck <jdeboeck@aserver.com>
 editor = /usr/bin/vim -c "r ~/.hgtemplate"
 merge = meld
 

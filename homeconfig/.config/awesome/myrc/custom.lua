@@ -2,6 +2,10 @@ local awful = require("awful")
 local client = require("client")
 local naughty = require("naughty")
 local tag = require("tag")
+local shifty = require("shifty")
+local screen = require("screen")
+local ipairs = ipairs
+
 module("myrc.custom")
 
 browser = "firefox"
@@ -31,6 +35,7 @@ shiftyapps = {
          { match = { "xterm", "urxvt", "Terminator"} , honorsizehints = false, slave = true, tag = "1:term" } ,
          { match = { "Thunar", "pcmanfm", "xarchiver" }, tag = "5:fs" } ,
          { match = { "Geany" }, tag = "6:edit" } ,
+         { match = { "gvim" }, tag = "6:edit" } ,
          { match = { "Eclipse" }, tag = "6:edit" } ,
          { match = { "MPlayer", "ario", "Audacious" }, tag = "7:media" } ,
          { match = { "" }, buttons =  clientbuttons },
@@ -44,17 +49,66 @@ shiftydefaults = {
   run = function(tag) naughty.notify({ text = tag.name }) end
 }
 
+function pushincorner()
+    local sel = client.focus
+    local geometry = sel:geometry()
+    geometry['x'] = 0
+    geometry['y'] = 0
+    sel:geometry(geometry)
+end
+
+function tagtoscr(scr, t)
+  -- break if called with an invalid screen number
+  
+  if not scr or scr < 1 or scr > screen.count() then return end
+  -- tag to move
+  local otag = t or awful.tag.selected() 
+  
+  -- unselect active tag on other screen
+  local remotetag = awful.tag.selected(scr)
+  
+  if remotetag then
+    remotetag.selected = false
+  end
+  -- set screen and then reset tag to order properly
+  
+  otag.screen = scr
+  if #otag:clients() > 0 then
+    for _ , c in ipairs(otag:clients()) do
+      if not c.sticky then
+        c.screen = scr
+        c:tags( { otag } )
+      else
+        awful.client.toggletag(otag,c)
+      end
+    end
+  end
+  return otag
+end
+
+function switchtagtonextscreen()
+  local scr = client.focus.screen or mouse.screen
+  scr = scr + 1
+  if scr > screen.count() then
+      scr = 1
+  end
+  tagtoscr(scr)
+  
+end
+
 keybindings = awful.util.table.join(
     awful.key({ modkey2, "Control" }, "c", function () awful.util.spawn(terminal) end),
-    awful.key({ }, "Print", function () awful.util.spawn("/home/grimpy/mygit/scripts/bin/caputereimg.sh /home/grimpy/Pictures/SS") end),
-    awful.key({ modkey,           }, "F2", function () awful.util.spawn("/home/grimpy/mygit/scripts/bin/musiccontrol toggle") end),
-    awful.key({ modkey,           }, "F3", function () awful.util.spawn("/home/grimpy/mygit/scripts/bin/musiccontrol prev") end),
-    awful.key({ modkey,           }, "F4", function () awful.util.spawn("/home/grimpy/mygit/scripts/bin/musiccontrol next") end),
-    awful.key({ modkey,           }, "F7", function () awful.util.spawn("/home/grimpy/mygit/scripts/bin/single.sh") end),
-    awful.key({ modkey,           }, "F8", function () awful.util.spawn("/home/grimpy/mygit/scripts/bin/dual.sh") end),
+    awful.key({ }, "Print", function () awful.util.spawn("/home/Jo/mygit/scripts/bin/caputereimg.sh /home/grimpy/Pictures/SS") end),
+    awful.key({ modkey,           }, "F2", function () awful.util.spawn("/home/Jo/mygit/scripts/bin/musiccontrol toggle") end),
+    awful.key({ modkey,           }, "F3", function () awful.util.spawn("/home/Jo/mygit/scripts/bin/musiccontrol prev") end),
+    awful.key({ modkey,           }, "F4", function () awful.util.spawn("/home/Jo/mygit/scripts/bin/musiccontrol next") end),
+    awful.key({ modkey,           }, "F7", function () awful.util.spawn("/home/Jo/mygit/scripts/bin/single.sh") end),
+    awful.key({ modkey,           }, "F8", function () awful.util.spawn("/home/Jo/mygit/scripts/bin/dual.sh") end),
     awful.key({ modkey,           }, "e", function () awful.util.spawn("thunar") end),
     awful.key({ modkey, }, "l", function () awful.util.spawn("alock -auth pam -bg blank") end),
     awful.key({ modkey2, "Control" }, "s", function () awful.util.spawn("skype") end),
     awful.key({ modkey2, "Control" }, "m", function () awful.util.spawn("pidgin") end),
+    awful.key({ modkey, 'Shift'   }, "o", switchtagtonextscreen),
+    awful.key({ modkey,    }, "c", pushincorner),
     awful.key({ modkey2, "Control" }, "k", function () awful.util.spawn("geany") end))
 

@@ -3,14 +3,16 @@ if [ $UID != "0" ]; then
     echo "Run this as root moron!"
     exit 1
 fi
-brol=`mount | grep '/home/grimpy/Dev/minimaldapper/sys'`
-if [ $? -ne 0 ]; then
-    mount --bind /sys /home/grimpy/Dev/minimaldapper/sys
-fi
-brol=`mount | grep '/home/grimpy/Dev/minimaldapper/proc'`
-if [ $? -ne 0 ]; then
-    mount --bind /proc /home/grimpy/Dev/minimaldapper/proc
-fi
+
+name="maverick"
+chrootdir="/home/Jo/work/bin/${name}"
+for d in sys dev proc; do
+    brol=`mount | grep "${chrootdir}/${d}"`
+    if [ $? -ne 0 ]; then
+        mount --rbind /${d} "${chrootdir}/${d}"
+    fi
+done
+
 #brol=`mount | grep '//172.17.1.17/InstallFramework'`
 #if [ $? -ne 0  ]; then
 #   mount -t smbfs -o username=ReleaseManager,password="een.vijf" //172.17.1.17/InstallFramework /mnt/ipr/
@@ -19,4 +21,5 @@ fi
 #if [ $? -ne 0 ]; then
 #    mount --bind /mnt/ipr/ /home/grimpy/Dev/minimaldapper/mnt/ipr/
 #fi
-chroot /home/grimpy/Dev/minimaldapper/ /bin/bash
+export debian_chroot="maverick"
+chroot ${chrootdir} /bin/zsh

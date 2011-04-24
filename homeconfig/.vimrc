@@ -8,7 +8,7 @@ set mouse=a
 autocmd FileType python compiler pylint
 nnoremap <silent> <F2> :NERDTreeToggle<CR>
 nnoremap <silent> <F3> :TlistToggle<CR>
-nnoremap <silent> <F5> :Pylint<CR>
+nnoremap <silent> <F5> :Pylint<CR>:syn on<CR>
 
 let Tlist_GainFocus_On_ToggleOpen = 1
 let Tlist_Use_Right_Window = 1
