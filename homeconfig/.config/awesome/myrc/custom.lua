@@ -20,7 +20,7 @@ shiftytags = {
     ["3:web"]  = { position = 3, exclusive = true, spawn = browser, screen = 2, layout = awful.layout.suit.max, icon="/usr/share/icons/Tango/16x16/apps/web-browser.png"},
     ["4:mail"]  = { position = 4, exclusive = true, spawn = "thunderbird", layout = awful.layout.suit.max, screen = 1},
     ["5:fs"]  = { position = 5, exclusive = true, spawn = "thunar", layout = awful.layout.suit.floating, },
-    ["6:edit"]  = { position = 6, exclusive = true, spawn = "geany", screen = 1, nopopup = true, layout = awful.layout.suit.max, },
+    ["6:edit"]  = { position = 6, exclusive = true, spawn = "gvim", screen = 1, nopopup = true, layout = awful.layout.suit.max, },
     ["7:media"]  = { position = 7, exclusive = true, screen = 2, nopopup = true, layout = awful.layout.suit.floating, },
 }
 clientbuttons = awful.util.table.join(
@@ -29,14 +29,14 @@ clientbuttons = awful.util.table.join(
     awful.button({ "Mod1" }, 3, awful.mouse.client.resize))
 
 shiftyapps = {
-         { match = { "Chrome", "Chromium", "Midori", "Navigator", "Namoroka","Firefox"} , tag = "3:web" } ,
-         { match = { "Thunderbird"} , tag = "4:mail" } ,
-         { match = { "Pidgin", "Skype"} , tag = "2:im" } ,
+         { match = { "Chrome", "Chromium", "Midori", "Navigator", "Namoroka","Firefox"} , tag = "3:web" nopopup=true} ,
+         { match = { "Thunderbird"} , tag = "4:mail", nopopup=true } ,
+         { match = { "Pidgin", "Skype"} , tag = "2:im", nopopup=true } ,
          { match = { "xterm", "urxvt", "Terminator"} , honorsizehints = false, slave = true, tag = "1:term" } ,
          { match = { "Thunar", "pcmanfm", "xarchiver" }, tag = "5:fs" } ,
          { match = { "Geany" }, tag = "6:edit" } ,
          { match = { "gvim" }, tag = "6:edit" } ,
-         { match = { "Eclipse" }, tag = "6:edit" } ,
+         { match = { "Eclipse" }, tag = "6:edit", nopopup=true } ,
          { match = { "MPlayer", "ario", "Audacious" }, tag = "7:media" } ,
          { match = { "" }, buttons =  clientbuttons },
 }
