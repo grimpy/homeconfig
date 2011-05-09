@@ -29,7 +29,7 @@ clientbuttons = awful.util.table.join(
     awful.button({ "Mod1" }, 3, awful.mouse.client.resize))
 
 shiftyapps = {
-         { match = { "Chrome", "Chromium", "Midori", "Navigator", "Namoroka","Firefox"} , tag = "3:web" nopopup=true} ,
+         { match = { "Chrome", "Chromium", "Midori", "Navigator", "Namoroka","Firefox"} , tag = "3:web", nopopup=true} ,
          { match = { "Thunderbird"} , tag = "4:mail", nopopup=true } ,
          { match = { "Pidgin", "Skype"} , tag = "2:im", nopopup=true } ,
          { match = { "xterm", "urxvt", "Terminator"} , honorsizehints = false, slave = true, tag = "1:term" } ,

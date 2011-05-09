@@ -1,3 +1,6 @@
+call pathogen#runtime_append_all_bundles()
+filetype off
+filetype plugin indent on
 syn on
 set tabstop=4
 set shiftwidth=4
