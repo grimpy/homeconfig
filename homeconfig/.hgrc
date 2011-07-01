@@ -10,6 +10,7 @@ extdiff =
 bookmarks = 
 transplant = 
 pager =
+hgext.hgk=
 rebase =
 
 [extdiff]

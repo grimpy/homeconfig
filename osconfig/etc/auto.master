@@ -6,5 +6,6 @@
 #
 /mnt/network	/etc/auto.network --ghost
 /mnt/media   /etc/auto.usb --timeout=5 --ghost
+/mnt/smb   /etc/auto.smb --timeout=5 --ghost
 #
 +auto.master
