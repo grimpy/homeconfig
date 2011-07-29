@@ -33,7 +33,7 @@ shiftyapps = {
          { match = { "Thunderbird"} , tag = "4:mail", nopopup=true } ,
          { match = { "Pidgin", "Skype"} , tag = "2:im", nopopup=true } ,
          { match = { "xterm", "urxvt", "Terminator"} , honorsizehints = false, slave = true, tag = "1:term" } ,
-         { match = { "Thunar", "pcmanfm", "xarchiver" }, tag = "5:fs" } ,
+         { match = { "Thunar", "pcmanfm", "xarchiver", "Squeeze" }, tag = "5:fs" } ,
          { match = { "Geany" }, tag = "6:edit" } ,
          { match = { "gvim" }, tag = "6:edit" } ,
          { match = { "Eclipse" }, tag = "6:edit", nopopup=true } ,
