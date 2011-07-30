@@ -63,15 +63,14 @@ parse_hg() {
 
 
 # on each chdir update the cached hg variable(s)
-preexec_functions+='zsh_hg_preexec_update_vars'
 chpwd_functions+='zsh_hg_chpwd_update_vars'
-#precmd_functions+='zsh_hg_precmd_update_vars'
+precmd_functions+='zsh_hg_precmd_update_vars'
 
 zsh_hg_chpwd_update_vars() {
     parse_hg
 }
-zsh_hg_preexec_update_vars() {
-    case "$(history $HISTCMD)" in
+zsh_hg_precmd_update_vars() {
+    case "$(history | tail -n 1)" in
         *hg*) parse_hg ;;
     esac
 }

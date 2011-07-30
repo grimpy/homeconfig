@@ -71,15 +71,14 @@ parse_git() {
 }
 
 # on each chdir update the cached git variable(s)
-preexec_functions+='zsh_git_preexec_update_vars'
 chpwd_functions+='zsh_git_chpwd_update_vars'
-#precmd_functions+='zsh_git_precmd_update_vars'
+precmd_functions+='zsh_git_precmd_update_vars'
 
 zsh_git_chpwd_update_vars() {
     parse_git
 }
-zsh_git_preexec_update_vars() {
-    case "$(history $HISTCMD)" in
+zsh_git_precmd_update_vars() {
+    case "$(history | tail -n 1)" in
             *git*) parse_git ;;
     esac
 }
