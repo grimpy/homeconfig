@@ -9,8 +9,8 @@
     background_darkness = 0.04
     urgent_bell = True
     cursor_color = "#ffff00000000"
-    foreground_color = "#AAAAAA"
-    font = Courier New 10
+    foreground_color = "#ffffff"
+    font = Courier New Bold 14
 [layouts]
   [[default]]
     [[[child1]]]

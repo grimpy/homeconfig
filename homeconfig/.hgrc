@@ -5,6 +5,7 @@ merge = meld
 
 [extensions]
 fetch = 
+churn =
 color = 
 extdiff = 
 bookmarks = 
