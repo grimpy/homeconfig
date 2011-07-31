@@ -78,11 +78,10 @@ zsh_git_chpwd_update_vars() {
     parse_git
 }
 zsh_git_precmd_update_vars() {
-    case "$(history | tail -n 1)" in
-            *git*) parse_git ;;
-    esac
+    if [ -n "$(fc -l -m 'git*' -1 -1)" ]; then
+        parse_git
+    fi
 }
-
 # this function returns the current git branch
 # it takes as argument a string with printf like arguments:
 #   '%P'     path to top of repository
