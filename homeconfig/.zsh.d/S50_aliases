@@ -35,6 +35,8 @@ alias rmmod="sudo /sbin/rmmod"
 #rsa stuff
 alias ssh="loadrsa; ssh"
 alias scp="loadrsa; scp"
+alias git="loadrsa; git"
+alias hg="loadrsa; hg"
 
 export LANG="en_US.utf8"
 #export LANG="en_UK.ISO_8859_1"

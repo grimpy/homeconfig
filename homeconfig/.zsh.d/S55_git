@@ -2,15 +2,16 @@
 
 autoload colors
 colors
+GIT=/usr/bin/git
 
 # ----------------------------------------------------------------------
 # various git scripts
 
 gitize() {
-    git init \
-    && git add . \
-    && git commit -a -m"initial commit" \
-    && git gc
+    $GIT init \
+    && $GIT add . \
+    && $GIT commit -a -m"initial commit" \
+    && $GIT gc
 }
 
 # ----------------------------------------------------------------------
@@ -29,7 +30,7 @@ parse_git() {
     local git_dir branch
 
     psvar=()
-    git_dir_=$(git rev-parse --git-dir 2> /dev/null)
+    git_dir_=$($GIT rev-parse --git-dir 2> /dev/null)
     if [ -z "$git_dir_" ]; then
         export __ZSH_GIT_DIR=
         return
@@ -43,7 +44,7 @@ parse_git() {
         else
             __ZSH_GIT_STATE="am/rebase"
         fi
-        branch="$(git symbolic-ref HEAD 2>/dev/null)"
+        branch="$($GIT symbolic-ref HEAD 2>/dev/null)"
     elif test -f "$git_dir/.dotest-merge/interactive"; then
         __ZSH_GIT_STATE="rebase -i"
         branch="$(cat "$git_dir/.dotest-merge/head-name")"
@@ -52,11 +53,11 @@ parse_git() {
         branch="$(cat "$git_dir/.dotest-merge/head-name")"
     elif test -f "$git_dir/MERGE_HEAD"; then
         __ZSH_GIT_STATE="merge"
-        branch="$(git symbolic-ref HEAD 2>/dev/null)"
+        branch="$($GIT symbolic-ref HEAD 2>/dev/null)"
     else
         test -f "$git_dir/BISECT_LOG" && __ZSH_GIT_STATE="bisect"
-        branch="$(git symbolic-ref HEAD 2>/dev/null)" || \
-            branch="$(git describe --exact-match HEAD 2>/dev/null)" || \
+        branch="$($GIT symbolic-ref HEAD 2>/dev/null)" || \
+            branch="$($GIT describe --exact-match HEAD 2>/dev/null)" || \
             branch="$(cut -c1-7 "$git_dir/HEAD")..."
     fi
 
