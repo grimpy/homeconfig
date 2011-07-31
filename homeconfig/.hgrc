@@ -8,6 +8,8 @@ fetch =
 churn =
 color = 
 extdiff = 
+hgext.graphlog = 
+purge = 
 bookmarks = 
 transplant = 
 pager =
@@ -16,6 +18,9 @@ rebase =
 
 [extdiff]
 cmd.meld = 
+
+[hgk]
+meld=meld
 
 [pager]
 pager = less -R
