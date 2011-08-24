@@ -13,15 +13,17 @@ terminal = "urxvtc"
 autostart = true
 modkey = "Mod4"
 modkey2 = "Mod1"
+LCD = 1
+VGA = 2
 
 shiftytags = {
-    ["1:term"] = { position = 1, exclusive = true, max_clients = 4, spawn = terminal, layout = awful.layout.suit.fair},
-    ["2:im"]  = { position = 2, exclusive = true, spawn = "pidgin", layout = awful.layout.suit.floating, },
-    ["3:web"]  = { position = 3, exclusive = true, spawn = browser, screen = 2, layout = awful.layout.suit.max, icon="/usr/share/icons/Tango/16x16/apps/web-browser.png"},
-    ["4:mail"]  = { position = 4, exclusive = true, spawn = "thunderbird", layout = awful.layout.suit.max, screen = 1},
-    ["5:fs"]  = { position = 5, exclusive = true, spawn = "thunar", layout = awful.layout.suit.floating, },
-    ["6:edit"]  = { position = 6, exclusive = true, spawn = "gvim", screen = 1, nopopup = true, layout = awful.layout.suit.max, },
-    ["7:media"]  = { position = 7, exclusive = true, screen = 2, nopopup = true, layout = awful.layout.suit.floating, },
+    ["1:term"] = { position = 1, exclusive = true, max_clients = 4, screen = VGA, spawn = terminal, layout = awful.layout.suit.fair},
+    ["2:im"]  = { position = 2, exclusive = true, spawn = "pidgin", screen = VGA, layout = awful.layout.suit.floating, },
+    ["3:web"]  = { position = 3, exclusive = true, spawn = browser, screen = LCD, layout = awful.layout.suit.max, icon="/usr/share/icons/Tango/16x16/apps/web-browser.png"},
+    ["4:mail"]  = { position = 4, exclusive = true, spawn = "thunderbird-bin", layout = awful.layout.suit.max, screen = VGA},
+    ["5:fs"]  = { position = 5, exclusive = true, spawn = "thunar", layout = awful.layout.suit.floating, screen = LCD},
+    ["6:edit"]  = { position = 6, exclusive = true, spawn = "gvim", screen = VGA, nopopup = true, layout = awful.layout.suit.max, },
+    ["7:media"]  = { position = 7, exclusive = true, screen = LCD, nopopup = true, layout = awful.layout.suit.floating, },
 }
 clientbuttons = awful.util.table.join(
     awful.button({ }, 1, function (c) client.focus = c; c:raise() end),
@@ -105,7 +107,7 @@ keybindings = awful.util.table.join(
     awful.key({ modkey,           }, "F7", function () awful.util.spawn("/home/Jo/mygit/scripts/bin/single.sh") end),
     awful.key({ modkey,           }, "F8", function () awful.util.spawn("/home/Jo/mygit/scripts/bin/dual.sh") end),
     awful.key({ modkey,           }, "e", function () awful.util.spawn("thunar") end),
-    awful.key({ modkey, }, "l", function () awful.util.spawn("alock -auth pam -bg blank") end),
+    awful.key({ modkey, }, "l", function () awful.util.spawn("slock") end),
     awful.key({ modkey2, "Control" }, "s", function () awful.util.spawn("skype") end),
     awful.key({ modkey2, "Control" }, "m", function () awful.util.spawn("pidgin") end),
     awful.key({ modkey, 'Shift'   }, "o", switchtagtonextscreen),

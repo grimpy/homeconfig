@@ -31,4 +31,5 @@ track.current = True
 
 [alias]
 duw = push -r .
+ditch = revert --no-backup
 blame = annotate -u
