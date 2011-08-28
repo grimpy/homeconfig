@@ -17,7 +17,8 @@ hgext.hgk=
 rebase =
 
 [hooks]
-commit = python:flake8.run.hg_hook
+pretxncommit.pyflakes = python:hghooks.code.pyflakeshook
+pretxncommit.pdb = python:hghooks.code.pdbhook
 
 [extdiff]
 cmd.meld = 
