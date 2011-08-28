@@ -16,6 +16,9 @@ pager =
 hgext.hgk=
 rebase =
 
+[hooks]
+commit = python:flake8.run.hg_hook
+
 [extdiff]
 cmd.meld = 
 
