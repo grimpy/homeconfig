@@ -33,3 +33,4 @@ track.current = True
 duw = push -r .
 ditch = revert --no-backup
 blame = annotate -u
+stat = !hg status $($HG root) $HG_ARGS
