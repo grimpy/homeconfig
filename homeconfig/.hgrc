@@ -16,6 +16,10 @@ pager =
 hgext.hgk=
 rebase =
 
+[hooks]
+pretxncommit.pyflakes = python:hghooks.code.pyflakeshook
+pretxncommit.pdb = python:hghooks.code.pdbhook
+
 [extdiff]
 cmd.meld = 
 
