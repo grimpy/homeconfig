@@ -71,8 +71,8 @@ $ch2$rst"
 }
 
 if [ $UID -eq 0 ]; then
-    PROMPT="$bgc%{%B$fg[yellow]%}[%{$fg[red]%}%n %m%{$fg[yellow]%}]$rst "
-    RPROMPT="$rst%{$fg[red]%}(%B%{$fg[red]%}%~%b%{$fg[red]%})$rst "
+    lprompt '[]' yellow red
+    rprompt '()' red red
 else
     case $HOST in
         Hulk*)
