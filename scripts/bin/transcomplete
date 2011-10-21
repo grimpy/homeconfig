@@ -1,0 +1,2 @@
+#!/bin/bash
+transmission-remote -t $TR_TORRENT_ID  -r
