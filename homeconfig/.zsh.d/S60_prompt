@@ -73,6 +73,9 @@ $ch2$rst"
 if [ $UID -eq 0 ]; then
     lprompt '[]' yellow red
     rprompt '()' red red
+elif [ -n "$SSH_CLIENT" ]; then
+    lprompt '<>' yellow blue
+    rprompt '<>' red white
 else
     case $HOST in
         Hulk*)
