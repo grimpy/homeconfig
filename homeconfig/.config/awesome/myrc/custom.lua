@@ -32,7 +32,7 @@ clientbuttons = awful.util.table.join(
 
 shiftyapps = {
          { match = { "Chrome", "Chromium", "Midori", "Navigator", "Namoroka","Firefox"} , tag = "3:web", nopopup=true} ,
-         { match = { "Thunderbird"} , tag = "4:mail", nopopup=true } ,
+         { match = { "Thunderbird", "Mail", "Msgcompose"} , tag = "4:mail", nopopup=true } ,
          { match = { "Pidgin", "Skype"} , tag = "2:im", nopopup=true } ,
          { match = { "xterm", "urxvt", "Terminator"} , honorsizehints = false, slave = true, tag = "1:term" } ,
          { match = { "Thunar", "pcmanfm", "xarchiver", "Squeeze" }, tag = "5:fs" } ,

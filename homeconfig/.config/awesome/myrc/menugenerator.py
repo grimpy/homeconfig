@@ -6,6 +6,7 @@ import os
 
 programs = dict()
 
+NOTFOUNDICON = "/usr/share/icons/Tango/48x48/status/error.png"
 categories = {"Accessories": "Utility", "Development" : "Development",
     "Education": "Education", "Games": "Game",
     "Graphics" : "Graphics", "Multimedia": "AudioVideo",
@@ -33,7 +34,7 @@ def get_command_line(entry):
 xdg.Config.setIconTheme('Tango')
 for appdir in set(xdg.BaseDirectory.xdg_data_dirs):
     appdir = os.path.join(appdir, 'applications')
-    print appdir
+    print(appdir)
     if os.path.isdir(appdir):
         for fl in os.listdir(appdir):
             fl_path = os.path.join(appdir, fl)
@@ -44,7 +45,7 @@ for appdir in set(xdg.BaseDirectory.xdg_data_dirs):
                         if cat in valid_cat:
                             icon =  xdg.IconTheme.getIconPath(entry.getIcon(), extensions=["png"])
                             if not icon or not icon.endswith("png"):
-                                icon = 'nil'
+                                icon = '"%s"' % NOTFOUNDICON
                             else:
                                 icon = '"%s"' % icon
                             args = cat, entry.getName(), get_command_line(entry), icon
