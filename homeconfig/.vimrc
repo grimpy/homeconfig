@@ -8,6 +8,7 @@ set expandtab
 set smartindent
 set filetype=on
 set mouse=a
+set guifont=Monospace\ 8
 autocmd FileType python compiler pylint
 nnoremap <silent> <F2> :NERDTreeToggle<CR>
 nnoremap <silent> <F3> :TlistToggle<CR>

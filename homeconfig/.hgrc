@@ -18,7 +18,11 @@ rebase =
 
 [hooks]
 pretxncommit.pyflakes = python:hghooks.code.pyflakeshook
+#pretxncommit.pep8 = python:hghooks.code.pep8hook
 pretxncommit.pdb = python:hghooks.code.pdbhook
+
+[pep8]
+ignore = E501,E302,E225,E303
 
 [extdiff]
 cmd.meld = 

@@ -25,10 +25,10 @@ end
 -- env - table with string constants - command line to different apps
 
 function build()
-    local terminal = (env.terminal or "terminator") .. " "
+    local terminal = (env.terminal or "urxvtc") .. " "
     local man = (env.man or "xterm -e man") .. " "
     local editor = (env.editor or "xterm -e " .. (os.getenv("EDITOR") or "vim")) .. " "
-    local browser = (env.browser or "chromium-bin") .. " "
+    local browser = (env.browser or "firefox") .. " "
 
     freedesktop_utils.terminal = terminal
     freedesktop_utils.icon_theme = "Tango"
