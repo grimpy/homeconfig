@@ -8,7 +8,7 @@ local ipairs = ipairs
 
 module("myrc.custom")
 
-browser = "chormium"
+browser = "chromium"
 terminal = "urxvtc"
 autostart = true
 modkey = "Mod4"
