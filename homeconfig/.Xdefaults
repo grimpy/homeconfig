@@ -43,6 +43,5 @@ urxvt.saveLines: 10000
 *colorUL: #86A2BB
 urxvt.font: xft:Monospace:size=8
 URxvt.keysym.Shift-Control-V: perl:clipboard:paste
-URxvt.keysym.Shift-Control-C: perl:clipboard:on_sel_grab
 URxvt.perl-ext-common: default,matcher,clipboard
 Xterm.font: xft:Monospace:size=10
