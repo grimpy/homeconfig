@@ -1,0 +1,4 @@
+#!/bin/bash
+cmd=lxc-$1
+shift
+sudo $cmd $*
