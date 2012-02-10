@@ -77,42 +77,8 @@ elif [ -n "$SSH_CLIENT" ]; then
     lprompt '<>' yellow blue
     rprompt '<>' red white
 else
-    case $HOST in
-        Hulk*)
-            lprompt '[]' bold green
-            rprompt '()' yellow white
-            ;;
-        JackJack*)
-            lprompt '[]' white green
-            rprompt '()' yellow white
-            ;;
-        Wolverine*)
-            lprompt '[]' white green
-            rprompt '()' yellow white
-            ;;
-        IronMan*)
-            lprompt '<>' red yellow
-            rprompt '<>' red white
-            ;;
-        triton*)
-            lprompt '<>' red blue
-            rprompt '<>' red white
-            ;;
-        DareDevil*)
-            lprompt '<>' red green
-            rprompt '<>' red white
-            ;;
-
-        *)
-            if [ ${$(hostname -s)#*.} = "jukie.net" ]; then
-                lprompt '[]' bold white
-                rprompt '()' bold white
-            else
-                lprompt '{}' green blue
-                rprompt '()' green blue
-            fi
-            ;;
-    esac
+    lprompt '[]' bold green
+    rprompt '()' yellow white
 fi
 
 if [ -n "$debian_chroot" ]; then
