@@ -8,7 +8,7 @@ local ipairs = ipairs
 
 module("myrc.custom")
 
-browser = "firefox"
+browser = "chromium"
 terminal = "urxvtc"
 autostart = true
 modkey = "Mod4"
@@ -21,7 +21,7 @@ shiftytags = {
     ["2:im"]  = { position = 2, exclusive = true, spawn = "pidgin", screen = VGA, layout = awful.layout.suit.floating, },
     ["3:web"]  = { position = 3, exclusive = true, spawn = browser, screen = LCD, layout = awful.layout.suit.max, icon="/usr/share/icons/Tango/16x16/apps/web-browser.png"},
     ["4:mail"]  = { position = 4, exclusive = true, spawn = "thunderbird", layout = awful.layout.suit.max, screen = VGA},
-    ["5:fs"]  = { position = 5, exclusive = true, spawn = "thunar", layout = awful.layout.suit.floating, screen = LCD},
+    ["5:fs"]  = { position = 5, exclusive = true, spawn = "pcmanfm", layout = awful.layout.suit.floating, screen = LCD},
     ["6:edit"]  = { position = 6, exclusive = true, spawn = "gvim", screen = VGA, nopopup = true, layout = awful.layout.suit.max, },
     ["7:media"]  = { position = 7, exclusive = true, screen = LCD, nopopup = true, layout = awful.layout.suit.floating, },
 }
@@ -32,7 +32,7 @@ clientbuttons = awful.util.table.join(
 
 shiftyapps = {
          { match = { "Chrome", "Chromium", "Midori", "Navigator", "Namoroka","Firefox"} , tag = "3:web", nopopup=true} ,
-         { match = { "Thunderbird"} , tag = "4:mail", nopopup=true } ,
+         { match = { "Thunderbird", "Mail", "Msgcompose"} , tag = "4:mail", nopopup=true } ,
          { match = { "Pidgin", "Skype"} , tag = "2:im", nopopup=true } ,
          { match = { "xterm", "urxvt", "Terminator"} , honorsizehints = false, slave = true, tag = "1:term" } ,
          { match = { "Thunar", "pcmanfm", "xarchiver", "Squeeze" }, tag = "5:fs" } ,
@@ -104,10 +104,17 @@ keybindings = awful.util.table.join(
     awful.key({ modkey,           }, "F2", function () awful.util.spawn("/home/Jo/mygit/scripts/bin/musiccontrol toggle") end),
     awful.key({ modkey,           }, "F3", function () awful.util.spawn("/home/Jo/mygit/scripts/bin/musiccontrol prev") end),
     awful.key({ modkey,           }, "F4", function () awful.util.spawn("/home/Jo/mygit/scripts/bin/musiccontrol next") end),
+    awful.key({ }, "XF86AudioNext", function () awful.util.spawn("/home/Jo/mygit/scripts/bin/musiccontrol next") end),
+    awful.key({ }, "XF86AudioPlay", function () awful.util.spawn("/home/Jo/mygit/scripts/bin/musiccontrol toggle") end),
     awful.key({ modkey,           }, "F7", function () awful.util.spawn("/home/Jo/mygit/scripts/bin/single.sh") end),
     awful.key({ modkey,           }, "F8", function () awful.util.spawn("/home/Jo/mygit/scripts/bin/dual.sh") end),
+<<<<<<< HEAD
     awful.key({ modkey,           }, "e", function () awful.util.spawn("thunar") end),
     awful.key({ modkey, }, "l", function () awful.util.spawn("i3lock") end),
+=======
+    awful.key({ modkey,           }, "e", function () awful.util.spawn("pcmanfm") end),
+    awful.key({ modkey, }, "l", function () awful.util.spawn("i3lock -c 222222") end),
+>>>>>>> origin/master
     awful.key({ modkey2, "Control" }, "s", function () awful.util.spawn("skype") end),
     awful.key({ modkey2, "Control" }, "m", function () awful.util.spawn("pidgin") end),
     awful.key({ modkey, 'Shift'   }, "o", switchtagtonextscreen),
