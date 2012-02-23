@@ -108,13 +108,8 @@ keybindings = awful.util.table.join(
     awful.key({ }, "XF86AudioPlay", function () awful.util.spawn("/home/Jo/mygit/scripts/bin/musiccontrol toggle") end),
     awful.key({ modkey,           }, "F7", function () awful.util.spawn("/home/Jo/mygit/scripts/bin/single.sh") end),
     awful.key({ modkey,           }, "F8", function () awful.util.spawn("/home/Jo/mygit/scripts/bin/dual.sh") end),
-<<<<<<< HEAD
-    awful.key({ modkey,           }, "e", function () awful.util.spawn("thunar") end),
-    awful.key({ modkey, }, "l", function () awful.util.spawn("i3lock") end),
-=======
     awful.key({ modkey,           }, "e", function () awful.util.spawn("pcmanfm") end),
     awful.key({ modkey, }, "l", function () awful.util.spawn("i3lock -c 222222") end),
->>>>>>> origin/master
     awful.key({ modkey2, "Control" }, "s", function () awful.util.spawn("skype") end),
     awful.key({ modkey2, "Control" }, "m", function () awful.util.spawn("pidgin") end),
     awful.key({ modkey, 'Shift'   }, "o", switchtagtonextscreen),
