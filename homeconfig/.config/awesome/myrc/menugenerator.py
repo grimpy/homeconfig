@@ -60,6 +60,7 @@ icons = ('applications-accessories.png', 'applications-development.png', 'applic
 filecontents.append("menu = {")
 for (menu_name, category), icon in zip(sorted(categories.items()), icons):
     if category in used_cat:
+        icon = icon or NOTFOUNDICON
         line = '{ "%s", programs["%s"], "%s"},' % (menu_name, category, xdg.IconTheme.getIconPath(icon, extensions=["png"]))
         filecontents.append(line)
 filecontents.append("}")
