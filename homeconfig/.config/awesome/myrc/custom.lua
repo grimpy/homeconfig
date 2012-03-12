@@ -18,8 +18,8 @@ VGA = 2
 
 shiftytags = {
     ["1:term"] = { position = 1, exclusive = true, max_clients = 4, screen = VGA, spawn = terminal, layout = awful.layout.suit.fair},
-    ["2:im"]  = { position = 2, exclusive = true, spawn = "pidgin", screen = VGA, layout = awful.layout.suit.floating, },
-    ["3:web"]  = { position = 3, exclusive = true, spawn = browser, screen = LCD, layout = awful.layout.suit.max, icon="/usr/share/icons/Tango/16x16/apps/web-browser.png"},
+    ["2:im"]  = { position = 2, exclusive = true, spawn = "pidgin", screen = VGA, layout = awful.layout.suit.fair.horizontal, },
+    ["3:web"]  = { position = 3, exclusive = true, spawn = browser, screen = LCD, layout = awful.layout.suit.max, icon="/usr/share/icons/gnome/16x16/apps/web-browser.png"},
     ["4:mail"]  = { position = 4, exclusive = true, spawn = "thunderbird", layout = awful.layout.suit.max, screen = VGA},
     ["5:fs"]  = { position = 5, exclusive = true, spawn = "pcmanfm", layout = awful.layout.suit.floating, screen = LCD},
     ["6:edit"]  = { position = 6, exclusive = true, spawn = "gvim", screen = VGA, nopopup = true, layout = awful.layout.suit.max, },

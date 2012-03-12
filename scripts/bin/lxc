@@ -1,4 +1,12 @@
 #!/bin/bash
+if [ "$1" == "--help" ]; then
+    echo "Usage lxc <commmand> [command options]"
+    for x in `ls /usr/bin/lxc-* | sed -s "s#/usr/bin/lxc-##" `; do 
+        echo "  lxc " $x; 
+    done
+    exit 0
+fi
+
 cmd=lxc-$1
 shift
 sudo $cmd $*
