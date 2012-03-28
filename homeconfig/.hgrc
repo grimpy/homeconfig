@@ -15,6 +15,7 @@ transplant =
 pager =
 hgext.hgk=
 rebase =
+mq =
 
 [hooks]
 pretxncommit.pyflakes = python:hghooks.code.pyflakeshook
