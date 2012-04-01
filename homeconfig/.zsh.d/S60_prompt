@@ -30,7 +30,7 @@ function lprompt {
 $bgc$ch1\
 $bgc$col2%B%1~%b\
 $ch2$rst\
-$col2 " #%#$rst "
+$col2$rst " #%#$rst "
     PROMPT='${vcs_info_msg_0_}$PROMPT1'
 }
 
