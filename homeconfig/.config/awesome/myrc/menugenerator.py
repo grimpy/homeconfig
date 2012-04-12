@@ -32,6 +32,7 @@ def get_command_line(entry):
     return cmd
 
 xdg.Config.setIconTheme('gnome')
+apps = list()
 for appdir in set(xdg.BaseDirectory.xdg_data_dirs):
     appdir = os.path.join(appdir, 'applications')
     print(appdir)
@@ -49,9 +50,11 @@ for appdir in set(xdg.BaseDirectory.xdg_data_dirs):
                             else:
                                 icon = '"%s"' % icon
                             args = cat, entry.getName(), get_command_line(entry), icon
-                            filecontents.append('table.insert(programs["%s"], { "%s", "%s", %s })' % (args))
+                            apps.append((args[1], 'table.insert(programs["%s"], { "%s", "%s", %s })' % (args)))
                             used_cat.add(cat)
                             break
+apps.sort()
+filecontents.extend([ x[1] for x in apps ])
 
 icons = ('applications-accessories.png', 'applications-development.png', 'applications-science.png',
         'applications-games.png', 'applications-graphics.png', 'applications-internet.png',
