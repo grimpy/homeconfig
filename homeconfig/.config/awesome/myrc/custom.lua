@@ -24,6 +24,7 @@ shiftytags = {
     ["5:fs"]  = { position = 5, exclusive = true, spawn = "thunar", layout = awful.layout.suit.floating, screen = LCD},
     ["6:edit"]  = { position = 6, exclusive = true, spawn = "gvim", screen = VGA, nopopup = true, layout = awful.layout.suit.max, },
     ["7:media"]  = { position = 7, exclusive = true, screen = LCD, nopopup = true, layout = awful.layout.suit.floating, },
+    ["8:emu"]  = { position = 8, exclusive = true, spawn = "VirtualBox", screen = LCD, nopopup = true, layout = awful.layout.suit.max, },
 }
 clientbuttons = awful.util.table.join(
     awful.button({ }, 1, function (c) client.focus = c; c:raise() end),
@@ -36,10 +37,10 @@ shiftyapps = {
          { match = { "Pidgin", "Skype"} , tag = "2:im", nopopup=true } ,
          { match = { "xterm", "urxvt", "Terminator"} , honorsizehints = false, slave = true, tag = "1:term" } ,
          { match = { "Thunar", "pcmanfm", "xarchiver", "Squeeze" }, tag = "5:fs" } ,
-         { match = { "Geany" }, tag = "6:edit" } ,
-         { match = { "gvim" }, tag = "6:edit" } ,
+         { match = { "Geany", "gvim" }, tag = "6:edit" } ,
          { match = { "Eclipse" }, tag = "6:edit", nopopup=true } ,
          { match = { "MPlayer", "ario", "Audacious" }, tag = "7:media" } ,
+         { match = { "VirtualBox" }, tag = "8:emu" } ,
          { match = { "" }, buttons =  clientbuttons },
 }
 
