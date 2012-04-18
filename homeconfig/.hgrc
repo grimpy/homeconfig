@@ -2,6 +2,7 @@
 username = Jo De Boeck <jdeboeck@aserver.com>
 editor = /usr/bin/vim -c "r ~/.hgtemplate"
 merge = meld
+ssh = ssh -C
 
 [extensions]
 fetch = 
