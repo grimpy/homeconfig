@@ -6,6 +6,7 @@ ssh = ssh -C
 
 [extensions]
 fetch = 
+mercurial_reviewboard =
 churn =
 color = 
 extdiff = 
@@ -17,6 +18,10 @@ pager =
 hgext.hgk=
 rebase =
 mq =
+
+[reviewboard]
+server = http://172.20.12.3
+user = deboeckj
 
 [hooks]
 pretxncommit.pyflakes = python:hghooks.code.pyflakeshook
