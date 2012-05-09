@@ -1,0 +1,90 @@
+#!/usr/bin/env python2
+import bluetooth
+import dbus
+import dbus.mainloop.glib
+import gobject
+import sys
+
+dbus.mainloop.glib.DBusGMainLoop(set_as_default=True)
+mainloop = gobject.MainLoop()
+
+DOMAIN='org.bluez'
+bus = dbus.SystemBus()
+
+def getMouseAddress():
+    if len(sys.argv) > 1:
+        return sys.argv[1]
+    print 'Searching....'
+    devices = bluetooth.find_service(None, bluetooth.HIDP_UUID)
+
+    if not devices:
+        print 'No mouse found'
+        exit(1)
+
+    print 'Found %s device(s) please select:' % len(devices)
+    for idx, dev in enumerate(devices):
+        print '%i %s' % (idx+1, dev['name'])
+    result = int(raw_input("Selection:"))
+
+    return devices[result-1]['host']
+
+def construcDevicePath(adapter, mac):
+    return "%s/dev_%s" % (adapter, mac.replace(":", "_"))
+
+def deviceCreated(device):
+    mainloop.quit()
+    main2(device)
+
+def deviceNotCreated(error):
+    print 'error', error
+    mainloop.quit()
+    exit(1)
+
+def createDevice(mouseaddr):
+    manager = dbus.Interface(bus.get_object(DOMAIN, '/'), 'org.bluez.Manager')
+    adapterpath = manager.DefaultAdapter()
+    adapter = dbus.Interface(bus.get_object(DOMAIN, adapterpath), 'org.bluez.Adapter')
+    mousepath = construcDevicePath(adapterpath, mouseaddr)
+    ##Verify device exists
+    properties = adapter.GetProperties()
+    if mousepath not in properties['Devices']:
+        print 'Adding device'
+        adapter.CreateDevice(mouseaddr, reply_handler=deviceCreated, error_handler=deviceNotCreated)
+        mainloop.run()
+        return None
+    else:
+        print 'Device already added'
+    return mousepath
+
+def checkPermissions(device, properties):
+    ##Verify permissions
+    if not properties['Trusted']:
+        print 'Adding device trust'
+        device.SetProperty('Trusted', True)
+    else:
+        print 'Device already trusted'
+
+#now lets connect to it
+def connect(mousepath, properties):
+    if properties['Connected']:
+        print 'Connecting device'
+        indev = dbus.Interface(bus.get_object(DOMAIN, mousepath), 'org.bluez.Input')
+        indev.Connect()
+    else:
+        print 'Device already connected'
+
+def main():
+    mouseaddr = getMouseAddress()
+    mousepath = createDevice(mouseaddr)
+    if mousepath:
+        main2(mousepath)
+
+
+def main2(mousepath):
+    device = dbus.Interface(bus.get_object(DOMAIN, mousepath), 'org.bluez.Device')
+    properties = device.GetProperties()
+    checkPermissions(device, properties)
+    connect(mousepath, properties)
+
+if __name__ == '__main__':
+    main()

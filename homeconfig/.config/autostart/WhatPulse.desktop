@@ -1,10 +1,10 @@
 [Desktop Entry]
 Encoding=UTF-8
-Version=0.9.4
+Version=1.2.1
 Type=Application
 Name=WhatPulse
 Comment=WhatPulse
-Exec=/home/Jo/opt/bin/WhatPulse
+Exec=/usr/bin/WhatPulse
 StartupNotify=false
 Terminal=false
 Hidden=false

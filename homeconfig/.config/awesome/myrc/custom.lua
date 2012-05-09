@@ -21,9 +21,10 @@ shiftytags = {
     ["2:im"]  = { position = 2, exclusive = true, spawn = "pidgin", screen = VGA, layout = awful.layout.suit.fair.horizontal, },
     ["3:web"]  = { position = 3, exclusive = true, spawn = browser, screen = LCD, layout = awful.layout.suit.max, icon="/usr/share/icons/gnome/16x16/apps/web-browser.png"},
     ["4:mail"]  = { position = 4, exclusive = true, spawn = "thunderbird", layout = awful.layout.suit.max, screen = VGA},
-    ["5:fs"]  = { position = 5, exclusive = true, spawn = "pcmanfm", layout = awful.layout.suit.floating, screen = LCD},
+    ["5:fs"]  = { position = 5, exclusive = true, spawn = "thunar", layout = awful.layout.suit.floating, screen = LCD},
     ["6:edit"]  = { position = 6, exclusive = true, spawn = "gvim", screen = VGA, nopopup = true, layout = awful.layout.suit.max, },
     ["7:media"]  = { position = 7, exclusive = true, screen = LCD, nopopup = true, layout = awful.layout.suit.floating, },
+    ["8:emu"]  = { position = 8, exclusive = true, spawn = "VirtualBox", screen = LCD, nopopup = true, layout = awful.layout.suit.max, },
 }
 clientbuttons = awful.util.table.join(
     awful.button({ }, 1, function (c) client.focus = c; c:raise() end),
@@ -36,10 +37,10 @@ shiftyapps = {
          { match = { "Pidgin", "Skype"} , tag = "2:im", nopopup=true } ,
          { match = { "xterm", "urxvt", "Terminator"} , honorsizehints = false, slave = true, tag = "1:term" } ,
          { match = { "Thunar", "pcmanfm", "xarchiver", "Squeeze" }, tag = "5:fs" } ,
-         { match = { "Geany" }, tag = "6:edit" } ,
-         { match = { "gvim" }, tag = "6:edit" } ,
+         { match = { "Geany", "gvim" }, tag = "6:edit" } ,
          { match = { "Eclipse" }, tag = "6:edit", nopopup=true } ,
          { match = { "MPlayer", "ario", "Audacious" }, tag = "7:media" } ,
+         { match = { "VirtualBox" }, tag = "8:emu" } ,
          { match = { "" }, buttons =  clientbuttons },
 }
 
@@ -108,9 +109,9 @@ keybindings = awful.util.table.join(
     awful.key({ }, "XF86AudioPlay", function () awful.util.spawn("/home/Jo/mygit/scripts/bin/musiccontrol toggle") end),
     awful.key({ modkey,           }, "F7", function () awful.util.spawn("/home/Jo/mygit/scripts/bin/single.sh") end),
     awful.key({ modkey,           }, "F8", function () awful.util.spawn("/home/Jo/mygit/scripts/bin/dual.sh") end),
-    awful.key({ modkey,           }, "e", function () awful.util.spawn("pcmanfm") end),
+    awful.key({ modkey,           }, "e", function () awful.util.spawn("thunar") end),
     awful.key({ modkey, }, "l", function () awful.util.spawn("i3lock -c 222222") end),
-    awful.key({ modkey2, "Control" }, "s", function () awful.util.spawn("skype") end),
+    awful.key({ modkey2, "Control" }, "s", function () awful.util.spawn("skypetab-ng") end),
     awful.key({ modkey2, "Control" }, "m", function () awful.util.spawn("pidgin") end),
     awful.key({ modkey, 'Shift'   }, "o", switchtagtonextscreen),
     awful.key({ modkey,    }, "c", pushincorner),

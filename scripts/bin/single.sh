@@ -1,1 +1,1 @@
-xrandr --output VGA1 --off
+xrandr --output HDMI1 --off

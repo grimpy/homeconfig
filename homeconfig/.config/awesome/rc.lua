@@ -77,7 +77,7 @@ mybaticon.image = image(confdir .. "/icons/bat.png")
 mybatwidget     = widget({ type = "textbox", name = "mybatwidget" })
 hostname = string.sub(awful.util.pread("hostname"), 0, -2)
 battery = "BAT0"
-if hostname == "Hulk" then
+if hostname == "Hulk" or hostname == "wolverine" then
     battery = "BAT1"
 end
 vicious.register(mybatwidget, vicious.widgets.bat, "$1$2%", 61, battery)

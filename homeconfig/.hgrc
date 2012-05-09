@@ -2,9 +2,11 @@
 username = Jo De Boeck <jdeboeck@aserver.com>
 editor = /usr/bin/vim -c "r ~/.hgtemplate"
 merge = meld
+ssh = ssh -C
 
 [extensions]
 fetch = 
+mercurial_reviewboard =
 churn =
 color = 
 extdiff = 
@@ -15,6 +17,11 @@ transplant =
 pager =
 hgext.hgk=
 rebase =
+mq =
+
+[reviewboard]
+server = http://172.20.12.3
+user = deboeckj
 
 [hooks]
 pretxncommit.pyflakes = python:hghooks.code.pyflakeshook
