@@ -1,2 +1,3 @@
 #!/bin/bash
-iptables -t nat -A PREROUTING -p tcp --dport $1 -j DNAT --to-destination $2:80
+iptables -t nat -A PREROUTING -p tcp -i eth0 --dport $1 -j DNAT --to-destination $2:80
+iptables -t nat -A PREROUTING -p tcp -i wlan0 --dport $1 -j DNAT --to-destination $2:80
