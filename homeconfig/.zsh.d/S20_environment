@@ -24,6 +24,7 @@ export EDITOR=/usr/bin/vim
 export WORK=$HOME/work
 export INCUBAID=$HOME/work/incubaid
 export ASERVER=$HOME/work/aserver
+export AWINGU=$HOME/work/awingu
 loadrsa() {
         eval `keychain -q --eval --agents ssh id_rsa $1`
 }
