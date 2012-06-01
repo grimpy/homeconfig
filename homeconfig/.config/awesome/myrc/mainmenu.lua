@@ -36,6 +36,7 @@ function build()
 
     local shutdown_menu = {
         { "Logout", awesome.quit, freedesktop_utils.lookup_icon({ icon = 'gnome-logout' }) },
+        { "Switch user", function () awful.util.spawn("/home/Jo/mygit/scripts/bin/switchuser") end, freedesktop_utils.lookup_icon({ icon = 'gtk-switch' }) },
         { "Reboot", function () awful.util.spawn("sudo /sbin/reboot") end, freedesktop_utils.lookup_icon({ icon = 'gtk-refresh' }) },
         { "Suspend", function () awful.util.spawn("sudo /usr/sbin/pm-suspend") end, freedesktop_utils.lookup_icon({ icon = 'xfsm-suspend' }) },
         { "Hibernate", function () awful.util.spawn("sudo /usr/sbin/pm-hibernate") end, freedesktop_utils.lookup_icon({ icon = 'xfsm-hibernate' }) },

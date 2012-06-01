@@ -1,0 +1,3 @@
+#!/bin/bash
+i3lock -c 222222
+/usr/lib/lightdm/lightdm/gdmflexiserver
