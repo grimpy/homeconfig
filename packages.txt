@@ -1,0 +1,2 @@
+#vim
+vim-pathogen vim-nerdtree vim-minibufexpl vim-supertab vim-pyflakes vim-pylint vim-koe
