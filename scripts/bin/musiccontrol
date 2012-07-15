@@ -13,11 +13,23 @@ function auda() {
 
 }
 function mpd() {
-    mpc $command
+    mpc -h 192.168.20.132 $command
+}
+
+function pra() {
+    c=""
+    case $command in
+        "next" ) c="-f" ;;
+        "prev" ) c="-r" ;;
+        "toggle") c="-t" ;;
+        *) return 1;
+    esac
+
+    pragha $c
 }
 
 if ps -eaf | grep -v grep | grep audacious; then
     auda
 else
-    mpd
+    pra
 fi
