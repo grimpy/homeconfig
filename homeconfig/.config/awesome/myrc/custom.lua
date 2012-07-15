@@ -39,7 +39,7 @@ shiftyapps = {
          { match = { "Thunar", "pcmanfm", "xarchiver", "Squeeze" }, tag = "5:fs" } ,
          { match = { "Geany", "gvim" }, tag = "6:edit" } ,
          { match = { "Eclipse" }, tag = "6:edit", nopopup=true } ,
-         { match = { "MPlayer", "ario", "Audacious" }, tag = "7:media" } ,
+         { match = { "MPlayer", "ario", "Audacious", "pragha" }, tag = "7:media" } ,
          { match = { "VirtualBox" }, tag = "8:emu" } ,
          { match = { "" }, buttons =  clientbuttons },
 }
@@ -111,7 +111,7 @@ keybindings = awful.util.table.join(
     awful.key({ modkey,           }, "F8", function () awful.util.spawn("/home/Jo/mygit/scripts/bin/dual.sh") end),
     awful.key({ modkey,           }, "e", function () awful.util.spawn("thunar") end),
     awful.key({ modkey, }, "l", function () awful.util.spawn("i3lock -c 222222") end),
-    awful.key({ modkey2, "Control" }, "s", function () awful.util.spawn("skypetab-ng") end),
+    awful.key({ modkey2, "Control" }, "s", function () awful.util.spawn("skype") end),
     awful.key({ modkey2, "Control" }, "m", function () awful.util.spawn("pidgin") end),
     awful.key({ modkey, 'Shift'   }, "o", switchtagtonextscreen),
     awful.key({ modkey,    }, "c", pushincorner),
