@@ -5,10 +5,12 @@ local tag = require("tag")
 local shifty = require("shifty")
 local screen = require("screen")
 local ipairs = ipairs
+local os = require("os")
 
 module("myrc.custom")
+binhome = os.getenv("HOME") .. "/mygit/scripts/bin/"
 
-browser = "chromium"
+browser = binhome .. "browser"
 terminal = "urxvtc"
 autostart = true
 modkey = "Mod4"
@@ -101,14 +103,14 @@ end
 
 keybindings = awful.util.table.join(
     awful.key({ modkey2, "Control" }, "c", function () awful.util.spawn(terminal) end),
-    awful.key({ }, "Print", function () awful.util.spawn("/home/Jo/mygit/scripts/bin/caputereimg.sh /home/Jo/Pictures/SS") end),
-    awful.key({ modkey,           }, "F2", function () awful.util.spawn("/home/Jo/mygit/scripts/bin/musiccontrol toggle") end),
-    awful.key({ modkey,           }, "F3", function () awful.util.spawn("/home/Jo/mygit/scripts/bin/musiccontrol prev") end),
-    awful.key({ modkey,           }, "F4", function () awful.util.spawn("/home/Jo/mygit/scripts/bin/musiccontrol next") end),
-    awful.key({ }, "XF86AudioNext", function () awful.util.spawn("/home/Jo/mygit/scripts/bin/musiccontrol next") end),
-    awful.key({ }, "XF86AudioPlay", function () awful.util.spawn("/home/Jo/mygit/scripts/bin/musiccontrol toggle") end),
-    awful.key({ modkey,           }, "F7", function () awful.util.spawn("/home/Jo/mygit/scripts/bin/single.sh") end),
-    awful.key({ modkey,           }, "F8", function () awful.util.spawn("/home/Jo/mygit/scripts/bin/dual.sh") end),
+    awful.key({ }, "Print", function () awful.util.spawn(binhome .. "caputereimg.sh /home/Jo/Pictures/SS") end),
+    awful.key({ modkey,           }, "F2", function () awful.util.spawn(binhome .. "musiccontrol toggle") end),
+    awful.key({ modkey,           }, "F3", function () awful.util.spawn(binhome .. "musiccontrol prev") end),
+    awful.key({ modkey,           }, "F4", function () awful.util.spawn(binhome .. "musiccontrol next") end),
+    awful.key({ }, "XF86AudioNext", function () awful.util.spawn(binhome .. "musiccontrol next") end),
+    awful.key({ }, "XF86AudioPlay", function () awful.util.spawn(binhome .. "musiccontrol toggle") end),
+    awful.key({ modkey,           }, "F7", function () awful.util.spawn(binhome .. "single.sh") end),
+    awful.key({ modkey,           }, "F8", function () awful.util.spawn(binhome .. "dual.sh") end),
     awful.key({ modkey,           }, "e", function () awful.util.spawn("thunar") end),
     awful.key({ modkey, }, "l", function () awful.util.spawn("i3lock -c 222222") end),
     awful.key({ modkey2, "Control" }, "s", function () awful.util.spawn("skype") end),
