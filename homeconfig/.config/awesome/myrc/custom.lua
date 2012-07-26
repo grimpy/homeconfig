@@ -109,6 +109,7 @@ keybindings = awful.util.table.join(
     awful.key({ modkey,           }, "F4", function () awful.util.spawn(binhome .. "musiccontrol next") end),
     awful.key({ }, "XF86AudioNext", function () awful.util.spawn(binhome .. "musiccontrol next") end),
     awful.key({ }, "XF86AudioPlay", function () awful.util.spawn(binhome .. "musiccontrol toggle") end),
+    awful.key({ }, "XF86Battery", function () awful.util.spawn("systemctl suspend") end),
     awful.key({ modkey,           }, "F7", function () awful.util.spawn(binhome .. "single.sh") end),
     awful.key({ modkey,           }, "F8", function () awful.util.spawn(binhome .. "dual.sh") end),
     awful.key({ modkey,           }, "e", function () awful.util.spawn("thunar") end),
