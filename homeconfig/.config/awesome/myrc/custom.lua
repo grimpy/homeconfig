@@ -6,6 +6,7 @@ local shifty = require("shifty")
 local screen = require("screen")
 local ipairs = ipairs
 local os = require("os")
+local revelation = require("revelation")
 
 module("myrc.custom")
 binhome = os.getenv("HOME") .. "/mygit/scripts/bin/"
@@ -117,6 +118,7 @@ keybindings = awful.util.table.join(
     awful.key({ modkey2, "Control" }, "s", function () awful.util.spawn("skype") end),
     awful.key({ modkey2, "Control" }, "m", function () awful.util.spawn("pidgin") end),
     awful.key({ modkey, 'Shift'   }, "o", switchtagtonextscreen),
+    awful.key({modkey, }, "t", revelation),
     awful.key({ modkey,    }, "c", pushincorner),
     awful.key({ modkey2, "Control" }, "k", function () awful.util.spawn("geany") end))
 
