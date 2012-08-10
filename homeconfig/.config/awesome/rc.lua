@@ -91,7 +91,7 @@ vicious.register(mynet, vicious.contrib.net, '<span color="#CC9393">${total down
 
 -- {{{ Wibox
 -- Create a textclock widget
-mytextclock = awful.widget.textclock({ align = "right" }, "%R - %a %d/%m")
+mytextclock = awful.widget.textclock({ align = "right" }, "%a %d/%m - %R")
 myrc.calendar2.addCalendarToWidget(mytextclock)
 
 -- Create a systray
