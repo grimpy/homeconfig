@@ -12,6 +12,7 @@ require("myrc.autostart")
 require("myrc.calendar2")
 require("myrc.custom")
 require("vicious")
+require("vicious.contrib")
 
 -- {{{ Variable definitions
 -- Themes define colours, icons, and wallpapers
@@ -75,16 +76,20 @@ mylauncher = awful.widget.launcher({ image = image(beautiful.awesome_icon),
 mybaticon = widget({ type = "imagebox", name = "mybaticon" })
 mybaticon.image = image(confdir .. "/icons/bat.png")
 mybatwidget     = widget({ type = "textbox", name = "mybatwidget" })
+mytemp     = widget({ type = "textbox", name = "mytemp" })
+mynet = widget({ type = "textbox" })
 hostname = string.sub(awful.util.pread("hostname"), 0, -2)
 battery = "BAT0"
 if hostname == "Hulk" or hostname == "wolverine" then
     battery = "BAT1"
 end
 vicious.register(mybatwidget, vicious.widgets.bat, "$1$2%", 61, battery)
+vicious.register(mytemp, vicious.widgets.thermal, "$1°C ", 61, "thermal_zone0")
+vicious.register(mynet, vicious.contrib.net, '<span color="#CC9393">${total down_kb}</span> <span color="#7F9F7F">${total up_kb}</span> ', 3)
 
 -- {{{ Wibox
 -- Create a textclock widget
-mytextclock = awful.widget.textclock({ align = "right" })
+mytextclock = awful.widget.textclock({ align = "right" }, "%R - %a %d/%m")
 myrc.calendar2.addCalendarToWidget(mytextclock)
 
 -- Create a systray
@@ -160,6 +165,8 @@ for s = 1, screen.count() do
         },
         mylayoutbox[s],
         mytextclock,
+        mynet,
+        mytemp,
         mybaticon, mybatwidget,
         s == 1 and mysystray or nil,
         mytasklist[s],
