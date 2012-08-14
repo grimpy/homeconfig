@@ -82,11 +82,15 @@ mytemp     = widget({ type = "textbox", name = "mytemp" })
 mynet = widget({ type = "textbox" })
 hostname = string.sub(awful.util.pread("hostname"), 0, -2)
 battery = "BAT0"
+temp = 'thermal_zone0'
 if hostname == "Hulk" or hostname == "wolverine" then
     battery = "BAT1"
 end
+if hostname == 'wolverine' then
+    temp = {'coretemp.0', 'core'}
+end
 vicious.register(mybatwidget, vicious.widgets.bat, "$1$2%", 61, battery)
-vicious.register(mytemp, vicious.widgets.thermal, "$1°C", 61, "thermal_zone0")
+vicious.register(mytemp, vicious.widgets.thermal, "$1°C", 61, temp)
 vicious.register(mynet, vicious.contrib.net, '<span color="#CC9393">${total down_kb}</span> <span color="#7F9F7F">${total up_kb}</span>', 3)
 
 -- {{{ Wibox
