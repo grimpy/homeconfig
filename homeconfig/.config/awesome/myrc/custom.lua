@@ -27,6 +27,7 @@ shiftytags = {
     ["5:fs"]  = { position = 5, exclusive = true, spawn = "thunar", layout = awful.layout.suit.floating, screen = LCD},
     ["6:edit"]  = { position = 6, exclusive = true, spawn = "gvim", screen = VGA, nopopup = true, layout = awful.layout.suit.max, },
     ["7:media"]  = { position = 7, exclusive = true, screen = LCD, nopopup = true, layout = awful.layout.suit.floating, },
+    ["9:mediafs"]  = { position = 9, exclusive = true, screen = LCD, nopopup = true, layout = awful.layout.suit.max.fullscreen, },
     ["8:emu"]  = { position = 8, exclusive = true, spawn = "VirtualBox", screen = LCD, nopopup = true, layout = awful.layout.suit.max, },
 }
 clientbuttons = awful.util.table.join(
@@ -44,6 +45,7 @@ shiftyapps = {
          { match = { "Eclipse" }, tag = "6:edit", nopopup=true } ,
          { match = { "MPlayer", "ario", "Audacious", "pragha" }, tag = "7:media" } ,
          { match = { "VirtualBox" }, tag = "8:emu" } ,
+         { match = { "xbmc.bin" }, tag = "9:mediafs" } ,
          { match = { "" }, buttons =  clientbuttons },
 }
 
@@ -110,7 +112,7 @@ keybindings = awful.util.table.join(
     awful.key({ modkey,           }, "F4", function () awful.util.spawn(binhome .. "musiccontrol next") end),
     awful.key({ }, "XF86AudioNext", function () awful.util.spawn(binhome .. "musiccontrol next") end),
     awful.key({ }, "XF86AudioPlay", function () awful.util.spawn(binhome .. "musiccontrol toggle") end),
-    awful.key({ }, "XF86Battery", function () awful.util.spawn("systemctl suspend") end),
+    awful.key({ }, "XF86Battery", function () awful.util.spawn("sudo pm-suspend") end),
     awful.key({ modkey,           }, "F7", function () awful.util.spawn(binhome .. "single.sh") end),
     awful.key({ modkey,           }, "F8", function () awful.util.spawn(binhome .. "dual.sh") end),
     awful.key({ modkey,           }, "e", function () awful.util.spawn("thunar") end),
