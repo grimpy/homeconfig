@@ -11,8 +11,8 @@ require("myrc.mainmenu")
 require("myrc.autostart")
 require("myrc.calendar2")
 require("myrc.custom")
-require("vicious")
-require("vicious.contrib")
+local vicious = require("vicious")
+vicious.contrib = require("vicious.contrib")
 
 -- {{{ Variable definitions
 -- Themes define colours, icons, and wallpapers
