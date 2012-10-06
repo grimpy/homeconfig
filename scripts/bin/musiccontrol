@@ -12,6 +12,19 @@ function auda() {
    audacious $c
 
 }
+
+function xbmc() {
+    c=""
+    case $command in
+        "next" ) c="-f" ;;
+        "prev" ) c="-r" ;;
+        "toggle") c="-t" ;;
+        *) return 1;
+   esac
+   ~/Dev/xbmc/remote.py --host=daredevil.lan $c
+
+}
+
 function mpd() {
     mpc -h 192.168.20.132 $command
 }
@@ -30,6 +43,9 @@ function pra() {
 
 if ps -eaf | grep -v grep | grep audacious; then
     auda
+
+elif ps -eaf | grep -v grep | grep remote.py; then
+    xbmc
 else
     pra
 fi

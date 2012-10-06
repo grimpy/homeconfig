@@ -43,7 +43,7 @@ shiftyapps = {
          { match = { "Thunar", "pcmanfm", "xarchiver", "Squeeze" }, tag = "5:fs" } ,
          { match = { "Geany", "gvim" }, tag = "6:edit" } ,
          { match = { "Eclipse" }, tag = "6:edit", nopopup=true } ,
-         { match = { "MPlayer", "ario", "Audacious", "pragha" }, tag = "7:media" } ,
+         { match = { "MPlayer", "ario", "Audacious", "pragha", "mplayer2" }, tag = "7:media" } ,
          { match = { "VirtualBox" }, tag = "8:emu" } ,
          { match = { "xbmc.bin" }, tag = "9:mediafs" } ,
          { match = { "" }, buttons =  clientbuttons },
