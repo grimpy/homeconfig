@@ -31,12 +31,11 @@ api_fs_umount() {
 }
 
 is_mounted() {
-    cat /proc/mounts | cut -d' ' -f2 | grep "^${chrootdir}" && return 0
+    cat /proc/mounts | cut -d' ' -f2 | grep "^${chrootdir}/dev" && return 0
     return 1
 }
 
 api_stop_ps() {
-    return 0
 	out "Kill remaining processes that run in the chroot"
 	KILL_PIDS=""
 	for i in /proc/[0-9]*; do
@@ -109,20 +108,16 @@ STATE=$?
 [[ -d $chrootdir ]] || die "Can't create chroot on non-directory %s" "$chrootdir"
 
 if [ ${STATE} -ne 0 -a "${1}" != "--stop" ]; then
-    echo "start"
     api_fs_mount "$chrootdir" || die "failed to setup API filesystems in chroot %s" "$chrootdir"
-    mount -B /etc/resolv.conf "$chrootdir/etc/resolv.conf"
 fi
 
 if [ "$1" != "--stop" -a "$1" != "--start" ]; then
-    echo "chroot"
     SHELL=/bin/bash chroot "$chrootdir" "$@"
 fi
 
 if [ "$1" = "--stop" -o ${STATE} -eq 1 ]; then
-    echo "stop"
     if [ "$1" != "--start" ]; then
-        api_fs_umount;api_stop_ps; umount "$chrootdir/etc/resolv.conf";
+        api_stop_ps;api_fs_umount;
     fi
 fi
 
