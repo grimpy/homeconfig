@@ -9,4 +9,5 @@ fi
 
 cmd=lxc-$1
 shift
+sudo mount --make-rprivate /
 sudo $cmd $*
