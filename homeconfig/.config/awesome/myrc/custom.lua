@@ -40,7 +40,7 @@ shiftyapps = {
          { match = { "Thunderbird", "Mail", "Msgcompose"} , tag = "4:mail", nopopup=true } ,
          { match = { "Pidgin", "Skype", "gajim"} , tag = "2:im", nopopup=true } ,
          { match = { "xterm", "urxvt", "Terminator"} , honorsizehints = false, slave = true, tag = "1:term" } ,
-         { match = { "Thunar", "pcmanfm", "xarchiver", "Squeeze" }, tag = "5:fs" } ,
+         { match = { "Thunar", "pcmanfm", "xarchiver", "Squeeze", "File-roller" }, tag = "5:fs" } ,
          { match = { "Geany", "gvim" }, tag = "6:edit" } ,
          { match = { "Eclipse" }, tag = "6:edit", nopopup=true } ,
          { match = { "MPlayer", "ario", "Audacious", "pragha" }, tag = "7:media" } ,
