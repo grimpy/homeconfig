@@ -3,7 +3,7 @@ call pathogen#runtime_append_all_bundles()
 
 let pymode_options_other = 0
 let pymode_lint_onfly = 1
-let pymode_lint_ignore = "E302,E501,E303"
+let pymode_lint_ignore = "E301,E302,E501,E303,W901"
 
 let python = 'python2'
 let pydoc = 'pydoc2'
