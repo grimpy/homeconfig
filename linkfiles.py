@@ -1,12 +1,14 @@
 #!/usr/bin/env /usr/bin/python2
-import os, sys, shutil
+import os
+import sys
+import shutil
 from optparse import OptionParser
 parser = OptionParser()
 parser.add_option("-r", "--root", dest="root", action="store_true", default=False,
                   help="Do root")
 (options, args) = parser.parse_args()
 fullpath = os.path.abspath(os.path.dirname(sys.argv[0]))
-linkfolders = ['.config/awesome', '.config/autostart', '.zsh.d', '.ssh', '.vim', '.urxvt' ]
+linkfolders = ['.config/awesome', '.config/autostart', '.zsh.d', '.ssh', '.vim', '.urxvt']
 copydirs = ['etc/udev/rules.d']
 target = os.environ['HOME']
 
@@ -20,7 +22,7 @@ if options.root:
 else:
     fullpath = os.path.join(fullpath, 'homeconfig')
 
-striplen = len(fullpath)+1
+striplen = len(fullpath) + 1
 #do folders defined in linkfolders
 #cleanuppath
 def cleanuppath(targetfolder):
@@ -36,7 +38,7 @@ def createRecusiveFolder(folder):
         os.makedirs(folder)
 
 def createParentFolder(targetfolder):
-    parenttarget = os.path.abspath(os.path.join(targetfolder,'..'))
+    parenttarget = os.path.abspath(os.path.join(targetfolder, '..'))
     createRecusiveFolder(parenttarget)
 
 for curdir, dirs, files in os.walk(fullpath):

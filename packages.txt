@@ -1,2 +1,2 @@
 #vim
-vim-pathogen vim-nerdtree vim-minibufexpl vim-supertab vim-python-mode vim-koe vim-yankring  vim-pyflakes
+vim-pathogen vim-nerdtree vim-minibufexpl vim-supertab vim-python-mode vim-togglelist-git

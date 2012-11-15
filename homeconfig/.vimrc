@@ -1,7 +1,12 @@
 call pathogen#runtime_append_all_bundles()
 " python mode
-let g:pymode_lint = 0
-let g:pymode_options_other = 0
+
+let pymode_options_other = 0
+let pymode_lint_onfly = 1
+let pymode_lint_ignore = "E302,E501,E303"
+
+let python = 'python2'
+let pydoc = 'pydoc2'
 
 " some defaults
 filetype off
