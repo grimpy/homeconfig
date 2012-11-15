@@ -1,2 +1,3 @@
 #vim
-vim-pathogen vim-nerdtree vim-minibufexpl vim-supertab vim-python-mode vim-togglelist-git
+vim-pathogen vim-nerdtree vim-supertab vim-python-mode vim-togglelist-git
+vim-buffergator vim-pydiction vim-ctrlp

@@ -3,7 +3,9 @@ call pathogen#runtime_append_all_bundles()
 
 let pymode_options_other = 0
 let pymode_lint_onfly = 1
+let pymode_breakpoint = 0
 let pymode_lint_ignore = "E301,E302,E501,E303,W901"
+let pydiction_location = '/usr/share/pydiction/complete-dict'
 
 let python = 'python2'
 let pydoc = 'pydoc2'
@@ -23,7 +25,7 @@ set fdm=indent
 set foldlevel=30
 nnoremap <silent> <F2> :NERDTreeToggle<CR>
 nnoremap <silent> <F3> :TlistToggle<CR>
-nnoremap <silent> <F5> :Pylint<CR>:syn on<CR>
+nnoremap <silent> m :only<CR>
 
 let Tlist_GainFocus_On_ToggleOpen = 1
 let Tlist_Use_Right_Window = 1
