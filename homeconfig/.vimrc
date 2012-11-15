@@ -6,6 +6,7 @@ let pymode_lint_onfly = 1
 let pymode_breakpoint = 0
 let pymode_lint_ignore = "E301,E302,E501,E303,W901"
 let pydiction_location = '/usr/share/pydiction/complete-dict'
+let ctrlp_regexp = 1
 
 let python = 'python2'
 let pydoc = 'pydoc2'
