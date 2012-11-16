@@ -1,0 +1,12 @@
+[submodule "homeconfig/.vim/bundle/python-mode"]
+	path = homeconfig/.vim/bundle/python-mode
+	url = git://github.com/klen/python-mode.git
+[submodule "homeconfig/.vim/bundle/ctrlp.vim"]
+	path = homeconfig/.vim/bundle/ctrlp.vim
+	url = git://github.com/grimpy/ctrlp.vim.git
+[submodule "homeconfig/.vim/bundle/snipmate"]
+	path = homeconfig/.vim/bundle/snipmate
+	url = https://github.com/msanders/snipmate.vim.git
+[submodule "homeconfig/.vim/bundle/ack"]
+	path = homeconfig/.vim/bundle/ack
+	url = https://github.com/mileszs/ack.vim.git
