@@ -2,27 +2,18 @@ call pathogen#infect()
 " python mode
 
 let mapleader = ","
-let pymode_options_other = 0
-let pymode_lint_onfly = 1
-let pymode_breakpoint = 0
-let pymode_lint_ignore = "E301,E302,E501,E303,W901"
-let pydiction_location = '/usr/share/pydiction/complete-dict'
+let g:pymode_options = 0
+let g:pymode_rope = 0
+let g:pymode_lint_onfly = 1
+let g:pymode_breakpoint = 0
+let g:pymode_lint_hold = 1
+let g:pymode_lint_ignore = "E301,E302,E501,E303,W901"
 
 let g:ctrlp_map = '<leader>f'
 let g:ctrlp_regexp = 1
-let g:ctrlp_match_func = { 'match': 'MatchFunc' }
-let g:path_to_binary = "/usr/bin/grep"
-
-function! MatchFunc(items, str, limit, mmode, ispath, crfile, regex)
-  " Create a cache file
-  if (a:regex)
-    return ctrlp#call('s:MatchIt', a:items, a:str, a:limit, a:crfile)
-  else
-    let cmd = g:path_to_binary.' -Rl '.a:str.' * 2> /dev/null'
-    return split(system(cmd), "\n")
-  endif
-endfunction
-
+au FileType python set omnifunc=pythoncomplete#Complete
+let g:SuperTabDefaultCompletionType = "context"
+set completeopt=menuone,longest,preview
 
 let python = 'python2'
 let pydoc = 'pydoc2'
@@ -42,8 +33,12 @@ set fdm=indent
 set foldlevel=30
 set hlsearch
 nnoremap <leader>/ :noh<cr>
-nnoremap <silent> <F2> :NERDTreeToggle<CR>
+nnoremap <leader>n :NERDTreeToggle<CR>
 nnoremap <leader>m :only<CR>
+nmap <leader>a <Esc>:Ack!
+imap <C-Space> <C-x><C-o>
+imap <C-@> <C-Space>
+
 inoremap jj <ESC>
 
 let Tlist_GainFocus_On_ToggleOpen = 1
