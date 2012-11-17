@@ -1,4 +1,5 @@
 call pathogen#infect()
+call pathogen#helptags()
 " python mode
 
 let mapleader = ","
