@@ -8,10 +8,14 @@ let g:pymode_rope = 0
 let g:pymode_lint_onfly = 1
 let g:pymode_breakpoint = 0
 let g:pymode_lint_hold = 1
+let g:pymode_lint_cwindow = 0
+let g:pymode_lint_checker = "pyflakes"
 let g:pymode_lint_ignore = "E301,E302,E501,E303,W901"
 
 let g:ctrlp_map = '<leader>f'
 let g:ctrlp_regexp = 1
+let g:pydiction_location = '$HOME/.vim/complete-dict'
+
 au FileType python set omnifunc=pythoncomplete#Complete
 let g:SuperTabDefaultCompletionType = "context"
 set completeopt=menuone,longest,preview
