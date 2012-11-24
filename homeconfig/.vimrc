@@ -43,8 +43,11 @@ nnoremap <leader>m :only<CR>
 nmap <leader>a <Esc>:Ack!
 imap <C-Space> <C-x><C-o>
 imap <C-@> <C-Space>
-
 inoremap jj <ESC>
+map <c-j> <c-w>j
+map <c-k> <c-w>k
+map <c-l> <c-w>l
+map <c-h> <c-w>h
 
 let Tlist_GainFocus_On_ToggleOpen = 1
 let Tlist_Use_Right_Window = 1
