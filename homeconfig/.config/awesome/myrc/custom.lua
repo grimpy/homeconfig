@@ -23,7 +23,7 @@ shiftytags = {
     ["1:term"] = { position = 1, exclusive = true, max_clients = 4, screen = VGA, spawn = terminal, layout = awful.layout.suit.fair},
     ["2:im"]  = { position = 2, exclusive = true, spawn = "pidgin", screen = VGA, layout = awful.layout.suit.fair.horizontal, },
     ["3:web"]  = { position = 3, exclusive = true, spawn = browser, screen = LCD, layout = awful.layout.suit.max, icon="/usr/share/icons/gnome/16x16/apps/web-browser.png"},
-    ["4:mail"]  = { position = 4, exclusive = true, spawn = "thunderbird", layout = awful.layout.suit.max, screen = VGA},
+    ["4:mail"]  = { position = 4, exclusive = true, spawn = "evolution", layout = awful.layout.suit.max, screen = VGA},
     ["5:fs"]  = { position = 5, exclusive = true, spawn = "thunar", layout = awful.layout.suit.floating, screen = LCD},
     ["6:edit"]  = { position = 6, exclusive = true, spawn = "gvim", screen = VGA, nopopup = true, layout = awful.layout.suit.max, },
     ["7:media"]  = { position = 7, exclusive = true, screen = LCD, nopopup = true, layout = awful.layout.suit.floating, },
@@ -37,7 +37,7 @@ clientbuttons = awful.util.table.join(
 
 shiftyapps = {
          { match = { "Chrome", "Chromium", "Midori", "Navigator", "Namoroka","Firefox"} , tag = "3:web", nopopup=true} ,
-         { match = { "Thunderbird", "Mail", "Msgcompose"} , tag = "4:mail", nopopup=true } ,
+         { match = { "Thunderbird", "Mail", "Msgcompose", "Evolution"} , tag = "4:mail", nopopup=true } ,
          { match = { "Pidgin", "Skype", "gajim"} , tag = "2:im", nopopup=true } ,
          { match = { "xterm", "urxvt", "Terminator"} , honorsizehints = false, slave = true, tag = "1:term" } ,
          { match = { "Thunar", "pcmanfm", "xarchiver", "Squeeze", "File-roller" }, tag = "5:fs" } ,
