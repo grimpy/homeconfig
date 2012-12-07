@@ -108,3 +108,18 @@ xbox(){
 loadkey(){
     eval `keychain -q --eval --agents ssh id_rsa`
 }
+
+# grep for the text in the following directory or the sub directories                               
+# and search for folders having the same name / for actions in pylabs 
+function v(){
+    vimbin="vim"
+    if [ -e "/usr/bin/gvim" ]; then
+        vimbin="gvim"
+    fi
+    if [ -z "$@" ] ; then
+        $vimbin -c "normal '0";
+    else
+        $vimbin `echo "$@" | cut -d: -f1,2 | sed -e 's/:/ +/g'`;
+    fi
+}
+

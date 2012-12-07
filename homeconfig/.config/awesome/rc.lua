@@ -248,7 +248,11 @@ for i=1, ( shifty.config.maxtags or 9 ) do
 
   globalkeys = awful.util.table.join(globalkeys, awful.key({ modkey }, i,
   function ()
-    local t = awful.tag.viewonly(shifty.getpos(i))
+    local tag = shifty.getpos(i)
+    local t = awful.tag.viewonly(tag)
+    if client.focus.screen ~= tag.screen then
+      awful.screen.focus(tag.screen)
+    end
   end))
   globalkeys = awful.util.table.join(globalkeys, awful.key({ modkey, "Control" }, i,
   function ()
