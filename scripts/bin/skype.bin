@@ -1,0 +1,27 @@
+#!/bin/bash 
+# Run Skype over a Socks proxy. 
+# Etisalat drops about every tenth packet, which makes Skype sound gritty and buggy. 
+# Skype can use a Socks proxy, but it has a bug and tends to ignore the proxy setting! 
+# The solution is to drop all other traffic to/from Skype and force it to use the proxy. 
+# Configure Skype to use a Socks 5 proxy on localhost:1080 
+# Create a group called socksgrp and add yourself to it, then use this group in iptables 
+# to drop all other Skype packets on the floor. 
+# Skype uses about 10 kbs for voice, more for video, but it is remarkably efficient 
+# if all the packets are allowed to get to the other side. 
+set -e
+
+if ! netstat -tnl | grep 1080 > /dev/null; then
+    echo Set up a Socks proxy Virtual Private Network to proxy.example.com on localhost:1080 
+    /usr/bin/ssh -fND 1080 root@10.101.182.182
+fi
+
+if ! sudo iptables -vL | grep socksgrp > /dev/null; then
+    echo Only allow Skype connections to localhost by filtering on the socksgrp 
+    sudo iptables -A OUTPUT -d 127.0.0.1 -m owner --gid-owner socksgrp -j ACCEPT
+    sudo iptables -A OUTPUT ! -d 127.0.0.1 -m owner --gid-owner socksgrp -j REJECT
+fi
+
+echo Spawn Skype as group socksgrp, to allow the above rules to filter it 
+sg socksgrp skype
+
+echo Et Voila!
