@@ -21,7 +21,7 @@ function xbmc() {
         "toggle") c="-t" ;;
         *) return 1;
    esac
-   ~/Dev/xbmc/remote.py --host=daredevil.lan $c
+   xbmcremote --host=xbmc.lan $c
 
 }
 
@@ -44,7 +44,7 @@ function pra() {
 if ps -eaf | grep -v grep | grep audacious; then
     auda
 
-elif ps -eaf | grep -v grep | grep remote.py; then
+elif ps -eaf | grep -v grep | grep xbmcremote; then
     xbmc
 else
     pra
