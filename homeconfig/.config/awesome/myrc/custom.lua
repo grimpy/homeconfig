@@ -1,14 +1,12 @@
 local awful = require("awful")
-local client = require("client")
+local client = client
 local naughty = require("naughty")
-local tag = require("tag")
 local shifty = require("shifty")
-local screen = require("screen")
 local ipairs = ipairs
 local os = require("os")
-local revelation = require("revelation")
 
 module("myrc.custom")
+shifty.config.sloppy = false
 binhome = os.getenv("HOME") .. "/mygit/scripts/bin/"
 
 browser = binhome .. "browser"
@@ -17,13 +15,13 @@ autostart = true
 modkey = "Mod4"
 modkey2 = "Mod1"
 LCD = 1
-VGA = 2
+VGA = 1
 
 shiftytags = {
     ["1:term"] = { position = 1, exclusive = true, max_clients = 4, screen = VGA, spawn = terminal, layout = awful.layout.suit.fair},
     ["2:im"]  = { position = 2, exclusive = true, spawn = "pidgin", screen = VGA, layout = awful.layout.suit.fair.horizontal, },
     ["3:web"]  = { position = 3, exclusive = true, spawn = browser, screen = LCD, layout = awful.layout.suit.max, icon="/usr/share/icons/gnome/16x16/apps/web-browser.png"},
-    ["4:mail"]  = { position = 4, exclusive = true, spawn = "evolution", layout = awful.layout.suit.max, screen = VGA},
+    ["4:mail"]  = { position = 4, exclusive = true, spawn = "thunderbird", layout = awful.layout.suit.max, screen = VGA},
     ["5:fs"]  = { position = 5, exclusive = true, spawn = "thunar", layout = awful.layout.suit.floating, screen = LCD},
     ["6:edit"]  = { position = 6, exclusive = true, spawn = "gvim", screen = VGA, nopopup = true, layout = awful.layout.suit.max, },
     ["7:media"]  = { position = 7, exclusive = true, screen = LCD, nopopup = true, layout = awful.layout.suit.floating, },
@@ -65,45 +63,6 @@ function pushincorner()
     sel:geometry(geometry)
 end
 
-function tagtoscr(scr, t)
-  -- break if called with an invalid screen number
-  
-  if not scr or scr < 1 or scr > screen.count() then return end
-  -- tag to move
-  local otag = t or awful.tag.selected() 
-  
-  -- unselect active tag on other screen
-  local remotetag = awful.tag.selected(scr)
-  
-  if remotetag then
-    remotetag.selected = false
-  end
-  -- set screen and then reset tag to order properly
-  
-  otag.screen = scr
-  if #otag:clients() > 0 then
-    for _ , c in ipairs(otag:clients()) do
-      if not c.sticky then
-        c.screen = scr
-        c:tags( { otag } )
-      else
-        awful.client.toggletag(otag,c)
-      end
-    end
-  end
-  return otag
-end
-
-function switchtagtonextscreen()
-  local scr = client.focus.screen or mouse.screen
-  scr = scr + 1
-  if scr > screen.count() then
-      scr = 1
-  end
-  tagtoscr(scr)
-  
-end
-
 keybindings = awful.util.table.join(
     awful.key({ modkey2, "Control" }, "c", function () awful.util.spawn(terminal) end),
     awful.key({ }, "Print", function () awful.util.spawn(binhome .. "caputereimg.sh /home/Jo/Pictures/SS") end),
@@ -119,8 +78,7 @@ keybindings = awful.util.table.join(
     awful.key({ modkey, }, "l", function () awful.util.spawn("i3lock -c 222222") end),
     awful.key({ modkey2, "Control" }, "s", function () awful.util.spawn("skype") end),
     awful.key({ modkey2, "Control" }, "m", function () awful.util.spawn("pidgin") end),
-    awful.key({ modkey, 'Shift'   }, "o", switchtagtonextscreen),
-    awful.key({modkey, }, "t", revelation),
     awful.key({ modkey,    }, "c", pushincorner),
-    awful.key({ modkey2, "Control" }, "k", function () awful.util.spawn("geany") end))
+    awful.key({ modkey2, "Control" }, "k", function () awful.util.spawn("geany") end)
+)
 

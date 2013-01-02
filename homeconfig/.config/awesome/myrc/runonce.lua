@@ -1,5 +1,6 @@
 -- @author Peter J. Kranz (Absurd-Mind, peter@myref.net)
 -- Any questions, criticism or praise just drop me an email
+awful = require("awful")
 
 local M = {}
 
