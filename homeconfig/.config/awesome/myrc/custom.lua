@@ -75,7 +75,7 @@ keybindings = awful.util.table.join(
     awful.key({ modkey,           }, "F7", function () awful.util.spawn(binhome .. "single.sh") end),
     awful.key({ modkey,           }, "F8", function () awful.util.spawn(binhome .. "dual.sh") end),
     awful.key({ modkey,           }, "e", function () awful.util.spawn("thunar") end),
-    awful.key({ modkey, }, "l", function () awful.util.spawn("i3lock -c 222222") 
+    awful.key({ modkey2, "Control" }, "l", function () awful.util.spawn("i3lock -c 222222") 
                                             awful.util.spawn(binhome .. "musiccontrol Pause")
     end),
     awful.key({ modkey2, "Control" }, "s", function () awful.util.spawn("skype") end),

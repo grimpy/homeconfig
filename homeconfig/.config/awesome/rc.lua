@@ -10,7 +10,7 @@ local shifty = require("shifty")
 -- Custom
 require("myrc.mainmenu")
 require("myrc.autostart")
-require("myrc.calendar2")
+local cal = require("cal")
 require("myrc.custom")
 local vicious = require("vicious")
 vicious.contrib = require("vicious.contrib")
@@ -97,7 +97,7 @@ vicious.register(mynet, vicious.contrib.net, '<span color="#CC9393">${total down
 -- {{{ Wibox
 -- Create a textclock widget
 mytextclock = awful.widget.textclock("%a %d/%m - %R")
-myrc.calendar2.addCalendarToWidget(mytextclock)
+cal.register(mytextclock)
 
 
 -- Create a wibox for each screen and add it
@@ -166,7 +166,7 @@ for s = 1, screen.count() do
     mytasklist[s] = awful.widget.tasklist(s, awful.widget.tasklist.filter.currenttags, mytasklist.buttons)
 
     -- Create the wibox
-    mywibox[s] = awful.wibox({ position = "bottom", screen = s })
+    mywibox[s] = awful.wibox({ position = "top", screen = s })
 
     -- Widgets that are aligned to the left
     local left_layout = wibox.layout.fixed.horizontal()
@@ -213,8 +213,8 @@ root.buttons(awful.util.table.join(
 
 -- {{{ Key bindings
 globalkeys = awful.util.table.join(
-    awful.key({ modkey,           }, "Left",   awful.tag.viewprev       ),
-    awful.key({ modkey,           }, "Right",  awful.tag.viewnext       ),
+    awful.key({ modkey, "Shift"   }, "Left",   awful.tag.viewprev       ),
+    awful.key({ modkey, "Shift"          }, "Right",  awful.tag.viewnext       ),
     awful.key({ modkey,           }, "Escape", awful.tag.history.restore),
     
     -- Shifty: keybindings specific to shifty
@@ -237,16 +237,27 @@ globalkeys = awful.util.table.join(
         shifty.add({nopopup = true})
     end),
 
-    awful.key({ modkey,           }, "j",
+    awful.key({ modkey,           }, "h",
         function ()
-            awful.client.focus.byidx( 1)
+            awful.client.focus.bydirection("left")
+            if client.focus then client.focus:raise() end
+        end),
+    awful.key({ modkey,           }, "l",
+        function ()
+            awful.client.focus.bydirection("right")
             if client.focus then client.focus:raise() end
         end),
     awful.key({ modkey,           }, "k",
         function ()
-            awful.client.focus.byidx(-1)
+            awful.client.focus.bydirection("up")
             if client.focus then client.focus:raise() end
         end),
+    awful.key({ modkey,           }, "j",
+        function ()
+            awful.client.focus.bydirection("down")
+            if client.focus then client.focus:raise() end
+        end),
+
     awful.key({ modkey,           }, "w", function () mymainmenu:show() end),
 
     -- Layout manipulation
