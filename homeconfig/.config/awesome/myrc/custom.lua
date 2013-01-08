@@ -14,7 +14,7 @@ terminal = "urxvtc"
 autostart = true
 modkey = "Mod4"
 modkey2 = "Mod1"
-LCD = 1
+LCD = 2
 VGA = 1
 
 shiftytags = {
@@ -66,16 +66,18 @@ end
 keybindings = awful.util.table.join(
     awful.key({ modkey2, "Control" }, "c", function () awful.util.spawn(terminal) end),
     awful.key({ }, "Print", function () awful.util.spawn(binhome .. "caputereimg.sh /home/Jo/Pictures/SS") end),
-    awful.key({ modkey,           }, "F2", function () awful.util.spawn(binhome .. "musiccontrol toggle") end),
-    awful.key({ modkey,           }, "F3", function () awful.util.spawn(binhome .. "musiccontrol prev") end),
-    awful.key({ modkey,           }, "F4", function () awful.util.spawn(binhome .. "musiccontrol next") end),
-    awful.key({ }, "XF86AudioNext", function () awful.util.spawn(binhome .. "musiccontrol next") end),
-    awful.key({ }, "XF86AudioPlay", function () awful.util.spawn(binhome .. "musiccontrol toggle") end),
+    awful.key({ modkey,           }, "F2", function () awful.util.spawn(binhome .. "musiccontrol PlayPause") end),
+    awful.key({ modkey,           }, "F3", function () awful.util.spawn(binhome .. "musiccontrol Previous") end),
+    awful.key({ modkey,           }, "F4", function () awful.util.spawn(binhome .. "musiccontrol Next") end),
+    awful.key({ }, "XF86AudioNext", function () awful.util.spawn(binhome .. "musiccontrol Next") end),
+    awful.key({ }, "XF86AudioPlay", function () awful.util.spawn(binhome .. "musiccontrol PlayPause") end),
     awful.key({ }, "XF86Battery", function () awful.util.spawn("sudo pm-suspend") end),
     awful.key({ modkey,           }, "F7", function () awful.util.spawn(binhome .. "single.sh") end),
     awful.key({ modkey,           }, "F8", function () awful.util.spawn(binhome .. "dual.sh") end),
     awful.key({ modkey,           }, "e", function () awful.util.spawn("thunar") end),
-    awful.key({ modkey, }, "l", function () awful.util.spawn("i3lock -c 222222") end),
+    awful.key({ modkey, }, "l", function () awful.util.spawn("i3lock -c 222222") 
+                                            awful.util.spawn(binhome .. "musiccontrol Pause")
+    end),
     awful.key({ modkey2, "Control" }, "s", function () awful.util.spawn("skype") end),
     awful.key({ modkey2, "Control" }, "m", function () awful.util.spawn("pidgin") end),
     awful.key({ modkey,    }, "c", pushincorner),
