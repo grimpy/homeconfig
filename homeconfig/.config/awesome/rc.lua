@@ -224,7 +224,7 @@ globalkeys = awful.util.table.join(
     awful.key({modkey, "Control"},
               "n",
               function()
-                  local t = awful.tag.selected()
+                  local t = client.focus:tags()[1]
                   local s = awful.util.cycle(screen.count(), awful.tag.getscreen(t) + 1)
                   awful.tag.history.restore()
                   t = shifty.tagtoscr(s, t)
