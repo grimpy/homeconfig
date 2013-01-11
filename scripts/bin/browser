@@ -1,4 +1,4 @@
 #!/bin/bash
 #/usr/bin/opera -newpage $@
-#firefox $@
-chromium $@
+firefox $@
+#chromium $@

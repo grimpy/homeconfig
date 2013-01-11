@@ -1,6 +1,3 @@
-[submodule "homeconfig/.vim/bundle/python-mode"]
-	path = homeconfig/.vim/bundle/python-mode
-	url = git://github.com/klen/python-mode.git
 [submodule "homeconfig/.vim/bundle/ctrlp.vim"]
 	path = homeconfig/.vim/bundle/ctrlp.vim
 	url = git://github.com/grimpy/ctrlp.vim.git
@@ -13,3 +10,6 @@
 [submodule "homeconfig/.config/awesome/shifty"]
 	path = homeconfig/.config/awesome/shifty
 	url = git@github.com:grimpy/awesome-shifty.git
+[submodule "homeconfig/.vim/bundle/plantuml"]
+	path = homeconfig/.vim/bundle/plantuml
+	url = git@github.com:aklt/plantuml-syntax.git
