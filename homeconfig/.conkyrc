@@ -66,31 +66,21 @@ color1 888888
 color2 047090
 color3 03DBFC
 
-# For darkblue theme
-#color1 063158
-#color2 047090
-#color3 03DBFC
-
-# For white theme
-#color1 666666
-#color2 888888
-#color3 444444
-#
 # Up and down speed included
-#template0 ${color1}\1 [${color3}${addr \1}${color}]${downspeedgraph \1 8,40 000000 00ff00 -t}${upspeedgraph \1 8,40 000000 ff0000 -t}
 template0 ${color1}\1 [${color3}${addr \1}${color}]${color 00aa00}${downspeed \1}${color aa0000}${upspeed \1}
 template1 ${color1}\1:${color}${color3}${cpugraph \2 5,40 00ff00 ff0000}${color}
 
 
 TEXT
+${color1}Battery: [${color3}${acpiacadapter ACAD}${color1}] ${color}${color3}${battery_percent BAT1}% ${battery_bar 5,40 BAT1}${color} | \
 ${color1}Temp:${color}${color3}${acpitemp}°C ${color} | \
 ${color1}/dev/sda:${color}${diskiograph /dev/sda 8,40 000000 ff0000 -t} \
 ${if_up eth0}${template0 eth0}${endif} \
 ${if_up wlan0}${template0 wlan0}${endif} \
-${alignr}${color1}Battery: [${color3}${acpiacadapter ADP0}${color1}] ${color}${color3}${battery_percent BAT0}% ${battery_bar 5,40 BAT0}${color} | \
+${alignr}\
 ${color1}CPU: ${color}${color2}${cpu}%${cpugraph cpu0 5,40 00ff00 ff0000}${color} \
 ${template1 CPU1 cpu1} \
 ${template1 CPU2 cpu2} \
 ${template1 CPU3 cpu3} \
 ${template1 CPU4 cpu4} \
-${color1}RAM:${color} ${color3}${memperc}% ${membar 5,40}${color}
+${color1}RAM:${color} ${color3}${memperc}% ${membar 5,40}${color} \
