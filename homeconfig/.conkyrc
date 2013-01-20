@@ -43,8 +43,8 @@ use_xft yes
 xftfont Sans Mono:size=8
 gap_x 5
 gap_y 0
-minimum_size 1600 6
-maximum_width 1600
+minimum_size 1300 6
+maximum_width 1300
 net_avg_samples 2
 no_buffers yes
 out_to_console no
