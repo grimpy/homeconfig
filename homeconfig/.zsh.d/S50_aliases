@@ -22,9 +22,11 @@ alias git="loadrsa; git"
 alias hg="loadrsa; hg"
 
 export LANG="en_US.utf8"
-#export LANG="en_UK.ISO_8859_1"
 
 alias grep="grep --colour=auto"
+
+alias python="/usr/bin/python2"
+alias ipython="/usr/bin/ipython2"
 
 vik(){
        sed -i $1d ~/.ssh/known_hosts
