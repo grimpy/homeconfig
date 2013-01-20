@@ -85,16 +85,6 @@ if [ -n "$debian_chroot" ]; then
     PROMPT="$bgc%{$fg[yellow]%}%B${debian_chroot}%b ${PROMPT}"
 fi
 
-if [ "$TERM" = "screen" -o -n "$WINDOW" ]; then
-    PROMPT="${PROMPT}%{kzsh\\%}"
-
-    preexec () {
-        local CMD=${1[(wr)^(*=*|sudo|-*)]}
-        echo -ne "\ek$CMD\e\\"
-        update_display
-    }
-fi
-
 unset rst bgc
 
 if [[ "$TERM" != "linux" ]]; then
@@ -110,22 +100,3 @@ if [[ "$TERM" != "linux" ]]; then
 
 fi #TERM
 
-
-# ------------------------
-#       PS1=$'%{\e[34;1m%}%20>..>%1~%>>>%{\e[0m%}'
-#
-#       function zle-keymap-select {
-#               PS1=${${1/vicmd/$'%{\e[31;1m%}'}/(viins|main)/$'%{\e[34;1m%}'}${PS1#*%\}}
-#               zle reset-prompt
-#       }
-
-
-# ------------------------
-#       function zle-line-init zle-keymap-select {
-#               RPS1="${${KEYMAP/vicmd/-- NORMAL --}/(main|viins)/-- INSERT --}"
-#               RPS2=$RPS1
-#               RPS3=$RPS1
-#               RPS4=$RPS1
-#               zle reset-prompt
-#       }
-#       zle -N zle-line-init
