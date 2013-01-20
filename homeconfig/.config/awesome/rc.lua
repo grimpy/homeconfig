@@ -73,6 +73,7 @@ mylauncher = awful.widget.launcher({ image = beautiful.awesome_icon,
 
 -- }}}
 
+conkybar = awful.wibox({ position = "top", screen = 1, ontop = false, width = 1, height = 16 })
 mybaticon = wibox.widget.imagebox()
 mybaticon.name = "mybaticon"
 mybaticon:set_image(confdir .. "/icons/bat.png")
@@ -166,7 +167,7 @@ for s = 1, screen.count() do
     mytasklist[s] = awful.widget.tasklist(s, awful.widget.tasklist.filter.currenttags, mytasklist.buttons)
 
     -- Create the wibox
-    mywibox[s] = awful.wibox({ position = "top", screen = s })
+    mywibox[s] = awful.wibox({ position = "bottom", screen = s })
 
     -- Widgets that are aligned to the left
     local left_layout = wibox.layout.fixed.horizontal()
