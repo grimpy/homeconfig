@@ -1,0 +1,95 @@
+# Conky, a system monitor, based on torsmo
+#
+# Any original torsmo code is licensed under the BSD license
+#
+# All code written since the fork of torsmo is licensed under the GPL
+#
+# Please see COPYING for details
+#
+# Copyright (c) 2004, Hannu Saransaari and Lauri Hakkarainen
+# Copyright (c) 2005-2010 Brenden Matthews, Philip Kovacs, et. al. (see AUTHORS)
+# All rights reserved.
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+# GNU General Public License for more details.
+# You should have received a copy of the GNU General Public License
+# along with this program. If not, see <http://www.gnu.org/licenses/>.
+#
+
+alignment top_left
+if_up_strictness address
+background yes
+border_width 1
+cpu_avg_samples 2
+default_color 063158
+default_outline_color 063158
+#default_color 222222
+#default_outline_color 222222
+default_shade_color aaaaaa
+draw_borders no
+draw_graph_borders yes
+draw_outline no
+draw_shades no
+use_xft yes
+#xftfont DejaVu Sans Mono:size=12
+xftfont Sans Mono:size=8
+gap_x 5
+gap_y 0
+minimum_size 1600 6
+maximum_width 1600
+net_avg_samples 2
+no_buffers yes
+out_to_console no
+out_to_stderr no
+extra_newline no
+own_window no
+own_window_class Conky
+own_window_type desktop
+own_window_transparent yes
+stippled_borders 0
+update_interval 1.0
+uppercase no
+use_spacer left
+show_graph_scale no
+show_graph_range no
+format_human_readable yes
+
+color1 888888
+color2 047090
+color3 03DBFC
+
+# For darkblue theme
+#color1 063158
+#color2 047090
+#color3 03DBFC
+
+# For white theme
+#color1 666666
+#color2 888888
+#color3 444444
+#
+# Up and down speed included
+#template0 ${color1}\1 [${color3}${addr \1}${color}]${downspeedgraph \1 8,40 000000 00ff00 -t}${upspeedgraph \1 8,40 000000 ff0000 -t}
+template0 ${color1}\1 [${color3}${addr \1}${color}]${color 00aa00}${downspeed \1}${color aa0000}${upspeed \1}
+template1 ${color1}\1:${color}${color3}${cpugraph \2 5,40 00ff00 ff0000}${color}
+
+
+TEXT
+${color1}Temp:${color}${color3}${acpitemp}°C ${color} | \
+${color1}/dev/sda:${color}${diskiograph /dev/sda 8,40 000000 ff0000 -t} \
+${if_up eth0}${template0 eth0}${endif} \
+${if_up wlan0}${template0 wlan0}${endif} \
+${alignr}${color1}Battery: [${color3}${acpiacadapter ADP0}${color1}] ${color}${color3}${battery_percent BAT0}% ${battery_bar 5,40 BAT0}${color} | \
+${color1}CPU: ${color}${color2}${cpu}%${cpugraph cpu0 5,40 00ff00 ff0000}${color} \
+${template1 CPU1 cpu1} \
+${template1 CPU2 cpu2} \
+${template1 CPU3 cpu3} \
+${template1 CPU4 cpu4} \
+${color1}RAM:${color} ${color3}${memperc}% ${membar 5,40}${color}
