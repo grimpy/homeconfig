@@ -74,26 +74,8 @@ mylauncher = awful.widget.launcher({ image = beautiful.awesome_icon,
 -- }}}
 
 conkybar = awful.wibox({ position = "top", screen = 1, ontop = false, width = 1, height = 16 })
-mybaticon = wibox.widget.imagebox()
-mybaticon.name = "mybaticon"
-mybaticon:set_image(confdir .. "/icons/bat.png")
-mybatwidget = wibox.widget.textbox()
 mysep = wibox.widget.textbox()
 mysep:set_text("|")
-mytemp = wibox.widget.textbox()
-mynet = wibox.widget.textbox()
-hostname = string.sub(awful.util.pread("hostname"), 0, -2)
-battery = "BAT0"
-temp = 'thermal_zone0'
-if hostname == "Hulk" or hostname == "wolverine" then
-    battery = "BAT1"
-end
-if hostname == 'wolverine' then
-    temp = {'coretemp.0', 'core'}
-end
-vicious.register(mybatwidget, vicious.widgets.bat, "$1$2%", 61, battery)
-vicious.register(mytemp, vicious.widgets.thermal, "$1°C", 61, temp)
-vicious.register(mynet, vicious.contrib.net, '<span color="#CC9393">${total down_kb}</span> <span color="#7F9F7F">${total up_kb}</span>', 3)
 
 -- {{{ Wibox
 -- Create a textclock widget
@@ -178,13 +160,6 @@ for s = 1, screen.count() do
     -- Widgets that are aligned to the right
     local right_layout = wibox.layout.fixed.horizontal()
     if s == 1 then right_layout:add(wibox.widget.systray()) end
-    right_layout:add(mynet)
-    right_layout:add(mysep)
-    right_layout:add(mytemp)
-    right_layout:add(mysep)
-    right_layout:add(mybatwidget)
-    right_layout:add(mybaticon)
-    right_layout:add(mysep)
     right_layout:add(mytextclock)
     right_layout:add(mylayoutbox[s])
 
