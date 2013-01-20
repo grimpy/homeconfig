@@ -25,6 +25,7 @@
 
 alignment top_left
 if_up_strictness address
+double_buffer yes
 background yes
 border_width 1
 cpu_avg_samples 2
