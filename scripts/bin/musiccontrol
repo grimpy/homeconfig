@@ -10,9 +10,9 @@ function mpris() {
 function xbmc() {
     c=""
     case $command in
-        "next" ) c="-f" ;;
-        "prev" ) c="-r" ;;
-        "toggle") c="-t" ;;
+        "Next" ) c="-f" ;;
+        "Prev" ) c="-r" ;;
+        "PlayPause") c="-t" ;;
         *) return 1;
    esac
    xbmcremote --host=xbmc.lan $c
