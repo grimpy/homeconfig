@@ -269,13 +269,6 @@ globalkeys = awful.util.table.join(
     -- Prompt
     awful.key({ modkey },            "r",     function () mypromptbox[mouse.screen]:run() end),
 
-    awful.key({ modkey }, "x",
-              function ()
-                  awful.prompt.run({ prompt = "Run Lua code: " },
-                  mypromptbox[mouse.screen].widget,
-                  awful.util.eval, nil,
-                  awful.util.getdir("cache") .. "/history_eval")
-              end),
     -- Menubar
     awful.key({ modkey }, "p", function() menubar.show() end)
 )
@@ -306,9 +299,12 @@ shifty.config.clientkeys = clientkeys
 shifty.config.modkey = modkey
 
 -- Compute the maximum number of digit we need, limited to 9
-for i = 1, (shifty.config.maxtags or 9) do
+-- for i = 1, (shifty.config.maxtags or 9) do
+for _, shiftag in pairs(shifty.config.tags) do
+    local i = shiftag.position
+    local key = shiftag.key or i
     globalkeys = awful.util.table.join(globalkeys,
-          awful.key({modkey}, i, function()
+          awful.key({modkey}, key, function()
             local tag = shifty.getpos(i)
             local t =  awful.tag.viewonly(tag)
             local scr = awful.tag.getscreen(tag)
@@ -316,17 +312,17 @@ for i = 1, (shifty.config.maxtags or 9) do
                 awful.screen.focus(scr)
             end
             end),
-        awful.key({modkey, "Control"}, i, function()
+        awful.key({modkey, "Control"}, key, function()
             local t = shifty.getpos(i)
             t.selected = not t.selected
             end),
-        awful.key({modkey, "Control", "Shift"}, i, function()
+        awful.key({modkey, "Control", "Shift"}, key, function()
             if client.focus then
                 awful.client.toggletag(shifty.getpos(i))
             end
             end),
         -- move clients to other tags
-        awful.key({modkey, "Shift"}, i, function()
+        awful.key({modkey, "Shift"}, key, function()
             if client.focus then
                 t = shifty.getpos(i)
                 awful.client.movetotag(t)
