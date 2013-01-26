@@ -43,7 +43,6 @@ urxvt.saveLines: 10000
 urxvt.font: xft:Monospace:size=8
 URxvt.perl-ext-common: default,matcher,clipboard,keyboard-select
 URxvt.keysym.M-Escape: perl:keyboard-select:activate
-URxvt.keysym.Mod4-c: perl:clipboard:copy
 URxvt.keysym.Mod4-v: perl:clipboard:paste
 urxvt.cutchars:'"'&()*,;<=>?@[]^{|}
 Xterm.font: xft:Monospace:size=10
