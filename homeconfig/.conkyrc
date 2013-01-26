@@ -69,12 +69,15 @@ color3 03DBFC
 # Up and down speed included
 template0 ${color1}\1 [${color3}${addr \1}${color}]${color 00aa00}${downspeed \1}${color aa0000}${upspeed \1}
 template1 ${color1}\1:${color}${color3}${cpugraph \2 5,40 00ff00 ff0000}${color}
+# IronMan   ADP0 BAT0
+# wolverine ACAD BAT1
+template2 ${color1}Battery: [${color3}${acpiacadapter \1}${color1}] ${color}${color3}${battery_percent \2}% ${battery_bar 5,40 \2}${color} | \
 
 
 TEXT
-${color1}Battery: [${color3}${acpiacadapter ACAD}${color1}] ${color}${color3}${battery_percent BAT1}% ${battery_bar 5,40 BAT1}${color} | \
+${if_match "wolverine" != "$nodename"}${template2 ADP0 BAT0}${else}${template2 ACAD BAT1}${endif} \
 ${color1}Temp:${color}${color3}${acpitemp}°C ${color} | \
-${color1}/dev/sda:${color}${diskiograph /dev/sda 8,40 000000 ff0000 -t} \
+${color1}/dev/sda:${color}${diskiograph /dev/sda 8,40 00ff00 ff0000 -t} \
 ${if_up eth0}${template0 eth0}${endif} \
 ${if_up wlan0}${template0 wlan0}${endif} \
 ${alignr}\
