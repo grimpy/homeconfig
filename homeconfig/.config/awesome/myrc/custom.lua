@@ -71,6 +71,7 @@ keybindings = awful.util.table.join(
     awful.key({ modkey2, "Control" }, "c", function () awful.util.spawn(terminal) end),
     awful.key({ }, "Print", function () awful.util.spawn(binhome .. "caputereimg.sh /home/Jo/Pictures/SS") end),
     awful.key({ modkey,           }, "F2", function () awful.util.spawn(binhome .. "musiccontrol PlayPause") end),
+    awful.key({ modkey,           }, "c", function () awful.util.spawn_with_shell("xclip -o | xclip -i -selection clipboard") end),
     awful.key({ modkey,           }, "F3", function () awful.util.spawn(binhome .. "musiccontrol Previous") end),
     awful.key({ modkey,           }, "F4", function () awful.util.spawn(binhome .. "musiccontrol Next") end),
     awful.key({ }, "XF86AudioNext", function () awful.util.spawn(binhome .. "musiccontrol Next") end),
