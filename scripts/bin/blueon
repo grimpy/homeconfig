@@ -1,3 +1,0 @@
-sudo /sbin/modprobe bluetooth
-sudo /sbin/modprobe hci_usb
-sudo /etc/init.d/bluetooth restart

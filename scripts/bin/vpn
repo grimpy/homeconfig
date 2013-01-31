@@ -1,4 +1,0 @@
-#!/bin/bash
-sudo modprobe tun
-cd /home/grimpy/Doc/configs/openvpn/
-sudo openvpn --config /home/grimpy/Doc/configs/openvpn/ovpn-client.ovpn --route-up "/home/grimpy/Doc/configs/openvpn/networkup"

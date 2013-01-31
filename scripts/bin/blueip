@@ -1,9 +1,0 @@
-ip=exec ipeth0
-sudo rfcomm release 0
-sudo rfcomm bind 0
-sudo sdptool add --channel=1 SP
-#sudo dund --listen --channel 1 --msdun call p900
-sudo dund --listen --persist --channel 1 noauth debug crtscts lock local proxyarp passive ipcp-accept-local ipcp-accept-remote ms-dns 10.0.0.3 10.0.0.141:10.0.0.33
-sudo echo 1 > /proc/sys/net/ipv4/ip_forward
-sudo echo 1 > /dev/rfcomm0
-#sudo /etc/init.d/named restart

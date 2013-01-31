@@ -1,1 +1,0 @@
-ifconfig $1 | grep addr: | awk -F : '{print $2;}' | awk '{print $1;}'

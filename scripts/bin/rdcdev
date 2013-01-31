@@ -1,5 +1,0 @@
-ipadress=10.100.0.18
-if [ -n $1 ]; then
-  ipaddress=$1
-fi
-rdesktop -D -K -P -z -0 -5 -u jo -p jo -g 1440x900 -a 8 -T 'Jo Dev' $ipaddress
