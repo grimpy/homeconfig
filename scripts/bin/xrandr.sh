@@ -22,8 +22,8 @@ dual() {
 clone() {
     xrandr --output ${CON[1]} --same-as ${CON[0]}
 }
-toggle() {
-    if [ ${#CON[*]} -gt 1 ]; then
+auto() {
+    if [ ${#CON[*]} -lt 1 ]; then
         single
     else
         dual
@@ -35,7 +35,7 @@ case ${COMMAND} in
     --single) single;;
     --dual) dual;;
     --clone) clone;;
-    --toggle) toggle;;
+    --auto) auto;;
     *) usage
 esac
 
