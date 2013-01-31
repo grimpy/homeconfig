@@ -1,0 +1,16 @@
+#!/bin/bash
+processes=$(ps -eo pid,cmd | grep ssh_mux | grep -v grep)
+IFS="
+"
+x=1
+declare -a proc
+for process in ${processes}; do
+    unset IFS
+    p=($(echo ${process} | tr '_' ' '))
+    echo "${x}) ${p[0]} ${p[6]}@${p[4]}:${p[5]}"
+    proc[$x]=${p[0]}
+    x=$(($x+1))
+done
+echo -n "Which mux to kill: "
+read killme
+kill ${proc[${killme}]}
