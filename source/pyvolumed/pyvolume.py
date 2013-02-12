@@ -104,8 +104,10 @@ def toggleMute(_):
 
 def main():
     keybinder.bind('<Super>Up', notifyDelta, 5)
-    keybinder.bind('<Super>Down', notifyDelta, -5)
+    keybinder.bind('XF86AudioRaiseVolume', notifyDelta, 5)
+    keybinder.bind('XF86AudioLowerVolume', notifyDelta, -5)
     keybinder.bind('<Super>0', toggleMute, None)
+    keybinder.bind('XF86AudioMute', toggleMute, None)
     gtk.mainloop()
 
 
