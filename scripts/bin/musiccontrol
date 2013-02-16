@@ -12,7 +12,7 @@ function xbmc() {
     case $command in
         "Next" ) c="-f" ;;
         "Prev" ) c="-r" ;;
-        "PlayPause") c="-t" ;;
+        "PlayPause") c="-k p" ;;
         *) return 1;
    esac
    xbmcremote --host=xbmc.lan $c
