@@ -13,6 +13,14 @@ alias ll="ls --color=always -l"
 alias lla="ls --color=always -la"
 alias lal="ls --color=always -la"
 
+# cd stuff
+alias .="cd .."
+alias ..="cd ../.."
+alias ...="cd ../../.."
+alias ....="cd ../../../.."
+
+alias cdr="cd vcs_info_msg_1_"
+
 #rsa stuff
 alias ssh="loadrsa; ssh"
 alias scp="loadrsa; scp"
