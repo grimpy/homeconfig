@@ -12,7 +12,7 @@ set -e
 
 if ! netstat -tnl | grep 1080 > /dev/null; then
     echo Set up a Socks proxy Virtual Private Network to proxy.example.com on localhost:1080 
-    /usr/bin/ssh -fND 1080 root@10.101.182.182
+    /usr/bin/ssh -fND 1080 bshellz
 fi
 
 if ! sudo iptables -vL | grep socksgrp > /dev/null; then
