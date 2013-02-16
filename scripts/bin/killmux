@@ -11,6 +11,5 @@ for process in ${processes}; do
     proc[$x]=${p[0]}
     x=$(($x+1))
 done
-echo -n "Which mux to kill: "
-read killme
+read -p "Which mux to kill: " killme
 kill ${proc[${killme}]}
