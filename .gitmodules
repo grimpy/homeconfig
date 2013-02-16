@@ -13,3 +13,6 @@
 [submodule "homeconfig/.vim/bundle/plantuml"]
 	path = homeconfig/.vim/bundle/plantuml
 	url = git@github.com:aklt/plantuml-syntax.git
+[submodule "homeconfig/.vim/bundle/py.test"]
+	path = homeconfig/.vim/bundle/py.test
+	url = git@github.com:alfredodeza/pytest.vim.git

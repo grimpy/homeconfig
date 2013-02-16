@@ -32,6 +32,10 @@ set hlsearch
 nnoremap <leader>/ :noh<cr>
 nnoremap <leader>n :NERDTreeToggle<CR>
 nnoremap <leader>m :only<CR>
+nmap <silent><Leader>tf <Esc>:Pytest file<CR>
+nmap <silent><Leader>tc <Esc>:Pytest class<CR>
+nmap <silent><Leader>tm <Esc>:Pytest method<CR>
+
 nmap <leader>a <Esc>:Ack!
 imap <C-Space> <C-x><C-o>
 imap <C-@> <C-Space>
