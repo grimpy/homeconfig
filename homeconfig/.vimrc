@@ -5,7 +5,7 @@ call pathogen#helptags()
 let mapleader = ","
 
 let g:ctrlp_map = '<leader>f'
-let g:ctrlp_regexp = 1
+"let g:ctrlp_regexp = 1
 let g:pydiction_location = '$HOME/.vim/complete-dict'
 
 au FileType python set omnifunc=pythoncomplete#Complete
@@ -23,6 +23,7 @@ set tabstop=4
 set shiftwidth=4
 set expandtab
 set smartindent
+set smartcase
 set filetype=on
 set mouse=a
 set guifont=Monospace\ 8
@@ -35,6 +36,7 @@ nnoremap <leader>m :only<CR>
 nmap <silent><Leader>tf <Esc>:Pytest file<CR>
 nmap <silent><Leader>tc <Esc>:Pytest class<CR>
 nmap <silent><Leader>tm <Esc>:Pytest method<CR>
+nmap <f5> :make<CR>
 
 nmap <leader>a <Esc>:Ack!
 imap <C-Space> <C-x><C-o>
