@@ -13,8 +13,6 @@ alias ll="ls --color=always -l"
 alias lla="ls --color=always -la"
 alias lal="ls --color=always -la"
 
-alias cp="cp -i"
-
 #rsa stuff
 alias ssh="loadrsa; ssh"
 alias scp="loadrsa; scp"
@@ -24,9 +22,6 @@ alias hg="loadrsa; hg"
 export LANG="en_US.utf8"
 
 alias grep="grep --colour=auto"
-
-alias python="/usr/bin/python2"
-alias ipython="/usr/bin/ipython2"
 
 vik(){
        sed -i $1d ~/.ssh/known_hosts
