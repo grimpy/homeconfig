@@ -36,6 +36,11 @@ nnoremap <leader>m :only<CR>
 nmap <silent><Leader>tf <Esc>:Pytest file<CR>
 nmap <silent><Leader>tc <Esc>:Pytest class<CR>
 nmap <silent><Leader>tm <Esc>:Pytest method<CR>
+nmap <silent><Leader>tn <Esc>:Pytest next<CR>
+nmap <silent><Leader>tp <Esc>:Pytest previous<CR>
+nmap <silent><Leader>te <Esc>:Pytest end<CR>
+nmap <silent><Leader>ts <Esc>:Pytest session<CR>
+
 nmap <f5> :make<CR>
 
 nmap <leader>a <Esc>:Ack!
