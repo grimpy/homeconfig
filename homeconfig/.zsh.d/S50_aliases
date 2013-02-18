@@ -19,7 +19,7 @@ alias ..="cd ../.."
 alias ...="cd ../../.."
 alias ....="cd ../../../.."
 
-alias cdr="cd vcs_info_msg_1_"
+alias cdr="cd \$vcs_info_msg_1_"
 
 #rsa stuff
 alias ssh="loadrsa; ssh"
@@ -48,13 +48,20 @@ loadkey(){
 # and search for folders having the same name / for actions in pylabs 
 function v(){
     vimbin="vim"
-    if [ -e "/usr/bin/gvim" ]; then
-        vimbin="gvim"
-    fi
     if [ -z "$@" ] ; then
         $vimbin -c "normal '0";
     else
         $vimbin `echo "$@" | cut -d: -f1,2 | sed -e 's/:/ +/g'`;
     fi
+}
+
+function cd() {
+    local cdto="BKMRK_${1}"
+    cdto="${(P)cdto}"
+    if [ -n "$cdto" ]; then
+        builtin cd $cdto
+        return
+    fi
+    builtin cd $*
 }
 
