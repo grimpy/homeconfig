@@ -37,6 +37,7 @@ nmap <silent><Leader>tp <Esc>:Pytest previous<CR>
 nmap <silent><Leader>te <Esc>:Pytest end<CR>
 nmap <silent><Leader>ts <Esc>:Pytest session<CR>
 
+
 nmap <f5> :make<CR>
 
 nmap <leader>a <Esc>:Ack!
@@ -59,6 +60,8 @@ else
     colorscheme  evening
 endif
 
+highlight Pmenu guibg=purple gui=bold
+highlight Pmenu ctermbg=blue ctermfg=white gui=bold
 
 " save root files while not root
 cmap w!! w !sudo tee % >/dev/null
