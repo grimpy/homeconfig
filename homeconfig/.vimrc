@@ -6,14 +6,10 @@ let mapleader = ","
 
 let g:ctrlp_map = '<leader>f'
 "let g:ctrlp_regexp = 1
-let g:pydiction_location = '$HOME/.vim/complete-dict'
 
 au FileType python set omnifunc=pythoncomplete#Complete
 let g:SuperTabDefaultCompletionType = "context"
 set completeopt=menuone,longest,preview
-
-let python = 'python2'
-let pydoc = 'pydoc2'
 
 " some defaults
 filetype off
