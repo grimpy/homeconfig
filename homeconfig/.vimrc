@@ -9,7 +9,10 @@ let g:ctrlp_map = '<leader>f'
 
 au FileType python set omnifunc=pythoncomplete#Complete
 let g:SuperTabDefaultCompletionType = "context"
+let g:SuperTabClosePreviewOnPopupClose = 1
 set completeopt=menuone,longest,preview
+
+let g:notes_directory = '~/Documents/Notes'
 
 " some defaults
 filetype off
@@ -61,7 +64,9 @@ else
 endif
 
 highlight Pmenu guibg=purple gui=bold
+highlight PmenuSel guibg=red gui=bold
 highlight Pmenu ctermbg=blue ctermfg=white gui=bold
+highlight PmenuSel ctermbg=red ctermfg=white gui=bold
 
 " save root files while not root
 cmap w!! w !sudo tee % >/dev/null
