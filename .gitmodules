@@ -22,3 +22,6 @@
 [submodule "homeconfig/.vim/bundle/pathogen"]
 	path = homeconfig/.vim/bundle/pathogen
 	url = git@github.com:tpope/vim-pathogen.git
+[submodule "homeconfig/.vim/bundle/commentary"]
+	path = homeconfig/.vim/bundle/commentary
+	url = git@github.com:tpope/vim-commentary.git
