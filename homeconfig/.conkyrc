@@ -79,7 +79,7 @@ ${if_match "wolverine" != "$nodename"}${template2 ADP0 BAT0}${else}${template2 A
 ${color1}Temp:${color}${color3}${acpitemp}°C ${color} | \
 ${color1}/dev/sda:${color}${diskiograph /dev/sda 8,40 00ff00 ff0000 -t} \
 ${if_up eth0}${template0 eth0}${endif} \
-${if_up wlan0}${template0 wlan0}${endif} \
+${if_up wlan0}${template0 wlan0} ${color3} ${wireless_essid wlan0}${endif} \
 ${alignr}\
 ${color1}CPU: ${color}${color2}${cpu}%${cpugraph cpu0 5,40 00ff00 ff0000}${color} \
 ${template1 CPU1 cpu1} \
