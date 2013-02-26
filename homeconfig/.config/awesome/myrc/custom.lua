@@ -20,7 +20,7 @@ LCD = screen.count()
 VGA = 1
 
 shiftytags = {
-    ["1:term"] = { position=1, key=1, exclusive=true, max_clients=4, screen=VGA, spawn=terminal, layout=awful.layout.suit.fair},
+    ["1:term"] = { position=1, key=1, exclusive=true, max_clients=4, screen=VGA, spawn=terminal, layout=awful.layout.suit.fair.horizontal},
     ["2:im"] = { position=2, key=2, exclusive=true, spawn="pidgin", screen=VGA, layout=awful.layout.suit.fair.horizontal, },
     ["3:web"] = { position=3, key=3, exclusive=true, spawn=browser, screen=LCD, layout=awful.layout.suit.max, icon="/usr/share/icons/gnome/16x16/apps/web-browser.png"},
     ["4:mail"] = { position=4, key=4, exclusive=true, spawn="thunderbird", layout=awful.layout.suit.max, screen=VGA},
@@ -29,7 +29,8 @@ shiftytags = {
     ["7:media"] = { position=7, key=7, exclusive=true, screen=LCD, nopopup=true, layout=awful.layout.suit.floating, },
     ["9:mediafs"] = { position=9, key=9, exclusive=true, screen=LCD, nopopup=true, layout=awful.layout.suit.max.fullscreen, },
     ["8:emu"] = { position=8, key=8, exclusive=true, spawn="VirtualBox", screen=LCD, nopopup=true, layout=awful.layout.suit.max, },
-    ["10:xbmcremote"] = { position=10, key='x', exclusive=true, spawn='xterm -class xbmcremote -e python2 /usr/bin/xbmcremote -c --host xbmc.lan', screen=VGA, layout=awful.layout.suit.max, },
+    --["10:xbmcremote"] = { position=10, key='x', exclusive=true, spawn='xterm -class xbmcremote -e python2 /usr/bin/xbmcremote -c --host xbmc.lan', screen=VGA, layout=awful.layout.suit.max, },
+    ["10:xbmcremote"] = { position=10, key='x', exclusive=true, spawn='xterm -class xbmcremote -e bash /home/Jo/mygit/scripts/bin/kbshare', screen=VGA, layout=awful.layout.suit.max, },
 }
 clientbuttons=awful.util.table.join(
     awful.button({ }, 1, function (c) client.focus=c; c:raise() end),
@@ -45,7 +46,7 @@ shiftyapps = {
          { match = { "Geany", "gvim" }, tag="6:edit" } ,
          { match = { "xbmcremote" }, tag="10:xbmcremote" } ,
          { match = { "Eclipse" }, tag="6:edit", nopopup=true } ,
-         { match = { "MPlayer", "ario", "Audacious", "pragha", "mplayer2" }, tag="7:media" } ,
+         { match = { "MPlayer", "ario", "Audacious", "pragha", "mplayer2", "bino" }, tag="7:media" } ,
          { match = { "VirtualBox" }, tag="8:emu" } ,
          { match = { "xbmc.bin" }, tag="9:mediafs" } ,
          { match = { "" }, buttons= clientbuttons },
