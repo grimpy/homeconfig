@@ -58,8 +58,12 @@ function v(){
 function cd() {
     local cdto="BKMRK_${1}"
     cdto="${(P)cdto}"
-    if [ -n "$cdto" ]; then
-        builtin cd $cdto
+    if [ -n "$cdto" -a ! -e "${1}" ]; then
+        local extra=`echo "$1" | cut -d / -f 2-`
+        if [ "$extra" = "$1" ]; then
+            extra=""
+        fi
+        builtin cd "$cdto/$extra"
         return
     fi
     builtin cd $*
