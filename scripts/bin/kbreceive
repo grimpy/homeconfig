@@ -1,0 +1,20 @@
+#!/usr/bin/env python
+import os
+import subprocess
+
+command = "netcat -t -l -p %s | netevent -write"
+ports = [1956, 1960]
+portsinfo = dict()
+
+for port in ports:
+    sub = subprocess.Popen([command % port], shell=True)
+    portsinfo[sub.pid] = port
+
+while True:
+    (pid, exit) = os.wait()
+    port = portsinfo.pop(pid)
+    print "Client with port %s died" % port
+    stdin = open('/dev/zero')
+    sub = subprocess.Popen([command % port], shell=True, stdin=stdin)
+    portsinfo[sub.pid] = port
+

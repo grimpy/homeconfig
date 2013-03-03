@@ -1,0 +1,28 @@
+#!/bin/bash
+remotehost=$1
+
+cleanup() {
+    echo "Killing mouse server"
+    kill %1
+}
+
+netevent -nograb -toggler "/home/Jo/.netdevgrab" -read /dev/input/by-path/platform-i8042-serio-1-event-mouse | netcat -t $remotehost 1960 &
+trap cleanup SIGINT
+netevent -nograb -hotkey EV_KEY:100:1 "@toggle" -ontoggle "
+notify() {
+    body=\$1
+    timeout=\$2
+    bg=\$3
+    echo \"naughty = require('naughty'); 
+    local myobj = naughty.notify({title='\$body', replaces_id=1, timeout=\$2, bg='\$bg'});
+    \" | awesome-client
+}
+
+echo -n \$GRAB > /home/Jo/.netdevgrab
+
+if [ \$GRAB -eq 0 ]; then
+    notify \"Keyboard Disconnected\" 5 '#535d6c'
+else
+    notify \"Keyboard Connected\" 0 '#aa2020'
+fi
+"  -read /dev/input/by-path/platform-i8042-serio-0-event-kbd | netcat -t $remotehost 1956
