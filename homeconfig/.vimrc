@@ -8,10 +8,13 @@ let mapleader = ","
 let g:ctrlp_map = '<leader>f'
 "let g:ctrlp_regexp = 1
 
-au FileType python set omnifunc=pythoncomplete#Complete
-let g:SuperTabDefaultCompletionType = "context"
-let g:SuperTabClosePreviewOnPopupClose = 1
-set completeopt=menuone,longest,preview
+autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
+autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
+autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
+autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
+autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
+let g:neocomplcache_enable_at_startup = 1
+let g:neocomplcache_enable_auto_close_preview = 1
 
 let g:notes_directory = '~/Documents/Notes'
 
