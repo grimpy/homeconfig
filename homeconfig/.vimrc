@@ -33,6 +33,8 @@ set guifont=Monospace\ 8
 set fdm=indent
 set foldlevel=30
 set hlsearch
+
+inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
 nnoremap <leader>/ :noh<cr>
 nnoremap <leader>n :NERDTreeToggle<CR>
 nnoremap <leader>m :only<CR>
