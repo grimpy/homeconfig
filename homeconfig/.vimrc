@@ -36,7 +36,7 @@ set hlsearch
 
 inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
 nnoremap <leader>/ :noh<cr>
-nnoremap <leader>n :NERDTreeToggle<CR>
+nnoremap <leader>n :NERDTreeFind<CR>
 nnoremap <leader>m :only<CR>
 nmap <silent><Leader>tf <Esc>:Pytest file<CR>
 nmap <silent><Leader>tc <Esc>:Pytest class<CR>
