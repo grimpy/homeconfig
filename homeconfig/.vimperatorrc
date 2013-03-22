@@ -7,3 +7,4 @@ command! -nargs=+ lazy autocmd VimperatorEnter .* <args>
 lazy fmaps -urls='www\.facebook\.com.*' -events=vkeydown j k
 lazy fmaps -urls='www\.google\.be/reader.*' -events=vkeypress j k n p m s v A r S N P X O gh ga gs gt gu u / ? J K
 lazy fmaps -urls='plus\.google\.com.*' -events=keypress j k
+lazy fmaps -urls='www\.feedly\.com.*' j k v
