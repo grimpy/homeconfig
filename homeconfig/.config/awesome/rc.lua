@@ -195,8 +195,6 @@ globalkeys = awful.util.table.join(
     
     -- Shifty: keybindings specific to shifty
     awful.key({modkey, "Shift"}, "d", shifty.del), -- delete a tag
-    awful.key({modkey, "Shift"}, "n", shifty.send_prev), -- client to prev tag
-    awful.key({modkey}, "n", shifty.send_next), -- client to next tag
     awful.key({modkey, "Control"},
               "n",
               function()
