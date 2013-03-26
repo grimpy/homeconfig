@@ -69,3 +69,7 @@ function cd() {
     builtin cd $*
 }
 
+function yaourt(){
+    /usr/bin/yaourt $*
+    hash -r
+}
