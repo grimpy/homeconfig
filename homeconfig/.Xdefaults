@@ -1,6 +1,3 @@
-urxvt*termName: rxvt
-urxvt*urgentOnBell: True
-urxvt.saveLines: 10000
 *background: black
 *foreground: white
 *cursorColor: red
@@ -36,13 +33,21 @@ urxvt.saveLines: 10000
 ! ! white
 *color7  : #D3D7CF
 *color15 : #EEEEEC
-
-*urlLauncher: firefox
 *matcher.button: 3
 *colorUL: #86A2BB
+
+urxvt.url-launcher: /usr/bin/firefox
 urxvt.font: xft:Monospace:size=8
-URxvt.perl-ext-common: default,matcher,clipboard,keyboard-select
-URxvt.keysym.M-Escape: perl:keyboard-select:activate
-URxvt.keysym.Mod4-v: perl:clipboard:paste
+urxvt.perl-ext-common: default,matcher,clipboard,keyboard-select
+urxvt.keysym.M-Escape: perl:keyboard-select:activate
+urxvt.perl-ext:   default,url-select
+urxvt.keysym.M-u: perl:url-select:select_next
+urxvt.url-select.underline: true
+urxvt.keysym.M-v: perl:clipboard:paste
+urxvt.keysym.M-c: perl:clipboard:copy
 urxvt.cutchars:'"'&()*,;<=>?@[]^{|}
-Xterm.font: xft:Monospace:size=10
+urxvt.termName: rxvt
+urxvt.urgentOnBell: True
+urxvt.saveLines: 10000
+
+xterm.font: xft:Monospace:size=10
