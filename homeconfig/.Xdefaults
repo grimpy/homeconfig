@@ -37,6 +37,7 @@
 *colorUL: #86A2BB
 
 urxvt.url-launcher: /usr/bin/firefox
+urxvt.url-select.launcher: /usr/bin/firefox
 urxvt.font: xft:Monospace:size=8
 urxvt.perl-ext-common: default,matcher,clipboard,keyboard-select
 urxvt.keysym.M-Escape: perl:keyboard-select:activate
