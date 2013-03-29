@@ -8,8 +8,8 @@ autoload colors
 autoload vcs_info
 colors
 
-rst="%{%b%s%u$reset_color%}"
-bgc="%{%(?.$rst.%S)%}"
+local _rst="%{%b%s%u$reset_color%}"
+local _bgc="%{%(?.$_rst.%S)%}"
 zstyle ':vcs_info:*' enable git hg svn
 zstyle ':vcs_info:*' check-for-changes true
 zstyle ':vcs_info:*' stagedstr  'S '
@@ -27,10 +27,10 @@ function lprompt {
     ch2=$col1${1[2]}
 
     PROMPT1="\
-$bgc$ch1\
-$bgc$col2%B%1~%b\
-$ch2$rst\
-$col2$rst " #%#$rst "
+$_bgc$ch1\
+$_bgc$col2%B%1~%b\
+$ch2$_rst\
+$col2$_rst " #%#$_rst "
     PROMPT='${vcs_info_msg_0_}$PROMPT1'
 }
 
@@ -63,11 +63,11 @@ function rprompt {
     local _dir='$(_rprompt_dir)'
 
     RPROMPT="\
-$rst$ch1\
+$_rst$ch1\
 $col2%n@%m\
 $col1:\
 $col2%B$_dir%b\
-$ch2$rst"
+$ch2$_rst"
 }
 
 if [ $UID -eq 0 ]; then
@@ -82,10 +82,20 @@ else
 fi
 
 if [ -n "$debian_chroot" ]; then
-    PROMPT="$bgc%{$fg[yellow]%}%B${debian_chroot}%b ${PROMPT}"
+    PROMPT="$_bgc%{$fg[yellow]%}%B${debian_chroot}%b ${PROMPT}"
 fi
 
-unset rst bgc
+
+function zle-line-init zle-keymap-select {
+    color="${${KEYMAP/vicmd/blue}/(main|viins)/white}"
+    rprompt '()' yellow $color
+    zle reset-prompt
+}
+
+zle -N zle-line-init
+zle -N zle-keymap-select
+
+
 
 if [[ "$TERM" != "linux" ]]; then
 
