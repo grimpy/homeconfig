@@ -39,11 +39,10 @@
 urxvt.url-launcher: /usr/bin/firefox
 urxvt.url-select.launcher: /usr/bin/firefox
 urxvt.font: xft:Monospace:size=8
-urxvt.perl-ext-common: default,matcher,clipboard,keyboard-select
+urxvt.perl-ext-common: default,clipboard,keyboard-select,confirm-paste,url-select
+urxvt.matcher.pattern.1: \\w{8}-\\w{4}-\\w{4}-\\w{4}-\\w{12}
 urxvt.keysym.M-Escape: perl:keyboard-select:activate
-urxvt.perl-ext:   default,url-select
 urxvt.keysym.M-u: perl:url-select:select_next
-urxvt.url-select.underline: true
 urxvt.keysym.M-v: perl:clipboard:paste
 urxvt.keysym.M-c: perl:clipboard:copy
 urxvt.cutchars:'"'&()*,;<=>?@[]^{|}
