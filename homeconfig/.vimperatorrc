@@ -1,7 +1,7 @@
 let mapleader = ","
 noremap <leader>/ :noh<cr>
-"noremap j 8j
-"noremap k 8k
+noremap j 8j
+noremap k 8k
 
 command! -nargs=+ lazy autocmd VimperatorEnter .* <args>
 lazy fmaps -urls='www\.facebook\.com.*' -events=vkeydown j k
