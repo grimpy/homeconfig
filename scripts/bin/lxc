@@ -5,6 +5,21 @@ if [ "$1" == "--help" ]; then
         echo "  lxc " $x; 
     done
     exit 0
+elif [ "$1" == "clone" ]; then
+    src="$2"
+    destname="$3"
+    dest="/var/lib/lxc/$3"
+    lxc_path="/var/lib/lxc"
+    sudo btrfs subvolume snapshot "/var/lib/lxc/${src}" "${dest}"
+    sudo sed -i "s/lxc.utsname.*/lxc.utsname = ${destname}/" "${dest}/config"
+    sudo sed -i "s#/var/lib/lxc/${src}#/var/lib/lxc/${destname}#" "${dest}/config"
+    sudo sed -i "s@$lxc_path/$src@$lxc_path/$destname@" $dest/fstab
+    sudo sed -i "s/${src}/${destname}/" $dest/rootfs/etc/hostname
+    sudo sed -i "s/${src}/${destname}/" $dest/rootfs/etc/hosts
+    exit 0
+elif [ "$1" == "destroy" ]; then
+    sudo btrfs subvolume delete /var/lib/lxc/$2
+    exit 0
 fi
 
 cmd=lxc-$1
