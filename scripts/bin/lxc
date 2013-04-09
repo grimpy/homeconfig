@@ -1,23 +1,58 @@
 #!/bin/bash
+
+function getStatus() {
+    pid=$(lxc info -p -n ${1} | awk '{print $2}')
+    if [ "$pid" = "-1" ]; then
+        return 1
+    fi
+    return 0
+}
+
+lxc_path="/var/lib/lxc"
 if [ "$1" == "--help" ]; then
     echo "Usage lxc <commmand> [command options]"
     for x in `ls /usr/bin/lxc-* | sed -s "s#/usr/bin/lxc-##" `; do 
         echo "  lxc " $x; 
     done
     exit 0
+
+elif [ "$1" == "ls" ]; then
+    for container in $(sudo lxc-ls); do
+        echo -e -n $container "\t"
+        lxc info -s -n $container | awk '{print $2}'
+    done | sort -k2 -k1
+    exit 0
+elif [ "$1" == "start" ]; then
+    sudo lxc-start -d -n "$2"
+    exit 0
+elif [ "$1" == "stop" ]; then
+    sudo lxc-stop -n "$2"
+    exit 0
 elif [ "$1" == "clone" ]; then
     src="$2"
     destname="$3"
-    dest="/var/lib/lxc/$3"
-    lxc_path="/var/lib/lxc"
-    sudo btrfs subvolume snapshot "/var/lib/lxc/${src}" "${dest}"
+    dest="${lxc_path}/$3"
+    if [ -e "$dest" ]; then
+        echo Container $destname already exists
+        exit 1
+    fi
+    sudo btrfs subvolume snapshot "$lxc_path/${src}" "${dest}"
     sudo sed -i "s/lxc.utsname.*/lxc.utsname = ${destname}/" "${dest}/config"
-    sudo sed -i "s#/var/lib/lxc/${src}#/var/lib/lxc/${destname}#" "${dest}/config"
+    sudo sed -i "s#${lxc_path}/${src}#${lxc_path}/${destname}#" "${dest}/config"
     sudo sed -i "s@$lxc_path/$src@$lxc_path/$destname@" $dest/fstab
     sudo sed -i "s/${src}/${destname}/" $dest/rootfs/etc/hostname
     sudo sed -i "s/${src}/${destname}/" $dest/rootfs/etc/hosts
     exit 0
 elif [ "$1" == "destroy" ]; then
+    dest="${lxc_path}/$2"
+    if [ ! -e "${dest}" -o -z "$2" ]; then
+        echo "Container doest not exist"
+        exit 1
+    fi
+    if getStatus "$2"; then
+        echo "Can not destroy container which is running"    
+        exit 1
+    fi
     sudo btrfs subvolume delete /var/lib/lxc/$2
     exit 0
 fi
