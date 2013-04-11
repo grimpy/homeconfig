@@ -20,7 +20,7 @@ elif [ "$1" == "ls" ]; then
     for container in $(sudo lxc-ls); do
         echo -e -n $container "\t"
         lxc info -s -n $container | awk '{print $2}'
-    done | sort -k2 -k1
+    done | sort -k2 -k1 | column -t
     exit 0
 elif [ "$1" == "start" ]; then
     sudo lxc-start -d -n "$2"
