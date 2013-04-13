@@ -68,6 +68,13 @@ function pushincorner()
     sel:geometry(geometry)
 end
 
+function movecursor(x, y)
+    local location = mouse.coords()
+    location.x = location.x + x
+    location.y = location.y + y
+    mouse.coords(location)
+end
+
 keybindings = awful.util.table.join(
     awful.key({ modkey2, "Control" }, "c", function () awful.util.spawn(terminal) end),
     awful.key({ }, "Print", function () awful.util.spawn(binhome .. "caputereimg.sh /home/Jo/Pictures/SS") end),
@@ -86,6 +93,11 @@ keybindings = awful.util.table.join(
     awful.key({ modkey2, "Control" }, "s", function () awful.util.spawn("skype") end),
     awful.key({ modkey2, "Control" }, "m", function () awful.util.spawn("pidgin") end),
     awful.key({ modkey,    }, "c", pushincorner),
-    awful.key({ modkey2, "Control" }, "k", function () awful.util.spawn("geany") end)
+    awful.key({ modkey2, "Control" }, "k", function () awful.util.spawn("geany") end),
+    -- Mouse cursor bindings
+    awful.key({ "Mod3",  }, "Left", function () movecursor(-10,0) end),
+    awful.key({ "Mod3",  }, "Right", function () movecursor(10,0) end),
+    awful.key({ "Mod3",  }, "Up", function () movecursor(0,-10) end),
+    awful.key({ "Mod3",  }, "Down", function () movecursor(0,10) end)
 )
 
