@@ -77,10 +77,10 @@ keybindings = awful.util.table.join(
     awful.key({ modkey,           }, "F4", function () awful.util.spawn(binhome .. "musiccontrol Next") end),
     awful.key({ }, "XF86AudioNext", function () awful.util.spawn(binhome .. "musiccontrol Next") end),
     awful.key({ }, "XF86AudioPlay", function () awful.util.spawn(binhome .. "musiccontrol PlayPause") end),
-    awful.key({ }, "XF86Battery", function () awful.util.spawn("sudo pm-suspend") end),
+    awful.key({ }, "XF86Battery", function () awful.util.spawn("xautolock -locknow && sudo pm-suspend") end),
     awful.key({ modkey,           }, "F7", function () awful.util.spawn(binhome .. "xrandr.sh --auto") end),    awful.key({ modkey,           }, "x", xbmckeyhandler),
     awful.key({ modkey,           }, "e", function () awful.util.spawn("thunar") end),
-    awful.key({ modkey2, "Control" }, "l", function () awful.util.spawn("i3lock -c 222222") 
+    awful.key({ modkey, }, "l", function () awful.util.spawn("xautolock -locknow") 
                                             awful.util.spawn(binhome .. "musiccontrol Pause")
     end),
     awful.key({ modkey2, "Control" }, "s", function () awful.util.spawn("skype") end),
