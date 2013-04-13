@@ -44,7 +44,7 @@ urxvt.matcher.pattern.1: \\w{8}-\\w{4}-\\w{4}-\\w{4}-\\w{12}
 urxvt.keysym.M-Escape: perl:keyboard-select:activate
 urxvt.keysym.M-u: perl:url-select:select_next
 urxvt.keysym.M-v: perl:clipboard:paste
-urxvt.selection-autotransform.0: s/^([^:[:space:]]+):(\\d+):?.*$/vi +$2 \\Q$1\\E\\x0d/
+urxvt.selection-autotransform.0: s/^([^:[:space:]]+)(\\.py|\\.c|\\.js):(\\d+):?.*$/vi +$3 \\Q$1$2\\E\\x0d/
 urxvt.keysym.M-c: perl:clipboard:copy
 urxvt.cutchars:'"'&()*,;<=>?@[]^{|}
 urxvt.termName: rxvt
