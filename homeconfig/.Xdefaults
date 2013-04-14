@@ -37,6 +37,7 @@
 *colorUL: #86A2BB
 urxvt.url-launcher: /usr/bin/firefox
 urxvt.url-select.launcher: /usr/bin/firefox
+urxvt.url-select.underline: false
 urxvt.font: xft:Monospace:size=8
 urxvt.perl-ext-common: default,clipboard,keyboard-select,confirm-paste,url-select,selection-autotransform
 urxvt.matcher.pattern.1: \\w{8}-\\w{4}-\\w{4}-\\w{4}-\\w{12}
