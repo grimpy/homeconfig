@@ -195,8 +195,7 @@ globalkeys = awful.util.table.join(
     
     -- Shifty: keybindings specific to shifty
     awful.key({modkey, "Shift"}, "d", shifty.del), -- delete a tag
-    awful.key({modkey, "Control"},
-              "n",
+    awful.key({modkey,        }, "o",
               function()
                   local t = client.focus:tags()[1]
                   local s = awful.util.cycle(screen.count(), awful.tag.getscreen(t) + 1)
@@ -274,7 +273,7 @@ clientkeys = awful.util.table.join(
     awful.key({ modkey,           }, "c",      function (c) c:kill()                         end),
     awful.key({ modkey, "Control" }, "space",  awful.client.floating.toggle                     ),
     awful.key({ modkey, "Control" }, "Return", function (c) c:swap(awful.client.getmaster()) end),
-    awful.key({ modkey,           }, "o",      awful.client.movetoscreen                        ),
+    awful.key({ modkey, "Shift"   }, "o",      awful.client.movetoscreen                        ),
     awful.key({ modkey,           }, "t",      function (c) c.ontop = not c.ontop            end),
     awful.key({ modkey,           }, "m",
         function (c)
