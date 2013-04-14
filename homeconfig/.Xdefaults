@@ -35,20 +35,18 @@
 *color15 : #EEEEEC
 *matcher.button: 3
 *colorUL: #86A2BB
-
 urxvt.url-launcher: /usr/bin/firefox
 urxvt.url-select.launcher: /usr/bin/firefox
 urxvt.font: xft:Monospace:size=8
 urxvt.perl-ext-common: default,clipboard,keyboard-select,confirm-paste,url-select,selection-autotransform
 urxvt.matcher.pattern.1: \\w{8}-\\w{4}-\\w{4}-\\w{4}-\\w{12}
-urxvt.keysym.M-Escape: perl:keyboard-select:activate
-urxvt.keysym.M-u: perl:url-select:select_next
-urxvt.keysym.M-v: perl:clipboard:paste
-urxvt.selection-autotransform.0: s/^([^:[:space:]]+):(\\d+):?.*$/vi +$2 \\Q$1\\E\\x0d/
-urxvt.keysym.M-c: perl:clipboard:copy
+urxvt.keysym.Mod4-t: perl:keyboard-select:activate
+urxvt.keysym.Mod4-u: perl:url-select:select_next
+urxvt.keysym.Mod4-v: perl:clipboard:paste
+urxvt.keysym.Mod4-c: perl:clipboard:copy
+urxvt.selection-autotransform.0: s/^([^:[:space:]]+)(\\.py|\\.c|\\.js):(\\d+):?.*$/vi +$3 \\Q$1$2\\E\\x0d/
 urxvt.cutchars:'"'&()*,;<=>?@[]^{|}
 urxvt.termName: rxvt
 urxvt.urgentOnBell: True
 urxvt.saveLines: 10000
-
 xterm.font: xft:Monospace:size=10

@@ -1,0 +1,10 @@
+[Desktop Entry]
+Encoding=UTF-8
+Type=Application
+Name=xautolock
+Comment=
+Exec=xautolock -time 3 -locker 'i3lock -c 222222' -noclose
+StartupNotify=false
+Terminal=false
+Hidden=false
+

@@ -1,1 +1,4 @@
+remove Lock = Caps_Lock
+keysym Caps_Lock = Eisu_Shift
+add mod3 = Eisu_Shift
 keysym Control_R = Menu
