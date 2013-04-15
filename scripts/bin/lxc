@@ -1,5 +1,5 @@
 #!/bin/bash
-
+sudo mount --make-rprivate /
 function getStatus() {
     pid=$(lxc info -p -n ${1} | awk '{print $2}')
     if [ "$pid" = "-1" ]; then
@@ -19,14 +19,8 @@ if [ "$1" == "--help" ]; then
 elif [ "$1" == "ls" ]; then
     for container in $(sudo lxc-ls); do
         echo -e -n $container "\t"
-        lxc info -s -n $container | awk '{print $2}'
+        sudo lxc-info -s -n $container | awk '{print $2}'
     done | sort -k2 -k1 | column -t
-    exit 0
-elif [ "$1" == "start" ]; then
-    sudo lxc-start -d -n "$2"
-    exit 0
-elif [ "$1" == "stop" ]; then
-    sudo lxc-stop -n "$2"
     exit 0
 elif [ "$1" == "clone" ]; then
     src="$2"
@@ -55,9 +49,15 @@ elif [ "$1" == "destroy" ]; then
     fi
     sudo btrfs subvolume delete /var/lib/lxc/$2
     exit 0
+elif [ "$#" -eq 2 ]; then
+    cmd=lxc-$1
+    opts=""
+    if [ "$1" == "start"  ]; then
+        opts=" -d "
+    fi
+    sudo lxc-$1 $opts -n $2
+    exit 0
+else 
+    echo "What do you want? $*"
+    exit 1
 fi
-
-cmd=lxc-$1
-shift
-sudo mount --make-rprivate /
-sudo $cmd $*
