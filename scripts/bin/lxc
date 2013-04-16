@@ -1,7 +1,7 @@
 #!/bin/bash
 sudo mount --make-rprivate /
 function getStatus() {
-    pid=$(lxc info -p -n ${1} | awk '{print $2}')
+    pid=$(sudo lxc-info -p -n ${1} | awk '{print $2}')
     if [ "$pid" = "-1" ]; then
         return 1
     fi
