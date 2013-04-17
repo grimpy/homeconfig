@@ -231,6 +231,30 @@ globalkeys = awful.util.table.join(
             if client.focus then client.focus:raise() end
         end),
 
+    awful.key({ modkey, "Shift"   }, "h",
+        function ()
+            awful.client.swap.bydirection("left")
+            if client.focus then client.focus:raise() end
+        end),
+    awful.key({ modkey, "Shift"   }, "l",
+        function ()
+            awful.client.swap.bydirection("right")
+            if client.focus then client.focus:raise() end
+        end),
+    awful.key({ modkey, "Shift"   }, "k",
+        function ()
+            awful.client.swap.bydirection("up")
+            if client.focus then client.focus:raise() end
+        end),
+    awful.key({ modkey, "Shift"   }, "j",
+        function ()
+            awful.client.swap.bydirection("down")
+            if client.focus then client.focus:raise() end
+        end),
+
+
+
+
     awful.key({ modkey,           }, "w", function () mymainmenu:show() end),
 
     -- Layout manipulation
