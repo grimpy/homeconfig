@@ -8,6 +8,16 @@ function getStatus() {
     return 0
 }
 
+function rename() {
+    sudo sed -i "s/lxc.utsname.*/lxc.utsname = ${destname}/" "${dest}/config"
+    sudo sed -i "s#${src}#${dest}#" "${dest}/config"
+    sudo sed -i "s@$src@$dest@" $dest/fstab
+    sudo sed -i "s/${srcname}/${destname}/" $dest/rootfs/etc/hostname
+    sudo sed -i "s/${srcname}/${destname}/" $dest/rootfs/etc/hosts
+
+}
+
+
 lxc_path="/var/lib/lxc"
 if [ "$1" == "--help" ]; then
     echo "Usage lxc <commmand> [command options]"
@@ -22,20 +32,21 @@ elif [ "$1" == "ls" ]; then
         sudo lxc-info -s -n $container | awk '{print $2}'
     done | sort -k2 -k1 | column -t
     exit 0
-elif [ "$1" == "clone" ]; then
-    src="$2"
+elif [ "$1" == "clone" -o "$1" == "rename"  ]; then
+    srcname="$2"
     destname="$3"
     dest="${lxc_path}/$3"
+    src="${lxc_path}/$2"
     if [ -e "$dest" ]; then
         echo Container $destname already exists
         exit 1
     fi
-    sudo btrfs subvolume snapshot "$lxc_path/${src}" "${dest}"
-    sudo sed -i "s/lxc.utsname.*/lxc.utsname = ${destname}/" "${dest}/config"
-    sudo sed -i "s#${lxc_path}/${src}#${lxc_path}/${destname}#" "${dest}/config"
-    sudo sed -i "s@$lxc_path/$src@$lxc_path/$destname@" $dest/fstab
-    sudo sed -i "s/${src}/${destname}/" $dest/rootfs/etc/hostname
-    sudo sed -i "s/${src}/${destname}/" $dest/rootfs/etc/hosts
+    if [ "$1" == "clone" ]; then
+        sudo btrfs subvolume snapshot "${src}" "${dest}"
+    else
+        sudo mv "${src}" "${dest}"
+    fi
+    rename
     exit 0
 elif [ "$1" == "destroy" ]; then
     dest="${lxc_path}/$2"
