@@ -44,8 +44,6 @@ loadkey(){
     eval `keychain -q --eval --agents ssh id_rsa`
 }
 
-# grep for the text in the following directory or the sub directories                               
-# and search for folders having the same name / for actions in pylabs 
 function v(){
     vimbin="vim"
     if [ -z "$@" ] ; then
@@ -72,4 +70,13 @@ function cd() {
 function yaourt(){
     /usr/bin/yaourt $*
     hash -r
+}
+
+function hgp(){
+    sed -i "s/pretxncommit.pyflakes/#pretxncommit.pyflakes/" ~/.hgrc
+    hg $*
+    exitcode=$?
+    sed -i "s/#pretxncommit.pyflakes/pretxncommit.pyflakes/" ~/.hgrc
+    return $exitcode
+    
 }
