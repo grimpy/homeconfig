@@ -1,10 +1,14 @@
 [color]
- ui = true
+	ui = true
 [user]
 	name = Jo De Boeck
 	email = deboeck.jo@gmail.com
 [push]
 	default = current
+[help]
+	autocorrect = 1
+[alias]
+    stat = status
 [giggle]
 	main-window-maximized = false
 	main-window-geometry = 1220x879+195+38
