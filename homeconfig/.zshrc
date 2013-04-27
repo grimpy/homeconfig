@@ -1,5 +1,7 @@
 #! /bin/zsh
 
+fpath=(~/.zsh.d/completion $fpath)
+
 autoload -U compinit zrecompile
 
 zsh_cache=${HOME}/.zsh_cache
