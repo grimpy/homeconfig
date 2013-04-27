@@ -72,6 +72,14 @@ function yaourt(){
     hash -r
 }
 
+function zfload(){
+    autoload -U zfinit
+    zfinit
+    cmd="zf$1"
+    shift
+    $cmd $*
+}
+
 function hgp(){
     sed -i "s/pretxncommit.pyflakes/#pretxncommit.pyflakes/" ~/.hgrc
     hg $*
