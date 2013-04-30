@@ -19,9 +19,22 @@ function xbmc() {
 
 }
 
-if ps -eaf | grep -v grep | grep audacious; then
-    mpris audacious
+function mplayer() {
+    c=""
+    case $command in
+        "Next" ) c="-f" ;;
+        "Prev" ) c="-r" ;;
+        "PlayPause") c="pause" ;;
+        *) return 1;
+   esac
+   echo $c > ~/.mplayer/fifo
 
+}
+
+if ps -eaf | grep -v grep | grep mplayer; then
+    mplayer
+elif ps -eaf | grep -v grep | grep audacious; then
+    mpris audacious
 elif ps -eaf | grep -v grep | grep xbmcremote; then
     xbmc
 else
