@@ -15,7 +15,7 @@ function xbmc() {
         "PlayPause") c="-k ' '" ;;
         *) return 1;
    esac
-   xbmcremote --host=xbmc.lan $c
+   xbmcremote --host=xbmc.lan "$c"
 
 }
 
