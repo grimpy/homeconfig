@@ -67,23 +67,23 @@ color2 047090
 color3 03DBFC
 
 # Up and down speed included
-template0 ${color1}\1 [${color3}${addr \1}${color}]${color 00aa00}${downspeed \1}${color aa0000}${upspeed \1}
-template1 ${color1}\1:${color}${color3}${cpugraph \2 5,40 00ff00 ff0000}${color}
+template0 ${color1}\1 [${color3}${addr \1}${color1}]${color 00aa00}${downspeed \1}${color aa0000}${upspeed \1}
+template1 ${color1}\1:${color3}${cpugraph \2 5,40 00ff00 ff0000}
 # IronMan   ADP0 BAT0
 # wolverine ACAD BAT1
-template2 ${color1}Battery: [${color3}${acpiacadapter \1}${color1}] ${color}${color3}${battery_percent \2}% ${battery_bar 5,40 \2}${color} | \
+template2 ${color1}Battery: [${color3}${acpiacadapter \1}${color1}] ${color3}${battery_percent \2}% ${battery_bar 5,40 \2} \
 
 
 TEXT
 ${if_match "wolverine" != "$nodename"}${template2 ADP0 BAT0}${else}${template2 ACAD BAT1}${endif} \
-${color1}Temp:${color}${color3}${acpitemp}°C ${color} | \
-${color1}/dev/sda:${color}${diskiograph /dev/sda 8,40 00ff00 ff0000 -t} \
+${color1}Temp:${color3}${acpitemp}°C \
+${color1}/dev/sda:${diskiograph /dev/sda 8,40 00ff00 ff0000 -t} \
 ${if_up eth0}${template0 eth0}${endif} \
 ${if_up wlan0}${template0 wlan0} ${color3} ${wireless_essid wlan0}${endif} \
 ${alignr}\
-${color1}CPU: ${color}${color2}${cpu}%${cpugraph cpu0 5,40 00ff00 ff0000}${color} \
+${color1}CPU: ${color2}${cpu}%${cpugraph cpu0 5,40 00ff00 ff0000} \
 ${template1 CPU1 cpu1} \
 ${template1 CPU2 cpu2} \
 ${template1 CPU3 cpu3} \
 ${template1 CPU4 cpu4} \
-${color1}RAM:${color} ${color3}${memperc}% ${membar 5,40}${color} \
+${color1}RAM: ${color3}${memperc}% ${membar 5,40} \

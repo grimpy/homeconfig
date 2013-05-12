@@ -80,6 +80,15 @@ function zfload(){
     $cmd $*
 }
 
+function ownedby(){
+    if [ -e "$*" ]; then
+        filename="$*"
+    else
+        filename=$(which "$*")
+    fi
+    yaourt -Qo $filename
+}
+
 function hgp(){
     sed -i "s/pretxncommit.pyflakes/#pretxncommit.pyflakes/" ~/.hgrc
     hg $*
