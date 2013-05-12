@@ -16,6 +16,6 @@ DESTPORT=${INPUT[$DESTPORT]}
 DESTIP=${INPUT[$DESTIP]}
 
 
-for int in eth0 wlan0 tun0; do
+for int in eth0 wlan0 tun0 vboxnet0; do
     sudo iptables -t nat -A PREROUTING -p tcp -i $int --dport $INPORT -j DNAT --to-destination $DESTIP:$DESTPORT
 done

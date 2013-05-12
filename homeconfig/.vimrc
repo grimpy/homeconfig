@@ -22,6 +22,8 @@ let g:notes_directory = '~/Documents/Notes'
 filetype off
 filetype plugin indent on
 syn on
+set t_Co=256
+set background=dark
 set tabstop=4
 set shiftwidth=4
 set expandtab
@@ -66,15 +68,15 @@ let NERDTreeQuitOnOpen = 1
 let NERDTreeShowBookmarks = 1
 let NERDTreeChDirMode = 2
 if has('gui_running')
-    colorscheme  desert
+    colorscheme molokai
 else
-    colorscheme  evening
+    colorscheme molokai
 endif
 
-highlight Pmenu guibg=purple gui=bold
-highlight PmenuSel guibg=red gui=bold
-highlight Pmenu ctermbg=blue ctermfg=white gui=bold
-highlight PmenuSel ctermbg=red ctermfg=white gui=bold
+" highlight Pmenu guibg=purple gui=bold
+" highlight PmenuSel guibg=red gui=bold
+" highlight Pmenu ctermbg=blue ctermfg=white gui=bold
+" highlight PmenuSel ctermbg=red ctermfg=white gui=bold
 
 " save root files while not root
 cmap w!! w !sudo tee % >/dev/null
