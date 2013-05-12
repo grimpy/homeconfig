@@ -39,12 +39,16 @@ urxvt.url-launcher: /usr/bin/firefox
 urxvt.url-select.launcher: /usr/bin/firefox
 urxvt.url-select.underline: false
 urxvt.font: xft:Monospace:size=8
-urxvt.perl-ext-common: default,clipboard,keyboard-select,confirm-paste,url-select,selection-autotransform
+urxvt.perl-ext-common: default,clipboard,keyboard-select,confirm-paste,url-select,selection-autotransform,font-size
 urxvt.matcher.pattern.1: \\w{8}-\\w{4}-\\w{4}-\\w{4}-\\w{12}
+urxvt.matcher.pattern.2: (https?|ftps?)://[^\\s]+
 urxvt.keysym.Mod4-t: perl:keyboard-select:activate
 urxvt.keysym.Mod4-u: perl:url-select:select_next
 urxvt.keysym.Mod4-v: perl:clipboard:paste
 urxvt.keysym.Mod4-c: perl:clipboard:copy
+urxvt.keysym.Mod4-minus: perl:font-size:decrease
+urxvt.keysym.Mod4-equal: perl:font-size:increase
+
 urxvt.selection-autotransform.0: s/^([^:[:space:]]+)(\\.py|\\.c|\\.js):(\\d+):?.*$/vi +$3 \\Q$1$2\\E\\x0d/
 urxvt.cutchars:'"'&()*,;<=>?@[]^{|}
 urxvt.termName: rxvt
