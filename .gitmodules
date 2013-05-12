@@ -25,3 +25,6 @@
 [submodule "homeconfig/.vim/bundle/neocomplcache"]
 	path = homeconfig/.vim/bundle/neocomplcache
 	url = git://github.com/Shougo/neocomplcache.git
+[submodule "homeconfig/.vim/bundle/molokai"]
+	path = homeconfig/.vim/bundle/molokai
+	url = git@github.com:tomasr/molokai
