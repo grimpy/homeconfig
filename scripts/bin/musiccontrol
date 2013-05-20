@@ -31,6 +31,19 @@ function mplayer() {
 
 }
 
+function mpc() {
+    c=""
+    case $command in
+        "Next" ) c="next" ;;
+        "Prev" ) c="previous" ;;
+        "Pause") c="pause" ;;
+        "PlayPause") c="toggle" ;;
+        *) return 1;
+   esac
+   /usr/bin/mpc "$c"
+
+}
+
 if ps -eaf | grep -v grep | grep mplayer; then
     mplayer
 elif ps -eaf | grep -v grep | grep audacious; then
@@ -38,5 +51,5 @@ elif ps -eaf | grep -v grep | grep audacious; then
 elif ps -eaf | grep -v grep | grep xbmcremote; then
     xbmc
 else
-    mpris pragha
+    mpc
 fi
