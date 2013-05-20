@@ -21,6 +21,8 @@ alias ....="cd ../../../.."
 
 alias cdr="cd \$vcs_info_msg_1_"
 
+alias tmux="tmux -2"
+
 #rsa stuff
 alias ssh="loadrsa; ssh"
 alias scp="loadrsa; scp"
