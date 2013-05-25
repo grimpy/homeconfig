@@ -104,7 +104,6 @@ keybindings = awful.util.table.join(
 client.connect_signal("property::urgent", function(c) 
     if c.urgent and c.window ~= client.focus.window then
         awful.util.spawn(binhome .. "scrolllock")
-        naughty.notify({text=c.name, title='Urgent window'})
     elseif not awful.client.urgent.get() then
         awful.util.spawn("rm /tmp/scrolllock")
     end
