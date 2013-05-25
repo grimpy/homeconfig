@@ -1,12 +1,11 @@
 #!/bin/bash
 COMMAND=$1
 CON=($(xrandr -q | grep " connected" | cut -f 1 -d ' '))
+ENABLED=($(xrandr -q | grep "mm$" | cut -f 1 -d ' '))
 
 usage() {
     echo Usage $0 [--single --dual --clone]
 }
-
-echo ${CON[1]}
 
 if [ ${#CON[*]} -gt 1 ]; then
     xrandr --output ${CON[1]} --auto
@@ -23,7 +22,7 @@ clone() {
     xrandr --output ${CON[1]} --same-as ${CON[0]}
 }
 auto() {
-    if [ ${#CON[*]} -lt 1 ]; then
+    if [ ${#ENABLED[*]} -gt 1 ]; then
         single
     else
         dual

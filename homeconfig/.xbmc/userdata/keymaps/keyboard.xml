@@ -98,7 +98,7 @@
       <numpadeight>Number8</numpadeight>
       <numpadnine>Number9</numpadnine>
       <backslash>ToggleFullScreen</backslash>
-      <home>FirstPage</home>
+      <home>XBMC.ActivateWindow(home)</home>
       <end>LastPage</end>
       <h>XBMC.ActivateWindow(home)</h>
       <t>XBMC.ActivateWindow(Videos, TvShowTitles)</t>
@@ -159,6 +159,9 @@
   </LoginScreen>
   <Home>
     <keyboard>
+      <escape>ActivateWindow(Favourites)</escape>
+      <volume_up>ActivateWindow(Videos, MovieTitles)</volume_up>
+      <volume_down>ActivateWindow(Videos, TvShowTitles)</volume_down>
       <i>info</i>
       <end mod="ctrl">XBMC.ShutDown()</end>
     </keyboard>
@@ -216,6 +219,7 @@
       <f>FastForward</f>
       <r>Rewind</r>
       <period>StepForward</period>
+      <home>Pause</home>
       <comma>StepBack</comma>
       <backspace>Fullscreen</backspace>
       <quote>SmallStepBack</quote>
@@ -415,6 +419,9 @@
   </VideoBookmarks>
   <MyVideoLibrary>
     <keyboard>
+      <escape>ActivateWindow(Favourites)</escape>
+      <volume_up>ActivateWindow(Videos, MovieTitles)</volume_up>
+      <volume_down>ActivateWindow(Videos, TvShowTitles)</volume_down>
       <delete>Delete</delete>
       <space>Playlist</space>
       <w>ToggleWatched</w>

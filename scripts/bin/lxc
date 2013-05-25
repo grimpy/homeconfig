@@ -8,6 +8,10 @@ function getStatus() {
     return 0
 }
 
+function getIP() {
+    sudo lxc-attach -s NETWORK -n ${1} -- ip a s dev eth0 | grep "inet " | awk '{print $2}' | cut -d "/" -f 1
+}
+
 function rename() {
     sudo sed -i "s/lxc.utsname.*/lxc.utsname = ${destname}/" "${dest}/config"
     sudo sed -i "s#${src}#${dest}#" "${dest}/config"
@@ -28,8 +32,12 @@ if [ "$1" == "--help" ]; then
 
 elif [ "$1" == "ls" ]; then
     for container in $(sudo lxc-ls); do
-        echo -e -n $container "\t"
-        sudo lxc-info -s -n $container | awk '{print $2}'
+        status=$(sudo lxc-info -s -n $container | awk '{print $2}')
+        ip=""
+        if [ "$status" == "RUNNING" ]; then
+            ip=$(getIP $container)
+        fi
+        echo -e "$container \t $status \t $ip"
     done | sort -k2 -k1 | column -t
     exit 0
 elif [ "$1" == "clone" -o "$1" == "rename"  ]; then
