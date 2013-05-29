@@ -52,3 +52,4 @@ blame = annotate -u -c
 stat = !hg status $($HG root) $HG_ARGS
 show = log -p -v -r
 stash = shelve --all
+log = glog

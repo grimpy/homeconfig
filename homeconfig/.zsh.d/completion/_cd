@@ -18,7 +18,7 @@ _cd_options() {
   '(-P)-L[retain symbolic links ignoring CHASE_LINKS]' \
   '(-L)-P[resolve symbolic links as CHASE_LINKS]'
 }
-compadd -X Bookmarks $(env | grep BKMRK_ | cut -f 1 -d = | cut -f 2 -d _)
+compadd -X '---- Bookmarks ----' $(env | grep BKMRK_ | cut -f 1 -d = | cut -f 2 -d _)
 #compadd pylabs gic incubaid awingu mygit mydev work qppy qpqp qpaw qpbgc psc
 
 setopt localoptions nonomatch
