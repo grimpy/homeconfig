@@ -31,3 +31,6 @@
 [submodule "homeconfig/.vim/bundle/neosnippet"]
 	path = homeconfig/.vim/bundle/neosnippet
 	url = git://github.com/Shougo/neosnippet.vim.git
+[submodule "homeconfig/.vim/bundle/vcscommand"]
+	path = homeconfig/.vim/bundle/vcscommand
+	url = git://repo.or.cz/vcscommand
