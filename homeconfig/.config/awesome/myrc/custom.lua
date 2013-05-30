@@ -43,7 +43,7 @@ shiftyapps = {
          { match = { "Pidgin", "Skype", "gajim"} , tag="2:im", nopopup=true } ,
          { match = { "xterm", "urxvt", "Terminator"} , honorsizehints=false, slave=true, tag="1:term" } ,
          { match = { "Thunar", "pcmanfm", "xarchiver", "Squeeze", "File-roller", "Nautilus" }, tag="5:fs" } ,
-         { match = { "Geany", "gvim" }, tag="6:edit" } ,
+         { match = { "Geany", "gvim", "Firebug", "Devtools" }, tag="6:edit" } ,
          { match = { "xbmcremote" }, tag="10:xbmcremote" } ,
          { match = { "Eclipse" }, tag="6:edit", nopopup=true } ,
          { match = { "MPlayer", "ario", "Audacious", "pragha", "mplayer2", "bino" }, tag="7:media" } ,
