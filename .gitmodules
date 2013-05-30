@@ -34,3 +34,6 @@
 [submodule "homeconfig/.vim/bundle/vcscommand"]
 	path = homeconfig/.vim/bundle/vcscommand
 	url = git://repo.or.cz/vcscommand
+[submodule "homeconfig/.vim/bundle/xmledit"]
+	path = homeconfig/.vim/bundle/xmledit
+	url = git://github.com/sukima/xmledit.git
