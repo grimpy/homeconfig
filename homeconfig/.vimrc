@@ -107,12 +107,10 @@ noremap <Leader><Leader> <C-^>
 "remove paste mode after leaving insert mode
 au InsertLeave * set nopaste
 "move lines with alt key
-noremap <A-j> :m+<CR>
-noremap <A-k> :m-2<CR>
-inoremap <A-j> <Esc>:m+<CR>
-inoremap <A-k> <Esc>:m-2<CR>
-vnoremap <A-j> :m'>+<CR>gv
-vnoremap <A-k> :m-2<CR>gv
+noremap J :m+<CR>
+noremap K :m-2<CR>
+vnoremap J :m'>+<CR>gv
+vnoremap K :m-2<CR>gv
 
 "home and end mappings
 noremap H ^
