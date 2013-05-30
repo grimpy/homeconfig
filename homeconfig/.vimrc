@@ -92,10 +92,34 @@ else
     colorscheme molokai
 endif
 
-" highlight Pmenu guibg=purple gui=bold
-" highlight PmenuSel guibg=red gui=bold
-" highlight Pmenu ctermbg=blue ctermfg=white gui=bold
-" highlight PmenuSel ctermbg=red ctermfg=white gui=bold
-
 " save root files while not root
 cmap w!! w !sudo tee % >/dev/null
+
+" Reselect visual blockafter indent/outdent
+vnoremap < <gv
+vnoremap > >gv
+
+" I can type :help on my own, thanks.
+noremap <F1> <Esc>
+
+" aleternate last two buffers
+noremap <Leader><Leader> <C-^>
+"remove paste mode after leaving insert mode
+au InsertLeave * set nopaste
+"move lines with alt key
+noremap <A-j> :m+<CR>
+noremap <A-k> :m-2<CR>
+inoremap <A-j> <Esc>:m+<CR>
+inoremap <A-k> <Esc>:m-2<CR>
+vnoremap <A-j> :m'>+<CR>gv
+vnoremap <A-k> :m-2<CR>gv
+
+"home and end mappings
+noremap H ^
+noremap L $
+vnoremap H ^
+vnoremap L $
+
+"easy command mode
+nnoremap ; :
+
