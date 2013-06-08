@@ -87,13 +87,5 @@ function vik() {
 if [[ "$TERM" = screen* ]]; then
   PROMPT_COMMAND='rename_screen_tab ${USER}@${HOSTNAME%%.*}'
     [ "$HOSTNAME" = "DareDevil" ] && PROMPT_COMMAND='rename_screen_tab ${SCREEN_TAB:-$USER}'
-    fi
+fi
 
-
-export PATH="/home/grimpy/mono-1.9.1/bin:$PATH"
-
-export PKG_CONFIG_PATH="/home/grimpy/mono-1.9.1/lib/pkgconfig:$PKG_CONFIG_PATH"
-
-export MANPATH="/home/grimpy/mono-1.9.1/share/man:$MANPATH"
-
-export LD_LIBRARY_PATH="/home/grimpy/mono-1.9.1/lib:$LD_LIBRARY_PATH"
