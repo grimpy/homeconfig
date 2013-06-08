@@ -10,8 +10,10 @@
 [alias]
     stat = status
 [giggle]
-	main-window-maximized = false
-	main-window-geometry = 1220x879+195+38
+	main-window-maximized = true
+	main-window-geometry = 0x0+0+0
 	history-view-vpane-position = 274
 	main-window-view = HistoryView
 	file-view-vpane-position = 398
+[review "review.cyanogenmod.org"]
+	username = deboeck.jo
