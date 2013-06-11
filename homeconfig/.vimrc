@@ -35,6 +35,7 @@ set guifont=Monospace\ 8
 set fdm=indent
 set foldlevel=30
 set hlsearch
+set paste
 
 inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
 nnoremap <leader>/ :noh<cr>
@@ -104,8 +105,6 @@ noremap <F1> <Esc>
 
 " aleternate last two buffers
 noremap <Leader><Leader> <C-^>
-"remove paste mode after leaving insert mode
-au InsertLeave * set nopaste
 "move lines with alt key
 noremap J :m+<CR>
 noremap K :m-2<CR>
