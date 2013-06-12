@@ -313,23 +313,23 @@ for _, shiftag in pairs(shifty.config.tags) do
     local i = shiftag.position
     local key = shiftag.key or i
     globalkeys = awful.util.table.join(globalkeys,
-          awful.key({modkey}, key, function()
-            local tag = shifty.getpos(i)
-            local t =  awful.tag.viewonly(tag)
-            local scr = awful.tag.getscreen(tag)
+        awful.key({modkey}, key, function()
+            local scr = shiftag.screen
             if client.focus.screen ~= scr then
                 awful.screen.focus(scr)
             end
-            end),
+            local tag = shifty.getpos(i)
+            local t =  awful.tag.viewonly(tag)
+        end),
         awful.key({modkey, "Control"}, key, function()
             local t = shifty.getpos(i)
             t.selected = not t.selected
-            end),
+        end),
         awful.key({modkey, "Control", "Shift"}, key, function()
             if client.focus then
                 awful.client.toggletag(shifty.getpos(i))
             end
-            end),
+        end),
         -- move clients to other tags
         awful.key({modkey, "Shift"}, key, function()
             if client.focus then
