@@ -320,6 +320,10 @@ for _, shiftag in pairs(shifty.config.tags) do
             end
             local tag = shifty.getpos(i)
             local t =  awful.tag.viewonly(tag)
+            scr = awful.tag.getscreen(tag)
+            if scr ~= client.focus.screen then
+                awful.screen.focus(scr)
+            end
         end),
         awful.key({modkey, "Control"}, key, function()
             local t = shifty.getpos(i)

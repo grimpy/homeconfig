@@ -16,8 +16,8 @@ terminal = "urxvtc"
 autostart = true
 modkey = "Mod4"
 modkey2 = "Mod1"
-LCD = screen.count()
-VGA = 1
+VGA = screen.count()
+LCD = 1
 
 shiftytags = {
     ["1:term"] = { position=1, key=1, exclusive=true, max_clients=4, screen=VGA, spawn=terminal, layout=awful.layout.suit.fair.horizontal},
