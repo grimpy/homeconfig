@@ -1,0 +1,7 @@
+#!/usr/bin/env python
+import os
+import subprocess
+fl = open('/tmp/bleh.txt', 'a')
+fl.write('test\n')
+fl.close()
+subprocess.Popen(['alock', '-auth', 'pam'])
