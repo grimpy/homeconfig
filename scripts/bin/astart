@@ -1,0 +1,8 @@
+#!/bin/bash
+echo "
+source ~/.bashrc
+cd ~/Dev/android/CM
+source build/envsetup.sh
+breakfast mako" > /tmp/$$.rc
+
+bash --rcfile /tmp/$$.rc
