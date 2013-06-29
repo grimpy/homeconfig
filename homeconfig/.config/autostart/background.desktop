@@ -1,0 +1,11 @@
+[Desktop Entry]
+Encoding=UTF-8
+Version=0.1
+Type=Application
+Name=Background
+Comment=
+Exec=display -density 400 -backdrop -transparent-color 000000 -background \#000000 -foreground \#000000 -window root /usr/share/archlinux/wmlogos/archlinux-wm-awesome.svg
+StartupNotify=false
+Terminal=false
+Hidden=false
+
