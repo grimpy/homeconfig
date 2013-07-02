@@ -8,7 +8,6 @@
 *tintingType: true
 *tinting: #ffffff
 *tintColor: #FFFFFF
-*shading: 10
 ! black
 *color0  : #2E3436
 *color8  : #555753
@@ -48,6 +47,8 @@ urxvt.keysym.Mod4-v: perl:clipboard:paste
 urxvt.keysym.Mod4-c: perl:clipboard:copy
 urxvt.keysym.Mod4-minus: perl:font-size:decrease
 urxvt.keysym.Mod4-equal: perl:font-size:increase
+urxvt.shading:    20
+urxvt.transparent:true
 
 urxvt.selection-autotransform.0: s/^([^:[:space:]]+)(\\.py|\\.c|\\.js):(\\d+):?.*$/vi +$3 \\Q$1$2\\E\\x0d/
 urxvt.cutchars:'"'&()*,;<=>?@[]^{|}
