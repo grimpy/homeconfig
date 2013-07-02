@@ -77,7 +77,6 @@ template2 ${color1}Battery: [${color3}${acpiacadapter \1}${color1}] ${color3}${b
 TEXT
 ${color1}/dev/sda:${diskiograph /dev/sda 8,40 00ff00 ff0000 -t} \
 ${color1}CPU: ${color2}${cpu}%${goto 160}${cpugraph cpu0 5,40 00ff00 ff0000} \
-${template1 CPU cpu0} \
 ${color1}RAM: ${color3}${memperc}% ${membar 5,40} \
 ${if_up eth0}${template0 eth0}${endif} \
 ${if_up wlan0}${color3}${wireless_essid wlan0} ${template0 wlan0} ${endif} \
