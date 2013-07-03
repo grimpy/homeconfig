@@ -1,10 +1,10 @@
 if [ ! -e /tmp/scrolllock ];then
 	touch /tmp/scrolllock
 	while [ -e /tmp/scrolllock ]; do
-        sudo su -c 'setleds -D -caps < /dev/console'
+        xset led 1
 		sleep 0.5
-        sudo su -c 'setleds -D +caps < /dev/console'
+        xset -led 1
 		sleep 0.5 
 	done
-    sudo su -c 'setleds -D -caps < /dev/console'
+    xset -led 1
 fi
