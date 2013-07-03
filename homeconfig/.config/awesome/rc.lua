@@ -12,8 +12,7 @@ require("myrc.mainmenu")
 require("myrc.autostart")
 local cal = require("cal")
 require("myrc.custom")
-local vicious = require("vicious")
-vicious.contrib = require("vicious.contrib")
+local bashets = require("bashets")
 
 -- {{{ Variable definitions
 -- Themes define colours, icons, and wallpapers
@@ -30,6 +29,9 @@ confdir = awful.util.getdir("config")
 if myrc.custom.autostart then
     myrc.autostart.init(home .. "/.config/autostart/")
 end
+
+bashets.set_script_path("/dev/shm/bashets/scripts/")
+bashets.set_temporary_path("/dev/shm/bashets/tmp/")
 
 -- Default modkey.
 -- Usually, Mod4 is the key with a logo between Control and Alt.
@@ -59,7 +61,6 @@ local layouts =
 
 -- tag settings
 shifty.config.tags = myrc.custom.shiftytags
-
 shifty.config.apps = myrc.custom.shiftyapps
 
 -- tag defaults
@@ -73,9 +74,47 @@ mylauncher = awful.widget.launcher({ image = beautiful.awesome_icon,
 
 -- }}}
 
-conkybar = awful.wibox({ position = "top", screen = 1, ontop = false, width = 1, height = 16 })
 mysep = wibox.widget.textbox()
-mysep:set_text("|")
+mysep:set_text("  ")
+
+mytemp = wibox.widget.textbox()
+bashets.register("temp.sh", {widget=mytemp, update_time=2, format='$1¹'})
+
+myip = wibox.widget.textbox()
+bashets.register("gwip.sh", {widget=myip, update_time=2})
+
+-- Initialize widget
+cpuwidget = awful.widget.graph()
+-- Graph properties
+cpuwidget:set_width(50)
+cpuwidget:set_max_value(100)  
+cpuwidget:set_background_color("#494B4F")
+cpuwidget:set_color({ type = "linear", from = { 10, 0 }, to = { 0,0 }, stops = { {0, "#FF5656"}, {0.5, "#88A175"}, 
+                    {1, "#AECF96" }}})
+-- Register widget
+bashets.register("cpu.sh", {widget=cpuwidget, update_time=2})
+bashets.start()
+-- Initialize widget
+memwidget = awful.widget.progressbar()
+memwidget:set_width(6)
+memwidget:set_max_value(100)  
+memwidget:set_vertical(true)
+memwidget:set_background_color("#494B4F")
+memwidget:set_border_color(nil)
+memwidget:set_color({ type = "linear", from = { 0, 0 }, to = { 10,0 }, stops = { {0, "#AECF96"}, {0.5, "#88A175"}, 
+                    {1, "#FF5656"}}})
+bashets.register("mem.sh", {widget=memwidget, update_time=2})
+
+mixerw = awful.widget.progressbar()
+mixerw:set_width(6)
+mixerw:set_max_value(100)  
+mixerw:set_vertical(true)
+mixerw:set_background_color("#494B4F")
+mixerw:set_border_color(nil)
+mixerw:set_color("#0080FF")
+bashets.register("vollevel.sh Master", {widget=mixerw, update_time=2})
+
+
 
 -- {{{ Wibox
 -- Create a textclock widget
@@ -149,7 +188,7 @@ for s = 1, screen.count() do
     mytasklist[s] = awful.widget.tasklist(s, awful.widget.tasklist.filter.currenttags, mytasklist.buttons)
 
     -- Create the wibox
-    mywibox[s] = awful.wibox({ position = "bottom", screen = s })
+    mywibox[s] = awful.wibox({ position = "top", screen = s })
 
     -- Widgets that are aligned to the left
     local left_layout = wibox.layout.fixed.horizontal()
@@ -159,6 +198,17 @@ for s = 1, screen.count() do
 
     -- Widgets that are aligned to the right
     local right_layout = wibox.layout.fixed.horizontal()
+    right_layout:add(mytemp)
+    right_layout:add(mysep)
+    right_layout:add(myip)
+    right_layout:add(mysep)
+    right_layout:add(memwidget)
+    right_layout:add(mysep)
+    right_layout:add(cpuwidget)
+    right_layout:add(mysep)
+    right_layout:add(mixerw)
+    right_layout:add(mysep)
+
     if s == 1 then right_layout:add(wibox.widget.systray()) end
     right_layout:add(mytextclock)
     right_layout:add(mylayoutbox[s])

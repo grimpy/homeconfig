@@ -1,0 +1,4 @@
+#!/bin/bash
+mkdir -p /dev/shm/bashets/{scripts,tmp}
+cp /usr/share/awesome/bashets/* /dev/shm/bashets/scripts/
+cp ~/mygit/scripts/bashets/* /dev/shm/bashets/scripts/
