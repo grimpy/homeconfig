@@ -16,7 +16,8 @@ autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
 let g:neocomplcache_enable_at_startup = 1
 let g:neocomplcache_enable_auto_close_preview = 1
 
-let g:notes_directory = '~/Documents/Notes'
+let g:notes_directories = ['~/Documents/Notes']
+let g:notes_suffix = '.txt'
 
 " some defaults
 filetype off
