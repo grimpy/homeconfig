@@ -78,7 +78,7 @@ mysep = wibox.widget.textbox()
 mysep:set_text("  ")
 
 mytemp = wibox.widget.textbox()
-bashets.register("temp.sh", {widget=mytemp, update_time=2, format='$1¹'})
+bashets.register("temp.sh", {widget=mytemp, update_time=2, format='$1°C'})
 
 myip = wibox.widget.textbox()
 bashets.register("gwip.sh", {widget=myip, update_time=2})
