@@ -83,14 +83,16 @@ bashets.register("temp.sh", {widget=mytemp, update_time=2, format='$1°C'})
 myip = wibox.widget.textbox()
 bashets.register("gwip.sh", {widget=myip, update_time=2})
 
+mybat = wibox.widget.textbox()
+bashets.register("bat.sh", {widget=mybat, update_time=10})
+
 -- Initialize widget
 cpuwidget = awful.widget.graph()
 -- Graph properties
 cpuwidget:set_width(50)
 cpuwidget:set_max_value(100)  
 cpuwidget:set_background_color("#494B4F")
-cpuwidget:set_color({ type = "linear", from = { 10, 0 }, to = { 0,0 }, stops = { {0, "#FF5656"}, {0.5, "#88A175"}, 
-                    {1, "#AECF96" }}})
+cpuwidget:set_color({ type = "linear", from = { 0, 0 }, to = { 0,10 }, stops = { {0, "#FF0000"}, {2, "#33FF00"}, {10, "#00FF00" }}})
 -- Register widget
 bashets.register("cpu.sh", {widget=cpuwidget, update_time=2})
 bashets.start()
@@ -198,6 +200,8 @@ for s = 1, screen.count() do
 
     -- Widgets that are aligned to the right
     local right_layout = wibox.layout.fixed.horizontal()
+    right_layout:add(mybat)
+    right_layout:add(mysep)
     right_layout:add(mytemp)
     right_layout:add(mysep)
     right_layout:add(myip)
