@@ -73,18 +73,35 @@ mylauncher = awful.widget.launcher({ image = beautiful.awesome_icon,
                                      menu = mymainmenu })
 
 -- }}}
+--
+bashets.set_defaults({seperator=nil})
+
+function bashetsUpdate(script, widget, format)
+    script = bashets.util.fullpath(script)
+    local data = bashets.util.readshell(script, nil)
+    bashets.util.update_widget(widget, data, format)
+end
+
 
 mysep = wibox.widget.textbox()
 mysep:set_text("  ")
 
 mytemp = wibox.widget.textbox()
-bashets.register("temp.sh", {widget=mytemp, update_time=2, format='$1°C'})
+bashets.register("temp.sh", {widget=mytemp, update_time=2})
 
 myip = wibox.widget.textbox()
-bashets.register("gwip.sh", {widget=myip, update_time=2})
+bashetsUpdate("gwip.sh", myip, "$1")
+bashets.register_d("system", "name.marples.roy.dhcpcd", nil, function() bashetsUpdate("gwip.sh", myip, "$1") end, "$1")
 
 mybat = wibox.widget.textbox()
-bashets.register("bat.sh", {widget=mybat, update_time=10})
+bashetsUpdate("bat.sh", mybat, "$1")
+bashets.register_d("system", "org.freedesktop.UPower.Device", nil, function() bashetsUpdate("bat.sh", mybat, "$1") end, "$1")
+
+myrx = wibox.widget.textbox()
+bashets.register("net.sh 1 rx", {widget=myrx, update_time=1})
+
+mytx = wibox.widget.textbox()
+bashets.register("net.sh 1 tx", {widget=mytx, update_time=1})
 
 -- Initialize widget
 cpuwidget = awful.widget.graph()
@@ -200,11 +217,15 @@ for s = 1, screen.count() do
 
     -- Widgets that are aligned to the right
     local right_layout = wibox.layout.fixed.horizontal()
+    right_layout:add(myip)
+    right_layout:add(mysep)
+    right_layout:add(myrx)
+    right_layout:add(mysep)
+    right_layout:add(mytx)
+    right_layout:add(mysep)
     right_layout:add(mybat)
     right_layout:add(mysep)
     right_layout:add(mytemp)
-    right_layout:add(mysep)
-    right_layout:add(myip)
     right_layout:add(mysep)
     right_layout:add(memwidget)
     right_layout:add(mysep)

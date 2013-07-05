@@ -3,15 +3,23 @@ FULLCHARGE=$(cat /sys/class/power_supply/BAT?/charge_full)
 CURRENTCHARGE=$(cat /sys/class/power_supply/BAT?/charge_now)
 CPU=$(($CURRENTCHARGE*100/$FULLCHARGE))
 STATE=$(cat /sys/class/power_supply/BAT?/status)
-echo -n $CPU
+COLOR="#0080ff"
 case $STATE in
     Charging) 
-        echo -n +
+        SIGN="+"
         ;;
     Discharging)
-        echo -n -
+        SIGN="-"
+        if [ $CPU -gt 40 ]; then
+            COLOR="#00FF00"
+        elif [ $CPU -gt 15 ]; then
+            COLOR="#ff9c00"
+        else
+            COLOR="#FF0000"
+        fi
         ;;
     Full)
-        echo -n ↯
+        SIGN="↯"
         ;;
 esac
+echo -n "<span color=\"$COLOR\">${CPU}$SIGN</span>"
