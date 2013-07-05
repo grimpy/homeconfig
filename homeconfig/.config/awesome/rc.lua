@@ -98,9 +98,11 @@ bashetsUpdate("bat.sh", mybat, "$1")
 bashets.register_d("system", "org.freedesktop.UPower.Device", nil, function() bashetsUpdate("bat.sh", mybat, "$1") end, "$1")
 
 myrx = wibox.widget.textbox()
+myrx:set_font("Monospace 8")
 bashets.register("net.sh 1 rx", {widget=myrx, update_time=1})
 
 mytx = wibox.widget.textbox()
+mytx:set_font("Monospace 8")
 bashets.register("net.sh 1 tx", {widget=mytx, update_time=1})
 
 -- Initialize widget
