@@ -23,9 +23,11 @@ while [ $val -gt 1048576 ]; do
     cnt=$(($cnt+1))
 done
 output=$(echo "$val 1024"|awk '{printf "%0.2f", $1 / $2 }') 
+output="$output ${UNIT[$cnt]}"
+output=$(printf "%12s" "$output")
 if [ $TYPE == "tx" ]; then
     COLOR="#FF0000"
 else
     COLOR="#00FF00"
 fi
-echo -n "<span color=\"$COLOR\">$output ${UNIT[$cnt]}</span>"
+echo -n "<span color=\"$COLOR\">$output</span>"
