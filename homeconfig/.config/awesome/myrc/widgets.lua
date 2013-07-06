@@ -47,16 +47,22 @@ local mynet = wibox.widget.textbox()
 mynet:set_font("Monospace 8")
 vicious.register(mynet, vicious.contrib.net, 
     function(widget, data)
-        local iunit = "kb"
-        local unit = "KiB"
+        local uiunit = "kb"
+        local diunit = 'kb'
+        local dunit = "KiB"
+        local uunit = 'KiB'
         if data['{total down_b}'] + 0 > 1024^2 then
-           iunit = 'mb'
-           unit = 'MiB'
+           diunit = 'mb'
+           dunit = 'MiB'
         end
-        local down = data["{total down_".. iunit .. "}"]
-        local up = data["{total up_".. iunit  .. "}"]
-        local result = '<span color="#00FF00">%5s %s</span>  <span color="#FF0000">%5s %s</span>'
-        return string.format(result, down, unit, up, unit)
+        if data['{total up_b}'] + 0 > 1024^2 then
+           uiunit = 'mb'
+           uunit = 'MiB'
+        end
+        local down = data["{total down_".. diunit .. "}"]
+        local up = data["{total up_".. uiunit  .. "}"]
+        local result = '<span color="#00FF00">%5s %s</span> <span color="#FF0000">%5s %s</span>'
+        return string.format(result, down, dunit, up, uunit)
     end
 
 )
