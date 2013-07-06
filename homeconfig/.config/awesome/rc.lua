@@ -17,7 +17,7 @@ local bashets = require("bashets")
 -- {{{ Variable definitions
 -- Themes define colours, icons, and wallpapers
 home = os.getenv("HOME")
-beautiful.init(home .. "/.config/awesome/theme.lua")
+beautiful.init("/usr/share/awesome/themes/default/theme.lua")
 
 -- This is used later as the default terminal and editor to run.
 terminal = myrc.custom.terminal
