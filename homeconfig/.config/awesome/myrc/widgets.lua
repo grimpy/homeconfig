@@ -5,7 +5,7 @@ local wibox = require('wibox')
 local mylogger = require('mylogger')
 local dbus = dbus
 local io = { open = io.open, popen = io.popen}
-local string = {find = string.find, match = string.match}
+local string = {find = string.find, match = string.match, format=string.format}
 
 vicious.contrib = require("vicious.contrib")
 
@@ -53,9 +53,10 @@ vicious.register(mynet, vicious.contrib.net,
            iunit = 'mb'
            unit = 'MiB'
         end
-        local result = '<span color="#00FF00">' .. data["{total down_".. iunit  .. "}"] .. " " .. unit  .. "</span>"
-        result = result .. ' <span color="#FF0000">' .. data["{total up_".. iunit  .. "}"] .. " " .. unit  .. "</span>"
-        return result
+        local down = data["{total down_".. iunit .. "}"]
+        local up = data["{total up_".. iunit  .. "}"]
+        local result = '<span color="#00FF00">%5s %s</span>  <span color="#FF0000">%5s %s</span>'
+        return string.format(result, down, unit, up, unit)
     end
 
 )
