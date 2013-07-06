@@ -252,19 +252,11 @@ globalkeys = awful.util.table.join(
         end),
 
 
-
-
     awful.key({ modkey,           }, "w", function () mymainmenu:show() end),
 
     -- Layout manipulation
     awful.key({ modkey,           }, "u", awful.client.urgent.jumpto),
-    awful.key({ modkey2,           }, "Tab",
-        function ()
-            awful.client.focus.history.previous()
-            if client.focus then
-                client.focus:raise()
-            end
-        end),
+    awful.key({ modkey2,           }, "Tab", function() awful.client.focus.byidx(1) end),
 
     -- Standard program
     myrc.custom.keybindings,
