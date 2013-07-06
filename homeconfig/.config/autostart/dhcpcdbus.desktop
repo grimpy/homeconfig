@@ -1,0 +1,11 @@
+[Desktop Entry]
+Encoding=UTF-8
+Version=0.1
+Type=Application
+Name=Background
+Comment=
+Exec=dbus-send --system --dest="name.marples.roy.dhcpcd" /name/marples/roy/dhcpcd name.marples.roy.dhcpcd.GetVersion
+StartupNotify=false
+Terminal=false
+Hidden=false
+
