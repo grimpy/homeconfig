@@ -10,9 +10,9 @@ local shifty = require("shifty")
 -- Custom
 require("myrc.mainmenu")
 require("myrc.autostart")
-local cal = require("cal")
 require("myrc.custom")
-local bashets = require("bashets")
+require("myrc.widgets")
+vicious = require("vicious")
 
 -- {{{ Variable definitions
 -- Themes define colours, icons, and wallpapers
@@ -30,8 +30,6 @@ if myrc.custom.autostart then
     myrc.autostart.init(home .. "/.config/autostart/")
 end
 
-bashets.set_script_path("/dev/shm/bashets/scripts/")
-bashets.set_temporary_path("/dev/shm/bashets/tmp/")
 
 -- Default modkey.
 -- Usually, Mod4 is the key with a logo between Control and Alt.
@@ -74,74 +72,6 @@ mylauncher = awful.widget.launcher({ image = beautiful.awesome_icon,
 
 -- }}}
 --
-bashets.set_defaults({seperator=nil})
-
-function bashetsUpdate(script, widget, format)
-    script = bashets.util.fullpath(script)
-    local data = bashets.util.readshell(script, nil)
-    bashets.util.update_widget(widget, data, format)
-end
-
-
-mysep = wibox.widget.textbox()
-mysep:set_text("  ")
-
-mytemp = wibox.widget.textbox()
-bashets.register("temp.sh", {widget=mytemp, update_time=2})
-
-myip = wibox.widget.textbox()
-bashetsUpdate("gwip.sh", myip, "$1")
-bashets.register_d("system", "name.marples.roy.dhcpcd", nil, function() bashetsUpdate("gwip.sh", myip, "$1") end, "$1")
-
-mybat = wibox.widget.textbox()
-bashetsUpdate("bat.sh", mybat, "$1")
-bashets.register_d("system", "org.freedesktop.UPower.Device", nil, function() bashetsUpdate("bat.sh", mybat, "$1") end, "$1")
-
-myrx = wibox.widget.textbox()
-myrx:set_font("Monospace 8")
-bashets.register("net.sh 1 rx", {widget=myrx, update_time=1})
-
-mytx = wibox.widget.textbox()
-mytx:set_font("Monospace 8")
-bashets.register("net.sh 1 tx", {widget=mytx, update_time=1})
-
--- Initialize widget
-cpuwidget = awful.widget.graph()
--- Graph properties
-cpuwidget:set_width(50)
-cpuwidget:set_max_value(100)  
-cpuwidget:set_background_color("#494B4F")
-cpuwidget:set_color({ type = "linear", from = { 0, 0 }, to = { 0,10 }, stops = { {0, "#FF0000"}, {2, "#33FF00"}, {10, "#00FF00" }}})
--- Register widget
-bashets.register("cpu.sh", {widget=cpuwidget, update_time=2})
-bashets.start()
--- Initialize widget
-memwidget = awful.widget.progressbar()
-memwidget:set_width(6)
-memwidget:set_max_value(100)  
-memwidget:set_vertical(true)
-memwidget:set_background_color("#494B4F")
-memwidget:set_border_color(nil)
-memwidget:set_color({ type = "linear", from = { 0, 0 }, to = { 10,0 }, stops = { {0, "#AECF96"}, {0.5, "#88A175"}, 
-                    {1, "#FF5656"}}})
-bashets.register("mem.sh", {widget=memwidget, update_time=2})
-
-mixerw = awful.widget.progressbar()
-mixerw:set_width(6)
-mixerw:set_max_value(100)  
-mixerw:set_vertical(true)
-mixerw:set_background_color("#494B4F")
-mixerw:set_border_color(nil)
-mixerw:set_color("#0080FF")
-bashets.register("vollevel.sh Master", {widget=mixerw, update_time=2})
-
-
-
--- {{{ Wibox
--- Create a textclock widget
-mytextclock = awful.widget.textclock("%a %d/%m - %R")
-cal.register(mytextclock)
-
 
 -- Create a wibox for each screen and add it
 mywibox = {}
@@ -191,6 +121,11 @@ mytasklist.buttons = awful.util.table.join(
                                               if client.focus then client.focus:raise() end
                                           end))
 
+
+
+mysep = wibox.widget.textbox()
+mysep:set_text("  ")
+
 for s = 1, screen.count() do
     -- Create a promptbox for each screen
     mypromptbox[s] = awful.widget.prompt()
@@ -219,25 +154,12 @@ for s = 1, screen.count() do
 
     -- Widgets that are aligned to the right
     local right_layout = wibox.layout.fixed.horizontal()
-    right_layout:add(myip)
-    right_layout:add(mysep)
-    right_layout:add(myrx)
-    right_layout:add(mysep)
-    right_layout:add(mytx)
-    right_layout:add(mysep)
-    right_layout:add(mybat)
-    right_layout:add(mysep)
-    right_layout:add(mytemp)
-    right_layout:add(mysep)
-    right_layout:add(memwidget)
-    right_layout:add(mysep)
-    right_layout:add(cpuwidget)
-    right_layout:add(mysep)
-    right_layout:add(mixerw)
-    right_layout:add(mysep)
+    for _, widget in pairs(myrc.widgets.w) do
+        right_layout:add(widget)
+        right_layout:add(mysep)
+    end
 
     if s == 1 then right_layout:add(wibox.widget.systray()) end
-    right_layout:add(mytextclock)
     right_layout:add(mylayoutbox[s])
 
     -- Now bring it all together (with the tasklist in the middle)
