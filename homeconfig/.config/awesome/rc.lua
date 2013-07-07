@@ -306,7 +306,7 @@ for _, shiftag in pairs(shifty.config.tags) do
     globalkeys = awful.util.table.join(globalkeys,
         awful.key({modkey}, key, function()
             local scr = shiftag.screen
-            if client.focus.screen ~= scr then
+            if client.focus and client.focus.screen ~= scr then
                 awful.screen.focus(scr)
             end
             local tag = shifty.getpos(i)
