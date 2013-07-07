@@ -4,7 +4,8 @@ call pathogen#helptags()
 " python mode
 
 let mapleader = ","
-
+let python_highlight_all = 1
+let python_version_2 = 1
 let g:ctrlp_map = '<leader>f'
 "let g:ctrlp_regexp = 1
 
