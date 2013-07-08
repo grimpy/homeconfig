@@ -1,31 +1,37 @@
+*background: black
+*foreground: white
+*cursorColor: red
 *cursorBlink: true
 *scrollBar: false
+*boarderColor: red
 *loginShell: true
 *tintingType: true
 *tinting: #ffffff
 *tintColor: #FFFFFF
-*allow_bold: true
-
-! Molokai theme
-*background: #101010
-*foreground: #d0d0d0
-*color0: #101010
-*color1: #960050
-*color2: #66aa11
-*color3: #c47f2c
-*color4: #30309b
-*color5: #7e40a5
-*color6: #3579a8
-*color7: #9999aa
-*color8: #303030
-*color9: #ff0090
-*color10: #80ff00
-*color11: #ffba68
-*color12: #5f5fee
-*color13: #bb88dd
-*color14: #4eb4fa
-*color15: #d0d0d0
-
+! black
+*color0  : #2E3436
+*color8  : #555753
+! ! red
+*color1  : #CC0000
+*color9  : #EF2929
+! ! green
+*color2  : #4E9A06
+*color10 : #8AE234
+! ! yellow
+*color3  : #C4A000
+*color11 : #FCE94F
+! ! blue
+*color4  : #3465A4
+*color12 : #729FCF
+! ! magenta
+*color5  : #75507B
+*color13 : #AD7FA8
+! ! cyan
+*color6  : #06989A
+*color14 : #34E2E2
+! ! white
+*color7  : #D3D7CF
+*color15 : #EEEEEC
 *matcher.button: 3
 *colorUL: #86A2BB
 urxvt.url-launcher: /usr/bin/firefox
@@ -41,10 +47,12 @@ urxvt.keysym.Mod4-v: perl:clipboard:paste
 urxvt.keysym.Mod4-c: perl:clipboard:copy
 urxvt.keysym.Mod4-minus: perl:font-size:decrease
 urxvt.keysym.Mod4-equal: perl:font-size:increase
+urxvt.shading:    20
+urxvt.transparent:true
+
 urxvt.selection-autotransform.0: s/^([^:[:space:]]+)(\\.py|\\.c|\\.js):(\\d+):?.*$/vi +$3 \\Q$1$2\\E\\x0d/
 urxvt.cutchars:'"'&()*,;<=>?@[]^{|}
 urxvt.termName: rxvt
 urxvt.urgentOnBell: True
 urxvt.saveLines: 10000
 xterm.font: xft:Monospace:size=10
-
