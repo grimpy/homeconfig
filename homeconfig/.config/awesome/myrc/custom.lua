@@ -5,7 +5,8 @@ local mouse = mouse
 local naughty = require("naughty")
 local shifty = require("shifty")
 local ipairs = ipairs
-local os = require("os")
+local os = os
+local io = io
 
 module("myrc.custom")
 shifty.config.sloppy = false
@@ -18,6 +19,14 @@ modkey = "Mod4"
 modkey2 = "Mod1"
 VGA = screen.count()
 LCD = 1
+
+function removeFile(file)
+    local f = io.open(file,"r")
+    if f then
+        os.remove(file)
+        f:close()
+    end
+end
 
 shiftytags = {
     ["1:term"] = { position=1, key=1, exclusive=true, max_clients=4, screen=VGA, spawn=terminal, layout=awful.layout.suit.fair.horizontal},
@@ -105,6 +114,6 @@ client.connect_signal("property::urgent", function(c)
     if c.urgent and c.window ~= client.focus.window then
         awful.util.spawn(binhome .. "scrolllock")
     elseif not awful.client.urgent.get() then
-        awful.util.spawn("rm /tmp/scrolllock")
+        removeFile('/tmp/scrolllock')
     end
 end)

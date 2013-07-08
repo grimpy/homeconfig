@@ -255,7 +255,15 @@ globalkeys = awful.util.table.join(
     awful.key({ modkey,           }, "w", function () mymainmenu:show() end),
 
     -- Layout manipulation
-    awful.key({ modkey,           }, "u", awful.client.urgent.jumpto),
+    awful.key({ modkey,           }, "u", 
+        function() 
+            local cl = awful.client.urgent.get()
+            if cl then
+               awful.client.jumpto(cl)
+            else
+                myrc.custom.removeFile('/tmp/scrolllock')
+            end 
+        end),
     awful.key({ modkey2,           }, "Tab", function() awful.client.focus.byidx(1) end),
 
     -- Standard program
