@@ -28,6 +28,7 @@ function updateIP()
     local gwdev = string.match(ipr, 'default via .- dev (.-) metric')
     if not gwdev then
         myip:set_text("No GW")
+        return
     end
     f = io.popen("ip a s " .. gwdev)
     local ipa = f:read("*all")
@@ -35,6 +36,7 @@ function updateIP()
     local ip = string.match(ipa, "inet (.-)/")
     if not ip then
         myip:set_text("No IP")
+        return
     end
     myip:set_text(ip)
 end
