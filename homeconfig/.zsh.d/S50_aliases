@@ -91,11 +91,4 @@ function ownedby(){
     yaourt -Qo $filename
 }
 
-function hgp(){
-    sed -i "s/pretxncommit.pyflakes/#pretxncommit.pyflakes/" ~/.hgrc
-    hg $*
-    exitcode=$?
-    sed -i "s/#pretxncommit.pyflakes/pretxncommit.pyflakes/" ~/.hgrc
-    return $exitcode
-    
-}
+
