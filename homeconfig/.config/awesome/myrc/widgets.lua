@@ -2,7 +2,6 @@ local cal = require("cal")
 local vicious = require('vicious')
 local awful = require('awful')
 local wibox = require('wibox')
-local mylogger = require('mylogger')
 local dbus = dbus
 local io = { open = io.open, popen = io.popen}
 local string = {find = string.find, match = string.match, format=string.format}
