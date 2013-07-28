@@ -19,3 +19,8 @@ function hga() {
         popd
     done
 }
+
+function hgr() {
+    local hgroot=$(hg root)
+    hgp commit -l "${hgroot}/.hg/last-message.txt" $*
+}
