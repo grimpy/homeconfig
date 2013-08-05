@@ -1,0 +1,2 @@
+#!/bin/bash
+xdg-mime default $1.desktop x-scheme-handler/https x-scheme-handler/http
