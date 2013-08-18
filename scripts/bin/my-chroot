@@ -111,8 +111,10 @@ if [ ${STATE} -ne 0 -a "${1}" != "--stop" ]; then
     api_fs_mount "$chrootdir" || die "failed to setup API filesystems in chroot %s" "$chrootdir"
 fi
 
+EXIT=0
 if [ "$1" != "--stop" -a "$1" != "--start" ]; then
     SHELL=/bin/bash chroot "$chrootdir" "$@"
+    EXIT=$?
 fi
 
 if [ "$1" = "--stop" -o ${STATE} -eq 1 ]; then
@@ -121,4 +123,4 @@ if [ "$1" = "--stop" -o ${STATE} -eq 1 ]; then
     fi
 fi
 
-
+exit $EXIT
