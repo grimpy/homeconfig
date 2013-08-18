@@ -40,7 +40,7 @@ elif [ "$1" == "ls" ]; then
         echo -e "$container \t $status \t $ip"
     done | sort -k2 -k1 | column -t
     exit 0
-elif [ "$1" == "clone" -o "$1" == "rename"  ]; then
+elif [ "$1" == "rename"  ]; then
     srcname="$2"
     destname="$3"
     dest="${lxc_path}/$3"
@@ -49,24 +49,11 @@ elif [ "$1" == "clone" -o "$1" == "rename"  ]; then
         echo Container $destname already exists
         exit 1
     fi
-    if [ "$1" == "clone" ]; then
-        sudo btrfs subvolume snapshot "${src}" "${dest}"
-    else
-        sudo mv "${src}" "${dest}"
-    fi
+    sudo mv "${src}" "${dest}"
     rename
     exit 0
-elif [ "$1" == "destroy" ]; then
-    dest="${lxc_path}/$2"
-    if [ ! -e "${dest}" -o -z "$2" ]; then
-        echo "Container doest not exist"
-        exit 1
-    fi
-    if getStatus "$2"; then
-        echo "Can not destroy container which is running"    
-        exit 1
-    fi
-    sudo btrfs subvolume delete /var/lib/lxc/$2
+elif [ "$1" == "clone" ]; then
+    sudo lxc-clone -o $2 -n $3
     exit 0
 elif [ "$#" -eq 2 ]; then
     cmd=lxc-$1
