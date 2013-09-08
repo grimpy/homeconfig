@@ -1,2 +1,2 @@
 #!/bin/bash
-rsync -rmv --size-only $* ~/Pictures/Camera/ /run/user/1000/gvfs/smb-share:server=xbmc,share=media/Pictures
+rsync -rmv --size-only $* ~/Pictures/ /run/user/1000/gvfs/smb-share:server=xbmc,share=media/Pictures
