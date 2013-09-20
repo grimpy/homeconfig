@@ -1,13 +1,31 @@
-runtime bundle/pathogen/autoload/pathogen.vim
-call pathogen#infect()
-call pathogen#helptags()
-" python mode
+set nocompatible               " be iMproved
+filetype off                   " required!
+
+set rtp+=~/.vim/bundle/vundle/
+call vundle#rc()
+
+" let Vundle manage Vundle
+" required! 
+Bundle 'gmarik/vundle'
+Bundle 'grimpy/ctrlp.vim.git'
+Bundle 'mileszs/ack.vim.git'
+Bundle 'aklt/plantuml-syntax.git'
+Bundle 'alfredodeza/pytest.vim.git'
+Bundle 'tpope/vim-commentary.git'
+Bundle 'kevinw/pyflakes-vim.git'
+Bundle 'Shougo/neocomplcache.git'
+Bundle 'tomasr/molokai'
+Bundle 'Shougo/neosnippet.vim.git'
+Bundle 'git://repo.or.cz/vcscommand'
+Bundle 'sukima/xmledit.git'
+Bundle 'scrooloose/nerdtree'
+Bundle 'taglist.vim'
+
 
 let mapleader = ","
 let python_highlight_all = 1
 let python_version_2 = 1
 let g:ctrlp_map = '<leader>f'
-"let g:ctrlp_regexp = 1
 
 autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
 autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
@@ -38,10 +56,14 @@ set fdm=indent
 set foldlevel=30
 set hlsearch
 
+
+nnoremap <leader>r :source $MYVIMRC<CR>
 inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
 nnoremap <leader>/ :noh<cr>
 nnoremap <leader>n :NERDTreeFind<CR>
 nnoremap <leader>N :NERDTreeToggle<CR>
+nnoremap <F2> :NERDTreeToggle<CR>
+nnoremap <F3> :TlistToggle<CR>
 nnoremap <leader>m :only<CR>
 nnoremap <leader>p :! autopep8 --max-line-length=160 -i %<CR>
 nmap <silent><Leader>tf <Esc>:Pytest file<CR>
@@ -51,6 +73,7 @@ nmap <silent><Leader>tn <Esc>:Pytest next<CR>
 nmap <silent><Leader>tp <Esc>:Pytest previous<CR>
 nmap <silent><Leader>te <Esc>:Pytest end<CR>
 nmap <silent><Leader>ts <Esc>:Pytest session<CR>
+
 
 " " Plugin key-mappings.
 imap <C-k>     <Plug>(neosnippet_expand_or_jump)
@@ -82,6 +105,7 @@ map <c-j> <c-w>j
 map <c-k> <c-w>k
 map <c-l> <c-w>l
 map <c-h> <c-w>h
+
 
 let Tlist_GainFocus_On_ToggleOpen = 1
 let Tlist_Use_Right_Window = 1

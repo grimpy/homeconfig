@@ -1,39 +1,6 @@
-[submodule "homeconfig/.vim/bundle/ctrlp.vim"]
-	path = homeconfig/.vim/bundle/ctrlp.vim
-	url = git://github.com/grimpy/ctrlp.vim.git
-[submodule "homeconfig/.vim/bundle/ack"]
-	path = homeconfig/.vim/bundle/ack
-	url = git://github.com/mileszs/ack.vim.git
 [submodule "homeconfig/.config/awesome/shifty"]
 	path = homeconfig/.config/awesome/shifty
 	url = git@github.com:grimpy/awesome-shifty.git
-[submodule "homeconfig/.vim/bundle/plantuml"]
-	path = homeconfig/.vim/bundle/plantuml
-	url = git://github.com/aklt/plantuml-syntax.git
-[submodule "homeconfig/.vim/bundle/py.test"]
-	path = homeconfig/.vim/bundle/py.test
-	url = git://github.com/alfredodeza/pytest.vim.git
-[submodule "homeconfig/.vim/bundle/pathogen"]
-	path = homeconfig/.vim/bundle/pathogen
-	url = git://github.com/tpope/vim-pathogen.git
-[submodule "homeconfig/.vim/bundle/commentary"]
-	path = homeconfig/.vim/bundle/commentary
-	url = git://github.com/tpope/vim-commentary.git
-[submodule "homeconfig/.vim/bundle/pyflakes"]
-	path = homeconfig/.vim/bundle/pyflakes
-	url = git://github.com/kevinw/pyflakes-vim.git
-[submodule "homeconfig/.vim/bundle/neocomplcache"]
-	path = homeconfig/.vim/bundle/neocomplcache
-	url = git://github.com/Shougo/neocomplcache.git
-[submodule "homeconfig/.vim/bundle/molokai"]
-	path = homeconfig/.vim/bundle/molokai
-	url = git@github.com:tomasr/molokai
-[submodule "homeconfig/.vim/bundle/neosnippet"]
-	path = homeconfig/.vim/bundle/neosnippet
-	url = git://github.com/Shougo/neosnippet.vim.git
-[submodule "homeconfig/.vim/bundle/vcscommand"]
-	path = homeconfig/.vim/bundle/vcscommand
-	url = git://repo.or.cz/vcscommand
-[submodule "homeconfig/.vim/bundle/xmledit"]
-	path = homeconfig/.vim/bundle/xmledit
-	url = git://github.com/sukima/xmledit.git
+[submodule "homeconfig/.vim/bundle/vundle"]
+	path = homeconfig/.vim/bundle/vundle
+	url = git@github.com:gmarik/vundle.git
