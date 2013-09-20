@@ -1,0 +1,14 @@
+#!/bin/bash
+submodulepath=$1
+if [ ! -e "${submodulepath}" ]; then
+    echo "Invalid path $submodulepath"
+    exit 1
+fi
+
+git config -f .git/config --remove-section submodule.$submodulepath
+git config -f .gitmodules --remove-section submodule.$submodulepath
+git rm --cached $submodulepath
+rm -rf $submodulepath
+rm -rf .git/modules/$submodulepath
+
+
