@@ -37,6 +37,7 @@ let g:neocomplcache_enable_auto_close_preview = 1
 
 let g:notes_directories = ['~/Documents/Notes']
 let g:notes_suffix = '.txt'
+let g:xmledit_enable_html = 1
 
 " some defaults
 filetype off
