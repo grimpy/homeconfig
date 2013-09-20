@@ -1,0 +1,16 @@
+#!/bin/bash
+adb disconnect > /dev/null && adb connect dash.lan > /dev/null
+sleep 0.5
+adb root
+sleep 2
+adb disconnect > /dev/null && adb connect dash.lan > /dev/null
+sleep 0.5
+adb remount
+echo "Pushing $1"
+if [ ${1:0:9} = "framework" ]; then
+    adb push ~/Dev/android/CM/out/target/product/mako/system/framework/$1 /system/framework/
+    adb shell chmod 644 /system/framework/$1
+else 
+    adb push ~/Dev/android/CM/out/target/product/mako/system/app/$1.apk /system/app/
+    adb shell chmod 644 /system/app/$1.apk
+fi
