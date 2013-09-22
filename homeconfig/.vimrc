@@ -60,6 +60,7 @@ set guifont=Monospace\ 8
 set fdm=indent
 set foldlevel=30
 set hlsearch
+set cursorline
 
 
 nnoremap <leader>v :source $MYVIMRC<CR>
@@ -151,4 +152,4 @@ vnoremap L $
 
 "easy command mode
 nnoremap ; :
-
+nnoremap <leader>h *<C-O>
