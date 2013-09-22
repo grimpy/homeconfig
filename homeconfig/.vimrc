@@ -3,6 +3,7 @@ filetype off                   " required!
 
 set rtp+=~/.vim/bundle/vundle/
 call vundle#rc()
+let mapleader = ","
 
 " let Vundle manage Vundle
 " required! 
@@ -20,9 +21,12 @@ Bundle 'git://repo.or.cz/vcscommand'
 Bundle 'sukima/xmledit.git'
 Bundle 'scrooloose/nerdtree'
 Bundle 'taglist.vim'
+Bundle 'Buffergator'
+Bundle 'davidhalter/jedi-vim'
 
+let g:jedi#popup_on_dot = 0
+let g:jedi#usages_command = "<leader>u"
 
-let mapleader = ","
 let python_highlight_all = 1
 let python_version_2 = 1
 let g:ctrlp_map = '<leader>f'
@@ -58,7 +62,7 @@ set foldlevel=30
 set hlsearch
 
 
-nnoremap <leader>r :source $MYVIMRC<CR>
+nnoremap <leader>v :source $MYVIMRC<CR>
 inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
 nnoremap <leader>/ :noh<cr>
 nnoremap <leader>n :NERDTreeFind<CR>
