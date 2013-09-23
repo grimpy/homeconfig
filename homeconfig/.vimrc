@@ -63,7 +63,10 @@ set hlsearch
 set cursorline
 
 
-nnoremap <leader>v :source $MYVIMRC<CR>
+vnoremap <leader>c "*y
+nnoremap <leader>c "*yy
+nnoremap <leader>v "*p
+nnoremap <leader>R :source $MYVIMRC<CR>
 inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
 nnoremap <leader>/ :noh<cr>
 nnoremap <leader>n :NERDTreeFind<CR>
