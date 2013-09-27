@@ -1,6 +1,5 @@
 #!/bin/bash
-sudo mount --make-rprivate /
-function getStatus() {
+function lxc_get_status() {
     pid=$(sudo lxc-info -p -n ${1} | awk '{print $2}')
     if [ "$pid" = "-1" ]; then
         return 1
@@ -8,11 +7,22 @@ function getStatus() {
     return 0
 }
 
-function getIP() {
+function lxc_get_ip() {
     sudo lxc-attach -s NETWORK -n ${1} -- ip a s dev eth0 | grep "inet " | awk '{print $2}' | cut -d "/" -f 1
 }
 
-function rename() {
+function lxc_list() {
+    for container in $(sudo lxc-ls); do
+        state=$(sudo lxc-info -s -n $container | awk '{print $2}')
+        ip=""
+        if [ "$state" = "RUNNING" ]; then
+            ip=$(lxc_get_ip $container)
+        fi
+        echo -e "$container \t $state \t $ip"
+    done | sort -k2 -k1 | column -t
+}
+
+function lxc_rename() {
     sudo sed -i "s/lxc.utsname.*/lxc.utsname = ${destname}/" "${dest}/config"
     sudo sed -i "s#${src}#${dest}#" "${dest}/config"
     sudo sed -i "s@$src@$dest@" $dest/fstab
@@ -21,7 +31,12 @@ function rename() {
 
 }
 
+if [ "$BASH_SOURCE" != "$0" ]; then
+    return 0
+fi
 
+
+sudo mount --make-rprivate /
 lxc_path="/var/lib/lxc"
 if [ "$1" == "--help" ]; then
     echo "Usage lxc <commmand> [command options]"
@@ -31,14 +46,7 @@ if [ "$1" == "--help" ]; then
     exit 0
 
 elif [ "$1" == "ls" ]; then
-    for container in $(sudo lxc-ls); do
-        status=$(sudo lxc-info -s -n $container | awk '{print $2}')
-        ip=""
-        if [ "$status" == "RUNNING" ]; then
-            ip=$(getIP $container)
-        fi
-        echo -e "$container \t $status \t $ip"
-    done | sort -k2 -k1 | column -t
+    lxc_list
     exit 0
 elif [ "$1" == "rename"  ]; then
     srcname="$2"
@@ -50,7 +58,7 @@ elif [ "$1" == "rename"  ]; then
         exit 1
     fi
     sudo mv "${src}" "${dest}"
-    rename
+    lxc_rename
     exit 0
 elif [ "$1" == "clone" ]; then
     sudo lxc-clone -o $2 -n $3
