@@ -50,9 +50,16 @@ function v(){
     vimbin="vim"
     if [ -z "$@" ] ; then
         $vimbin -c "normal '0";
-    else
-        $vimbin `echo "$@" | cut -d: -f1,2 | sed -e 's/:/ +/g'`;
+        return 0;
     fi
+    array=("${(s/:/)@}")
+    if [ ! -e "${array[1]}" ]; then
+        array[1]=$(which ${array[1]})
+    fi
+    if [ -z "${array[2]}" ]; then
+        array[2]="0"
+    fi
+    $vimbin "${array[1]}" "+${array[2]}"
 }
 
 function cd() {

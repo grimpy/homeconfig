@@ -49,8 +49,6 @@ urxvt.keysym.Mod4-minus: perl:font-size:decrease
 urxvt.keysym.Mod4-equal: perl:font-size:increase
 urxvt.shading:    20
 urxvt.transparent:true
-
-urxvt.selection-autotransform.0: s/^([^:[:space:]]+)(\\.py|\\.c|\\.js):(\\d+):?.*$/vi +$3 \\Q$1$2\\E\\x0d/
 urxvt.cutchars:'"'&()*,;<=>?@[]^{|}
 urxvt.termName: rxvt
 urxvt.urgentOnBell: True
