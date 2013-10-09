@@ -16,7 +16,7 @@ single() {
     xrandr --output ${CON[1]} --off
 }
 dual() {
-    xrandr --output ${CON[0]} --right-of ${CON[1]} --auto
+    xrandr --output ${CON[0]} --left-of ${CON[1]} --auto
 }
 clone() {
     xrandr --output ${CON[1]} --same-as ${CON[0]}

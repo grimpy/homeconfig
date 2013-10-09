@@ -17,8 +17,8 @@ terminal = "urxvtc"
 autostart = true
 modkey = "Mod4"
 modkey2 = "Mod1"
-LCD = screen.count()
-VGA = 1
+VGA = screen.count()
+LCD = 1
 
 function removeFile(file)
     local f = io.open(file,"r")
