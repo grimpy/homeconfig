@@ -37,8 +37,8 @@
 urxvt.url-launcher: /usr/bin/firefox
 urxvt.url-select.launcher: /usr/bin/firefox
 urxvt.url-select.underline: false
-urxvt.font: xft:Monospace:size=8
-urxvt.perl-ext-common: default,clipboard,keyboard-select,confirm-paste,url-select,selection-autotransform,font-size
+urxvt.font: xft:Monospace:size=9
+urxvt.perl-ext-common: default,clipboard,keyboard-select,confirm-paste,url-select,font-size
 urxvt.matcher.pattern.1: \\w{8}-\\w{4}-\\w{4}-\\w{4}-\\w{12}
 urxvt.matcher.pattern.2: (https?|ftps?)://[^\\s]+
 urxvt.keysym.Mod4-t: perl:keyboard-select:activate
