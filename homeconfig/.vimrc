@@ -23,6 +23,8 @@ Bundle 'scrooloose/nerdtree'
 Bundle 'taglist.vim'
 Bundle 'Buffergator'
 Bundle 'davidhalter/jedi-vim'
+Bundle 'xolox/vim-misc'
+Bundle 'xolox/vim-notes'
 
 let g:jedi#popup_on_dot = 0
 let g:jedi#usages_command = "<leader>u"
@@ -74,7 +76,7 @@ nnoremap <leader>N :NERDTreeToggle<CR>
 nnoremap <F2> :NERDTreeToggle<CR>
 nnoremap <F3> :TlistToggle<CR>
 nnoremap <leader>m :only<CR>
-nnoremap <leader>p :! autopep8 --max-line-length=160 -i %<CR>
+nnoremap <leader>p :! autopep8-python2 --max-line-length=160 -i %<CR>
 nmap <silent><Leader>tf <Esc>:Pytest file<CR>
 nmap <silent><Leader>tc <Esc>:Pytest class<CR>
 nmap <silent><Leader>tm <Esc>:Pytest method<CR>
@@ -121,6 +123,8 @@ let Tlist_Use_Right_Window = 1
 let NERDTreeQuitOnOpen = 1
 let NERDTreeShowBookmarks = 1
 let NERDTreeChDirMode = 2
+let NERDTreeIgnore = ['\.pyc$']
+
 if has('gui_running')
     colorscheme molokai
 else
