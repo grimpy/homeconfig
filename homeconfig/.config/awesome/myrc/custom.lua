@@ -87,6 +87,7 @@ end
 keybindings = awful.util.table.join(
     awful.key({ modkey2, "Control" }, "c", function () awful.util.spawn(terminal) end),
     awful.key({ }, "Print", function () awful.util.spawn(binhome .. "caputereimg.sh /home/Jo/Pictures/SS") end),
+    awful.key({ modkey,           }, "o", function () awful.util.spawn(binhome .. "rotatescreen") end),
     awful.key({ modkey,           }, "F2", function () awful.util.spawn(binhome .. "musiccontrol PlayPause") end),
     awful.key({ modkey,           }, "c", function () awful.util.spawn_with_shell("xclip -o | xclip -i -selection clipboard") end),
     awful.key({ modkey,           }, "F3", function () awful.util.spawn(binhome .. "musiccontrol Previous") end),
@@ -94,7 +95,7 @@ keybindings = awful.util.table.join(
     awful.key({ }, "XF86AudioNext", function () awful.util.spawn(binhome .. "musiccontrol Next") end),
     awful.key({ }, "XF86AudioPlay", function () awful.util.spawn(binhome .. "musiccontrol PlayPause") end),
     awful.key({ }, "XF86Battery", function () awful.util.spawn("xautolock -locknow && sudo pm-suspend") end),
-    awful.key({ modkey,           }, "F7", function () awful.util.spawn(binhome .. "xrandr.sh --auto") end),    awful.key({ modkey,           }, "x", xbmckeyhandler),
+    awful.key({ modkey,           }, "p", function () awful.util.spawn(binhome .. "xrandr.sh --auto") end),    awful.key({ modkey,           }, "x", xbmckeyhandler),
     awful.key({ modkey,           }, "e", function () awful.util.spawn("thunar") end),
     awful.key({ modkey, }, "l", function () awful.util.spawn("xautolock -locknow") 
                                             awful.util.spawn(binhome .. "musiccontrol Pause")

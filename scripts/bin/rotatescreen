@@ -1,0 +1,9 @@
+#!/bin/bash
+state=$(xrandr -q | grep "0 inverted" || echo "normal")
+if [ "$state" == "normal" ]; then
+    state="inverted"
+else
+    state="normal"
+fi
+
+xrandr --output eDP1 --rotate $state
