@@ -17,14 +17,15 @@ vicious = require("vicious")
 -- {{{ Variable definitions
 -- Themes define colours, icons, and wallpapers
 home = os.getenv("HOME")
-beautiful.init("/usr/share/awesome/themes/default/theme.lua")
+confdir = awful.util.getdir("config")
+-- beautiful.init("/usr/share/awesome/themes/default/theme.lua")
+beautiful.init(confdir .. "/theme.lua")
 
 -- This is used later as the default terminal and editor to run.
 terminal = myrc.custom.terminal
 browser = myrc.custom.browser
 editor = os.getenv("EDITOR") or "vim"
 editor_cmd = terminal .. " -e " .. editor
-confdir = awful.util.getdir("config")
 
 if myrc.custom.autostart then
     myrc.autostart.init(home .. "/.config/autostart/")

@@ -3,9 +3,11 @@ local vicious = require('vicious')
 local awful = require('awful')
 local wibox = require('wibox')
 local dbus = dbus
+local os = os
 local io = { open = io.open, popen = io.popen}
 local string = {find = string.find, match = string.match, format=string.format}
 
+local device = require("myrc.device")
 vicious.contrib = require("vicious.contrib")
 
 module("myrc.widgets")
@@ -19,6 +21,7 @@ end
 
 
 local myip = wibox.widget.textbox()
+myip:set_font(device.font)
 
 function updateIP()
     local f = io.popen("ip r")
@@ -45,7 +48,7 @@ dbusCallBack("system", "name.marples.roy.dhcpcd", updateIP)
 w[#w+1] = myip
 
 local mynet = wibox.widget.textbox()
-mynet:set_font("Monospace 8")
+mynet:set_font(device.font)
 vicious.register(mynet, vicious.contrib.net, 
     function(widget, data)
         local uiunit = "kb"
@@ -70,6 +73,7 @@ vicious.register(mynet, vicious.contrib.net,
 w[#w+1] = mynet
 
 local mytemp = wibox.widget.textbox()
+mytemp:set_font(device.font)
 vicious.register(mytemp, vicious.widgets.thermal, 
     function(widget, data)
         local tmp = data[1]
@@ -88,8 +92,9 @@ w[#w+1] = mytemp
 
 
 local mybat = wibox.widget.textbox()
+mybat:set_font(device.font)
 function updateBat()
-    local res = vicious.widgets.bat(nil, "BAT0")
+    local res = vicious.widgets.bat(nil, device.battery)
     local per = res[2]
     local output = res[1] .. res[2]
     local color
@@ -139,6 +144,7 @@ vicious.register(myvol, vicious.widgets.volume, "$1", 2, "Master")
 w[#w+1] = myvol
 
 local mycal = awful.widget.textclock("%a %d/%m - %R")
+mycal:set_font(device.font)
 cal.register(mycal)
 w[#w+1] = mycal
 

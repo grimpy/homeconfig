@@ -24,6 +24,7 @@
 local string = {format = string.format}
 local os = {date = os.date, time = os.time}
 local awful = require("awful")
+local device = require("myrc.device")
 
 local cal = {}
 
@@ -86,7 +87,7 @@ function cal.register(mywidget, custom_current_day_format)
                 function tooltip:update()
                         local month, year = os.date('%m'), os.date('%Y')
                         state = {month, year}
-                        tooltip:set_text(string.format('<span font_desc="monospace">%s</span>', displayMonth(month, year, 2)))
+                        tooltip:set_text(string.format('<span font_desc="'.. device.font ..'">%s</span>', displayMonth(month, year, 2)))
                 end
                 tooltip:update()
 	end
@@ -123,7 +124,7 @@ end
 
 function switchMonth(delta)
 	state[1] = state[1] + (delta or 1)
-	local text = string.format('<span font_desc="monospace">%s</span>', displayMonth(state[1], state[2], 2))
+	local text = string.format('<span font_desc="' .. device.font .. '">%s</span>', displayMonth(state[1], state[2], 2))
 	tooltip:set_text(text)
 end
 
