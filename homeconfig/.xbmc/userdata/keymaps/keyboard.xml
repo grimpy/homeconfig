@@ -45,6 +45,8 @@
       <q>Queue</q>
       <f>ActivateWindow(favourites)</f>
       <r>Rewind</r>
+      <j>Down</j>
+      <k>Up</k>
       <left>Left</left>
       <right>Right</right>
       <up>Up</up>
