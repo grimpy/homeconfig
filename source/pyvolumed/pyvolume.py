@@ -22,10 +22,11 @@ class Mixer(object):
     def __init__(self, mixer):
         self._mixer = mixer
         self._maxvolume = 100
+        self._cardidx = alsaaudio.cards().index('PCH')
 
     @property
     def rawmixer(self):
-        return alsaaudio.Mixer(self._mixer)
+        return alsaaudio.Mixer(self._mixer, cardindex=self._cardidx)
 
     def get_volume(self):
         return self.rawmixer.getvolume()[0]
@@ -104,6 +105,7 @@ def toggleMute(_):
 
 def main():
     keybinder.bind('<Super>Up', notifyDelta, 5)
+    keybinder.bind('<Super>Down', notifyDelta, -5)
     keybinder.bind('XF86AudioRaiseVolume', notifyDelta, 5)
     keybinder.bind('XF86AudioLowerVolume', notifyDelta, -5)
     keybinder.bind('<Super>0', toggleMute, None)
