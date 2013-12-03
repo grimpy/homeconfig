@@ -63,6 +63,14 @@ elif [ "$1" == "rename"  ]; then
 elif [ "$1" == "clone" ]; then
     sudo lxc-clone -o $2 -n $3
     exit 0
+elif [ "$1" == "destroy" ]; then
+    sudo lxc-destroy -fn $2
+    exit 0
+elif [ "$1" == "reclone" ]; then
+    sudo lxc-destroy -fn $3
+    sudo lxc-clone -o $2 -n $3
+    sudo lxc-start -d -n $3
+    exit 0
 elif [ "$#" -eq 2 ]; then
     cmd=lxc-$1
     opts=""
