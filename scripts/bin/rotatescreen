@@ -2,8 +2,11 @@
 state=$(xrandr -q | grep "0 inverted" || echo "normal")
 if [ "$state" == "normal" ]; then
     state="inverted"
+    xinput set-float-prop 9 136 -1 0 1 0 -1 1 0 0 1
 else
     state="normal"
+    xinput set-float-prop 9 136 1 0 0 0 1 0 0 0 1
 fi
 
 xrandr --output eDP1 --rotate $state
+
