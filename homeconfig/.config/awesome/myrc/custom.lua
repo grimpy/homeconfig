@@ -20,6 +20,7 @@ modkey2 = "Mod1"
 VGA = screen.count()
 LCD = 1
 
+
 function removeFile(file)
     local f = io.open(file,"r")
     if f then
@@ -39,7 +40,6 @@ shiftytags = {
     ["9:mediafs"] = { position=9, key=9, exclusive=true, screen=LCD, nopopup=true, layout=awful.layout.suit.max.fullscreen, },
     ["8:emu"] = { position=8, key=8, exclusive=true, spawn="VirtualBox", screen=LCD, nopopup=true, layout=awful.layout.suit.max, },
     ["10:xbmcremote"] = { position=10, key='x', exclusive=true, spawn='xterm -class xbmcremote -e python2 /usr/bin/xbmcremote -c --host xbmc.lan', screen=VGA, layout=awful.layout.suit.max, },
-    --["10:xbmcremote"] = { position=10, key='x', exclusive=true, spawn='xterm -class xbmcremote -e bash /home/Jo/mygit/scripts/bin/kbshare', screen=VGA, layout=awful.layout.suit.max, },
 }
 clientbuttons=awful.util.table.join(
     awful.button({ }, 1, function (c) client.focus=c; c:raise() end),
@@ -52,7 +52,7 @@ shiftyapps = {
          { match = { "Pidgin", "Skype", "gajim"} , tag="2:im", nopopup=true } ,
          { match = { "xterm", "urxvt", "Terminator"} , honorsizehints=false, slave=true, tag="1:term" } ,
          { match = { "Thunar", "pcmanfm", "xarchiver", "Squeeze", "File-roller", "Nautilus" }, tag="5:fs" } ,
-         { match = { "Geany", "gvim", "Firebug", "Devtools", "jetbrains-android-studio" }, tag="6:edit" } ,
+         { match = { "Geany", "gvim", "Firebug", "sun-awt-X11-XFramePeer", "Devtools", "jetbrains-android-studio" }, tag="6:edit" } ,
          { match = { "xbmcremote" }, tag="10:xbmcremote" } ,
          { match = { "Eclipse" }, tag="6:edit", nopopup=true } ,
          { match = { "MPlayer", "ario", "Audacious", "pragha", "mplayer2", "bino" }, tag="7:media" } ,

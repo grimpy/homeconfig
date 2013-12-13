@@ -272,12 +272,6 @@ globalkeys = awful.util.table.join(
     awful.key({ modkey, "Control" }, "r", awesome.restart),
     awful.key({ modkey, "Shift"   }, "q", awesome.quit),
 
-    -- awful.key({ modkey,           }, "l",     function () awful.tag.incmwfact( 0.05)    end),
-    awful.key({ modkey,           }, "h",     function () awful.tag.incmwfact(-0.05)    end),
-    awful.key({ modkey, "Shift"   }, "h",     function () awful.tag.incnmaster( 1)      end),
-    awful.key({ modkey, "Shift"   }, "l",     function () awful.tag.incnmaster(-1)      end),
-    awful.key({ modkey, "Control" }, "h",     function () awful.tag.incncol( 1)         end),
-    awful.key({ modkey, "Control" }, "l",     function () awful.tag.incncol(-1)         end),
     awful.key({ modkey,           }, "space", function () awful.layout.inc(layouts,  1) end),
     awful.key({ modkey, "Shift"   }, "space", function () awful.layout.inc(layouts, -1) end),
 
@@ -321,7 +315,7 @@ for _, shiftag in pairs(shifty.config.tags) do
             local tag = shifty.getpos(i)
             local t =  awful.tag.viewonly(tag)
             scr = awful.tag.getscreen(tag)
-            if scr ~= client.focus.screen then
+            if client.focus and scr ~= client.focus.screen then
                 awful.screen.focus(scr)
             end
         end),
@@ -337,7 +331,7 @@ for _, shiftag in pairs(shifty.config.tags) do
         -- move clients to other tags
         awful.key({modkey, "Shift"}, key, function()
             if client.focus then
-                t = shifty.getpos(i)
+                local t = shifty.getpos(i)
                 awful.client.movetotag(t)
                 awful.tag.viewonly(t)
             end
