@@ -1,0 +1,114 @@
+#!/bin/bash
+dev=mako
+repo=~/Dev/android/CM
+product=$repo/out/target/product/$dev
+ip=dash.lan
+command=$1
+shift
+apk=$*
+apkb=$(basename "$apk")
+env="
+export PATH=/sbin:/vendor/bin:/system/sbin:/system/bin:/system/xbin
+export LD_LIBRARY_PATH=/vendor/lib:/system/lib
+export ANDROID_BOOTLOGO=1
+export ANDROID_ROOT=/system
+export ANDROID_ASSETS=/system/app
+export ANDROID_DATA=/data
+export ANDROID_STORAGE=/storage
+export ASEC_MOUNTPOINT=/mnt/asec
+export LOOP_MOUNTPOINT=/mnt/obb
+export BOOTCLASSPATH=/system/framework/core.jar:/system/framework/conscrypt.jar:/system/framework/okhttp.jar:/system/framework/core-junit.jar:/system/framework/bouncycastle.jar:/system/framework/ext.jar:/system/framework/framework.jar:/system/framework/framework2.jar:/system/framework/telephony-common.jar:/system/framework/voip-common.jar:/system/framework/mms-common.jar:/system/framework/android.policy.jar:/system/framework/services.jar:/system/framework/apache-xml.jar:/system/framework/webviewchromium.jar
+"
+
+function update() {
+    fold=$product
+    file=$(ls -t $fold/*.zip | head -n1)
+    filename=$(basename $file)
+    echo "Going to flash $filename press key"
+    read
+    scp $file $ip:/sdcard/AROMS/
+    ssh $ip "
+    mkdir -p /cache/recovery
+    echo 'boot-recovery' > /cache/recovery/command
+    echo '--update-package=/sdcard/AROMS/$filename' >> /cache/recovery/command
+    reboot recovery
+    "
+}
+
+function remount() {
+    ssh $ip "mount -o rw,remount /system" 
+}
+
+function pushs() {
+    remount
+    if [ ${1:0:9} = "framework" ]; then
+        scp $product/$device/system/framework/$1 $ip:/system/framework/
+        ssh $ip "chmod 644 /system/framework/$1"
+    else 
+        scp $product/$device/system/priv-app/$1.apk $ip:/system/priv-app/
+        ssh $ip "chmod 644 /system/priv-app/$1.apk"
+    fi
+}
+
+function rebase() {
+   cd $repo/frameworks/base
+   git rebase 
+   cd $repo/packages/apps/Settings
+   git rebase
+}
+
+function start() {
+    echo "
+    source ~/.bashrc
+    export USE_CCACHE=1
+    cd ~/Dev/android/CM
+    source build/envsetup.sh
+    breakfast ${dev}" > /tmp/$$.rc
+
+    bash --rcfile /tmp/$$.rc
+}
+
+case $command in
+    install)
+        ssh $ip "mkdir /sdcard/tmp/" 
+        scp $apk $ip:/sdcard/tmp/ 
+        ssh $ip " 
+$env
+pm install -r /sdcard/tmp/$apkb"
+        ;;
+    uninstall)
+        ssh $ip "
+$env
+pm uninstall $apk" 
+        ;;
+    push)
+        scp $1 $ip:$2 
+        ;;
+    pull)
+        scp $ip:$1 $2 
+        ;;
+    shell)
+        ssh $ip
+        ;;
+    logcat)
+        ssh $ip logcat
+        ;;
+    reboot)
+        ssh $ip "reboot $1" 
+        ;;
+    remount)
+        remount
+        ;;
+    update)
+        update
+        ;;
+    pushs)
+        pushs "$1"
+        ;;
+    rebase)
+        rebase
+        ;;
+    start)
+        start
+        ;;
+esac
