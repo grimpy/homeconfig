@@ -24,7 +24,7 @@ function mpv() {
     case $command in
         "Next" ) c="-f" ;;
         "Prev" ) c="-r" ;;
-        "PlayPause") c="pause" ;;
+        "PlayPause") c="cycle pause" ;;
         *) return 1;
    esac
    echo $c > ~/.mpv/fifo
