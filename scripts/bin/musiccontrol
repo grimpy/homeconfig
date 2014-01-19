@@ -19,7 +19,7 @@ function xbmc() {
 
 }
 
-function mplayer() {
+function mpv() {
     c=""
     case $command in
         "Next" ) c="-f" ;;
@@ -27,7 +27,7 @@ function mplayer() {
         "PlayPause") c="pause" ;;
         *) return 1;
    esac
-   echo $c > ~/.mplayer/fifo
+   echo $c > ~/.mpv/fifo
 
 }
 
@@ -44,8 +44,8 @@ function mpc() {
 
 }
 
-if ps -eaf | grep -v grep | grep mplayer; then
-    mplayer
+if ps -eaf | grep -v grep | grep mpv; then
+    mpv
 elif ps -eaf | grep -v grep | grep audacious; then
     mpris audacious
 elif ps -eaf | grep -v grep | grep xbmcremote; then
