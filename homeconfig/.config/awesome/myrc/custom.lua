@@ -34,7 +34,7 @@ shiftytags = {
     ["2:im"] = { position=2, key=2, exclusive=true, spawn="pidgin", screen=VGA, layout=awful.layout.suit.fair.horizontal, },
     ["3:web"] = { position=3, key=3, exclusive=true, spawn=browser, screen=LCD, layout=awful.layout.suit.max, icon="/usr/share/icons/gnome/16x16/apps/web-browser.png"},
     ["4:mail"] = { position=4, key=4, exclusive=true, spawn="thunderbird", layout=awful.layout.suit.max, screen=VGA},
-    ["5:fs"] = { position=5, key=5, exclusive=true, spawn="nautilus", layout=awful.layout.suit.floating, screen=LCD},
+    ["5:fs"] = { position=5, key=5, exclusive=true, spawn="thunar", layout=awful.layout.suit.floating, screen=LCD},
     ["6:edit"] = { position=6, key=6, exclusive=true, spawn="gvim", screen=VGA, nopopup=true, layout=awful.layout.suit.max, },
     ["7:media"] = { position=7, key=7, exclusive=true, screen=LCD, nopopup=true, layout=awful.layout.suit.floating, },
     ["9:mediafs"] = { position=9, key=9, exclusive=true, screen=LCD, nopopup=true, layout=awful.layout.suit.max.fullscreen, },
