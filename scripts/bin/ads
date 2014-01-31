@@ -2,7 +2,11 @@
 dev=mako
 repo=~/Dev/android/CM
 product=$repo/out/target/product/$dev
-ip=dash.lan
+
+if [ -z "$ADSIP" ]; then
+    ADSIP=dash.lan
+fi
+
 command=$1
 shift
 apk=$*
@@ -26,8 +30,8 @@ function update() {
     filename=$(basename $file)
     echo "Going to flash $filename press key"
     read
-    scp $file $ip:/sdcard/AROMS/
-    ssh $ip "
+    scp $file $ADSIP:/sdcard/AROMS/
+    ssh $ADSIP "
     mkdir -p /cache/recovery
     echo 'boot-recovery' > /cache/recovery/command
     echo '--update-package=/sdcard/AROMS/$filename' >> /cache/recovery/command
@@ -36,17 +40,17 @@ function update() {
 }
 
 function remount() {
-    ssh $ip "mount -o rw,remount /system" 
+    ssh $ADSIP "mount -o rw,remount /system" 
 }
 
 function pushs() {
     remount
     if [ ${1:0:9} = "framework" ]; then
-        scp $product/$device/system/framework/$1 $ip:/system/framework/
-        ssh $ip "chmod 644 /system/framework/$1"
+        scp $product/$device/system/framework/$1 $ADSIP:/system/framework/
+        ssh $ADSIP "chmod 644 /system/framework/$1"
     else 
-        scp $product/$device/system/priv-app/$1.apk $ip:/system/priv-app/
-        ssh $ip "chmod 644 /system/priv-app/$1.apk"
+        scp $product/$device/system/priv-app/$1.apk $ADSIP:/system/priv-app/
+        ssh $ADSIP "chmod 644 /system/priv-app/$1.apk"
     fi
 }
 
@@ -70,31 +74,31 @@ function start() {
 
 case $command in
     install)
-        ssh $ip "mkdir /sdcard/tmp/" 
-        scp $apk $ip:/sdcard/tmp/ 
-        ssh $ip " 
+        ssh $ADSIP "mkdir /sdcard/tmp/" 
+        scp $apk $ADSIP:/sdcard/tmp/ 
+        ssh $ADSIP " 
 $env
 pm install -r /sdcard/tmp/$apkb"
         ;;
     uninstall)
-        ssh $ip "
+        ssh $ADSIP "
 $env
 pm uninstall $apk" 
         ;;
     push)
-        scp $1 $ip:$2 
+        scp $1 $ADSIP:$2 
         ;;
     pull)
-        scp $ip:$1 $2 
+        scp $ADSIP:$1 $2 
         ;;
     shell)
-        ssh $ip
+        ssh $ADSIP
         ;;
     logcat)
-        ssh $ip logcat
+        ssh $ADSIP logcat
         ;;
     reboot)
-        ssh $ip "reboot $1" 
+        ssh $ADSIP "reboot $1" 
         ;;
     remount)
         remount
