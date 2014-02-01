@@ -28,6 +28,7 @@ Bundle 'xolox/vim-notes'
 
 let g:jedi#popup_on_dot = 0
 let g:jedi#usages_command = "<leader>u"
+let g:jedi#use_tabs_not_buffers = 0
 
 let python_highlight_all = 1
 let python_version_2 = 1
