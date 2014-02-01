@@ -51,6 +51,7 @@ filetype plugin indent on
 syn on
 set t_Co=256
 set background=dark
+
 set tabstop=4
 set shiftwidth=4
 set expandtab
@@ -140,6 +141,7 @@ vnoremap > >gv
 
 " I can type :help on my own, thanks.
 noremap <F1> <Esc>
+inoremap <F1> <Esc>
 
 " aleternate last two buffers
 noremap <Leader><Leader> <C-^>
