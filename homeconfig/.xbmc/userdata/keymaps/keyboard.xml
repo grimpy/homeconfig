@@ -44,6 +44,7 @@
       <p>Play</p>
       <q>Queue</q>
       <f>ActivateWindow(favourites)</f>
+      <y>togglefullscreen</y>
       <r>Rewind</r>
       <j>Down</j>
       <k>Up</k>
