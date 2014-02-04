@@ -1,27 +1,27 @@
 <advancedsettings>
  <pathsubstitution>
   <substitute>
-    <from>/media/2a0cbebc-a641-4fde-8f58-1ae9c2fc39f3/Movies/</from>
+    <from>/media/MEDIAKDISK/Movies/</from>
     <to>SMB://XBMC/media/Movies</to>
   </substitute>
   <substitute>
-    <from>/media/2a0cbebc-a641-4fde-8f58-1ae9c2fc39f3/Series/</from>
+    <from>/media/MEDIADISK/Series/</from>
     <to>SMB://XBMC/media/Series</to>
   </substitute>
   <substitute>
-    <from>/media/2a0cbebc-a641-4fde-8f58-1ae9c2fc39f3/Intros/</from>
+    <from>/media/MEDIADISK/Intros/</from>
     <to>SMB://XBMC/media/Intros</to>
   </substitute>
   <substitute>
-    <from>/media/2a0cbebc-a641-4fde-8f58-1ae9c2fc39f3/Pictures/</from>
+    <from>/media/MEDIADISK/Pictures/</from>
     <to>SMB://XBMC/media/Pictures</to>
   </substitute>
   <substitute>
-    <from>/media/2a0cbebc-a641-4fde-8f58-1ae9c2fc39f3/Downloads/</from>
+    <from>/media/MEDIADISK/Downloads/</from>
     <to>SMB://XBMC/media/Downloads</to>
   </substitute>
   <substitute>
-    <from>/media/2a0cbebc-a641-4fde-8f58-1ae9c2fc39f3/Music/</from>
+    <from>/media/MEDIADISK/Music/</from>
     <to>SMB://XBMC/media/Music</to>
   </substitute>
  </pathsubstitution>
