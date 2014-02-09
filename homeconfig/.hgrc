@@ -5,20 +5,30 @@ merge = meld
 ssh = ssh -C
 
 [extensions]
-fetch = 
-mercurial_reviewboard =
-churn =
+# fetch simplifies pull merge commit workflow
+fetch =  
+# churn is handy extension for statistics
+churn = 
+# enable nice colors
 color = 
+#enable extdiff extension
 extdiff = 
+#enables glog extension
 hgext.graphlog = 
-purge = 
+# extension to make it possible to cleanup fot tracked files
+purge =  
+# bookmark extension
 bookmarks = 
+# extension to transplant commits from branches/repos
 transplant = 
-pager =
-hgext.hgk=
-rebase =
-mq =
-hgshelve =
+# put long output commands in a pager output
+pager = 
+# enable rebase extension
+rebase = 
+# needed for working with advanced mq patched or just stripping bad commits
+mq = 
+# easy way of putting away unfinished work
+hgshelve = 
 
 [reviewboard]
 server = http://10.101.182.103
@@ -33,10 +43,7 @@ pretxncommit.pdb = python:hghooks.code.pdbhook
 ignore = E501,E302,E225,E303
 
 [extdiff]
-cmd.meld = 
-
-[hgk]
-meld=meld
+cmd.meld =  # use meld as 3-way diff viewer
 
 [pager]
 pager = less -R
@@ -46,10 +53,17 @@ attend = annotate, cat, df, diff, glog, help, in-diff, incoming, log, out-diff, 
 track.current = True
 
 [alias]
-duw = push -r .
-ditch = revert --no-backup
-blame = annotate -u -c
-stat = !hg status $($HG root) $HG_ARGS
-show = log -p -v -r
-stash = shelve --all
-log = glog
+# alias to push only current branch
+duw = push -r . 
+# alias to revert withouth saving backups
+ditch = revert --no-backup 
+# nice version of annote
+blame = annotate -u -c 
+# shot status with relative paths
+stat = !hg status $($HG root) $HG_ARGS 
+# simular as git show
+show = log -p -v -r 
+# mimic git stash
+stash = shelve --all 
+# glog > log
+log = glog 
