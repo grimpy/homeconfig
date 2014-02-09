@@ -43,7 +43,8 @@ pretxncommit.pdb = python:hghooks.code.pdbhook
 ignore = E501,E302,E225,E303
 
 [extdiff]
-cmd.meld =  # use meld as 3-way diff viewer
+# use meld as 3-way diff viewer
+cmd.meld =
 
 [pager]
 pager = less -R
