@@ -4,7 +4,6 @@ IFS=":"
 INPUT=($1)
 LEN=${#INPUT[@]}
 
-echo $LEN
 case $LEN in 
     3) INPORT=0;DESTPORT=2;DESTIP=1;;
     2) INPORT=1;DESTPORT=1;DESTIP=0;;
@@ -16,6 +15,4 @@ DESTPORT=${INPUT[$DESTPORT]}
 DESTIP=${INPUT[$DESTIP]}
 
 
-for int in eth0 wlan0 tun0 vboxnet0; do
-    sudo iptables -t nat -A PREROUTING -p tcp -i $int --dport $INPORT -j DNAT --to-destination $DESTIP:$DESTPORT
-done
+sudo iptables -t nat -A PREROUTING -p tcp --dport $INPORT -j DNAT --to-destination $DESTIP:$DESTPORT
