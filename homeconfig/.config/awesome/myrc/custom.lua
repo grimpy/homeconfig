@@ -85,7 +85,7 @@ function movecursor(x, y)
 end
 
 function lock()
-    awful.util.spawn_with_shell("xautolock -enable && sleep 0.5 && xautolock -detectsleep -locknow")
+    awful.util.spawn_with_shell("xautolock -enable && sleep 0.5 && xautolock -locknow")
 end
 
 function suspend()
