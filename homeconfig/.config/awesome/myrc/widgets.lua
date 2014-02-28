@@ -24,11 +24,14 @@ end
 local myip = wibox.widget.textbox()
 myip:set_font(device.font)
 
+local iptooltip = awful.tooltip({})
+iptooltip:add_to_object(myip)
+
 function updateIP()
     local f = io.popen("ip r")
     local ipr = f:read("*all")
     f:close()
-    local gwdev = string.match(ipr, 'default via .- dev (.-) metric')
+    local gwdev = string.match(ipr, 'default via .- dev (.-) ')
     if not gwdev then
         myip:set_text("No GW")
         return
@@ -42,11 +45,21 @@ function updateIP()
         return
     end
     myip:set_text(ip)
+    -- local f = io.popen("wpa_cli status | grep '^ssid' | cut -f2 -d=")
+    local f = io.popen("iwconfig wlan0")
+    local iw = f:read("*all")
+    f:close()
+    iptooltip:set_text(string.format("<span font_desc='%s'>%s</span>", device.font, iw))
 end
 
 updateIP()
 dbusCallBack("system", "name.marples.roy.dhcpcd", updateIP)
 w[#w+1] = myip
+
+myip:buttons(awful.util.table.join(
+    awful.button({}, 1, updateIP),
+    awful.button({}, 3, function() awful.util.spawn("wpa_gui") end)
+))
 
 local mynet = wibox.widget.textbox()
 mynet:set_font(device.font)
@@ -86,7 +99,7 @@ vicious.register(mytemp, vicious.widgets.thermal,
         else
             color = "#FF0000"
         end
-        return '<span color="' .. color  ..  '">' .. tmp  .. "°C</span>"
+        return string.format('<span color="%s">%s°C</span>', color, tmp)
     end
     , 2, {"coretemp.0", "core"})
 w[#w+1] = mytemp
@@ -128,7 +141,14 @@ mymem:set_background_color("#494B4F")
 mymem:set_border_color(nil)
 mymem:set_color({ type = "linear", from = { 0, 0 }, to = { 10,0 }, stops = { {0, "#AECF96"}, {0.5, "#88A175"}, 
                     {1, "#FF5656"}}})
-vicious.register(mymem, vicious.widgets.mem, "$1", 13)
+
+local memtooltip = awful.tooltip({})
+memtooltip:add_to_object(mymem)
+vicious.register(mymem, vicious.widgets.mem, function(widget, data) 
+    memtooltip:set_text(string.format("<span font_desc='%s'>%s%%</span>", device.font, data[1]))
+    return data[1]
+    end
+    , 13)
 w[#w+1] = mymem
 
 
