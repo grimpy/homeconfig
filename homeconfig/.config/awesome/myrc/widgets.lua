@@ -4,6 +4,7 @@ local awful = require('awful')
 local wibox = require('wibox')
 local dbus = dbus
 local os = os
+local timer = timer
 local io = { open = io.open, popen = io.popen}
 local string = {find = string.find, match = string.match, format=string.format}
 
@@ -114,6 +115,10 @@ function updateBat()
 end
 updateBat()
 dbusCallBack("system", "org.freedesktop.UPower.Device", updateBat)
+tm = timer({timeout=60})
+tm:connect_signal("timeout", updateBat)
+tm:start()
+
 w[#w+1] = mybat
 
 local mymem = awful.widget.progressbar()
