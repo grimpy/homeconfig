@@ -88,6 +88,16 @@ function yaourt(){
     hash -r
 }
 
+function pip(){
+    /usr/bin/pip $*
+    hash -r
+}
+
+function apt-get(){
+    /usr/bin/apt-get $*
+    hash -r
+}
+
 function zfload(){
     autoload -U zfinit
     zfinit
