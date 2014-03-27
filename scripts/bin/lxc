@@ -31,6 +31,11 @@ function lxc_rename() {
 
 }
 
+function clone() {
+    sudo lxc-clone -s -o $1 -n $2
+    sudo sed -i "s@$1@$2@" /var/lib/lxc/$2/fstab
+}
+
 if [ "$BASH_SOURCE" != "$0" ]; then
     return 0
 fi
@@ -61,14 +66,14 @@ elif [ "$1" == "rename"  ]; then
     lxc_rename
     exit 0
 elif [ "$1" == "clone" ]; then
-    sudo lxc-clone -s -o $2 -n $3
+    clone $2 $3
     exit 0
 elif [ "$1" == "destroy" ]; then
     sudo lxc-destroy -fn $2
     exit 0
 elif [ "$1" == "reclone" ]; then
     sudo lxc-destroy -fn $3
-    sudo lxc-clone -s -o $2 -n $3
+    clone $2 $3
     sudo lxc-start -d -n $3
     exit 0
 elif [ "$#" -eq 2 ]; then
