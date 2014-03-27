@@ -55,7 +55,7 @@ shiftyapps = {
          { match = { "Geany", "gvim", "Firebug", "sun-awt-X11-XFramePeer", "Devtools", "jetbrains-android-studio" }, tag="6:edit" } ,
          { match = { "xbmcremote" }, tag="10:xbmcremote" } ,
          { match = { "Eclipse" }, tag="6:edit", nopopup=true } ,
-         { match = { "MPlayer", "ario", "Audacious", "pragha", "mplayer2", "bino" }, tag="7:media" } ,
+         { match = { "MPlayer", "ario", "Audacious", "pragha", "mplayer2", "bino", "mpv" }, tag="7:media" } ,
          { match = { "VirtualBox" }, tag="8:emu" } ,
          { match = { "xbmc.bin" }, tag="9:mediafs" } ,
          { match = { "" }, buttons= clientbuttons },
