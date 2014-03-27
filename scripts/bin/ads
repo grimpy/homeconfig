@@ -48,6 +48,9 @@ function pushs() {
     if [ ${1:0:9} = "framework" ]; then
         scp $product/$device/system/framework/$1 $ADSIP:/system/framework/
         ssh $ADSIP "chmod 644 /system/framework/$1"
+    elif [ -n "$2" ]; then
+        scp $product/$device/system/app/$1.apk $ADSIP:/system/app/
+        ssh $ADSIP "chmod 644 /system/app/$1.apk"
     else 
         scp $product/$device/system/priv-app/$1.apk $ADSIP:/system/priv-app/
         ssh $ADSIP "chmod 644 /system/priv-app/$1.apk"
@@ -107,7 +110,7 @@ pm uninstall $apk"
         update
         ;;
     pushs)
-        pushs "$1"
+        pushs $*
         ;;
     rebase)
         rebase
