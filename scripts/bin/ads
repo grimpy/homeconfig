@@ -1,4 +1,5 @@
 #!/bin/bash
+export PATH=/opt/java6/bin:$PATH
 dev=mako
 repo=~/Dev/android/CM
 product=$repo/out/target/product/$dev
@@ -117,5 +118,9 @@ pm uninstall $apk"
         ;;
     start)
         start
+        ;;
+    sync)
+        cd $BKMRK_mycm
+        repo sync
         ;;
 esac
