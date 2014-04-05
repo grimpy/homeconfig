@@ -122,8 +122,6 @@ mytasklist.buttons = awful.util.table.join(
                                               if client.focus then client.focus:raise() end
                                           end))
 
-
-
 mysep = wibox.widget.textbox()
 mysep:set_text("  ")
 
