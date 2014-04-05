@@ -49,7 +49,7 @@ function updateIP()
     local f = io.popen("iwconfig wlan0")
     local iw = f:read("*all")
     f:close()
-    iptooltip:set_text(string.format("<span font_desc='%s'>%s</span>", device.font, iw))
+    iptooltip:set_markup(string.format("<span font_desc='%s'>%s</span>", device.font, iw))
 end
 
 updateIP()
