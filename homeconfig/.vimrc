@@ -25,6 +25,7 @@ Bundle 'Buffergator'
 Bundle 'davidhalter/jedi-vim'
 Bundle 'xolox/vim-misc'
 Bundle 'xolox/vim-notes'
+Bundle 'mhinz/vim-signify'
 
 let g:jedi#popup_on_dot = 0
 let g:jedi#usages_command = "<leader>u"
@@ -39,6 +40,7 @@ autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
 autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
 autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
 autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
+au BufNewFile,BufRead *.wiki set filetype=confluencewiki
 let g:neocomplcache_enable_at_startup = 1
 let g:neocomplcache_enable_auto_close_preview = 1
 
