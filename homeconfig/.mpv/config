@@ -1,3 +1,4 @@
 # Write your default config options here!
 input=file=/home/Jo/.mpv/fifo
+quvi-format=18
 
