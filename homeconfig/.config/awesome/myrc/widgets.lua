@@ -46,7 +46,7 @@ function updateIP()
     end
     myip:set_text(ip)
     -- local f = io.popen("wpa_cli status | grep '^ssid' | cut -f2 -d=")
-    local f = io.popen("iwconfig wlan0")
+    local f = io.popen("iwconfig " .. gwdev)
     local iw = f:read("*all")
     f:close()
     iptooltip:set_markup(string.format("<span font_desc='%s'>%s</span>", device.font, iw))
@@ -145,7 +145,7 @@ mymem:set_color({ type = "linear", from = { 0, 0 }, to = { 10,0 }, stops = { {0,
 local memtooltip = awful.tooltip({})
 memtooltip:add_to_object(mymem)
 vicious.register(mymem, vicious.widgets.mem, function(widget, data) 
-    memtooltip:set_text(string.format("<span font_desc='%s'>%s%%</span>", device.font, data[1]))
+    memtooltip:set_markup(string.format("<span font_desc='%s'>%s%%</span>", device.font, data[1]))
     return data[1]
     end
     , 13)
@@ -159,17 +159,46 @@ mycpu:set_color({ type = "linear", from = { 0, 0 }, to = { 0,10 }, stops = { {0,
 vicious.register(mycpu, vicious.widgets.cpu, "$1")
 w[#w+1] = mycpu
 
-local myvol = awful.widget.progressbar()
-myvol:set_width(6)
-myvol:set_vertical(true)
-myvol:set_background_color("#494B4F")
-myvol:set_border_color(nil)
-myvol:set_color("#0080FF")
-vicious.register(myvol, vicious.widgets.volume, "$1", 2, "Master")
-w[#w+1] = myvol
+local myvoltext = wibox.widget.textbox()
+function updatevol()
+    local data = vicious.widgets.volume(nil, device.amixer)
+    myvoltext:set_markup(string.format("<span color='yellow' font_desc='%s'>%3s%s</span>", device.font, data[1], data[2]))
+end
+updatevol()
+w[#w+1] = myvoltext
 
 local mycal = awful.widget.textclock("%a %d/%m - %R")
 mycal:set_font(device.font)
 cal.register(mycal)
 w[#w+1] = mycal
 
+function increasevolume()
+    awful.util.spawn("amixer -M set " .. device.amixer .. " 5%+")
+    updatevol()
+end
+
+function decreasevolume()
+    awful.util.spawn("amixer -M set " .. device.amixer .. " 5%-")
+    updatevol()
+end
+
+function mutevolume()
+    awful.util.spawn("amixer -M set " .. device.amixer .. " toggle")
+    updatevol()
+end
+
+myvoltext:buttons(awful.util.table.join(
+    awful.button({}, 1, updatevol),
+    awful.button({}, 3, mutevolume),
+    awful.button({}, 4, increasevolume),
+    awful.button({}, 5, decreasevolume)
+))
+
+keybindings = awful.util.table.join(
+    awful.key({}, "XF86AudioLowerVolume", decreasevolume),
+    awful.key({"Mod4"}, "Down", decreasevolume),
+    awful.key({}, "XF86AudioRaiseVolume", increasevolume),
+    awful.key({"Mod4"}, "Up", increasevolume),
+    awful.key({}, "XF86AudioMute", mutevolume),
+    awful.key({"Mod4"}, "0", mutevolume)
+)

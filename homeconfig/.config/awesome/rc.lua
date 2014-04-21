@@ -267,6 +267,7 @@ globalkeys = awful.util.table.join(
 
     -- Standard program
     myrc.custom.keybindings,
+    myrc.widgets.keybindings,
     awful.key({ modkey, "Control" }, "r", awesome.restart),
     awful.key({ modkey, "Shift"   }, "q", awesome.quit),
 
