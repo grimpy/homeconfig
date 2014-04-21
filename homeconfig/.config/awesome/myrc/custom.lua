@@ -105,7 +105,7 @@ keybindings = awful.util.table.join(
     awful.key({ }, "XF86AudioPlay", function () awful.util.spawn(binhome .. "musiccontrol PlayPause") end),
     awful.key({ }, "XF86Battery", suspend),
     awful.key({ "Mod3"}, "s", suspend),
-    awful.key({ "Mod3"}, "d", function () awful.util.spawn("systemctl poweroff") end),
+    awful.key({ "Mod3", "Shift"}, "d", function () awful.util.spawn("systemctl poweroff") end),
     awful.key({ "Mod3", "Shift"}, "r", function () awful.util.spawn("systemctl reboot") end),
     awful.key({ modkey,           }, "p", function () awful.util.spawn(binhome .. "xrandr.sh --auto") end),
     awful.key({ modkey, "Control" }, "l", function () awful.util.spawn("xautolock -disable") end),
