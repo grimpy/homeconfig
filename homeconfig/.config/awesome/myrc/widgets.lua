@@ -162,7 +162,11 @@ w[#w+1] = mycpu
 local myvoltext = wibox.widget.textbox()
 function updatevol()
     local data = vicious.widgets.volume(nil, device.amixer)
-    myvoltext:set_markup(string.format("<span color='yellow' font_desc='%s'>%3s%s</span>", device.font, data[1], data[2]))
+    local color = {
+        ["♫"]  = "yellow", -- "",
+        ["♩"] = "red"  -- "M"
+    }
+    myvoltext:set_markup(string.format("<span color='%s' font_desc='%s'>%3s%s</span>", color[data[2]], device.font, data[1], data[2]))
 end
 updatevol()
 w[#w+1] = myvoltext
