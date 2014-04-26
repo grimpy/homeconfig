@@ -1,0 +1,8 @@
+if [[ -n "$SSH_CONNECTION" && -z "$TMUX" ]]; then
+    NAME=SSH
+    if tmux has-session -t $NAME 2> /dev/null; then
+        exec tmux at -t $NAME
+    else
+        exec tmux new -s $NAME
+    fi
+fi
