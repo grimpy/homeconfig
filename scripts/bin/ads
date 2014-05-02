@@ -32,7 +32,7 @@ function update() {
     echo "Going to flash $filename press key"
     read
     scp $file $ADSIP:/sdcard/AROMS/
-    ssh $ADSIP "
+    timeout 5 ssh $ADSIP "
     mkdir -p /cache/recovery
     echo 'boot-recovery' > /cache/recovery/command
     echo '--update-package=/sdcard/AROMS/$filename' >> /cache/recovery/command
