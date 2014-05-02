@@ -1,5 +1,6 @@
 local awful = require("awful")
 local client = client
+local keygrabber = keygrabber
 local screen = screen
 local mouse = mouse
 local naughty = require("naughty")
@@ -93,6 +94,32 @@ function suspend()
     awful.util.spawn("systemctl suspend")
 end
 
+function shutdownmode()
+    local txt = [[
+
+Press s for suspend
+Press r for reboot
+Press p for poweroff
+Press l for lock
+    ]]
+    local noti = naughty.notify({ title="Shutdown mode", text=txt, timeout=0, fg='#ffffff', bg='#ff3333' })
+    keygrabber.run(function(mod, key, event)
+        if event == "release" then return end
+        if key == "s" then 
+            suspend()
+        elseif key == "p" then 
+            awful.util.spawn("systemctl poweroff")
+        elseif key == "l" then 
+            lock()
+        elseif key == "r" then 
+            awful.util.spawn("systemctl reboot")
+        else 
+            keygrabber.stop()
+        end
+        naughty.destroy(noti)
+   end)
+end
+
 keybindings = awful.util.table.join(
     awful.key({ modkey2, "Control" }, "c", function () awful.util.spawn(terminal) end),
     awful.key({ }, "Print", function () awful.util.spawn(binhome .. "caputereimg.sh /home/Jo/Pictures/SS") end),
@@ -104,12 +131,9 @@ keybindings = awful.util.table.join(
     awful.key({ }, "XF86AudioNext", function () awful.util.spawn(binhome .. "musiccontrol Next") end),
     awful.key({ }, "XF86AudioPlay", function () awful.util.spawn(binhome .. "musiccontrol PlayPause") end),
     awful.key({ }, "XF86Battery", suspend),
-    awful.key({ "Mod3"}, "s", suspend),
-    awful.key({ "Mod3", "Shift"}, "d", function () awful.util.spawn("systemctl poweroff") end),
-    awful.key({ "Mod3", "Shift"}, "r", function () awful.util.spawn("systemctl reboot") end),
+    awful.key({ "Mod3"}, "s", shutdownmode),
     awful.key({ modkey,           }, "p", function () awful.util.spawn(binhome .. "xrandr.sh --auto") end),
     awful.key({ modkey, "Control" }, "l", function () awful.util.spawn("xautolock -disable") end),
-    awful.key({ modkey, }, "l", lock),
     awful.key({ modkey,    }, "c", pushincorner),
     -- Mouse cursor bindings
     awful.key({ "Mod3",  }, "Left", function () movecursor(-10,0) end),
