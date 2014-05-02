@@ -26,6 +26,7 @@ alias tmux="tmux -2"
 #rsa stuff
 alias ssh="loadrsa; ssh"
 alias scp="loadrsa; scp"
+alias scpresume="loadrsa; rsync -Pazhv"
 alias git="loadrsa; git"
 alias hg="loadrsa; hg"
 
