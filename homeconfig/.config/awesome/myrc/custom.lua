@@ -86,7 +86,7 @@ function movecursor(x, y)
 end
 
 function lock()
-    awful.util.spawn_with_shell("xautolock -enable && sleep 0.5 && xautolock -locknow")
+    awful.util.pread("xautolock -enable && sleep 0.5 && xautolock -locknow && sleep 0.5")
 end
 
 function suspend()
@@ -94,31 +94,36 @@ function suspend()
     awful.util.spawn("systemctl suspend")
 end
 
-function shutdownmode()
-    local txt = [[
-
-Press s for suspend
-Press r for reboot
-Press p for poweroff
-Press l for lock
-    ]]
-    local noti = naughty.notify({ title="Shutdown mode", text=txt, timeout=0, fg='#ffffff', bg='#ff3333' })
-    keygrabber.run(function(mod, key, event)
-        if event == "release" then return end
-        if key == "s" then 
-            suspend()
-        elseif key == "p" then 
-            awful.util.spawn("systemctl poweroff")
-        elseif key == "l" then 
-            lock()
-        elseif key == "r" then 
-            awful.util.spawn("systemctl reboot")
-        else 
-            keygrabber.stop()
+function keymenu(keys, naughtytitle, naughtypreset)
+    local noti = nil
+    if naughtytitle then
+        naughtyprop = naughtyprop or {}
+        local txt = ''
+        for _, key in ipairs(keys) do
+            local descr = key.help or ""
+            txt = txt .. "\nPress " .. key.key .. " " .. descr
         end
-        naughty.destroy(noti)
+        noti = naughty.notify({title=naughtytitle, timeout=0, text=txt, preset=naughtypreset})
+    end
+    keygrabber.run(function(mod, pkey, event)
+        if event == "release" then return end
+        for _, key in ipairs(keys) do
+            if key.key == pkey then 
+                key.callback()
+            end
+        end
+        keygrabber.stop()
+        if noti then
+            naughty.destroy(noti)
+        end
    end)
 end
+
+local shutdownkeys = { {key="s", help="for suspend", callback=suspend},
+                       {key="r", help="for reboot", callback=function() awful.util.spawn("systemctl reboot") end},
+                       {key="p", help="for poweroff", callback=function() awful.util.spawn("systemctl poweroff") end},
+                       {key="l", help="for lock", callback=lock},
+                     }
 
 keybindings = awful.util.table.join(
     awful.key({ modkey2, "Control" }, "c", function () awful.util.spawn(terminal) end),
@@ -131,7 +136,7 @@ keybindings = awful.util.table.join(
     awful.key({ }, "XF86AudioNext", function () awful.util.spawn(binhome .. "musiccontrol Next") end),
     awful.key({ }, "XF86AudioPlay", function () awful.util.spawn(binhome .. "musiccontrol PlayPause") end),
     awful.key({ }, "XF86Battery", suspend),
-    awful.key({ "Mod3"}, "s", shutdownmode),
+    awful.key({ "Mod3"}, "s", function() keymenu(shutdownkeys, "Shutdown", {bg="#ff3333", fg="#ffffff"}) end),
     awful.key({ modkey,           }, "p", function () awful.util.spawn(binhome .. "xrandr.sh --auto") end),
     awful.key({ modkey, "Control" }, "l", function () awful.util.spawn("xautolock -disable") end),
     awful.key({ modkey,    }, "c", pushincorner),
