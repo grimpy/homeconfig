@@ -68,7 +68,7 @@ set foldlevel=30
 set hlsearch
 set cursorline
 
-
+nnoremap  <leader>l mzgg=G`z<CR>
 vnoremap <leader>c "*y
 nnoremap <leader>c "*yy
 nnoremap <leader>v "*p
