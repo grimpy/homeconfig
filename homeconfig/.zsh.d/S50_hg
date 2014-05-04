@@ -11,6 +11,9 @@ function hgp(){
 
 function hga() {
     for x in `ls`; do
+        if [[ -h "$x" || ! -d "$x" ]]; then
+            continue
+        fi
         pushd $x
         if [ -e ".hg" ]; then
             echo "Repo $x"
