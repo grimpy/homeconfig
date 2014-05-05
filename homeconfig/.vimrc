@@ -34,6 +34,8 @@ let g:jedi#use_tabs_not_buffers = 0
 let python_highlight_all = 1
 let python_version_2 = 1
 let g:ctrlp_map = '<leader>f'
+let g:ctrlp_regexp = 1
+let g:ctrlp_root_markers = ['.project']
 
 autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
 autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
