@@ -166,7 +166,9 @@ function updatevol()
         ["♫"]  = "yellow", -- "",
         ["♩"] = "red"  -- "M"
     }
-    myvoltext:set_markup(string.format("<span color='%s' font_desc='%s'>%3s%s</span>", color[data[2]], device.font, data[1], data[2]))
+    if data then
+        myvoltext:set_markup(string.format("<span color='%s' font_desc='%s'>%3s%s</span>", color[data[2]], device.font, data[1], data[2]))
+   end
 end
 updatevol()
 w[#w+1] = myvoltext
