@@ -71,6 +71,11 @@ elif [ "$1" == "clone" ]; then
 elif [ "$1" == "destroy" ]; then
     sudo lxc-destroy -fn $2
     exit 0
+elif [ "$1" == "ssh" ]; then
+    name=$2
+    shift;shift;
+    ssh "$(lxc_get_ip $name)" $@
+    exit 0
 elif [ "$1" == "reclone" ]; then
     sudo lxc-destroy -fn $3
     clone $2 $3
