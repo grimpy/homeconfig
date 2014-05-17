@@ -29,6 +29,7 @@ alias scp="loadrsa; scp"
 alias scpresume="loadrsa; rsync -Pazhv"
 alias git="loadrsa; git"
 alias hg="loadrsa; hg"
+alias mosh="mosh --predict=experimental"
 
 export LANG="en_US.utf8"
 
@@ -38,11 +39,21 @@ vik(){
        sed -i $1d ~/.ssh/known_hosts
 }
 
+
 ssh2(){
     ip=$1
     shift;
-        cat ~/.ssh/id_rsa.pub | /usr/bin/ssh $ip 'umask 077; test -d .ssh || mkdir .ssh; cat > /tmp/mykey && grep "`cat /tmp/mykey`" ~/.ssh/authorized_keys &> /dev/null || cat /tmp/mykey >> ~/.ssh/authorized_keys' || return 1
-            /usr/bin/ssh $ip $*
+    pubkey=$(cat ~/.ssh/id_rsa.pub)
+    /usr/bin/ssh $ip "
+    if [ ! -e ~/.ssh ]; then
+        mkdir ~/.ssh
+    fi
+    if ! grep \"$pubkey\" ~/.ssh/authorized_keys > /dev/null; then
+        echo \"$pubkey\" >> ~/.ssh/authorized_keys
+        chmod 600 ~/.ssh/authorized_keys
+    fi
+    "
+    /usr/bin/ssh $ip $@
 }
 
 mosh2() {
