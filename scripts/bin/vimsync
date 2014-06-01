@@ -1,0 +1,94 @@
+#!/usr/bin/env python
+import subprocess
+import sys
+import os
+
+CONNECTIONS = {'default' : '10.101.190.25',
+               'gm': '10.101.190.25',
+               'cb': '10.101.190.25',
+              }
+REPOBASE = "/home/Jo/work"
+isbox = False
+if not isbox:
+    BASE = "/opt/jumpscale/"
+    LIBDIR = "/usr/local/lib/python2.7/dist-packages/"
+    JSDIR = "/usr/local/lib/python2.7/dist-packages/JumpScale/"
+else:
+    BASE = "/opt/jsbox/"
+    LIBDIR = "/opt/jsbox/libext/"
+    JSDIR = "/opt/jsbox/libjs/JumpScale/"
+
+mapping = {
+        'incubaid': {
+            'cloudscalers' : {
+                'apps': ('apps', BASE, 'cb'),
+                'libs/agent-scripts': ('apps/agentcontroller/jumpscripts', BASE, 'gm'),
+                'libs/CloudscalerLibcloud': ('', LIBDIR, 'gm'),
+                }
+            },
+        'jumpscale': {
+            'jumpscale_core': {
+                'apps': ('apps', BASE, 'gm'),
+                'lib/JumpScale': ('', JSDIR, 'all')
+                },
+            'jumpscale_grid': {
+                'apps/vfw/jumpscripts/': ('apps/agentcontroller/jumpscripts/', BASE, 'gm'),
+                'apps': ('apps', BASE, 'gm'),
+                'lib/JumpScale': ('', JSDIR, 'all')
+                },
+            'jumpscale_lib': {
+                'JumpScale': ('', JSDIR, 'all')
+                },
+            'jumpscale_portal': {
+                'apps': ('apps', BASE, 'gm'),
+                'lib/JumpScale': ('', JSDIR, 'all')
+                }
+            }
+        }
+
+
+file = os.path.abspath(sys.argv[1])
+if not os.path.isfile(file):
+    print "This only works with files"
+    os.exit(1)
+
+metapath = file[len(REPOBASE)+1:]
+parts = metapath.split('/')
+repoaccount = parts[0]
+reponame = parts[1]
+abspath = '/'.join(parts[2:])
+
+if '__' in reponame:
+    reponame = reponame.split('__', 1)[1]
+
+repoinfo = mapping[repoaccount][reponame]
+
+destfile = None
+for key, conf in sorted(repoinfo.iteritems(), key=lambda x: len(x[0])):
+    if len(conf) == 2:
+        value, base = conf
+        connections = [ CONNECTIONS['default'] ]
+    else:
+        value, base, con = conf
+        if con == 'all':
+            connections = CONNECTIONS.values()
+        else:
+            connections = [ CONNECTIONS.get(con, CONNECTIONS['default']) ]
+
+    if abspath.startswith(key):
+        newabspath = abspath.replace(key, value, 1)
+        if newabspath.startswith('/'):
+            newabspath = newabspath[1:]
+        destfile = os.path.join(base, newabspath)
+
+if not destfile:
+    print "Could not determine destination"
+    os.exit(1)
+
+print destfile
+
+
+for connection in set(connections):
+    destdir = os.path.dirname(destfile)
+    subprocess.call(["ssh", connection, "mkdir -p '%s'" % destdir])
+    subprocess.call(["scp", file, "%s:%s" % (connection, destfile)])
