@@ -1,5 +1,4 @@
 #!/bin/bash
-export PATH=/opt/java6/bin:$PATH
 dev=mako
 repo=~/Dev/android/CM
 product=$repo/out/target/product/$dev
@@ -34,8 +33,9 @@ function update() {
     scp $file $ADSIP:/sdcard/AROMS/
     timeout 5 ssh $ADSIP "
     mkdir -p /cache/recovery
-    echo 'boot-recovery' > /cache/recovery/command
-    echo '--update-package=/sdcard/AROMS/$filename' >> /cache/recovery/command
+    echo 'install /sdcard/AROMS/$filename' > /cache/recovery/openrecoveryscript
+    echo 'install /sdcard/AROMS/Xposed-Installer-Recovery.zip' >> /cache/recovery/openrecoveryscript
+    echo 'cmd reboot' >> /cache/recovery/openrecoveryscript
     reboot recovery
     "
 }
@@ -69,6 +69,8 @@ function start() {
     echo "
     source ~/.bashrc
     export USE_CCACHE=1
+    export PATH=/opt/java6/bin:$PATH
+    export JAVA_HOME=/opt/java6/
     cd ~/Dev/android/CM
     source build/envsetup.sh
     breakfast ${dev}" > /tmp/$$.rc
