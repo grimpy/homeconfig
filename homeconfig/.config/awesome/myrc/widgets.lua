@@ -1,13 +1,16 @@
 local cal = require("cal")
 local vicious = require('vicious')
 local awful = require('awful')
+local util = require('awful.util')
+local prompt = require('awful.prompt')
+local ipairs = ipairs
+local completion = require('awful.completion')
 local wibox = require('wibox')
 local dbus = dbus
 local os = os
 local timer = timer
 local io = { open = io.open, popen = io.popen}
 local string = {find = string.find, match = string.match, format=string.format}
-
 local device = require("myrc.device")
 vicious.contrib = require("vicious.contrib")
 
@@ -20,6 +23,40 @@ function dbusCallBack(bus, iface, callback)
     dbus.connect_signal(iface, callback)
 end
 
+myprompt = wibox.widget.textbox()
+myprompt:set_font(device.font)
+
+function cmdprompt()
+    prompt.run({ prompt = 'Run: ' }, myprompt,
+                 function (...)
+                      local result = util.spawn(...)
+                      if type(result) == "string" then
+                          promptbox.widget:set_text(result)
+                      end
+                  end,
+                  completion.shell,
+                  util.getdir("cache") .. "/history")
+end
+
+function runprompt()
+    local mytags = {}
+    local mytagnames = {}
+    for _, tag in ipairs(awful.tag.gettags(1)) do
+        nr, name = tag.name:match("([^:]+):([^:]+)")
+        if not name then
+            name = tag.name
+        end
+        mytagnames[_] = name
+        mytags[name] = tag
+    end
+    function completionwrapper(text, cur_pos, ncomp)
+        return completion.generic(text, cur_pos, ncomp, mytagnames)
+    end
+    function result(...)
+        awful.tag.viewonly(mytags[...])
+    end
+    prompt.run({prompt='Tag: '}, myprompt, result, completionwrapper, nil)
+end
 
 local myip = wibox.widget.textbox()
 myip:set_font(device.font)
@@ -205,6 +242,8 @@ keybindings = awful.util.table.join(
     awful.key({"Mod4"}, "Down", decreasevolume),
     awful.key({}, "XF86AudioRaiseVolume", increasevolume),
     awful.key({"Mod4"}, "Up", increasevolume),
+    awful.key({"Mod3"}, "y", runprompt),
+    awful.key({"Mod3"}, "r", cmdprompt),
     awful.key({}, "XF86AudioMute", mutevolume),
     awful.key({"Mod4"}, "0", mutevolume)
 )
