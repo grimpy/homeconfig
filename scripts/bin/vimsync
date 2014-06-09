@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python2
 import subprocess
 import sys
 import os
@@ -11,7 +11,7 @@ REPOBASE = "/home/Jo/work"
 isbox = False
 if not isbox:
     BASE = "/opt/jumpscale/"
-    LIBDIR = "/usr/local/lib/python2.7/dist-packages/"
+    LIBDIR = "/usr/local/lib/python2.7/site-packages/"
     JSDIR = "/usr/local/lib/python2.7/dist-packages/JumpScale/"
 else:
     BASE = "/opt/jsbox/"
@@ -21,27 +21,29 @@ else:
 mapping = {
         'incubaid': {
             'cloudscalers' : {
-                'apps': ('apps', BASE, 'cb'),
-                'libs/agent-scripts': ('apps/agentcontroller/jumpscripts', BASE, 'gm'),
-                'libs/CloudscalerLibcloud': ('', LIBDIR, 'gm'),
+                'apps': ['apps', BASE, 'cb'],
+                'apps/cbportal/base/CBGrid/': ['apps/gridportal/base/CBGrid/', BASE, 'gm'],
+                'libs/agent-scripts': ['apps/agentcontroller/jumpscripts', BASE, 'gm'],
+                'libs/CloudscalerLibcloud': ['', LIBDIR, 'gm'],
                 }
             },
         'jumpscale': {
             'jumpscale_core': {
-                'apps': ('apps', BASE, 'gm'),
-                'lib/JumpScale': ('', JSDIR, 'all')
+                'apps': ['apps', BASE, 'gm'],
+                'lib/JumpScale': ['', JSDIR, 'all']
                 },
             'jumpscale_grid': {
-                'apps/vfw/jumpscripts/': ('apps/agentcontroller/jumpscripts/', BASE, 'gm'),
-                'apps': ('apps', BASE, 'gm'),
-                'lib/JumpScale': ('', JSDIR, 'all')
+                'apps/vfw/jumpscripts/': ['apps/agentcontroller/jumpscripts/', BASE, 'gm'],
+                'apps/vfw/actor/vfw/': ['apps/vfw/', BASE, 'gm'],
+                'apps': ['apps', BASE, 'gm'],
+                'lib/JumpScale': ['', JSDIR, 'all']
                 },
             'jumpscale_lib': {
-                'JumpScale': ('', JSDIR, 'all')
+                'JumpScale': ['', JSDIR, 'all']
                 },
             'jumpscale_portal': {
-                'apps': ('apps', BASE, 'gm'),
-                'lib/JumpScale': ('', JSDIR, 'all')
+                'apps': ['apps', BASE, 'gm'],
+                'lib/JumpScale': ['', JSDIR, 'all']
                 }
             }
         }
