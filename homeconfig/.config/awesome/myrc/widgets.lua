@@ -9,7 +9,8 @@ local wibox = require('wibox')
 local dbus = dbus
 local os = os
 local timer = timer
-local io = { open = io.open, popen = io.popen}
+local screen = screen
+local io = { open = io.open, popen = io.popen, stderr= io.stderr}
 local string = {find = string.find, match = string.match, format=string.format}
 local device = require("myrc.device")
 vicious.contrib = require("vicious.contrib")
@@ -41,13 +42,15 @@ end
 function runprompt()
     local mytags = {}
     local mytagnames = {}
-    for _, tag in ipairs(awful.tag.gettags(1)) do
-        nr, name = tag.name:match("([^:]+):([^:]+)")
-        if not name then
-            name = tag.name
+    for s=1, screen.count() do
+        for _, tag in ipairs(awful.tag.gettags(s)) do
+            nr, name = tag.name:match("([^:]+):([^:]+)")
+            if not name then
+                name = tag.name
+            end
+            mytagnames[#mytagnames+1] = name
+            mytags[name] = tag
         end
-        mytagnames[_] = name
-        mytags[name] = tag
     end
     function completionwrapper(text, cur_pos, ncomp)
         return completion.generic(text, cur_pos, ncomp, mytagnames)
