@@ -107,12 +107,17 @@ function keymenu(keys, naughtytitle, naughtypreset)
     end
     keygrabber.run(function(mod, pkey, event)
         if event == "release" then return end
+        local stopped = false
         for _, key in ipairs(keys) do
             if key.key == pkey then 
+                stopped = true
+                keygrabber.stop()
                 key.callback()
             end
         end
-        keygrabber.stop()
+        if not stopped then
+            keygrabber.stop()
+        end
         if noti then
             naughty.destroy(noti)
         end
@@ -124,6 +129,14 @@ local shutdownkeys = { {key="s", help="for suspend", callback=suspend},
                        {key="p", help="for poweroff", callback=function() awful.util.spawn("systemctl poweroff") end},
                        {key="l", help="for lock", callback=lock},
                      }
+
+
+local tagkeys = { {key="a", help="Add", callback=shifty.add},
+                  {key="r", help="Rename", callback=shifty.rename},
+                  {key="d", help="Delete", callback=shifty.del}
+                }
+
+
 
 keybindings = awful.util.table.join(
     awful.key({ modkey2, "Control" }, "c", function () awful.util.spawn(terminal) end),
@@ -137,6 +150,7 @@ keybindings = awful.util.table.join(
     awful.key({ }, "XF86AudioPlay", function () awful.util.spawn(binhome .. "musiccontrol PlayPause") end),
     awful.key({ }, "XF86Battery", suspend),
     awful.key({ "Mod3"}, "s", function() keymenu(shutdownkeys, "Shutdown", {bg="#ff3333", fg="#ffffff"}) end),
+    awful.key({ "Mod3"}, "t", function() keymenu(tagkeys, "Tag Management", {}) end),
     awful.key({ modkey,           }, "p", function () awful.util.spawn(binhome .. "xrandr.sh --auto") end),
     awful.key({ modkey, "Control" }, "l", function () awful.util.spawn("xautolock -disable") end),
     awful.key({ modkey,    }, "c", pushincorner),
