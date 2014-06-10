@@ -135,13 +135,14 @@ local shutdownkeys = { {key="s", help="for suspend", callback=suspend},
                      }
 
 function movetag(offset, idx) 
-    local tag = awful.tag.selected(1)
+    local screen=client.focus.screen
+    local tag = awful.tag.selected(screen)
     local idx = idx or awful.tag.getidx(tag)
     idx = idx + offset
     if idx <= 0 then
         idx = 1
     end
-    local nrtags = #awful.tag.gettags(1)
+    local nrtags = #awful.tag.gettags(screen)
     if idx > nrtags then
         idx = nrtags
     end
