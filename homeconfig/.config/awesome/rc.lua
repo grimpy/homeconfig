@@ -1,36 +1,55 @@
 -- Standard awesome library
+local gears = require("gears")
 local awful = require("awful")
+local mylogger = require("mylogger")
+awful.rules = require("awful.rules")
+local tyrannical = require("tyrannical")
+-- Widget and layout library
 local wibox = require("wibox")
-require("awful.autofocus")
 -- Theme handling library
 local beautiful = require("beautiful")
 -- Notification library
 local naughty = require("naughty")
-local shifty = require("shifty")
--- Custom
+local menubar = require("menubar")
 require("myrc.mainmenu")
 require("myrc.autostart")
 require("myrc.custom")
 require("myrc.widgets")
-vicious = require("vicious")
 
--- {{{ Variable definitions
--- Themes define colours, icons, and wallpapers
-home = os.getenv("HOME")
-confdir = awful.util.getdir("config")
--- beautiful.init("/usr/share/awesome/themes/default/theme.lua")
-beautiful.init(confdir .. "/theme.lua")
 
--- This is used later as the default terminal and editor to run.
-terminal = myrc.custom.terminal
-browser = myrc.custom.browser
-editor = os.getenv("EDITOR") or "vim"
-editor_cmd = terminal .. " -e " .. editor
+tyrannical.tags = myrc.custom.tags 
+-- {{{ Error handling
+-- Check if awesome encountered an error during startup and fell back to
+-- another config (This code will only ever execute for the fallback config)
+if awesome.startup_errors then
+    naughty.notify({ preset = naughty.config.presets.critical,
+                     title = "Oops, there were errors during startup!",
+                     text = awesome.startup_errors })
+end
 
+-- Handle runtime errors after startup
+do
+    local in_error = false
+    awesome.connect_signal("debug::error", function (err)
+        -- Make sure we don't go into an endless error loop
+        if in_error then return end
+        in_error = true
+
+        naughty.notify({ preset = naughty.config.presets.critical,
+                         title = "Oops, an error happened!",
+                         text = err })
+        in_error = false
+    end)
+end
+-- }}}
+
+local home = os.getenv("HOME")
 if myrc.custom.autostart then
     myrc.autostart.init(home .. "/.config/autostart/")
 end
 
+confdir = awful.util.getdir("config")
+beautiful.init(confdir .. "/theme.lua")
 
 -- Default modkey.
 -- Usually, Mod4 is the key with a logo between Control and Alt.
@@ -58,21 +77,27 @@ local layouts =
 }
 -- }}}
 
--- tag settings
-shifty.config.tags = myrc.custom.shiftytags
-shifty.config.apps = myrc.custom.shiftyapps
+-- {{{ Wallpaper
+if beautiful.wallpaper then
+    for s = 1, screen.count() do
+        gears.wallpaper.maximized(beautiful.wallpaper, s, true)
+    end
+end
+-- }}}
 
--- tag defaults
-shifty.config.defaults = myrc.custom.shiftydefaults
 
-
+-- {{{ Menu
+-- Create a laucher widget and a main menu
 -- {{{ XDG Menu
 mymainmenu = myrc.mainmenu.build()
 mylauncher = awful.widget.launcher({ image = beautiful.awesome_icon,
                                      menu = mymainmenu })
 
 -- }}}
---
+
+-- Menubar configuration
+menubar.utils.terminal = myrc.terminal -- Set the terminal for applications that require it
+-- }}}
 
 -- Create a wibox for each screen and add it
 mywibox = {}
@@ -110,7 +135,9 @@ mytasklist.buttons = awful.util.table.join(
                                                   instance:hide()
                                                   instance = nil
                                               else
-                                                  instance = awful.menu.clients({ width=250 })
+                                                  instance = awful.menu.clients({
+                                                      theme = { width = 250 }
+                                                  })
                                               end
                                           end),
                      awful.button({ }, 4, function ()
@@ -169,12 +196,6 @@ for s = 1, screen.count() do
 end
 -- }}}
 
--- SHIFTY: initialize shifty
--- the assignment of shifty.taglist must always be after its actually
--- initialized with awful.widget.taglist.new()
-shifty.taglist = mytaglist
-shifty.init()
-
 -- {{{ Mouse bindings
 root.buttons(awful.util.table.join(
     awful.button({ }, 3, function () mymainmenu:toggle() end),
@@ -188,23 +209,6 @@ globalkeys = awful.util.table.join(
     awful.key({ modkey,           }, "p",   awful.tag.viewprev       ),
     awful.key({ modkey,           }, "n",  awful.tag.viewnext       ),
     awful.key({ modkey,           }, "Escape", awful.tag.history.restore),
-    
-    -- Shifty: keybindings specific to shifty
-    awful.key({modkey, "Shift"}, "d", shifty.del), -- delete a tag
-    awful.key({modkey,        }, "o",
-              function()
-                  local t = client.focus:tags()[1]
-                  local s = awful.util.cycle(screen.count(), awful.tag.getscreen(t) + 1)
-                  awful.tag.history.restore()
-                  t = shifty.tagtoscr(s, t)
-                  awful.tag.viewonly(t)
-              end),
-    awful.key({modkey}, "a", shifty.add), -- creat a new tag
-    awful.key({modkey, "Shift"}, "r", shifty.rename), -- rename a tag
-    awful.key({modkey, "Shift"}, "a", -- nopopup new tag
-    function()
-        shifty.add({nopopup = true})
-    end),
 
     awful.key({ modkey,           }, "h",
         function ()
@@ -252,16 +256,14 @@ globalkeys = awful.util.table.join(
     awful.key({ modkey,           }, "w", function () mymainmenu:show() end),
 
     -- Layout manipulation
-    awful.key({ modkey,           }, "u", 
-        function() 
-            local cl = awful.client.urgent.get()
-            if cl then
-               awful.client.jumpto(cl)
-            else
-                myrc.custom.removeFile('/tmp/scrolllock')
-            end 
+    awful.key({ modkey,           }, "u", awful.client.urgent.jumpto),
+    awful.key({ modkey,           }, "Tab",
+        function ()
+            awful.client.focus.history.previous()
+            if client.focus then
+                client.focus:raise()
+            end
         end),
-    awful.key({ modkey2,           }, "Tab", function() awful.client.focus.byidx(1) end),
 
     -- Standard program
     myrc.custom.keybindings,
@@ -269,10 +271,16 @@ globalkeys = awful.util.table.join(
     awful.key({ modkey, "Control" }, "r", awesome.restart),
     awful.key({ modkey, "Shift"   }, "q", awesome.quit),
 
-    awful.key({ modkey,           }, "space", function () awful.layout.inc(layouts,  1) end),
-    awful.key({ modkey, "Shift"   }, "space", function () awful.layout.inc(layouts, -1) end)
+    -- awful.key({ modkey,           }, "l",     function () awful.tag.incmwfact( 0.05)    end),
+    -- awful.key({ modkey,           }, "h",     function () awful.tag.incmwfact(-0.05)    end),
+    -- awful.key({ modkey, "Shift"   }, "h",     function () awful.tag.incnmaster( 1)      end),
+    -- awful.key({ modkey, "Shift"   }, "l",     function () awful.tag.incnmaster(-1)      end),
+    -- awful.key({ modkey, "Control" }, "h",     function () awful.tag.incncol( 1)         end),
+    -- awful.key({ modkey, "Control" }, "l",     function () awful.tag.incncol(-1)         end),
+    -- awful.key({ modkey,           }, "space", function () awful.layout.inc(layouts,  1) end),
+    -- awful.key({ modkey, "Shift"   }, "space", function () awful.layout.inc(layouts, -1) end),
 
-    --~ awful.key({ modkey, "Control" }, "n", awful.client.restore),
+    awful.key({ modkey, "Control" }, "n", awful.client.restore)
 )
 
 clientkeys = awful.util.table.join(
@@ -281,7 +289,6 @@ clientkeys = awful.util.table.join(
     awful.key({ modkey, "Control" }, "space",  awful.client.floating.toggle                     ),
     awful.key({ modkey, "Control" }, "Return", function (c) c:swap(awful.client.getmaster()) end),
     awful.key({ modkey, "Shift"   }, "o",      awful.client.movetoscreen                        ),
-    awful.key({ modkey,           }, "t",      function (c) c.ontop = not c.ontop            end),
     awful.key({ modkey,           }, "m",
         function (c)
             c.maximized_horizontal = not c.maximized_horizontal
@@ -289,53 +296,161 @@ clientkeys = awful.util.table.join(
         end)
 )
 
--- SHIFTY: assign client keys to shifty for use in
--- match() function(manage hook)
-shifty.config.clientkeys = clientkeys
-shifty.config.modkey = modkey
-
--- Compute the maximum number of digit we need, limited to 9
--- for i = 1, (shifty.config.maxtags or 9) do
-for _, shiftag in pairs(shifty.config.tags) do
-    local i = shiftag.position
-    local key = shiftag.key or i
-    globalkeys = awful.util.table.join(globalkeys,
-        awful.key({modkey}, key, function()
-            local scr = shiftag.screen
-            if client.focus and client.focus.screen ~= scr then
-                awful.screen.focus(scr)
-            end
-            local tag = shifty.getpos(i)
-            local t =  awful.tag.viewonly(tag)
-            scr = awful.tag.getscreen(tag)
-            if client.focus and scr ~= client.focus.screen then
-                awful.screen.focus(scr)
-            end
-        end),
-        awful.key({modkey, "Control"}, key, function()
-            local t = shifty.getpos(i)
-            t.selected = not t.selected
-        end),
-        awful.key({modkey, "Control", "Shift"}, key, function()
-            if client.focus then
-                awful.client.toggletag(shifty.getpos(i))
-            end
-        end),
-        -- move clients to other tags
-        awful.key({modkey, "Shift"}, key, function()
-            if client.focus then
-                local t = shifty.getpos(i)
-                awful.client.movetotag(t)
-                awful.tag.viewonly(t)
-            end
-        end))
-
-
+function getTagByName(name, screen)
+    local screen = mouse.screen
+    for _, tag in ipairs(awful.tag.gettags(screen)) do
+        if tag.name == name then
+            return tag
+        end
+    end
 end
+
+for _, tagcfg in pairs(myrc.custom.tags) do
+    if tagcfg.key then
+    globalkeys = awful.util.table.join(globalkeys,
+        -- View tag only.
+        awful.key({ modkey }, tagcfg.key,
+                  function ()
+                        local tag = getTagByName(tagcfg.name)
+                        if tag then
+                           awful.tag.viewonly(tag)
+                        else
+                            if tagcfg.exec_once then
+                                awful.util.spawn(tagcfg.exec_once)
+                            end
+                        end
+                  end),
+        -- Toggle tag.
+        awful.key({ modkey, "Control" }, tagcfg.key,
+                  function ()
+                      local tag = getTagByName(tagcfg.name)
+                      if tag then
+                         awful.tag.viewtoggle(tag)
+                      end
+                  end),
+        -- Move client to tag.
+        awful.key({ modkey, "Shift" }, tagcfg.key,
+                  function ()
+                      if client.focus then
+                          local tag = getTagByName(tagcfg.name)
+                          if tag then
+                              awful.client.movetotag(tag)
+                          end
+                     end
+                  end),
+        -- Toggle tag.
+        awful.key({ modkey, "Control", "Shift" }, tagcfg.key,
+                  function ()
+                      if client.focus then
+                          local tag = getTagByName(tagcfg.name)
+                          if tag then
+                              awful.client.toggletag(tag)
+                          end
+                      end
+                  end))
+   end
+end
+
+clientbuttons = awful.util.table.join(
+    awful.button({ }, 1, function (c) client.focus = c; c:raise() end),
+    awful.button({ modkey }, 1, awful.mouse.client.move),
+    awful.button({ modkey }, 3, awful.mouse.client.resize))
 
 -- Set keys
 root.keys(globalkeys)
 -- }}}
+
+-- {{{ Rules
+-- Rules to apply to new clients (through the "manage" signal).
+awful.rules.rules = {
+    -- All clients will match this rule.
+    { rule = { },
+      properties = { border_width = beautiful.border_width,
+                     border_color = beautiful.border_normal,
+                     focus = awful.client.focus.filter,
+                     raise = true,
+                     keys = clientkeys,
+                     buttons = clientbuttons } },
+    { rule = { class = "MPlayer" },
+      properties = { floating = true } },
+    { rule = { class = "pinentry" },
+      properties = { floating = true } },
+    { rule = { class = "gimp" },
+      properties = { floating = true } },
+    -- Set Firefox to always map on tags number 2 of screen 1.
+    -- { rule = { class = "Firefox" },
+    --   properties = { tag = tags[1][2] } },
+}
+-- }}}
+
+-- {{{ Signals
+-- Signal function to execute when a new client appears.
+client.connect_signal("manage", function (c, startup)
+    -- Enable sloppy focus
+    c:connect_signal("mouse::enter", function(c)
+        if awful.layout.get(c.screen) ~= awful.layout.suit.magnifier
+            and awful.client.focus.filter(c) then
+            client.focus = c
+        end
+    end)
+
+    if not startup then
+        -- Set the windows at the slave,
+        -- i.e. put it at the end of others instead of setting it master.
+        -- awful.client.setslave(c)
+
+        -- Put windows in a smart way, only if they does not set an initial position.
+        if not c.size_hints.user_position and not c.size_hints.program_position then
+            awful.placement.no_overlap(c)
+            awful.placement.no_offscreen(c)
+        end
+    end
+
+    local titlebars_enabled = false
+    if titlebars_enabled and (c.type == "normal" or c.type == "dialog") then
+        -- buttons for the titlebar
+        local buttons = awful.util.table.join(
+                awful.button({ }, 1, function()
+                    client.focus = c
+                    c:raise()
+                    awful.mouse.client.move(c)
+                end),
+                awful.button({ }, 3, function()
+                    client.focus = c
+                    c:raise()
+                    awful.mouse.client.resize(c)
+                end)
+                )
+
+        -- Widgets that are aligned to the left
+        local left_layout = wibox.layout.fixed.horizontal()
+        left_layout:add(awful.titlebar.widget.iconwidget(c))
+        left_layout:buttons(buttons)
+
+        -- Widgets that are aligned to the right
+        local right_layout = wibox.layout.fixed.horizontal()
+        right_layout:add(awful.titlebar.widget.floatingbutton(c))
+        right_layout:add(awful.titlebar.widget.maximizedbutton(c))
+        right_layout:add(awful.titlebar.widget.stickybutton(c))
+        right_layout:add(awful.titlebar.widget.ontopbutton(c))
+        right_layout:add(awful.titlebar.widget.closebutton(c))
+
+        -- The title goes in the middle
+        local middle_layout = wibox.layout.flex.horizontal()
+        local title = awful.titlebar.widget.titlewidget(c)
+        title:set_align("center")
+        middle_layout:add(title)
+        middle_layout:buttons(buttons)
+
+        -- Now bring it all together
+        local layout = wibox.layout.align.horizontal()
+        layout:set_left(left_layout)
+        layout:set_right(right_layout)
+        layout:set_middle(middle_layout)
+
+        awful.titlebar(c):set_widget(layout)
+    end
+end)
 
 client.connect_signal("focus", function(c) c.border_color = beautiful.border_focus end)
 client.connect_signal("unfocus", function(c) c.border_color = beautiful.border_normal end)

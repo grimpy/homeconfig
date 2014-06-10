@@ -4,13 +4,12 @@ local keygrabber = keygrabber
 local screen = screen
 local mouse = mouse
 local naughty = require("naughty")
-local shifty = require("shifty")
+local mylogger = require("mylogger")
 local ipairs = ipairs
 local os = os
 local io = io
 
 module("myrc.custom")
-shifty.config.sloppy = false
 binhome = os.getenv("HOME") .. "/mygit/scripts/bin/"
 
 browser = binhome .. "browser"
@@ -29,6 +28,58 @@ function removeFile(file)
         f:close()
     end
 end
+
+tags = {
+    {
+        name        = "1:Term",                 -- Call the tag "Term"
+        key         = "1",
+        init        = false,                   -- Load the tag on startup
+        exec_once   = "urxvt",
+        max_clients = 4,
+        exclusive   = true,                   -- Refuse any other type of clients (by classes)
+        screen      = {1,2},                  -- Create this tag on screen 1 and screen 2
+        layout      = awful.layout.suit.tile, -- Use the tile layout
+        class       = { --Accept the following classes, refuse everything else (because of "exclusive=true")
+            "xterm" , "urxvt" , "aterm","URxvt","XTerm","konsole","terminator","gnome-terminal"
+        }
+    },
+    {
+        name        = "2:IM",                 -- Call the tag "Term"
+        key         = "2",
+        exec_once   = "pidgin",
+        init        = false,                   -- Load the tag on startup
+        exclusive   = true,                   -- Refuse any other type of clients (by classes)
+        screen      = {1,2},                  -- Create this tag on screen 1 and screen 2
+        layout      = awful.layout.suit.tile, -- Use the tile layout
+        class       = { --Accept the following classes, refuse everything else (because of "exclusive=true")
+            "Pidgin", "Skype", "gajim"
+        }
+    },
+    {
+        name        = "3:NET",                 -- Call the tag "Term"
+        key         = "3",
+        exec_once   = "firefox",
+        init        = false,                   -- Load the tag on startup
+        exclusive   = true,                   -- Refuse any other type of clients (by classes)
+        screen      = {1,2},                  -- Create this tag on screen 1 and screen 2
+        layout      = awful.layout.suit.tile, -- Use the tile layout
+        class       = { --Accept the following classes, refuse everything else (because of "exclusive=true")
+            "Chrome", "Chromium", "Midori", "Navigator", "Namoroka","Firefox"
+        }
+    },
+    {
+        name        = "5:FS",                 -- Call the tag "Term"
+        key         = "5",
+        exec_once   = "pcmanfm",
+        init        = false,                   -- Load the tag on startup
+        exclusive   = true,                   -- Refuse any other type of clients (by classes)
+        screen      = {1,2},                  -- Create this tag on screen 1 and screen 2
+        layout      = awful.layout.suit.tile, -- Use the tile layout
+        class       = { --Accept the following classes, refuse everything else (because of "exclusive=true")
+            "Thunar", "pcmanfm", "xarchiver", "Squeeze", "File-roller", "Nautilus" 
+        }
+    }
+}
 
 shiftytags = {
     ["1:term"] = { position=1, key=1, exclusive=true, max_clients=4, screen=VGA, spawn=terminal, layout=awful.layout.suit.fair.horizontal},
@@ -107,12 +158,17 @@ function keymenu(keys, naughtytitle, naughtypreset)
     end
     keygrabber.run(function(mod, pkey, event)
         if event == "release" then return end
+        local found = false
         for _, key in ipairs(keys) do
             if key.key == pkey then 
+                keygrabber.stop()
+                found = true
                 key.callback()
             end
         end
-        keygrabber.stop()
+        if not found then
+            keygrabber.stop()
+        end
         if noti then
             naughty.destroy(noti)
         end
@@ -124,6 +180,33 @@ local shutdownkeys = { {key="s", help="for suspend", callback=suspend},
                        {key="p", help="for poweroff", callback=function() awful.util.spawn("systemctl poweroff") end},
                        {key="l", help="for lock", callback=lock},
                      }
+
+function movetag(i)
+    local screen = client.focus.screen
+    local tag = awful.tag.selected(screen)
+    if tag then
+        local idx = awful.tag.getidx(tag)
+        idx = idx + i
+        if idx == 0 then
+            idx = 0
+        end
+        awful.tag.move(idx, tag)
+    end
+end
+
+function movetagmenu()
+    local keys = { {key="Left", help="Move tag left", callback=function() movetag(-1) end},
+                   {key="Right", help="Move tag right", callback=function() movetag(1) end},
+                 }
+    keymenu(keys, "Move Tag", {})
+end
+
+function tagmanagement()
+    local keys = { {key="m", help="Move tag", callback=movetagmenu}
+
+                 }
+    keymenu(keys, "Tag Management", {})
+end
 
 keybindings = awful.util.table.join(
     awful.key({ modkey2, "Control" }, "c", function () awful.util.spawn(terminal) end),
@@ -140,6 +223,7 @@ keybindings = awful.util.table.join(
     awful.key({ modkey,           }, "p", function () awful.util.spawn(binhome .. "xrandr.sh --auto") end),
     awful.key({ modkey, "Control" }, "l", function () awful.util.spawn("xautolock -disable") end),
     awful.key({ modkey,    }, "c", pushincorner),
+    awful.key({ "Mod3",  }, "t", tagmanagement),
     -- Mouse cursor bindings
     awful.key({ "Mod3",  }, "Left", function () movecursor(-10,0) end),
     awful.key({ "Mod3",  }, "Right", function () movecursor(10,0) end),

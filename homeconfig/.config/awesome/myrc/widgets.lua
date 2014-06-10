@@ -4,6 +4,7 @@ local awful = require('awful')
 local util = require('awful.util')
 local prompt = require('awful.prompt')
 local ipairs = ipairs
+local type = type
 local completion = require('awful.completion')
 local wibox = require('wibox')
 local dbus = dbus
