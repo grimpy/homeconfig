@@ -199,7 +199,6 @@ globalkeys = awful.util.table.join(
                   t = shifty.tagtoscr(s, t)
                   awful.tag.viewonly(t)
               end),
-    awful.key({modkey}, "a", shifty.add), -- creat a new tag
     awful.key({modkey, "Shift"}, "r", shifty.rename), -- rename a tag
     awful.key({modkey, "Shift"}, "a", -- nopopup new tag
     function()
@@ -275,6 +274,7 @@ globalkeys = awful.util.table.join(
     --~ awful.key({ modkey, "Control" }, "n", awful.client.restore),
 )
 
+
 clientkeys = awful.util.table.join(
     awful.key({ modkey,           }, "f",      function (c) c.fullscreen = not c.fullscreen  end),
     awful.key({ modkey,           }, "c",      function (c) c:kill()                         end),
@@ -285,6 +285,11 @@ clientkeys = awful.util.table.join(
         function (c)
             c.maximized_horizontal = not c.maximized_horizontal
             c.maximized_vertical   = not c.maximized_vertical
+        end),
+    awful.key({ modkey,           }, "a",
+        function (c)
+            local t = shifty.add()
+            c:tags({t})
         end)
 )
 
