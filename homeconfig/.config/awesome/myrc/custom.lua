@@ -6,6 +6,7 @@ local mouse = mouse
 local naughty = require("naughty")
 local shifty = require("shifty")
 local ipairs = ipairs
+local string = string
 local os = os
 local io = io
 
@@ -97,13 +98,16 @@ end
 function keymenu(keys, naughtytitle, naughtypreset)
     local noti = nil
     if naughtytitle then
-        naughtyprop = naughtyprop or {}
+        naughtyprop = naughtypreset or {}
+        if not naughtyprop.position then
+            naughtyprop.position = 'top_left'
+        end
         local txt = ''
         for _, key in ipairs(keys) do
             local descr = key.help or ""
             txt = txt .. "\nPress " .. key.key .. " " .. descr
         end
-        noti = naughty.notify({title=naughtytitle, timeout=0, text=txt, preset=naughtypreset})
+        noti = naughty.notify({title=naughtytitle, timeout=0, text=txt, preset=naughtyprop})
     end
     keygrabber.run(function(mod, pkey, event)
         if event == "release" then return end
@@ -130,9 +134,35 @@ local shutdownkeys = { {key="s", help="for suspend", callback=suspend},
                        {key="l", help="for lock", callback=lock},
                      }
 
+function movetag(offset, idx) 
+    local tag = awful.tag.selected(1)
+    local idx = idx or awful.tag.getidx(tag)
+    idx = idx + offset
+    if idx <= 0 then
+        idx = 1
+    end
+    local nrtags = #awful.tag.gettags(1)
+    if idx > nrtags then
+        idx = nrtags
+    end
+    awful.tag.move(idx, tag)
+end
+
+function movetagmenu()
+    local keys = { {key="Left", help="Move Left", callback=function () movetag(-1) end},
+                   {key="Right", help="Move Right", callback=function () movetag(1) end}
+                 }
+    for i=1, 9 do
+        keys[#keys+1] = {key=string.format("%s", i), help=string.format("Move to position %s", i), callback=function () movetag(0, i) end}
+
+    end
+    keymenu(keys, "Move Tag", {})
+
+end
 
 local tagkeys = { {key="a", help="Add", callback=shifty.add},
                   {key="r", help="Rename", callback=shifty.rename},
+                  {key="m", help="Move", callback=movetagmenu},
                   {key="d", help="Delete", callback=shifty.del}
                 }
 
