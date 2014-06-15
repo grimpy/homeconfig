@@ -26,6 +26,7 @@ Bundle 'davidhalter/jedi-vim'
 Bundle 'xolox/vim-misc'
 Bundle 'xolox/vim-notes'
 Bundle 'mhinz/vim-signify'
+Bundle 'vim-scripts/BufOnly.vim'
 
 let g:jedi#popup_on_dot = 0
 let g:jedi#usages_command = "<leader>u"
