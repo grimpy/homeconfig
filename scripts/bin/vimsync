@@ -3,9 +3,10 @@ import subprocess
 import sys
 import os
 
-CONNECTIONS = {'default' : '10.101.190.25',
-               'gm': '10.101.190.25',
-               'cb': '10.101.190.25',
+ALLIP = '10.101.190.19'
+CONNECTIONS = {'default' : ALLIP,
+               'gm': ALLIP,
+               'cb': ALLIP,
               }
 REPOBASE = "/home/Jo/work"
 isbox = False
@@ -22,7 +23,7 @@ mapping = {
         'incubaid': {
             'cloudscalers' : {
                 'apps': ['apps', BASE, 'cb'],
-                'apps/cbportal/base/CBGrid/': ['apps/gridportal/base/CBGrid/', BASE, 'gm'],
+                'apps/cbportal/base/': ['apps/gridportal/base/', BASE, 'gm'],
                 'libs/agent-scripts': ['apps/agentcontroller/jumpscripts', BASE, 'gm'],
                 'libs/CloudscalerLibcloud': ['', LIBDIR, 'gm'],
                 }
