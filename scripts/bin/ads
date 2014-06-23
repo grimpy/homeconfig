@@ -73,9 +73,23 @@ function start() {
     export JAVA_HOME=/opt/java6/
     cd ~/Dev/android/CM
     source build/envsetup.sh
-    breakfast ${dev}" > /tmp/$$.rc
+    breakfast ${dev}
+    $*
+    " > /tmp/$$.rc
 
     bash --rcfile /tmp/$$.rc
+}
+
+function sync() {
+    cd $BKMRK_mycm
+    repo sync
+}
+
+function build() {
+   sync
+   start "
+brunch $dev
+   " 
 }
 
 case $command in
@@ -119,10 +133,12 @@ pm uninstall $apk"
         rebase
         ;;
     start)
-        start
+        start $*
         ;;
     sync)
-        cd $BKMRK_mycm
-        repo sync
+        sync
+        ;;
+    build)
+        build
         ;;
 esac
