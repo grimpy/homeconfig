@@ -52,7 +52,7 @@ shiftyapps = {
          { match = { "Chrome", "Chromium", "Midori", "Navigator", "Namoroka","Firefox"} , tag="3:web", nopopup=true} ,
          { match = { "Thunderbird", "Mail", "Msgcompose", "Evolution"} , tag="4:mail", nopopup=true } ,
          { match = { "Pidgin", "Skype", "gajim"} , tag="2:im", nopopup=true } ,
-         { match = { "xterm", "urxvt", "Terminator"} , honorsizehints=false, slave=true, tag="1:term" } ,
+         { match = { "urxvt", "Terminator"} , honorsizehints=false, slave=true, tag="1:term" } ,
          { match = { "Thunar", "pcmanfm", "xarchiver", "Squeeze", "File-roller", "Nautilus" }, tag="5:fs" } ,
          { match = { "Geany", "gvim", "Firebug", "sun-awt-X11-XFramePeer", "Devtools", "jetbrains-android-studio" }, tag="6:edit" } ,
          { match = { "xbmcremote" }, tag="10:xbmcremote" } ,
@@ -112,11 +112,12 @@ function keymenu(keys, naughtytitle, naughtypreset)
     keygrabber.run(function(mod, pkey, event)
         if event == "release" then return end
         local stopped = false
+        local continue = false
         for _, key in ipairs(keys) do
             if key.key == pkey then 
                 stopped = true
                 keygrabber.stop()
-                key.callback()
+                continue = key.callback()
             end
         end
         if not stopped then
@@ -124,6 +125,9 @@ function keymenu(keys, naughtytitle, naughtypreset)
         end
         if noti then
             naughty.destroy(noti)
+        end
+        if continue then
+            keymenu(keys, naughtytitle, naughtypreset)
         end
    end)
 end
@@ -150,8 +154,8 @@ function movetag(offset, idx)
 end
 
 function movetagmenu()
-    local keys = { {key="Left", help="Move Left", callback=function () movetag(-1) end},
-                   {key="Right", help="Move Right", callback=function () movetag(1) end}
+    local keys = { {key="Left", help="Move Left", callback=function () movetag(-1); return true; end},
+                   {key="Right", help="Move Right", callback=function () movetag(1); return true end}
                  }
     for i=1, 9 do
         keys[#keys+1] = {key=string.format("%s", i), help=string.format("Move to position %s", i), callback=function () movetag(0, i) end}
@@ -159,6 +163,17 @@ function movetagmenu()
     end
     keymenu(keys, "Move Tag", {})
 
+end
+
+function xbmcmote()
+    function togglekb()
+        local output = awful.util.pread(binhome .. "xbmcmote kb")
+        naughty.notify({title="Remote Keyboard", timeout=5, text=output})
+    end
+    local keys = { {key="r", help="Toggle Remote", callback=togglekb},
+                   {key="x", help="Switch VT", callback=function () awful.util.spawn(binhome .. "xbmcmote x") end}
+                 }
+    keymenu(keys, "XBMCMote", {})
 end
 
 local tagkeys = { {key="a", help="Add", callback=shifty.add},
@@ -187,6 +202,7 @@ keybindings = awful.util.table.join(
     awful.key({ modkey,    }, "c", pushincorner),
     -- Mouse cursor bindings
     awful.key({ "Mod3",  }, "Left", function () movecursor(-10,0) end),
+    awful.key({ "Mod3",  }, "z", xbmcmote),
     awful.key({ "Mod3",  }, "Right", function () movecursor(10,0) end),
     awful.key({ "Mod3",  }, "Up", function () movecursor(0,-10) end),
     awful.key({ "Mod3",  }, "Down", function () movecursor(0,10) end)
