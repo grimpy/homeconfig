@@ -1,0 +1,44 @@
+#!/bin/bash
+function cmd() {
+    ssh xbmc "
+export DISPLAY=:0
+$*
+"
+}
+
+function kbtoggle() {
+    kid=$(cmd "xinput list" | gawk 'match($0, /Lefant.*id=([0-9]+).*keyboard/, m) {print m[1]}')
+    kidflag=$(cmd "xinput list-props $kid" | gawk 'match($0, /Device Enabled.*([0-9]+)$/, m) {print m[1]}')
+
+    if [ "$kidflag" == "0" ]; then
+        echo "Enable KB"
+        cmd "xinput enable $kid"
+    else
+        echo "Disable KB"
+        cmd "xinput disable $kid"
+    fi
+}
+
+function switchx() {
+    vt=$(cmd fgconsole)
+    if [ $vt == 7 ]; then
+        vt=9
+    else
+        vt=7
+    fi
+    cmd chvt $vt
+    
+}
+
+case "$1" in
+    kb)
+        kbtoggle
+        ;;
+
+    x)
+        switchx
+        ;;
+    *)
+        echo "Unknown command $1"
+        ;;
+esac
