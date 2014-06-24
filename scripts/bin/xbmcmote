@@ -1,6 +1,6 @@
 #!/bin/bash
 function cmd() {
-    ssh xbmc "
+    ssh xbmc.lan "
 export DISPLAY=:0
 $*
 "
@@ -35,6 +35,14 @@ function switchx() {
     
 }
 
+function sleep() {
+    timeout 3 ssh xbmc.lan "systemctl suspend"
+}
+
+function wakeup() {
+    wol "44:8a:5b:22:35:3a"
+}
+
 case "$1" in
     kb)
         kbtoggle
@@ -42,6 +50,12 @@ case "$1" in
 
     x)
         switchx
+        ;;
+    s)
+        sleep
+        ;;
+    w)
+        wakeup
         ;;
     *)
         echo "Unknown command $1"

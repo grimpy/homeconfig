@@ -171,7 +171,9 @@ function xbmcmote()
         naughty.notify({title="Remote Keyboard", timeout=5, text=output})
     end
     local keys = { {key="r", help="Toggle Remote", callback=togglekb},
-                   {key="x", help="Switch VT", callback=function () awful.util.spawn(binhome .. "xbmcmote x") end}
+                   {key="x", help="Switch VT", callback=function () awful.util.spawn(binhome .. "xbmcmote x") end},
+                   {key="s", help="Sleep", callback=function () awful.util.spawn(binhome .. "xbmcmote s") end},
+                   {key="w", help="Wakeup", callback=function () awful.util.spawn(binhome .. "xbmcmote w") end}
                  }
     keymenu(keys, "XBMCMote", {})
 end
