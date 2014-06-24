@@ -36,6 +36,7 @@ mapping = {
             'jumpscale_grid': {
                 'apps/vfw/jumpscripts/': ['apps/agentcontroller/jumpscripts/', BASE, 'gm'],
                 'apps/vfw/actor/vfw/': ['apps/vfw/', BASE, 'gm'],
+                'apps/vfw/osis/': ['apps/osis/logic/', BASE, 'gm'],
                 'apps': ['apps', BASE, 'gm'],
                 'lib/JumpScale': ['', JSDIR, 'all']
                 },
