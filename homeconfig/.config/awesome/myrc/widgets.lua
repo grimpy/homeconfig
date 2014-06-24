@@ -141,7 +141,7 @@ vicious.register(mytemp, vicious.widgets.thermal,
         end
         return string.format('<span color="%s">%s°C</span>', color, tmp)
     end
-    , 2, {"coretemp.0", "core"})
+    , 2, {"thermal_zone0", "sys"})
 w[#w+1] = mytemp
 
 
