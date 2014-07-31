@@ -30,8 +30,7 @@ function update() {
     filename=$(basename $file)
     echo "Going to flash $filename press key"
     read
-    scp $file $ADSIP:/sdcard/AROMS/
-    timeout 5 ssh $ADSIP "
+    scp $file $ADSIP:/sdcard/AROMS/ && timeout 5 ssh $ADSIP "
     mkdir -p /cache/recovery
     echo 'install /sdcard/AROMS/$filename' > /cache/recovery/openrecoveryscript
     echo 'install /sdcard/AROMS/Xposed-Installer-Recovery.zip' >> /cache/recovery/openrecoveryscript
