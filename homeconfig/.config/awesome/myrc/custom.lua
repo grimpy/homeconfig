@@ -1,5 +1,6 @@
 local awful = require("awful")
 local client = client
+local awesome = awesome
 local keygrabber = keygrabber
 local screen = screen
 local mouse = mouse
@@ -134,6 +135,8 @@ end
 
 local shutdownkeys = { {key="s", help="for suspend", callback=suspend},
                        {key="r", help="for reboot", callback=function() awful.util.spawn("systemctl reboot") end},
+                       {key="e", help="for logout", callback=awesome.quit},
+                       {key="c", help="for reload", callback=awesome.restart},
                        {key="p", help="for poweroff", callback=function() awful.util.spawn("systemctl poweroff") end},
                        {key="l", help="for lock", callback=lock},
                      }
