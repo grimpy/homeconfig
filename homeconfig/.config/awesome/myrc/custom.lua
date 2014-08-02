@@ -88,7 +88,7 @@ function movecursor(x, y)
 end
 
 function lock()
-    awful.util.pread("xautolock -enable && sleep 0.5 && xautolock -locknow && sleep 0.5")
+    awful.util.pread("xautolock -locknow && sleep 0.5")
 end
 
 function suspend()
