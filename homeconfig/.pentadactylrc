@@ -9,3 +9,4 @@ set passkeys+=mail.google.com:jk
 set passkeys+=plus.google.com:jk
 set passkeys+=www.facebook.com:jk
 set passkeys+=feedly.com:jkv
+autocmd LocationChange '^chrome://browser/content/devtools/scratchpad.xul' :normal! <C-z>
