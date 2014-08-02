@@ -214,7 +214,11 @@ keybindings = awful.util.table.join(
 )
 
 client.connect_signal("property::urgent", function(c) 
-    if c.urgent and c.window ~= client.focus.window then
+    local window = nil
+    if client.focus then
+        window = client.focus.window
+    end
+    if c.urgent and c.window ~= window then
         awful.util.spawn(binhome .. "scrolllock")
     elseif not awful.client.urgent.get() then
         removeFile('/tmp/scrolllock')
