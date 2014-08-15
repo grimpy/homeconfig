@@ -4,28 +4,34 @@ import sys
 import os
 
 ALLIP = '10.101.190.19'
+isbox = False
 CONNECTIONS = {'default' : ALLIP,
                'gm': ALLIP,
                'cb': ALLIP,
               }
 REPOBASE = "/home/Jo/work"
-isbox = False
 if not isbox:
     BASE = "/opt/jumpscale/"
+    BINDIR = "/usr/local/bin/"
     LIBDIR = "/usr/local/lib/python2.7/site-packages/"
     JSDIR = "/usr/local/lib/python2.7/dist-packages/JumpScale/"
 else:
     BASE = "/opt/jsbox/"
+    BINDIR = "/usr/local/bin/"
     LIBDIR = "/opt/jsbox/libext/"
     JSDIR = "/opt/jsbox/libjs/JumpScale/"
+
+LIBEXT = os.path.join(BASE, 'libext', '')
 
 mapping = {
         'incubaid': {
             'cloudscalers' : {
                 'apps': ['apps', BASE, 'cb'],
+                'shellcmds': ['', BINDIR, 'cb'],
                 'apps/cbportal/base/': ['apps/gridportal/base/', BASE, 'gm'],
                 'libs/agent-scripts': ['apps/agentcontroller/jumpscripts', BASE, 'gm'],
                 'libs/CloudscalerLibcloud': ['', LIBDIR, 'gm'],
+                'apps/billingengine/billingenginelib': ['billingenginelib', LIBEXT, 'gm'],
                 }
             },
         'jumpscale': {
@@ -52,9 +58,12 @@ mapping = {
 
 
 file = os.path.abspath(sys.argv[1])
+defaultip = None
 if not os.path.isfile(file):
     print "This only works with files"
     os.exit(1)
+if len(sys.argv) > 2:
+    defaultip = sys.argv[2]
 
 metapath = file[len(REPOBASE)+1:]
 parts = metapath.split('/')
@@ -74,7 +83,9 @@ for key, conf in sorted(repoinfo.iteritems(), key=lambda x: len(x[0])):
         connections = [ CONNECTIONS['default'] ]
     else:
         value, base, con = conf
-        if con == 'all':
+        if defaultip:
+            connections = [ defaultip ]
+        elif con == 'all':
             connections = CONNECTIONS.values()
         else:
             connections = [ CONNECTIONS.get(con, CONNECTIONS['default']) ]
