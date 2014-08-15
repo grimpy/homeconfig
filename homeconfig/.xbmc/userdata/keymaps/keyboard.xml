@@ -67,6 +67,7 @@
       <i>Info</i>
       <menu>ContextMenu</menu>
       <c>ContextMenu</c>
+      <d>RunPlugin(plugin://plugin.video.makeoffline/)</d>
       <o mod="ctrl">ContextMenu</o>  <!-- MCE Recorded TV -->
       <space>Pause</space>
       <x>Stop</x>
