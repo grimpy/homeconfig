@@ -152,7 +152,7 @@ function updateBat()
     local per = res[2]
     local output = res[1] .. res[2]
     local color
-    if res[1] ~= "-" then
+    if res[1] == "+" then
         color = "#0080ff"
     else
         if per > 40 then
