@@ -1,0 +1,36 @@
+#!/bin/zsh
+
+function hgp(){
+    sed -i "s/pretxncommit.pyflakes/#pretxncommit.pyflakes/" ~/.hgrc
+    hg $*
+    exitcode=$?
+    sed -i "s/#pretxncommit.pyflakes/pretxncommit.pyflakes/" ~/.hgrc
+    return $exitcode
+    
+}
+
+function vcsa() {
+    local filter=$1
+    local cmd=$2
+    shift
+    shift
+    for x in `ls`; do
+        if [[ -h "$x" || ! -d "$x" ]]; then
+            continue
+        fi
+        pushd $x
+        if [ -e "$filter" ]; then
+            echo "Repo $x"
+            $cmd $*
+        fi
+        popd
+    done
+}
+
+alias hga="vcsa .hg hgp"
+alias gita="vcsa .git git"
+
+function hgr() {
+    local hgroot=$(hg root)
+    hgp commit -l "${hgroot}/.hg/last-message.txt" $*
+}
