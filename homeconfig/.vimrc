@@ -8,12 +8,14 @@ let mapleader = ","
 " let Vundle manage Vundle
 " required! 
 Bundle 'gmarik/vundle'
+Bundle 'bling/vim-airline'
 Bundle 'grimpy/ctrlp.vim.git'
 Bundle 'mileszs/ack.vim.git'
 Bundle 'aklt/plantuml-syntax.git'
 Bundle 'alfredodeza/pytest.vim.git'
 Bundle 'tpope/vim-commentary.git'
 Bundle 'tpope/vim-fugitive.git'
+Bundle 'tpope/vim-sensible.git'
 Bundle 'kevinw/pyflakes-vim.git'
 Bundle 'Shougo/neocomplcache.git'
 Bundle 'tomasr/molokai'
@@ -56,9 +58,8 @@ let g:notes_directories = ['~/Documents/Notes']
 let g:notes_suffix = '.txt'
 let g:xmledit_enable_html = 1
 
-" some defaults
-filetype plugin indent on
-syn on
+let g:airline_powerline_fonts = 1
+
 set t_Co=256
 set background=dark
 
@@ -67,7 +68,6 @@ set shiftwidth=4
 set expandtab
 set smartindent
 set smartcase
-set filetype=on
 set mouse=a
 set guifont=Monospace\ 8
 set fdm=indent
