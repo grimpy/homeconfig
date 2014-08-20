@@ -45,6 +45,10 @@ autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
 autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
 autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
 au BufNewFile,BufRead *.wiki set filetype=confluencewiki
+
+autocmd BufWritePost .vimrc source $MYVIMRC
+autocmd BufWritePost .vimrc filetype plugin indent on
+
 let g:neocomplcache_enable_at_startup = 1
 let g:neocomplcache_enable_auto_close_preview = 1
 
@@ -53,7 +57,6 @@ let g:notes_suffix = '.txt'
 let g:xmledit_enable_html = 1
 
 " some defaults
-filetype off
 filetype plugin indent on
 syn on
 set t_Co=256
@@ -77,6 +80,7 @@ vnoremap <leader>c "*y
 nnoremap <leader>c "*yy
 nnoremap <leader>v "*p
 nnoremap <leader>R :source $MYVIMRC<CR>
+
 inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
 nnoremap <leader>/ :noh<cr>
 nnoremap <leader>n :NERDTreeFind<CR>
@@ -103,15 +107,15 @@ xmap <C-k>     <Plug>(neosnippet_expand_target)
 let g:neosnippet#snippets_directory='~/.vim/snippets'
 " SuperTab like snippets behavior.
 imap <expr><TAB> neosnippet#expandable_or_jumpable() ?
-\ "\<Plug>(neosnippet_expand_or_jump)"
-\: pumvisible() ? "\<C-n>" : "\<TAB>"
+            \ "\<Plug>(neosnippet_expand_or_jump)"
+            \: pumvisible() ? "\<C-n>" : "\<TAB>"
 smap <expr><TAB> neosnippet#expandable_or_jumpable() ?
-\ "\<Plug>(neosnippet_expand_or_jump)"
-\: "\<TAB>"
+            \ "\<Plug>(neosnippet_expand_or_jump)"
+            \: "\<TAB>"
 
 " For snippet_complete marker.
 if has('conceal')
-  set conceallevel=2 concealcursor=i
+    set conceallevel=2 concealcursor=i
 endif
 
 
