@@ -5,6 +5,8 @@
 	email = deboeck.jo@gmail.com
 [push]
 	default = current
+[pull]
+    strategy = rebase
 [help]
 	autocorrect = 1
 [alias]

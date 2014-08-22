@@ -29,5 +29,4 @@ print s
 while True:
     data = f.read(s)
     time1, time2, evtype, evcode, evvalue = struct.unpack(format, data)
-    if evtype == KEY_TYPE:
-        print evcode, evvalue
+    print evcode, evvalue
