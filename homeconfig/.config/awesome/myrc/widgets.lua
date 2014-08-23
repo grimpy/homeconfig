@@ -17,6 +17,8 @@ vicious.contrib = require("vicious.contrib")
 
 module("myrc.widgets")
 
+local SNIPPETDIR = os.getenv("HOME") .. "/.config/snippets/"
+
 w = {}
 
 function dbusCallBack(bus, iface, callback)
@@ -39,6 +41,13 @@ function cmdprompt()
                   util.getdir("cache") .. "/history")
 end
 
+function completionwrapper(values)
+    function wrapper(text, cur_pos, ncomp)
+        return completion.generic(text, cur_pos, ncomp, values)
+    end
+    return wrapper
+end
+
 function runprompt()
     local mytags = {}
     local mytagnames = {}
@@ -52,13 +61,27 @@ function runprompt()
             mytags[name] = tag
         end
     end
-    function completionwrapper(text, cur_pos, ncomp)
-        return completion.generic(text, cur_pos, ncomp, mytagnames)
-    end
+
     function result(...)
         awful.tag.viewonly(mytags[...])
     end
-    prompt.run({prompt='Tag: '}, myprompt, result, completionwrapper, nil)
+    prompt.run({prompt='Tag: '}, myprompt, result, completionwrapper(mytagnames), nil)
+end
+
+function runsnippets()
+    local snippets = {}
+    local p = io.popen('find "'.. SNIPPETDIR ..'" -type f -printf "%f\n"')
+    for file in p:lines() do                         --Loop through all files
+        snippets[#snippets+1] = file
+    end
+
+    function result(...)
+        local file = SNIPPETDIR .. ...
+        awful.util.spawn_with_shell("cat " .. file .. " | xsel -i -p")
+        awful.util.spawn_with_shell("cat " .. file .. " | xsel -i -b")
+    end
+    prompt.run({prompt='Snippet: '}, myprompt, result, completionwrapper(snippets), nil)
+
 end
 
 local myip = wibox.widget.textbox()
@@ -246,6 +269,7 @@ keybindings = awful.util.table.join(
     awful.key({}, "XF86AudioRaiseVolume", increasevolume),
     awful.key({"Mod4"}, "Up", increasevolume),
     awful.key({"Mod3"}, "y", runprompt),
+    awful.key({"Mod3"}, "i", runsnippets),
     awful.key({"Mod3"}, "r", cmdprompt),
     awful.key({}, "XF86AudioMute", mutevolume),
     awful.key({"Mod4"}, "0", mutevolume)
