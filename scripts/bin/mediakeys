@@ -1,0 +1,55 @@
+#!/usr/bin/env python2
+import struct
+import glob
+import select
+import subprocess
+import pyinotify
+
+devices = dict()
+for devicepath in glob.glob("/dev/input/event*"):
+    devices[devicepath] = open(devicepath)
+
+class Processor(pyinotify.ProcessEvent):
+    def process_IN_CREATE(self, event):
+        print 'IN', event
+        if event.name.startswith('event'):
+            devices[event.pathname] = open(event.pathname)
+
+    def process_IN_DELETE(self, event):
+        print 'DEL', event
+        devices.pop(event.pathname, None)
+
+watcher = pyinotify.WatchManager()
+watcher.add_watch('/dev/input/', pyinotify.IN_DELETE | pyinotify.IN_CREATE)
+notifier = pyinotify.Notifier(watcher, Processor())
+
+format = "llHHi"
+
+KEY_TYPE = 1
+
+s = struct.calcsize(format)
+
+while True:
+    rlist, wlist, xlist = select.select(devices.values(), [], [], 5)
+    if notifier.check_events(1):
+        notifier.read_events()
+        notifier.process_events()
+    for device in rlist:
+        try:
+            data = device.read(s)
+        except Exception, e:
+            print e
+            continue
+        time1, time2, evtype, evcode, evvalue = struct.unpack(format, data)
+        if evtype == KEY_TYPE:
+            if evcode in (164, 174, 175) and evvalue == 1:
+                print "Found Media button", evcode
+                if not subprocess.call(['pidof', 'i3lock']):
+                    if evcode == 164: #play pause
+                        subprocess.call(['musiccontrol', 'PlayPause'])
+                    elif evcode == 113:
+                        subprocess.call(['amixer', '-M', 'set', 'Master', 'toggle'])
+                    elif evcode == 114:
+                        subprocess.call(['amixer', '-M', 'set', 'Master', '5%-'])
+                    elif evcode == 115:
+                        subprocess.call(['amixer', '-M', 'set', 'Master', '5%+'])
