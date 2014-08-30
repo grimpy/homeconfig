@@ -15,6 +15,7 @@ autocmd FileType unite call s:unite_my_settings()
 function! s:unite_my_settings()
 	" Overwrite settings.
     nnoremap <silent><buffer><expr> v unite#do_action('vsplit')
+    nnoremap <silent><buffer><expr> d unite#do_action('delete')
     inoremap <silent><buffer><expr> <C-v> unite#do_action('vsplit')
     imap <buffer> <C-j>   <Plug>(unite_select_next_line)
     imap <buffer> <C-k>   <Plug>(unite_select_previous_line)
