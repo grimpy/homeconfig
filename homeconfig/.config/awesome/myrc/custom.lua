@@ -88,7 +88,7 @@ function movecursor(x, y)
 end
 
 function lock()
-    awful.util.pread("xautolock -locknow && sleep 0.5")
+    awful.util.spawn("xlock")
 end
 
 function suspend()
@@ -203,7 +203,7 @@ keybindings = awful.util.table.join(
     awful.key({ "Mod3"}, "s", function() keymenu(shutdownkeys, "Shutdown", {bg="#ff3333", fg="#ffffff"}) end),
     awful.key({ "Mod3"}, "t", function() keymenu(tagkeys, "Tag Management", {}) end),
     awful.key({ modkey,           }, "p", function () awful.util.spawn(binhome .. "xrandr.sh --auto") end),
-    awful.key({ modkey, "Control" }, "l", function () awful.util.spawn("xautolock -disable") end),
+    awful.key({ modkey, "Control" }, "l", function () awful.util.spawn("xautolock -toggle") end),
     awful.key({ modkey,    }, "c", pushincorner),
     -- Mouse cursor bindings
     awful.key({ "Mod3",  }, "Left", function () movecursor(-10,0) end),
