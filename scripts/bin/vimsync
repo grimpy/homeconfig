@@ -22,38 +22,53 @@ else:
     JSDIR = "/opt/jsbox/libjs/JumpScale/"
 
 LIBEXT = os.path.join(BASE, 'libext', '')
-
-mapping = {
-        'incubaid': {
-            'cloudscalers' : {
+incubaid = {'cloudscalers' : {
                 'apps': ['apps', BASE, 'cb'],
                 'shellcmds': ['', BINDIR, 'cb'],
-                'apps/cbportal/base/': ['apps/gridportal/base/', BASE, 'gm'],
+                'apps/cbportal/base/': ['apps/portals/main/base/', BASE, 'gm'],
+                'apps/cloudbroker/base/': ['apps/portals/main/base/', BASE, 'gm'],
                 'libs/agent-scripts': ['apps/agentcontroller/jumpscripts', BASE, 'gm'],
                 'libs/CloudscalerLibcloud': ['', LIBDIR, 'gm'],
                 'apps/billingengine/billingenginelib': ['billingenginelib', LIBEXT, 'gm'],
                 }
-            },
-        'jumpscale': {
-            'jumpscale_core': {
-                'apps': ['apps', BASE, 'gm'],
-                'lib/JumpScale': ['', JSDIR, 'all']
-                },
-            'jumpscale_grid': {
-                'apps/vfw/jumpscripts/': ['apps/agentcontroller/jumpscripts/', BASE, 'gm'],
-                'apps/vfw/actor/vfw/': ['apps/vfw/', BASE, 'gm'],
-                'apps/vfw/osis/': ['apps/osis/logic/', BASE, 'gm'],
-                'apps': ['apps', BASE, 'gm'],
-                'lib/JumpScale': ['', JSDIR, 'all']
-                },
-            'jumpscale_lib': {
-                'JumpScale': ['', JSDIR, 'all']
-                },
-            'jumpscale_portal': {
-                'apps': ['apps', BASE, 'gm'],
-                'lib/JumpScale': ['', JSDIR, 'all']
-                }
             }
+
+mapping = {
+        'bitbucket': {
+            'incubaid': incubaid,
+            'jumpscale': {
+                'jumpscale_core': {
+                    'apps': ['apps', BASE, 'gm'],
+                    'lib/JumpScale': ['', JSDIR, 'all']
+                    },
+                'jumpscale_grid': {
+                    'apps/vfw/jumpscripts/': ['apps/agentcontroller/jumpscripts/', BASE, 'gm'],
+                    'apps/vfw/actor/vfw/': ['apps/vfw/', BASE, 'gm'],
+                    'apps/vfw/osis/': ['apps/osis/logic/', BASE, 'gm'],
+                    'apps': ['apps', BASE, 'gm'],
+                    'lib/JumpScale': ['', JSDIR, 'all']
+                    },
+                'jumpscale_lib': {
+                    'JumpScale': ['', JSDIR, 'all']
+                    },
+                'jumpscale_portal': {
+                    'apps': ['apps', BASE, 'gm'],
+                    'lib/JumpScale': ['', JSDIR, 'all']
+                    }
+                }
+            },
+        'github': {
+            'incubaid': incubaid,
+            'jumpscale': {
+                'jumpscale_core': {
+                    'apps/vfw/jumpscripts/': ['apps/agentcontroller/jumpscripts/', BASE, 'gm'],
+                    'apps/vfw/actor/vfw/': ['apps/portals/main/', BASE, 'gm'],
+                    'apps/vfw/osis/': ['apps/osis/logic/', BASE, 'gm'],
+                    'apps': ['apps', BASE, 'gm'],
+                    'lib/JumpScale': ['', JSDIR, 'all']
+                    },
+                }
+            },
         }
 
 
@@ -67,14 +82,15 @@ if len(sys.argv) > 2:
 
 metapath = file[len(REPOBASE)+1:]
 parts = metapath.split('/')
-repoaccount = parts[0]
-reponame = parts[1]
-abspath = '/'.join(parts[2:])
+provider = parts[0]
+repoaccount = parts[1]
+reponame = parts[2]
+abspath = '/'.join(parts[3:])
 
 if '__' in reponame:
     reponame = reponame.split('__', 1)[1]
 
-repoinfo = mapping[repoaccount][reponame]
+repoinfo = mapping[provider][repoaccount][reponame]
 
 destfile = None
 for key, conf in sorted(repoinfo.iteritems(), key=lambda x: len(x[0])):
