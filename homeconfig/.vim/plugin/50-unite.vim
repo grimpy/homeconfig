@@ -9,6 +9,7 @@ call unite#custom#profile('default', 'ignorecase', 1)
 " call unite#filters#sorter_default#use(['sorter_word', 'sorter_reverse'])
 call unite#custom#source('file_rec/async,buffer','sorters', ['sorter_word', 'sorter_reverse'])
 call unite#custom#source('file_rec/async', 'ignore_pattern', '*.pyc')
+call unite#custom#source('file_rec/async', 'ignore_pattern', '*.swp')
 call unite#custom#profile('default', 'context', {
     \ 'winheight': 100,
     \ 'direction': 'botright',
