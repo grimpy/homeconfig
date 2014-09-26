@@ -1,0 +1,24 @@
+#!/bin/bash
+case $1 in
+    enableap) 
+        sudo systemctl stop wpa_supplicant-nl80211@wlp1s0.service
+        sudo systemctl start hostapd
+        ;;
+    enablewifi)
+        sudo systemctl stop hostapd
+        sudo systemctl start wpa_supplicant-nl80211@wlp1s0.service
+        ;;
+    mode)
+        if systemctl status hostapd > /dev/null; then
+            echo "AP"
+        else
+            echo "CLIENT"
+        fi
+        ;;
+    reconnect)
+        for x in `wpa_cli list_networks| grep "DISABLED" | awk '{print $1}'`; do wpa_cli enable_network $x; done
+        wpa_cli reconnect
+        ;;
+    *)
+        echo "No option given"
+esac

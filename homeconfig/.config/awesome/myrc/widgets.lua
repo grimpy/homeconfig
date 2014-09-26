@@ -3,6 +3,7 @@ local vicious = require('vicious')
 local awful = require('awful')
 local util = require('awful.util')
 local prompt = require('awful.prompt')
+local theme = require("theme")
 local ipairs = ipairs
 local completion = require('awful.completion')
 local wibox = require('wibox')
@@ -119,9 +120,46 @@ updateIP()
 dbusCallBack("system", "name.marples.roy.dhcpcd", updateIP)
 w[#w+1] = myip
 
+function asyncspawn(cmd)
+    function spawn()
+        awful.util.spawn(cmd)
+    end
+    return spawn
+end
+
+local netmenucfg = { 
+             {"Restart DHCP", asyncspawn("sudo systemctl restart dhcpcd"), },
+             {"WiFi reconnect", asyncspawn("wifi reconnect"), },
+             {"Open WPA", asyncspawn("wpa_gui")},
+             {"Enable Hotspot", switchap}
+           }
+local args = {}
+args["items"] = netmenucfg
+args["theme"] = theme
+local netmenu = awful.menu.new(args)
+
 myip:buttons(awful.util.table.join(
     awful.button({}, 1, updateIP),
-    awful.button({}, 3, function() awful.util.spawn("wpa_gui") end)
+    awful.button({}, 3, function() 
+        local apmode = string.match(awful.util.pread("wifi mode"), "(AP)") == "AP"
+        local icon = ""
+        if apmode then
+            icon = "/usr/share/icons/AwOkenDark/clear/24x24/actions/dialog-yes.png"
+        else
+            icon = "/usr/share/icons/AwOkenDark/clear/24x24/actions/dialog-no.png"
+        end
+
+        function switchap()
+            if not apmode then
+                awful.util.spawn("wifi enableap")
+            else
+                awful.util.spawn("wifi enablewifi")
+            end
+        end
+        netmenu:delete(4)
+        netmenu:add({"Enable Hotspot", switchap, icon})
+        netmenu:show() 
+    end)
 ))
 
 local mynet = wibox.widget.textbox()
