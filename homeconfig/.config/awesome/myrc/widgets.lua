@@ -296,6 +296,7 @@ end
 
 myvoltext:buttons(awful.util.table.join(
     awful.button({}, 1, updatevol),
+    awful.button({'Shift'}, 1, asyncspawn('pavucontrol')),
     awful.button({}, 3, mutevolume),
     awful.button({}, 4, increasevolume),
     awful.button({}, 5, decreasevolume)
