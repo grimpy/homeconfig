@@ -3,17 +3,22 @@ import subprocess
 import sys
 import os
 
-ALLIP = '10.101.190.19'
+gm = '172.17.0.18'
+cb = '172.17.0.11'
+
+ALLIP = cb
+
 isbox = False
 CONNECTIONS = {'default' : ALLIP,
-               'gm': ALLIP,
-               'cb': ALLIP,
+               'gm': gm,
+               'cb': cb,
               }
 REPOBASE = "/home/Jo/work"
 if not isbox:
     BASE = "/opt/jumpscale/"
     BINDIR = "/usr/local/bin/"
-    LIBDIR = "/usr/local/lib/python2.7/site-packages/"
+    #LIBDIR = "/usr/local/lib/python2.7/site-packages/"
+    LIBDIR = "/opt/jumpscale/libext/"
     JSDIR = "/usr/local/lib/python2.7/dist-packages/JumpScale/"
 else:
     BASE = "/opt/jsbox/"
@@ -22,11 +27,14 @@ else:
     JSDIR = "/opt/jsbox/libjs/JumpScale/"
 
 LIBEXT = os.path.join(BASE, 'libext', '')
-incubaid = {'cloudscalers' : {
+incubaid = {'mothership1' : {
                 'apps': ['apps', BASE, 'cb'],
                 'shellcmds': ['', BINDIR, 'cb'],
                 'apps/cbportal/base/': ['apps/portals/main/base/', BASE, 'gm'],
-                'apps/cloudbroker/base/': ['apps/portals/main/base/', BASE, 'gm'],
+                'apps/cloudbroker/base/': ['apps/portals/main/base/', BASE, 'cb'],
+                'apps/billingengine/base/': ['apps/portals/main/base/', BASE, 'cb'],
+                'apps/cloudbroker/cloudbrokerlib/': ['cloudbrokerlib/', LIBDIR, 'gm'],
+                'apps/cloudscalers_fe/base/': ['apps/portals/main/base/', BASE, 'cb'],
                 'libs/agent-scripts': ['apps/agentcontroller/jumpscripts', BASE, 'gm'],
                 'libs/CloudscalerLibcloud': ['', LIBDIR, 'gm'],
                 'apps/billingengine/billingenginelib': ['billingenginelib', LIBEXT, 'gm'],
@@ -58,11 +66,13 @@ mapping = {
                 }
             },
         'github': {
-            'incubaid': incubaid,
+            '0-complexity': incubaid,
             'jumpscale': {
                 'jumpscale_core': {
+                    'shellcmds': ['', BINDIR, 'all'],
                     'apps/vfw/jumpscripts/': ['apps/agentcontroller/jumpscripts/', BASE, 'gm'],
                     'apps/vfw/actor/vfw/': ['apps/portals/main/', BASE, 'gm'],
+                    'apps/gridportal/base/': ['apps/portals/main/base/', BASE, 'gm'],
                     'apps/vfw/osis/': ['apps/osis/logic/', BASE, 'gm'],
                     'apps': ['apps', BASE, 'gm'],
                     'lib/JumpScale': ['', JSDIR, 'all']
@@ -114,7 +124,7 @@ for key, conf in sorted(repoinfo.iteritems(), key=lambda x: len(x[0])):
 
 if not destfile:
     print "Could not determine destination"
-    os.exit(1)
+    sys.exit(1)
 
 print destfile
 
