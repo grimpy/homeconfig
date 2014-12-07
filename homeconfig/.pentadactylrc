@@ -1,7 +1,7 @@
 let mapleader = ","
-noremap <leader>/ :noh<cr>
-noremap j 8j
-noremap k 8k
+map -builtin <leader>/ :noh<cr>
+map -builtin j 8j
+map -builtin k 8k
 
 set guioptions=rCmTBs
 
@@ -10,3 +10,9 @@ set passkeys+=plus.google.com:jk
 set passkeys+=www.facebook.com:jk
 set passkeys+=feedly.com:jkv
 autocmd LocationChange '^chrome://browser/content/devtools/scratchpad.xul' :normal! <C-z>
+
+style -name tabbrowser-height-fix chrome://* <<EOM
+[dactyl-australis=true] .tabbrowser-tabs {
+        max-height:       unset !important;
+}
+EOM
