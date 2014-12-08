@@ -69,7 +69,7 @@ function start() {
     source ~/.bashrc
     export USE_CCACHE=1
     export PATH=/opt/java6/bin:$PATH
-    export JAVA_HOME=/opt/java6/
+    #export JAVA_HOME=/opt/java6/
     cd ~/Dev/android/CM
     source build/envsetup.sh
     breakfast ${dev}
