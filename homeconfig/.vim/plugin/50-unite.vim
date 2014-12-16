@@ -5,7 +5,7 @@ nnoremap <leader>a :Unite -auto-preview grep:.<cr>
 nnoremap <leader>b :Unite buffer:-<cr>
 nnoremap <leader>y :Unite history/yank<cr>
 " call unite#filters#matcher_default#use(['matcher_fuzzy'])
-call unite#custom#profile('default', 'ignorecase', 1)
+call unite#custom#profile('default', 'context.ignorecase', 1)
 " call unite#filters#sorter_default#use(['sorter_word', 'sorter_reverse'])
 call unite#custom#source('file_rec/async,buffer','sorters', ['sorter_word', 'sorter_reverse'])
 call unite#custom#source('file_rec/async', 'ignore_pattern', '*.pyc')
