@@ -11,6 +11,12 @@
 	autocorrect = 1
 [alias]
     stat = status
+    wipe = reset --hard HEAD
+    meld = "!sh -c \"git difftool -y $1^!\""
+
+[diff]
+    tool = meld
+
 [giggle]
 	main-window-maximized = true
 	main-window-geometry = 0x0+0+0
@@ -19,3 +25,4 @@
 	file-view-vpane-position = 398
 [review "review.cyanogenmod.org"]
 	username = deboeck.jo
+
