@@ -1,0 +1,2 @@
+import JumpScale.grid
+ccl = j.core.osis.getClientForNamespace('cloudbroker')
