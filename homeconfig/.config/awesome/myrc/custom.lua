@@ -60,7 +60,7 @@ shiftyapps = {
          { match = { "Eclipse" }, tag="6:edit", nopopup=true } ,
          { match = { "MPlayer", "ario", "Audacious", "pragha", "mplayer2", "bino", "mpv" }, tag="7:media" } ,
          { match = { "VirtualBox" }, tag="8:emu" } ,
-         { match = { "xbmc.bin" }, tag="9:mediafs" } ,
+         { match = { "xbmc.bin", "Kodi" }, tag="9:mediafs" } ,
          { match = { "" }, buttons= clientbuttons },
 }
 
@@ -203,7 +203,8 @@ keybindings = awful.util.table.join(
     awful.key({ "Mod3"}, "s", function() keymenu(shutdownkeys, "Shutdown", {bg="#ff3333", fg="#ffffff"}) end),
     awful.key({ "Mod3"}, "t", function() keymenu(tagkeys, "Tag Management", {}) end),
     awful.key({ modkey,           }, "p", function () awful.util.spawn(binhome .. "xrandr.sh --auto") end),
-    awful.key({ modkey, "Control" }, "l", function () awful.util.spawn("xautolock -toggle") end),
+    awful.key({ modkey, "Shift" }, "l", function () awful.util.spawn("xautolock -disable") end),
+    awful.key({ modkey, "Control" }, "l", function () awful.util.spawn("xautolock -enable") end),
     awful.key({ modkey,    }, "c", pushincorner),
     -- Mouse cursor bindings
     awful.key({ "Mod3",  }, "Left", function () movecursor(-10,0) end),
