@@ -1,6 +1,7 @@
 local awful = require("awful")
 local client = client
 local awesome = awesome
+local menubar = require("menubar")
 local keygrabber = keygrabber
 local screen = screen
 local mouse = mouse
@@ -14,6 +15,7 @@ local io = io
 module("myrc.custom")
 shifty.config.sloppy = false
 binhome = os.getenv("HOME") .. "/mygit/scripts/bin/"
+menubar.menu_gen.all_menu_dirs = { "/usr/share/applications/", "/usr/local/share/applications", "~/.local/share/applications" }
 
 browser = binhome .. "browser"
 terminal = "urxvtc"
@@ -206,6 +208,8 @@ keybindings = awful.util.table.join(
     awful.key({ modkey, "Shift" }, "l", function () awful.util.spawn("xautolock -disable") end),
     awful.key({ modkey, "Control" }, "l", function () awful.util.spawn("xautolock -enable") end),
     awful.key({ modkey,    }, "c", pushincorner),
+    awful.key({ modkey }, "d", function () menubar.show() end),
+
     -- Mouse cursor bindings
     awful.key({ "Mod3",  }, "Left", function () movecursor(-10,0) end),
     awful.key({ "Mod3",  }, "z", xbmcmote),

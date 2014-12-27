@@ -8,7 +8,7 @@ local beautiful = require("beautiful")
 local naughty = require("naughty")
 local shifty = require("shifty")
 -- Custom
-require("myrc.mainmenu")
+local menubar = require("menubar")
 require("myrc.autostart")
 require("myrc.custom")
 require("myrc.widgets")
@@ -66,10 +66,12 @@ shifty.config.apps = myrc.custom.shiftyapps
 shifty.config.defaults = myrc.custom.shiftydefaults
 
 
--- {{{ XDG Menu
-mymainmenu = myrc.mainmenu.build()
-mylauncher = awful.widget.launcher({ image = beautiful.awesome_icon,
-                                     menu = mymainmenu })
+-- {{{ Menu Bar
+mylauncher = awful.widget.button({ image = beautiful.awesome_icon })
+mylauncher:buttons(awful.util.table.join(
+    awful.button({}, 1, function () menubar.show() end)
+    )
+)
 
 -- }}}
 --
@@ -177,7 +179,7 @@ shifty.init()
 
 -- {{{ Mouse bindings
 root.buttons(awful.util.table.join(
-    awful.button({ }, 3, function () mymainmenu:toggle() end),
+    awful.button({ }, 3, function () menubar.show() end),
     awful.button({ }, 4, awful.tag.viewnext),
     awful.button({ }, 5, awful.tag.viewprev)
 ))
@@ -248,7 +250,7 @@ globalkeys = awful.util.table.join(
         end),
 
 
-    awful.key({ modkey,           }, "w", function () mymainmenu:show() end),
+    awful.key({ modkey,           }, "w", function () menubar.show() end),
 
     -- Layout manipulation
     awful.key({ modkey,           }, "u", 
