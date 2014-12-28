@@ -39,38 +39,41 @@ tags = {
         key         = "1",
         init        = false,                   -- Load the tag on startup
         exec_once   = "urxvt",
-        no_autofocus= true,
         max_clients = 4,
         exclusive   = true,                   -- Refuse any other type of clients (by classes)
         screen      = {VGA},                  -- Create this tag on screen 1 and screen 2
-        layout      = awful.layout.suit.tile, -- Use the tile layout
-        class       = { --Accept the following classes, refuse everything else (because of "exclusive=true")
-            "xterm" , "urxvt" , "aterm","URxvt","XTerm","konsole","terminator","gnome-terminal"
-        }
+        layout      = awful.layout.suit.fair.horizontal, -- Use the tile layout
+        class       = {"xterm" , "urxvt" , "aterm","URxvt","XTerm","konsole","terminator","gnome-terminal"}
     },
     {
         name        = "2:IM",                 -- Call the tag "Term"
         key         = "2",
         exec_once   = "pidgin",
-        init        = false,                   -- Load the tag on startup
         exclusive   = true,                   -- Refuse any other type of clients (by classes)
+        init        = false,                   -- Load the tag on startup
         screen      = {VGA},                  -- Create this tag on screen 1 and screen 2
-        layout      = awful.layout.suit.tile, -- Use the tile layout
-        class       = { --Accept the following classes, refuse everything else (because of "exclusive=true")
-            "Pidgin", "Skype", "gajim"
-        }
+        layout      = awful.layout.suit.fair.horizontal, -- Use the tile layout
+        class       = {"Pidgin", "Skype", "gajim"}
     },
     {
         name        = "3:Web",                 -- Call the tag "Term"
         key         = "3",
-        exec_once   = "firefox",
+        exec_once   = "browser",
         init        = false,                   -- Load the tag on startup
         exclusive   = true,                   -- Refuse any other type of clients (by classes)
         screen      = {LCD},                  -- Create this tag on screen 1 and screen 2
         layout      = awful.layout.suit.tile, -- Use the tile layout
-        class       = { --Accept the following classes, refuse everything else (because of "exclusive=true")
-            "Chrome", "Chromium", "Midori", "Navigator", "Namoroka","Firefox"
-        }
+        class       = {"Chrome", "Chromium", "Midori", "Navigator", "Namoroka","Firefox"}
+    },
+    {
+        name        = "4:Mail",                 -- Call the tag "Term"
+        key         = "4",
+        exec_once   = "thunderbird",
+        init        = false,                   -- Load the tag on startup
+        exclusive   = true,                   -- Refuse any other type of clients (by classes)
+        screen      = {LCD},                  -- Create this tag on screen 1 and screen 2
+        layout      = awful.layout.suit.tile, -- Use the tile layout
+        class       = {"Thunderbird", "Mail", "Msgcompose", "Evolution"}
     },
     {
         name        = "5:FS",                 -- Call the tag "Term"
@@ -79,10 +82,8 @@ tags = {
         init        = false,                   -- Load the tag on startup
         exclusive   = true,                   -- Refuse any other type of clients (by classes)
         screen      = {LCD},                  -- Create this tag on screen 1 and screen 2
-        layout      = awful.layout.suit.tile, -- Use the tile layout
-        class       = { --Accept the following classes, refuse everything else (because of "exclusive=true")
-            "Thunar", "pcmanfm", "xarchiver", "Squeeze", "File-roller", "Nautilus" 
-        }
+        layout      = awful.layout.suit.float, -- Use the tile layout
+        class       = {"Thunar", "pcmanfm", "xarchiver", "Squeeze", "File-roller", "Nautilus"}
     },
     {
         name        = "6:Edit",                 -- Call the tag "Term"
@@ -92,9 +93,7 @@ tags = {
         exclusive   = true,                   -- Refuse any other type of clients (by classes)
         screen      = {VGA},                  -- Create this tag on screen 1 and screen 2
         layout      = awful.layout.suit.tile, -- Use the tile layout
-        class       = { --Accept the following classes, refuse everything else (because of "exclusive=true")
-            "Geany", "gvim", "Firebug", "sun-awt-X11-XFramePeer", "Devtools", "jetbrains-android-studio"
-        }
+        class       = {"Geany", "gvim", "Firebug", "sun-awt-X11-XFramePeer", "Devtools", "jetbrains-android-studio"}
     },
     {
         name        = "7:Media",                 -- Call the tag "Term"
@@ -103,10 +102,8 @@ tags = {
         init        = false,                   -- Load the tag on startup
         exclusive   = true,                   -- Refuse any other type of clients (by classes)
         screen      = {LCD},                  -- Create this tag on screen 1 and screen 2
-        layout      = awful.layout.suit.tile, -- Use the tile layout
-        class       = { --Accept the following classes, refuse everything else (because of "exclusive=true")
-            "MPlayer", "ario", "Audacious", "pragha", "mplayer2", "bino", "mpv"
-        }
+        layout      = awful.layout.suit.float, -- Use the tile layout
+        class       = {"MPlayer", "ario", "Audacious", "pragha", "mplayer2", "bino", "mpv"}
     },
     {
         name        = "8:Emu",                 -- Call the tag "Term"
@@ -115,9 +112,7 @@ tags = {
         exclusive   = true,                   -- Refuse any other type of clients (by classes)
         screen      = {VGA},                  -- Create this tag on screen 1 and screen 2
         layout      = awful.layout.suit.tile, -- Use the tile layout
-        class       = { --Accept the following classes, refuse everything else (because of "exclusive=true")
-            "VirtualBox"
-        }
+        class       = {"VirtualBox"}
     },
     {
         name        = "9:Mediafs",                 -- Call the tag "Term"
@@ -126,51 +121,23 @@ tags = {
         exclusive   = true,                   -- Refuse any other type of clients (by classes)
         screen      = {VGA},                  -- Create this tag on screen 1 and screen 2
         layout      = awful.layout.suit.tile, -- Use the tile layout
-        class       = { --Accept the following classes, refuse everything else (because of "exclusive=true")
-            "xbmc.bin", "Kodi"
-        }
+        class       = {"xbmc.bin", "Kodi"}
+    },
+    {
+        name        = "0:",                 -- Call the tag "Term"
+        key         = "0",
+        init        = false,                   -- Load the tag on startup
+        fallback    = true,
+        screen      = {VGA},                  -- Create this tag on screen 1 and screen 2
+        layout      = awful.layout.suit.tile -- Use the tile layout
     }
 }
 
-shiftytags = {
-    ["1:term"] = { position=1, key=1, exclusive=true, max_clients=4, screen=VGA, spawn=terminal, layout=awful.layout.suit.fair.horizontal},
-    ["2:im"] = { position=2, key=2, exclusive=true, spawn="pidgin", screen=VGA, layout=awful.layout.suit.fair.horizontal, },
-    ["3:web"] = { position=3, key=3, exclusive=true, spawn=browser, screen=LCD, layout=awful.layout.suit.max, icon="/usr/share/icons/gnome/16x16/apps/web-browser.png"},
-    ["4:mail"] = { position=4, key=4, exclusive=true, spawn="emailclient", layout=awful.layout.suit.max, screen=VGA},
-    ["5:fs"] = { position=5, key=5, exclusive=true, spawn="pcmanfm", layout=awful.layout.suit.floating, screen=LCD},
-    ["6:edit"] = { position=6, key=6, exclusive=true, spawn="gvim", screen=VGA, nopopup=true, layout=awful.layout.suit.max, },
-    ["7:media"] = { position=7, key=7, exclusive=true, screen=LCD, nopopup=true, layout=awful.layout.suit.floating, },
-    ["9:mediafs"] = { position=9, key=9, exclusive=true, screen=LCD, nopopup=true, layout=awful.layout.suit.max.fullscreen, },
-    ["8:emu"] = { position=8, key=8, exclusive=true, spawn="VirtualBox", screen=LCD, nopopup=true, layout=awful.layout.suit.max, },
-    ["10:xbmcremote"] = { position=10, key='x', exclusive=true, spawn='xterm -class xbmcremote -e python2 /usr/bin/xbmcremote -c --host xbmc.lan', screen=VGA, layout=awful.layout.suit.max, },
-}
 clientbuttons=awful.util.table.join(
     awful.button({ }, 1, function (c) client.focus=c; c:raise() end),
     awful.button({ "Mod1" }, 1, awful.mouse.client.move),
     awful.button({ "Mod1" }, 3, awful.mouse.client.resize))
 
-shiftyapps = {
-         { match = { "Chrome", "Chromium", "Midori", "Navigator", "Namoroka","Firefox"} , tag="3:web", nopopup=true} ,
-         { match = { "Thunderbird", "Mail", "Msgcompose", "Evolution"} , tag="4:mail", nopopup=true } ,
-         { match = { "Pidgin", "Skype", "gajim"} , tag="2:im", nopopup=true } ,
-         { match = { "urxvt", "Terminator"} , honorsizehints=false, slave=true, tag="1:term" } ,
-         { match = { "Thunar", "pcmanfm", "xarchiver", "Squeeze", "File-roller", "Nautilus" }, tag="5:fs" } ,
-         { match = { "Geany", "gvim", "Firebug", "sun-awt-X11-XFramePeer", "Devtools", "jetbrains-android-studio" }, tag="6:edit" } ,
-         { match = { "xbmcremote" }, tag="10:xbmcremote" } ,
-         { match = { "Eclipse" }, tag="6:edit", nopopup=true } ,
-         { match = { "MPlayer", "ario", "Audacious", "pragha", "mplayer2", "bino", "mpv" }, tag="7:media" } ,
-         { match = { "VirtualBox" }, tag="8:emu" } ,
-         { match = { "xbmc.bin", "Kodi" }, tag="9:mediafs" } ,
-         { match = { "" }, buttons= clientbuttons },
-}
-
-shiftydefaults = {
-  layout=awful.layout.suit.floating,
-  ncol=1,
-  mwfact=0.60,
-  floatBars=true,
-  run=function(tag) naughty.notify({ text=tag.name }) end
-}
 
 function pushincorner()
     local sel=client.focus
@@ -308,6 +275,28 @@ local tagkeys = { -- {key="a", help="Add", callback=shifty.add},
 
 
 
+function tagtoscr(scr, t)
+    -- break if called with an invalid screen number
+    if not scr or scr < 1 or scr > screen.count() then return end
+    -- tag to move
+    local otag = t or awful.tag.selected()
+
+    awful.tag.setscreen(otag, scr)
+    -- set screen and then reset tag to order properly
+    if #otag:clients() > 0 then
+        for _ , c in ipairs(otag:clients()) do
+            if not c.sticky then
+                c.screen = scr
+                c:tags({otag})
+            else
+                awful.client.toggletag(otag, c)
+            end
+        end
+    end
+    return otag
+end
+
+
 keybindings = awful.util.table.join(
     awful.key({ modkey2, "Control" }, "c", function () awful.util.spawn(terminal) end),
     awful.key({ }, "Print", function () awful.util.spawn(binhome .. "caputereimg.sh /home/Jo/Pictures/SS") end),
@@ -328,9 +317,17 @@ keybindings = awful.util.table.join(
         awful.client.urgent.jumpto()
         removeFile('/tmp/scrolllock')
     end),
+    awful.key({"Mod3",        }, "o",
+          function()
+              local t = client.focus:tags()[1]
+              local s = awful.util.cycle(screen.count(), awful.tag.getscreen(t) + 1)
+              awful.tag.history.restore()
+              t = tagtoscr(s, t)
+              awful.tag.viewonly(t)
+          end),
     awful.key({ modkey,    }, "c", pushincorner),
     awful.key({ "Mod3",  }, "t", tagmanagement),
-    awful.key({ modkey }, "d", function () menubar.show() end),
+    awful.key({ modkey }, "d", awful.tag.viewnone),
 
     -- Mouse cursor bindings
     awful.key({ "Mod3",  }, "Left", function () movecursor(-10,0) end),

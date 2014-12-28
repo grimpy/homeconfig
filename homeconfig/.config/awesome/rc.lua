@@ -275,8 +275,8 @@ globalkeys = awful.util.table.join(
     -- awful.key({ modkey, "Shift"   }, "l",     function () awful.tag.incnmaster(-1)      end),
     -- awful.key({ modkey, "Control" }, "h",     function () awful.tag.incncol( 1)         end),
     -- awful.key({ modkey, "Control" }, "l",     function () awful.tag.incncol(-1)         end),
-    -- awful.key({ modkey,           }, "space", function () awful.layout.inc(layouts,  1) end),
-    -- awful.key({ modkey, "Shift"   }, "space", function () awful.layout.inc(layouts, -1) end),
+    awful.key({ modkey,           }, "space", function () awful.layout.inc(layouts,  1) end),
+    awful.key({ modkey, "Shift"   }, "space", function () awful.layout.inc(layouts, -1) end),
 
     awful.key({ modkey, "Control" }, "n", awful.client.restore)
 )
@@ -308,7 +308,9 @@ function getTag(tagcfg)
     table.sort(tags, function(a, b) 
         local aidx = awful.tag.getproperty(a, 'index')
         local bidx = awful.tag.getproperty(b, 'index')
-        if aidx == curindex then
+        if not curindex then
+            return aidx < bidx
+        elseif aidx == curindex then
             return false
         elseif bidx == curindex then
             return true
