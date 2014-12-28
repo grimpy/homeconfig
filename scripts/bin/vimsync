@@ -3,8 +3,8 @@ import subprocess
 import sys
 import os
 
-gm = '172.17.0.18'
-cb = '172.17.0.11'
+gm = '172.17.0.34'
+cb = '172.17.0.34'
 
 ALLIP = cb
 
@@ -73,6 +73,7 @@ mapping = {
                     'apps/vfw/jumpscripts/': ['apps/agentcontroller/jumpscripts/', BASE, 'gm'],
                     'apps/vfw/actor/vfw/': ['apps/portals/main/', BASE, 'gm'],
                     'apps/gridportal/base/': ['apps/portals/main/base/', BASE, 'gm'],
+                    'apps/portalbase/': ['apps/portals/portalbase/', BASE, 'gm'],
                     'apps/vfw/osis/': ['apps/osis/logic/', BASE, 'gm'],
                     'apps': ['apps', BASE, 'gm'],
                     'lib/JumpScale': ['', JSDIR, 'all']
