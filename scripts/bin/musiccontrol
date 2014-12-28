@@ -19,6 +19,17 @@ function xbmc() {
 
 }
 
+function praghac() {
+    c=""
+    case $command in
+        "Next" ) c="-n" ;;
+        "Prev" ) c="-r" ;;
+        "PlayPause") c="-t" ;;
+        *) return 1;
+   esac
+   pragha "$c"
+}
+
 function mpv() {
     c=""
     case $command in
@@ -50,6 +61,8 @@ elif ps -eaf | grep -v grep | grep audacious; then
     mpris audacious
 elif ps -eaf | grep -v grep | grep xbmcremote; then
     xbmc
+elif ps -eaf | grep -v grep | grep pragha; then
+    praghac
 else
     mpc
 fi

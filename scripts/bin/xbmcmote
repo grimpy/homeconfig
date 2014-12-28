@@ -1,0 +1,63 @@
+#!/bin/bash
+function cmd() {
+    ssh xbmc.lan "
+export DISPLAY=:0
+$*
+"
+}
+
+function kbtoggle() {
+    kid=$(cmd "xinput list" | gawk 'match($0, /Lefant.*id=([0-9]+).*keyboard/, m) {print m[1]}')
+    kidflag=$(cmd "xinput list-props $kid" | gawk 'match($0, /Device Enabled.*([0-9]+)$/, m) {print m[1]}')
+
+    if [ "$kidflag" == "0" ]; then
+        echo "Enable KB"
+        cmd "xinput enable $kid"
+    else
+        echo "Disable KB"
+        cmd "xinput disable $kid"
+    fi
+}
+
+function switchx() {
+    vt=$(cmd fgconsole)
+    if [ $vt == 7 ]; then
+        synergys
+        if cmd "systemctl status startx" ; then
+            cmd chvt 9
+        else
+            cmd "systemctl start startx"
+        fi
+    else
+        pkill synergys
+        cmd chvt 7
+    fi
+    
+}
+
+function sleep() {
+    timeout 3 ssh xbmc.lan "systemctl suspend"
+}
+
+function wakeup() {
+    wol "44:8a:5b:22:35:3a"
+}
+
+case "$1" in
+    kb)
+        kbtoggle
+        ;;
+
+    x)
+        switchx
+        ;;
+    s)
+        sleep
+        ;;
+    w)
+        wakeup
+        ;;
+    *)
+        echo "Unknown command $1"
+        ;;
+esac

@@ -3,67 +3,104 @@ import subprocess
 import sys
 import os
 
-CONNECTIONS = {'default' : '10.101.190.25',
-               'gm': '10.101.190.25',
-               'cb': '10.101.190.25',
+gm = '172.17.0.18'
+cb = '172.17.0.11'
+
+ALLIP = cb
+
+isbox = False
+CONNECTIONS = {'default' : ALLIP,
+               'gm': gm,
+               'cb': cb,
               }
 REPOBASE = "/home/Jo/work"
-isbox = False
 if not isbox:
     BASE = "/opt/jumpscale/"
-    LIBDIR = "/usr/local/lib/python2.7/site-packages/"
+    BINDIR = "/usr/local/bin/"
+    #LIBDIR = "/usr/local/lib/python2.7/site-packages/"
+    LIBDIR = "/opt/jumpscale/libext/"
     JSDIR = "/usr/local/lib/python2.7/dist-packages/JumpScale/"
 else:
     BASE = "/opt/jsbox/"
+    BINDIR = "/usr/local/bin/"
     LIBDIR = "/opt/jsbox/libext/"
     JSDIR = "/opt/jsbox/libjs/JumpScale/"
 
-mapping = {
-        'incubaid': {
-            'cloudscalers' : {
+LIBEXT = os.path.join(BASE, 'libext', '')
+incubaid = {'mothership1' : {
                 'apps': ['apps', BASE, 'cb'],
-                'apps/cbportal/base/CBGrid/': ['apps/gridportal/base/CBGrid/', BASE, 'gm'],
+                'shellcmds': ['', BINDIR, 'cb'],
+                'apps/cbportal/base/': ['apps/portals/main/base/', BASE, 'gm'],
+                'apps/cloudbroker/base/': ['apps/portals/main/base/', BASE, 'cb'],
+                'apps/billingengine/base/': ['apps/portals/main/base/', BASE, 'cb'],
+                'apps/cloudbroker/cloudbrokerlib/': ['cloudbrokerlib/', LIBDIR, 'gm'],
+                'apps/cloudscalers_fe/base/': ['apps/portals/main/base/', BASE, 'cb'],
                 'libs/agent-scripts': ['apps/agentcontroller/jumpscripts', BASE, 'gm'],
                 'libs/CloudscalerLibcloud': ['', LIBDIR, 'gm'],
-                }
-            },
-        'jumpscale': {
-            'jumpscale_core': {
-                'apps': ['apps', BASE, 'gm'],
-                'lib/JumpScale': ['', JSDIR, 'all']
-                },
-            'jumpscale_grid': {
-                'apps/vfw/jumpscripts/': ['apps/agentcontroller/jumpscripts/', BASE, 'gm'],
-                'apps/vfw/actor/vfw/': ['apps/vfw/', BASE, 'gm'],
-                'apps': ['apps', BASE, 'gm'],
-                'lib/JumpScale': ['', JSDIR, 'all']
-                },
-            'jumpscale_lib': {
-                'JumpScale': ['', JSDIR, 'all']
-                },
-            'jumpscale_portal': {
-                'apps': ['apps', BASE, 'gm'],
-                'lib/JumpScale': ['', JSDIR, 'all']
+                'apps/billingengine/billingenginelib': ['billingenginelib', LIBEXT, 'gm'],
                 }
             }
+
+mapping = {
+        'bitbucket': {
+            'incubaid': incubaid,
+            'jumpscale': {
+                'jumpscale_core': {
+                    'apps': ['apps', BASE, 'gm'],
+                    'lib/JumpScale': ['', JSDIR, 'all']
+                    },
+                'jumpscale_grid': {
+                    'apps/vfw/jumpscripts/': ['apps/agentcontroller/jumpscripts/', BASE, 'gm'],
+                    'apps/vfw/actor/vfw/': ['apps/vfw/', BASE, 'gm'],
+                    'apps/vfw/osis/': ['apps/osis/logic/', BASE, 'gm'],
+                    'apps': ['apps', BASE, 'gm'],
+                    'lib/JumpScale': ['', JSDIR, 'all']
+                    },
+                'jumpscale_lib': {
+                    'JumpScale': ['', JSDIR, 'all']
+                    },
+                'jumpscale_portal': {
+                    'apps': ['apps', BASE, 'gm'],
+                    'lib/JumpScale': ['', JSDIR, 'all']
+                    }
+                }
+            },
+        'github': {
+            '0-complexity': incubaid,
+            'jumpscale': {
+                'jumpscale_core': {
+                    'shellcmds': ['', BINDIR, 'all'],
+                    'apps/vfw/jumpscripts/': ['apps/agentcontroller/jumpscripts/', BASE, 'gm'],
+                    'apps/vfw/actor/vfw/': ['apps/portals/main/', BASE, 'gm'],
+                    'apps/gridportal/base/': ['apps/portals/main/base/', BASE, 'gm'],
+                    'apps/vfw/osis/': ['apps/osis/logic/', BASE, 'gm'],
+                    'apps': ['apps', BASE, 'gm'],
+                    'lib/JumpScale': ['', JSDIR, 'all']
+                    },
+                }
+            },
         }
 
 
 file = os.path.abspath(sys.argv[1])
+defaultip = None
 if not os.path.isfile(file):
     print "This only works with files"
     os.exit(1)
+if len(sys.argv) > 2:
+    defaultip = sys.argv[2]
 
 metapath = file[len(REPOBASE)+1:]
 parts = metapath.split('/')
-repoaccount = parts[0]
-reponame = parts[1]
-abspath = '/'.join(parts[2:])
+provider = parts[0]
+repoaccount = parts[1]
+reponame = parts[2]
+abspath = '/'.join(parts[3:])
 
 if '__' in reponame:
     reponame = reponame.split('__', 1)[1]
 
-repoinfo = mapping[repoaccount][reponame]
+repoinfo = mapping[provider][repoaccount][reponame]
 
 destfile = None
 for key, conf in sorted(repoinfo.iteritems(), key=lambda x: len(x[0])):
@@ -72,7 +109,9 @@ for key, conf in sorted(repoinfo.iteritems(), key=lambda x: len(x[0])):
         connections = [ CONNECTIONS['default'] ]
     else:
         value, base, con = conf
-        if con == 'all':
+        if defaultip:
+            connections = [ defaultip ]
+        elif con == 'all':
             connections = CONNECTIONS.values()
         else:
             connections = [ CONNECTIONS.get(con, CONNECTIONS['default']) ]
@@ -85,7 +124,7 @@ for key, conf in sorted(repoinfo.iteritems(), key=lambda x: len(x[0])):
 
 if not destfile:
     print "Could not determine destination"
-    os.exit(1)
+    sys.exit(1)
 
 print destfile
 

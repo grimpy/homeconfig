@@ -3,6 +3,7 @@ local vicious = require('vicious')
 local awful = require('awful')
 local util = require('awful.util')
 local prompt = require('awful.prompt')
+local theme = require("theme")
 local ipairs = ipairs
 local type = type
 local completion = require('awful.completion')
@@ -10,12 +11,15 @@ local wibox = require('wibox')
 local dbus = dbus
 local os = os
 local timer = timer
-local io = { open = io.open, popen = io.popen}
+local screen = screen
+local io = { open = io.open, popen = io.popen, stderr= io.stderr}
 local string = {find = string.find, match = string.match, format=string.format}
 local device = require("myrc.device")
 vicious.contrib = require("vicious.contrib")
 
 module("myrc.widgets")
+
+local SNIPPETDIR = os.getenv("HOME") .. "/.config/snippets/"
 
 w = {}
 
@@ -39,24 +43,47 @@ function cmdprompt()
                   util.getdir("cache") .. "/history")
 end
 
+function completionwrapper(values)
+    function wrapper(text, cur_pos, ncomp)
+        return completion.generic(text, cur_pos, ncomp, values)
+    end
+    return wrapper
+end
+
 function runprompt()
     local mytags = {}
     local mytagnames = {}
-    for _, tag in ipairs(awful.tag.gettags(1)) do
-        nr, name = tag.name:match("([^:]+):([^:]+)")
-        if not name then
-            name = tag.name
+    for s=1, screen.count() do
+        for _, tag in ipairs(awful.tag.gettags(s)) do
+            nr, name = tag.name:match("([^:]+):([^:]+)")
+            if not name then
+                name = tag.name
+            end
+            mytagnames[#mytagnames+1] = name
+            mytags[name] = tag
         end
-        mytagnames[_] = name
-        mytags[name] = tag
     end
-    function completionwrapper(text, cur_pos, ncomp)
-        return completion.generic(text, cur_pos, ncomp, mytagnames)
-    end
+
     function result(...)
         awful.tag.viewonly(mytags[...])
     end
-    prompt.run({prompt='Tag: '}, myprompt, result, completionwrapper, nil)
+    prompt.run({prompt='Tag: '}, myprompt, result, completionwrapper(mytagnames), nil)
+end
+
+function runsnippets()
+    local snippets = {}
+    local p = io.popen('find "'.. SNIPPETDIR ..'" -type f -printf "%f\n"')
+    for file in p:lines() do                         --Loop through all files
+        snippets[#snippets+1] = file
+    end
+
+    function result(...)
+        local file = SNIPPETDIR .. ...
+        awful.util.spawn_with_shell("cat " .. file .. " | xsel -i -p")
+        awful.util.spawn_with_shell("cat " .. file .. " | xsel -i -b")
+    end
+    prompt.run({prompt='Snippet: '}, myprompt, result, completionwrapper(snippets), nil)
+
 end
 
 local myip = wibox.widget.textbox()
@@ -94,9 +121,46 @@ updateIP()
 dbusCallBack("system", "name.marples.roy.dhcpcd", updateIP)
 w[#w+1] = myip
 
+function asyncspawn(cmd)
+    function spawn()
+        awful.util.spawn(cmd)
+    end
+    return spawn
+end
+
+local netmenucfg = { 
+             {"Restart DHCP", asyncspawn("sudo systemctl restart dhcpcd"), },
+             {"WiFi reconnect", asyncspawn("wifi reconnect"), },
+             {"Open WPA", asyncspawn("wpa_gui")},
+             {"Enable Hotspot", switchap}
+           }
+local args = {}
+args["items"] = netmenucfg
+args["theme"] = theme
+local netmenu = awful.menu.new(args)
+
 myip:buttons(awful.util.table.join(
     awful.button({}, 1, updateIP),
-    awful.button({}, 3, function() awful.util.spawn("wpa_gui") end)
+    awful.button({}, 3, function() 
+        local apmode = string.match(awful.util.pread("wifi mode"), "(AP)") == "AP"
+        local icon = ""
+        if apmode then
+            icon = "/usr/share/icons/AwOkenDark/clear/24x24/actions/dialog-yes.png"
+        else
+            icon = "/usr/share/icons/AwOkenDark/clear/24x24/actions/dialog-no.png"
+        end
+
+        function switchap()
+            if not apmode then
+                awful.util.spawn("wifi enableap")
+            else
+                awful.util.spawn("wifi enablewifi")
+            end
+        end
+        netmenu:delete(4)
+        netmenu:add({"Enable Hotspot", switchap, icon})
+        netmenu:show() 
+    end)
 ))
 
 local mynet = wibox.widget.textbox()
@@ -139,7 +203,7 @@ vicious.register(mytemp, vicious.widgets.thermal,
         end
         return string.format('<span color="%s">%s°C</span>', color, tmp)
     end
-    , 2, {"coretemp.0", "core"})
+    , 2, {"thermal_zone0", "sys"})
 w[#w+1] = mytemp
 
 
@@ -150,7 +214,7 @@ function updateBat()
     local per = res[2]
     local output = res[1] .. res[2]
     local color
-    if res[1] ~= "-" then
+    if res[1] == "+" then
         color = "#0080ff"
     else
         if per > 40 then
@@ -233,6 +297,7 @@ end
 
 myvoltext:buttons(awful.util.table.join(
     awful.button({}, 1, updatevol),
+    awful.button({'Shift'}, 1, asyncspawn('pavucontrol')),
     awful.button({}, 3, mutevolume),
     awful.button({}, 4, increasevolume),
     awful.button({}, 5, decreasevolume)
@@ -244,6 +309,7 @@ keybindings = awful.util.table.join(
     awful.key({}, "XF86AudioRaiseVolume", increasevolume),
     awful.key({"Mod4"}, "Up", increasevolume),
     awful.key({"Mod3"}, "y", runprompt),
+    awful.key({"Mod3"}, "i", runsnippets),
     awful.key({"Mod3"}, "r", cmdprompt),
     awful.key({}, "XF86AudioMute", mutevolume),
     awful.key({"Mod4"}, "0", mutevolume)

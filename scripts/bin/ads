@@ -30,8 +30,7 @@ function update() {
     filename=$(basename $file)
     echo "Going to flash $filename press key"
     read
-    scp $file $ADSIP:/sdcard/AROMS/
-    timeout 5 ssh $ADSIP "
+    scp $file $ADSIP:/sdcard/AROMS/ && timeout 5 ssh $ADSIP "
     mkdir -p /cache/recovery
     echo 'install /sdcard/AROMS/$filename' > /cache/recovery/openrecoveryscript
     echo 'install /sdcard/AROMS/Xposed-Installer-Recovery.zip' >> /cache/recovery/openrecoveryscript
@@ -70,12 +69,26 @@ function start() {
     source ~/.bashrc
     export USE_CCACHE=1
     export PATH=/opt/java6/bin:$PATH
-    export JAVA_HOME=/opt/java6/
+    #export JAVA_HOME=/opt/java6/
     cd ~/Dev/android/CM
     source build/envsetup.sh
-    breakfast ${dev}" > /tmp/$$.rc
+    breakfast ${dev}
+    $*
+    " > /tmp/$$.rc
 
     bash --rcfile /tmp/$$.rc
+}
+
+function sync() {
+    cd $BKMRK_mycm
+    repo sync
+}
+
+function build() {
+   sync
+   start "
+brunch $dev
+   " 
 }
 
 case $command in
@@ -119,10 +132,12 @@ pm uninstall $apk"
         rebase
         ;;
     start)
-        start
+        start $*
         ;;
     sync)
-        cd $BKMRK_mycm
-        repo sync
+        sync
+        ;;
+    build)
+        build
         ;;
 esac

@@ -1,15 +1,20 @@
 local awful = require("awful")
 local client = client
+local awesome = awesome
+local menubar = require("menubar")
 local keygrabber = keygrabber
 local screen = screen
 local mouse = mouse
 local naughty = require("naughty")
 local ipairs = ipairs
+local string = string
 local os = os
 local io = io
+local widgets = require("myrc.widgets")
 
 module("myrc.custom")
 binhome = os.getenv("HOME") .. "/mygit/scripts/bin/"
+menubar.menu_gen.all_menu_dirs = { "/usr/share/applications/", "/usr/local/share/applications", "~/.local/share/applications" }
 
 browser = binhome .. "browser"
 terminal = "urxvtc"
@@ -34,6 +39,7 @@ tags = {
         key         = "1",
         init        = false,                   -- Load the tag on startup
         exec_once   = "urxvt",
+        no_autofocus= true,
         max_clients = 4,
         exclusive   = true,                   -- Refuse any other type of clients (by classes)
         screen      = {VGA},                  -- Create this tag on screen 1 and screen 2
@@ -93,7 +99,7 @@ tags = {
     {
         name        = "7:Media",                 -- Call the tag "Term"
         key         = "7",
-        exec_once   = "gvim",
+        exec_once   = "ario",
         init        = false,                   -- Load the tag on startup
         exclusive   = true,                   -- Refuse any other type of clients (by classes)
         screen      = {LCD},                  -- Create this tag on screen 1 and screen 2
@@ -147,14 +153,14 @@ shiftyapps = {
          { match = { "Chrome", "Chromium", "Midori", "Navigator", "Namoroka","Firefox"} , tag="3:web", nopopup=true} ,
          { match = { "Thunderbird", "Mail", "Msgcompose", "Evolution"} , tag="4:mail", nopopup=true } ,
          { match = { "Pidgin", "Skype", "gajim"} , tag="2:im", nopopup=true } ,
-         { match = { "xterm", "urxvt", "Terminator"} , honorsizehints=false, slave=true, tag="1:term" } ,
+         { match = { "urxvt", "Terminator"} , honorsizehints=false, slave=true, tag="1:term" } ,
          { match = { "Thunar", "pcmanfm", "xarchiver", "Squeeze", "File-roller", "Nautilus" }, tag="5:fs" } ,
          { match = { "Geany", "gvim", "Firebug", "sun-awt-X11-XFramePeer", "Devtools", "jetbrains-android-studio" }, tag="6:edit" } ,
          { match = { "xbmcremote" }, tag="10:xbmcremote" } ,
          { match = { "Eclipse" }, tag="6:edit", nopopup=true } ,
          { match = { "MPlayer", "ario", "Audacious", "pragha", "mplayer2", "bino", "mpv" }, tag="7:media" } ,
          { match = { "VirtualBox" }, tag="8:emu" } ,
-         { match = { "xbmc.bin" }, tag="9:mediafs" } ,
+         { match = { "xbmc.bin", "Kodi" }, tag="9:mediafs" } ,
          { match = { "" }, buttons= clientbuttons },
 }
 
@@ -182,7 +188,7 @@ function movecursor(x, y)
 end
 
 function lock()
-    awful.util.pread("xautolock -enable && sleep 0.5 && xautolock -locknow && sleep 0.5")
+    awful.util.spawn("xlock")
 end
 
 function suspend()
@@ -193,65 +199,114 @@ end
 function keymenu(keys, naughtytitle, naughtypreset)
     local noti = nil
     if naughtytitle then
-        naughtyprop = naughtyprop or {}
+        naughtyprop = naughtypreset or {}
+        if not naughtyprop.position then
+            naughtyprop.position = 'top_left'
+        end
         local txt = ''
         for _, key in ipairs(keys) do
             local descr = key.help or ""
             txt = txt .. "\nPress " .. key.key .. " " .. descr
         end
-        noti = naughty.notify({title=naughtytitle, timeout=0, text=txt, preset=naughtypreset})
+        noti = naughty.notify({title=naughtytitle, timeout=0, text=txt, preset=naughtyprop})
     end
     keygrabber.run(function(mod, pkey, event)
         if event == "release" then return end
-        local found = false
+        local stopped = false
+        local continue = false
         for _, key in ipairs(keys) do
             if key.key == pkey then 
+                stopped = true
                 keygrabber.stop()
-                found = true
-                key.callback()
+                continue = key.callback()
             end
         end
-        if not found then
+        if not stopped then
             keygrabber.stop()
         end
         if noti then
             naughty.destroy(noti)
+        end
+        if continue then
+            keymenu(keys, naughtytitle, naughtypreset)
         end
    end)
 end
 
 local shutdownkeys = { {key="s", help="for suspend", callback=suspend},
                        {key="r", help="for reboot", callback=function() awful.util.spawn("systemctl reboot") end},
+                       {key="e", help="for logout", callback=awesome.quit},
+                       {key="c", help="for reload", callback=awesome.restart},
                        {key="p", help="for poweroff", callback=function() awful.util.spawn("systemctl poweroff") end},
-                       {key="l", help="for lock", callback=lock},
-                     }
+                       {key="l", help="for lock", callback=lock}
+                    }
 
-function movetag(i)
-    local screen = client.focus.screen
+function movetag(offset, idx) 
+    local screen=client.focus.screen
     local tag = awful.tag.selected(screen)
-    if tag then
-        local idx = awful.tag.getidx(tag)
-        idx = idx + i
-        if idx == 0 then
-            idx = 0
-        end
-        awful.tag.move(idx, tag)
+    local idx = idx or awful.tag.getidx(tag)
+    idx = idx + offset
+    if idx <= 0 then
+        idx = 1
     end
+    local nrtags = #awful.tag.gettags(screen)
+    if idx > nrtags then
+        idx = nrtags
+    end
+    awful.tag.move(idx, tag)
+end
+
+function rename_tag()
+    awful.prompt.run({ prompt = "Enter new tag:" },
+    widgets.myprompt,
+    function(new_name)
+       if not new_name or #new_name == 0 then
+          return
+       else
+          local screen = mouse.screen
+          local tag = awful.tag.selected(screen)
+          if tag then
+             tag.name = new_name
+          end
+       end
+    end)
 end
 
 function movetagmenu()
-    local keys = { {key="Left", help="Move tag left", callback=function() movetag(-1) end},
-                   {key="Right", help="Move tag right", callback=function() movetag(1) end},
+    local keys = { {key="Left", help="Move Left", callback=function () movetag(-1); return true; end},
+                   {key="Right", help="Move Right", callback=function () movetag(1); return true end}
                  }
+    for i=1, 9 do
+        keys[#keys+1] = {key=string.format("%s", i), help=string.format("Move to position %s", i), callback=function () movetag(0, i) end}
+
+    end
     keymenu(keys, "Move Tag", {})
+
 end
 
-function tagmanagement()
-    local keys = { {key="m", help="Move tag", callback=movetagmenu}
-
+function xbmcmote()
+    function togglekb()
+        local output = awful.util.pread(binhome .. "xbmcmote kb")
+        naughty.notify({title="Remote Keyboard", timeout=5, text=output})
+    end
+    local keys = { {key="r", help="Toggle Remote", callback=togglekb},
+                   {key="x", help="Switch VT", callback=function () awful.util.spawn(binhome .. "xbmcmote x") end},
+                   {key="s", help="Sleep", callback=function () awful.util.spawn(binhome .. "xbmcmote s") end},
+                   {key="w", help="Wakeup", callback=function () awful.util.spawn(binhome .. "xbmcmote w") end}
                  }
-    keymenu(keys, "Tag Management", {})
+    keymenu(keys, "XBMCMote", {})
 end
+
+local tagkeys = { -- {key="a", help="Add", callback=shifty.add},
+                  {key="r", help="Rename", callback=rename_tag},
+                  {key="m", help="Move", callback=movetagmenu},
+                  {key="d", help="Delete", callback=function () 
+                    local t = awful.tag.selected() 
+                    awful.tag.delete(t)
+                  end}
+                }
+
+
 
 keybindings = awful.util.table.join(
     awful.key({ modkey2, "Control" }, "c", function () awful.util.spawn(terminal) end),
@@ -265,21 +320,33 @@ keybindings = awful.util.table.join(
     awful.key({ }, "XF86AudioPlay", function () awful.util.spawn(binhome .. "musiccontrol PlayPause") end),
     awful.key({ }, "XF86Battery", suspend),
     awful.key({ "Mod3"}, "s", function() keymenu(shutdownkeys, "Shutdown", {bg="#ff3333", fg="#ffffff"}) end),
+    awful.key({ "Mod3"}, "t", function() keymenu(tagkeys, "Tag Management", {}) end),
     awful.key({ modkey,           }, "p", function () awful.util.spawn(binhome .. "xrandr.sh --auto") end),
-    awful.key({ modkey, "Control" }, "l", function () awful.util.spawn("xautolock -disable") end),
+    awful.key({ modkey, "Shift" }, "l", function () awful.util.spawn("xautolock -disable") end),
+    awful.key({ modkey, "Control" }, "l", function () awful.util.spawn("xautolock -enable") end),
+    awful.key({ "Mod3",           }, "u", function () 
+        awful.client.urgent.jumpto()
+        removeFile('/tmp/scrolllock')
+    end),
     awful.key({ modkey,    }, "c", pushincorner),
     awful.key({ "Mod3",  }, "t", tagmanagement),
+    awful.key({ modkey }, "d", function () menubar.show() end),
+
     -- Mouse cursor bindings
     awful.key({ "Mod3",  }, "Left", function () movecursor(-10,0) end),
+    awful.key({ "Mod3",  }, "z", xbmcmote),
     awful.key({ "Mod3",  }, "Right", function () movecursor(10,0) end),
     awful.key({ "Mod3",  }, "Up", function () movecursor(0,-10) end),
     awful.key({ "Mod3",  }, "Down", function () movecursor(0,10) end)
 )
 
 client.connect_signal("property::urgent", function(c) 
-    if c.urgent and c.window ~= client.focus.window then
+    local window = nil
+    if client.focus then
+        window = client.focus.window
+    end
+    if c.urgent and c.window ~= window then
         awful.util.spawn(binhome .. "scrolllock")
-    elseif not awful.client.urgent.get() then
         removeFile('/tmp/scrolllock')
     end
 end)

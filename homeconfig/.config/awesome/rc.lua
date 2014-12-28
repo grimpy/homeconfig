@@ -9,10 +9,12 @@ local wibox = require("wibox")
 local beautiful = require("beautiful")
 -- Notification library
 local naughty = require("naughty")
+-- Custom
 local menubar = require("menubar")
 require("myrc.autostart")
 require("myrc.custom")
 require("myrc.widgets")
+local mylogger = require("mylogger")
 
 
 tyrannical.tags = myrc.custom.tags 
@@ -84,15 +86,17 @@ end
 -- }}}
 
 
--- {{{ Menu
--- Create a laucher widget and a main menu
--- {{{ XDG Menu
+-- {{{ Menu Bar
+menubar.utils.terminal = myrc.custom.terminal -- Set the terminal for applications that require it
 mylauncher = awful.widget.button({ image = beautiful.awesome_icon })
+mylauncher:buttons(awful.util.table.join(
+    awful.button({}, 1, function () menubar.show() end)
+    )
+)
 
 -- }}}
 
 -- Menubar configuration
-menubar.utils.terminal = myrc.terminal -- Set the terminal for applications that require it
 -- }}}
 
 -- Create a wibox for each screen and add it
@@ -194,7 +198,7 @@ end
 
 -- {{{ Mouse bindings
 root.buttons(awful.util.table.join(
-    awful.button({ }, 3, function () mymainmenu:toggle() end),
+    awful.button({ }, 3, function () menubar.show() end),
     awful.button({ }, 4, awful.tag.viewnext),
     awful.button({ }, 5, awful.tag.viewprev)
 ))
@@ -205,7 +209,6 @@ globalkeys = awful.util.table.join(
     awful.key({ modkey,           }, "p",   awful.tag.viewprev       ),
     awful.key({ modkey,           }, "n",  awful.tag.viewnext       ),
     awful.key({ modkey,           }, "Escape", awful.tag.history.restore),
-
     awful.key({ modkey,           }, "h",
         function ()
             awful.client.focus.bydirection("left")
@@ -249,10 +252,9 @@ globalkeys = awful.util.table.join(
         end),
 
 
-    awful.key({ modkey,           }, "w", function () mymainmenu:show() end),
+    awful.key({ modkey,           }, "w", function () menubar.show() end),
 
     -- Layout manipulation
-    awful.key({ modkey,           }, "u", awful.client.urgent.jumpto),
     awful.key({ modkey,           }, "Tab",
         function ()
             awful.client.focus.history.previous()
@@ -279,6 +281,7 @@ globalkeys = awful.util.table.join(
     awful.key({ modkey, "Control" }, "n", awful.client.restore)
 )
 
+
 clientkeys = awful.util.table.join(
     awful.key({ modkey,           }, "f",      function (c) c.fullscreen = not c.fullscreen  end),
     awful.key({ modkey,           }, "c",      function (c) c:kill()                         end),
@@ -289,13 +292,40 @@ clientkeys = awful.util.table.join(
         function (c)
             c.maximized_horizontal = not c.maximized_horizontal
             c.maximized_vertical   = not c.maximized_vertical
+        end),
+    awful.key({ modkey,           }, "a",
+        function (c)
+            local t = shifty.add()
+            c:tags({t})
         end)
 )
 
-function getTagByName(name, screen)
+function getTag(tagcfg)
     local screen = mouse.screen
-    for _, tag in ipairs(awful.tag.gettags(screen)) do
-        if tag.name == name then
+    local curtag = awful.tag.selected(screen)
+    local curindex = awful.tag.getproperty(curtag, 'index')
+    local tags = awful.tag.gettags(screen)
+    table.sort(tags, function(a, b) 
+        local aidx = awful.tag.getproperty(a, 'index')
+        local bidx = awful.tag.getproperty(b, 'index')
+        if aidx == curindex then
+            return false
+        elseif bidx == curindex then
+            return true
+        elseif aidx > curindex and bidx > curindex then
+            return aidx < bidx
+        elseif aidx > curindex and bidx < curindex then
+            return true
+        elseif aidx < curindex and bidx > curindex then
+            return false
+        else
+            return aidx < bidx
+        end
+    end)
+
+    for _, tag in ipairs(tags) do
+        local keymatch = tag.name:match("([0-9]?):")
+        if tag.name == tagcfg.name or tagcfg.key == keymatch then
             return tag
         end
     end
@@ -307,7 +337,7 @@ for _, tagcfg in pairs(myrc.custom.tags) do
         -- View tag only.
         awful.key({ modkey }, tagcfg.key,
                   function ()
-                        local tag = getTagByName(tagcfg.name)
+                        local tag = getTag(tagcfg, modkey)
                         if tag then
                            awful.tag.viewonly(tag)
                         else
@@ -315,11 +345,15 @@ for _, tagcfg in pairs(myrc.custom.tags) do
                                 awful.util.spawn(tagcfg.exec_once)
                             end
                         end
+                        local scr = awful.tag.getscreen(tag)
+                        if scr then
+                            awful.screen.focus(scr)
+                        end
                   end),
         -- Toggle tag.
         awful.key({ modkey, "Control" }, tagcfg.key,
                   function ()
-                      local tag = getTagByName(tagcfg.name)
+                      local tag = getTag(tagcfg)
                       if tag then
                          awful.tag.viewtoggle(tag)
                       end
@@ -328,7 +362,7 @@ for _, tagcfg in pairs(myrc.custom.tags) do
         awful.key({ modkey, "Shift" }, tagcfg.key,
                   function ()
                       if client.focus then
-                          local tag = getTagByName(tagcfg.name)
+                          local tag = getTag(tagcfg)
                           if tag then
                               awful.client.movetotag(tag)
                           end
@@ -338,7 +372,7 @@ for _, tagcfg in pairs(myrc.custom.tags) do
         awful.key({ modkey, "Control", "Shift" }, tagcfg.key,
                   function ()
                       if client.focus then
-                          local tag = getTagByName(tagcfg.name)
+                          local tag = getTag(tagcfg)
                           if tag then
                               awful.client.toggletag(tag)
                           end

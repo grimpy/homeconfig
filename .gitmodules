@@ -1,6 +1,6 @@
 [submodule "homeconfig/.config/awesome/shifty"]
 	path = homeconfig/.config/awesome/shifty
 	url = git@github.com:grimpy/awesome-shifty.git
-[submodule "homeconfig/.vim/bundle/vundle"]
-	path = homeconfig/.vim/bundle/vundle
-	url = git@github.com:gmarik/vundle.git
+[submodule "homeconfig/.vim/bundle/neobundle.vim"]
+	path = homeconfig/.vim/bundle/neobundle.vim
+	url = git@github.com:Shougo/neobundle.vim.git

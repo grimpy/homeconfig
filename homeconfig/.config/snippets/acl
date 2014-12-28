@@ -1,0 +1,2 @@
+import JumpScale.grid.agentcontroller
+acl = j.clients.agentcontroller.get()

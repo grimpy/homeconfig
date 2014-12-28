@@ -1,0 +1,2 @@
+import JumpScale.grid.mongodbclient
+mcl = j.clients.mongodb.getByInstance('main')
