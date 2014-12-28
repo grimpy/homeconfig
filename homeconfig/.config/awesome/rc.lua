@@ -1,7 +1,6 @@
 -- Standard awesome library
 local gears = require("gears")
 local awful = require("awful")
-local mylogger = require("mylogger")
 awful.rules = require("awful.rules")
 local tyrannical = require("tyrannical")
 -- Widget and layout library
@@ -11,7 +10,6 @@ local beautiful = require("beautiful")
 -- Notification library
 local naughty = require("naughty")
 local menubar = require("menubar")
-require("myrc.mainmenu")
 require("myrc.autostart")
 require("myrc.custom")
 require("myrc.widgets")
@@ -89,9 +87,7 @@ end
 -- {{{ Menu
 -- Create a laucher widget and a main menu
 -- {{{ XDG Menu
-mymainmenu = myrc.mainmenu.build()
-mylauncher = awful.widget.launcher({ image = beautiful.awesome_icon,
-                                     menu = mymainmenu })
+mylauncher = awful.widget.button({ image = beautiful.awesome_icon })
 
 -- }}}
 

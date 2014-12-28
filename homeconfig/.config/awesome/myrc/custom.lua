@@ -4,7 +4,6 @@ local keygrabber = keygrabber
 local screen = screen
 local mouse = mouse
 local naughty = require("naughty")
-local mylogger = require("mylogger")
 local ipairs = ipairs
 local os = os
 local io = io
@@ -37,7 +36,7 @@ tags = {
         exec_once   = "urxvt",
         max_clients = 4,
         exclusive   = true,                   -- Refuse any other type of clients (by classes)
-        screen      = {1,2},                  -- Create this tag on screen 1 and screen 2
+        screen      = {VGA},                  -- Create this tag on screen 1 and screen 2
         layout      = awful.layout.suit.tile, -- Use the tile layout
         class       = { --Accept the following classes, refuse everything else (because of "exclusive=true")
             "xterm" , "urxvt" , "aterm","URxvt","XTerm","konsole","terminator","gnome-terminal"
@@ -49,19 +48,19 @@ tags = {
         exec_once   = "pidgin",
         init        = false,                   -- Load the tag on startup
         exclusive   = true,                   -- Refuse any other type of clients (by classes)
-        screen      = {1,2},                  -- Create this tag on screen 1 and screen 2
+        screen      = {VGA},                  -- Create this tag on screen 1 and screen 2
         layout      = awful.layout.suit.tile, -- Use the tile layout
         class       = { --Accept the following classes, refuse everything else (because of "exclusive=true")
             "Pidgin", "Skype", "gajim"
         }
     },
     {
-        name        = "3:NET",                 -- Call the tag "Term"
+        name        = "3:Web",                 -- Call the tag "Term"
         key         = "3",
         exec_once   = "firefox",
         init        = false,                   -- Load the tag on startup
         exclusive   = true,                   -- Refuse any other type of clients (by classes)
-        screen      = {1,2},                  -- Create this tag on screen 1 and screen 2
+        screen      = {LCD},                  -- Create this tag on screen 1 and screen 2
         layout      = awful.layout.suit.tile, -- Use the tile layout
         class       = { --Accept the following classes, refuse everything else (because of "exclusive=true")
             "Chrome", "Chromium", "Midori", "Navigator", "Namoroka","Firefox"
@@ -73,10 +72,56 @@ tags = {
         exec_once   = "pcmanfm",
         init        = false,                   -- Load the tag on startup
         exclusive   = true,                   -- Refuse any other type of clients (by classes)
-        screen      = {1,2},                  -- Create this tag on screen 1 and screen 2
+        screen      = {LCD},                  -- Create this tag on screen 1 and screen 2
         layout      = awful.layout.suit.tile, -- Use the tile layout
         class       = { --Accept the following classes, refuse everything else (because of "exclusive=true")
             "Thunar", "pcmanfm", "xarchiver", "Squeeze", "File-roller", "Nautilus" 
+        }
+    },
+    {
+        name        = "6:Edit",                 -- Call the tag "Term"
+        key         = "6",
+        exec_once   = "gvim",
+        init        = false,                   -- Load the tag on startup
+        exclusive   = true,                   -- Refuse any other type of clients (by classes)
+        screen      = {VGA},                  -- Create this tag on screen 1 and screen 2
+        layout      = awful.layout.suit.tile, -- Use the tile layout
+        class       = { --Accept the following classes, refuse everything else (because of "exclusive=true")
+            "Geany", "gvim", "Firebug", "sun-awt-X11-XFramePeer", "Devtools", "jetbrains-android-studio"
+        }
+    },
+    {
+        name        = "7:Media",                 -- Call the tag "Term"
+        key         = "7",
+        exec_once   = "gvim",
+        init        = false,                   -- Load the tag on startup
+        exclusive   = true,                   -- Refuse any other type of clients (by classes)
+        screen      = {LCD},                  -- Create this tag on screen 1 and screen 2
+        layout      = awful.layout.suit.tile, -- Use the tile layout
+        class       = { --Accept the following classes, refuse everything else (because of "exclusive=true")
+            "MPlayer", "ario", "Audacious", "pragha", "mplayer2", "bino", "mpv"
+        }
+    },
+    {
+        name        = "8:Emu",                 -- Call the tag "Term"
+        key         = "8",
+        init        = false,                   -- Load the tag on startup
+        exclusive   = true,                   -- Refuse any other type of clients (by classes)
+        screen      = {VGA},                  -- Create this tag on screen 1 and screen 2
+        layout      = awful.layout.suit.tile, -- Use the tile layout
+        class       = { --Accept the following classes, refuse everything else (because of "exclusive=true")
+            "VirtualBox"
+        }
+    },
+    {
+        name        = "9:Mediafs",                 -- Call the tag "Term"
+        key         = "9",
+        init        = false,                   -- Load the tag on startup
+        exclusive   = true,                   -- Refuse any other type of clients (by classes)
+        screen      = {VGA},                  -- Create this tag on screen 1 and screen 2
+        layout      = awful.layout.suit.tile, -- Use the tile layout
+        class       = { --Accept the following classes, refuse everything else (because of "exclusive=true")
+            "xbmc.bin", "Kodi"
         }
     }
 }
