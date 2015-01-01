@@ -11,6 +11,8 @@ local string = string
 local os = os
 local io = io
 local widgets = require("myrc.widgets")
+local myrc = {}
+myrc.util = require("myrc.util")
 
 module("myrc.custom")
 binhome = os.getenv("HOME") .. "/mygit/scripts/bin/"
@@ -42,7 +44,7 @@ tags = {
         max_clients = 4,
         exclusive   = true,                   -- Refuse any other type of clients (by classes)
         screen      = {VGA},                  -- Create this tag on screen 1 and screen 2
-        layout      = awful.layout.suit.fair.horizontal, -- Use the tile layout
+        layout      = awful.layout.suit.tile, -- Use the tile layout
         class       = {"xterm" , "urxvt" , "aterm","URxvt","XTerm","konsole","terminator","gnome-terminal"}
     },
     {
@@ -122,6 +124,16 @@ tags = {
         screen      = {VGA},                  -- Create this tag on screen 1 and screen 2
         layout      = awful.layout.suit.tile, -- Use the tile layout
         class       = {"xbmc.bin", "Kodi"}
+    },
+    {
+        name        = "10:Remote",                 -- Call the tag "Term"
+        key         = "x",
+        exec_once   = "xterm -class xbmcremote -e python2 /usr/bin/xbmcremote -c --host xbmc.lan",
+        init        = false,                   -- Load the tag on startup
+        exclusive   = true,                   -- Refuse any other type of clients (by classes)
+        screen      = {LCD},                  -- Create this tag on screen 1 and screen 2
+        layout      = awful.layout.suit.tile, -- Use the tile layout
+        class       = {"xbmcremote"}
     },
     {
         name        = "0:",                 -- Call the tag "Term"
@@ -273,8 +285,6 @@ local tagkeys = { -- {key="a", help="Add", callback=shifty.add},
                   end}
                 }
 
-
-
 function tagtoscr(scr, t)
     -- break if called with an invalid screen number
     if not scr or scr < 1 or scr > screen.count() then return end
@@ -308,6 +318,7 @@ keybindings = awful.util.table.join(
     awful.key({ }, "XF86AudioNext", function () awful.util.spawn(binhome .. "musiccontrol Next") end),
     awful.key({ }, "XF86AudioPlay", function () awful.util.spawn(binhome .. "musiccontrol PlayPause") end),
     awful.key({ }, "XF86Battery", suspend),
+    awful.key({ "Mod3"}, "v", myrc.util.resortTags),
     awful.key({ "Mod3"}, "s", function() keymenu(shutdownkeys, "Shutdown", {bg="#ff3333", fg="#ffffff"}) end),
     awful.key({ "Mod3"}, "t", function() keymenu(tagkeys, "Tag Management", {}) end),
     awful.key({ modkey,           }, "p", function () awful.util.spawn(binhome .. "xrandr.sh --auto") end),
@@ -337,6 +348,7 @@ keybindings = awful.util.table.join(
     awful.key({ "Mod3",  }, "Down", function () movecursor(0,10) end)
 )
 
+
 client.connect_signal("property::urgent", function(c) 
     local window = nil
     if client.focus then
@@ -344,6 +356,7 @@ client.connect_signal("property::urgent", function(c)
     end
     if c.urgent and c.window ~= window then
         awful.util.spawn(binhome .. "scrolllock")
+    elseif not awful.client.urgent.get() then
         removeFile('/tmp/scrolllock')
     end
 end)

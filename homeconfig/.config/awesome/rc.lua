@@ -13,9 +13,9 @@ local naughty = require("naughty")
 local menubar = require("menubar")
 require("myrc.autostart")
 require("myrc.custom")
+require("myrc.util")
 require("myrc.widgets")
 local mylogger = require("mylogger")
-
 
 tyrannical.tags = myrc.custom.tags 
 -- {{{ Error handling
@@ -300,37 +300,36 @@ clientkeys = awful.util.table.join(
         end)
 )
 
-function getTag(tagcfg)
-    local screen = mouse.screen
-    local curtag = awful.tag.selected(screen)
-    local curindex = awful.tag.getproperty(curtag, 'index')
-    local tags = awful.tag.gettags(screen)
-    table.sort(tags, function(a, b) 
-        local aidx = awful.tag.getproperty(a, 'index')
-        local bidx = awful.tag.getproperty(b, 'index')
-        if not curindex then
-            return aidx < bidx
-        elseif aidx == curindex then
-            return false
-        elseif bidx == curindex then
-            return true
-        elseif aidx > curindex and bidx > curindex then
-            return aidx < bidx
-        elseif aidx > curindex and bidx < curindex then
-            return true
-        elseif aidx < curindex and bidx > curindex then
-            return false
-        else
-            return aidx < bidx
-        end
-    end)
 
-    for _, tag in ipairs(tags) do
-        local keymatch = tag.name:match("([0-9]?):")
-        if tag.name == tagcfg.name or tagcfg.key == keymatch then
-            return tag
+
+function getNextTag(tagcfg)
+    function getInfo(tag)
+        return {tag=tag, scr=awful.tag.getscreen(tag), idx=awful.tag.getproperty(tag, 'index')}
+    end
+    local cur = getInfo(myrc.util.getActiveTag())
+    local best = {tag=nil, idx=nil, scr=nil}
+    for i = 1, screen.count() do
+        for idx, tag in ipairs(awful.tag.gettags(i)) do
+            local keymatch = tag.name:match("([0-9]?):")
+            if tag.name == tagcfg.name or tagcfg.key == keymatch then
+                taginfo = getInfo(tag)
+                if not best.tag then
+                    best = taginfo
+                elseif best.tag == cur.tag then
+                    best = taginfo
+                elseif taginfo.scr == best.scr then
+                    if taginfo.idx > cur.idx and best.idx < cur.idx then
+                        best = taginfo
+                    end
+                else
+                    if best.idx < cur.idx then
+                        best = taginfo
+                    end
+                end
+            end
         end
     end
+    return best.tag
 end
 
 for _, tagcfg in pairs(myrc.custom.tags) do
@@ -339,7 +338,7 @@ for _, tagcfg in pairs(myrc.custom.tags) do
         -- View tag only.
         awful.key({ modkey }, tagcfg.key,
                   function ()
-                        local tag = getTag(tagcfg, modkey)
+                        local tag = getNextTag(tagcfg)
                         if tag then
                            awful.tag.viewonly(tag)
                         else
@@ -355,7 +354,7 @@ for _, tagcfg in pairs(myrc.custom.tags) do
         -- Toggle tag.
         awful.key({ modkey, "Control" }, tagcfg.key,
                   function ()
-                      local tag = getTag(tagcfg)
+                      local tag = getNextTag(tagcfg)
                       if tag then
                          awful.tag.viewtoggle(tag)
                       end
@@ -364,9 +363,12 @@ for _, tagcfg in pairs(myrc.custom.tags) do
         awful.key({ modkey, "Shift" }, tagcfg.key,
                   function ()
                       if client.focus then
-                          local tag = getTag(tagcfg)
+                          local tag = getNextTag(tagcfg)
+                          local curcl = client.focus
                           if tag then
                               awful.client.movetotag(tag)
+                              awful.tag.viewonly(tag)
+                              client.focus = curcl
                           end
                      end
                   end),
@@ -374,7 +376,7 @@ for _, tagcfg in pairs(myrc.custom.tags) do
         awful.key({ modkey, "Control", "Shift" }, tagcfg.key,
                   function ()
                       if client.focus then
-                          local tag = getTag(tagcfg)
+                          local tag = getNextTag(tagcfg)
                           if tag then
                               awful.client.toggletag(tag)
                           end
@@ -419,12 +421,6 @@ awful.rules.rules = {
 -- Signal function to execute when a new client appears.
 client.connect_signal("manage", function (c, startup)
     -- Enable sloppy focus
-    c:connect_signal("mouse::enter", function(c)
-        if awful.layout.get(c.screen) ~= awful.layout.suit.magnifier
-            and awful.client.focus.filter(c) then
-            client.focus = c
-        end
-    end)
 
     if not startup then
         -- Set the windows at the slave,
@@ -484,6 +480,7 @@ client.connect_signal("manage", function (c, startup)
     end
 end)
 
+awesome.connect_signal("spawn::completed", function() myrc.util.resortTags() end)
 client.connect_signal("focus", function(c) c.border_color = beautiful.border_focus end)
 client.connect_signal("unfocus", function(c) c.border_color = beautiful.border_normal end)
 -- }}}
