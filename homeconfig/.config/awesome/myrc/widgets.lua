@@ -5,6 +5,7 @@ local util = require('awful.util')
 local prompt = require('awful.prompt')
 local theme = require("theme")
 local ipairs = ipairs
+local type = type
 local completion = require('awful.completion')
 local wibox = require('wibox')
 local dbus = dbus
