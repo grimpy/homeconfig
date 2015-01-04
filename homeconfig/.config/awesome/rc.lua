@@ -307,29 +307,42 @@ function getNextTag(tagcfg)
         return {tag=tag, scr=awful.tag.getscreen(tag), idx=awful.tag.getproperty(tag, 'index')}
     end
     local cur = getInfo(myrc.util.getActiveTag())
-    local best = {tag=nil, idx=nil, scr=nil}
+    local scrcnt = screen.count()
+    local tags = {}
+
     for i = 1, screen.count() do
         for idx, tag in ipairs(awful.tag.gettags(i)) do
             local keymatch = tag.name:match("([0-9]?):")
             if tag.name == tagcfg.name or tagcfg.key == keymatch then
                 taginfo = getInfo(tag)
-                if not best.tag then
-                    best = taginfo
-                elseif best.tag == cur.tag then
-                    best = taginfo
-                elseif taginfo.scr == best.scr then
-                    if taginfo.idx > cur.idx and best.idx < cur.idx then
-                        best = taginfo
-                    end
-                else
-                    if best.idx < cur.idx then
-                        best = taginfo
-                    end
-                end
+                tags[#tags+1] = taginfo
             end
         end
     end
-    return best.tag
+    function score(tag)
+        local score = 0
+        -- same screen
+        if tag.idx == cur.idx and tag.scr == cur.scr then
+            return 999999999
+        elseif tag.scr == cur.scr then
+            if tag.idx > cur.idx then
+                return tag.idx - cur.idx            
+            else
+                return 100 * (scrcnt + 1) + tag.idx
+            end
+        else
+            return 100 * scrcnt + tag.idx
+        end
+    end
+    function sorter(tag1, tag2)
+        return score(tag1) < score(tag2)
+    end
+    table.sort(tags, sorter)
+    if #tags >= 1 then
+        return tags[1].tag
+    else
+        return
+    end
 end
 
 for _, tagcfg in pairs(myrc.custom.tags) do

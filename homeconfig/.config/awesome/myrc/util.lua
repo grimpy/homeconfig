@@ -26,20 +26,21 @@ function getActiveTag()
     return awful.tag.selected(scr)
 end
 
-function resortTags(scr)
-    scr = scr or 1
-    local tags = awful.tag.gettags(scr)
-    table.sort(tags, function(a, b) 
-        local ak = tonumber(a.name:match("([0-9]+):"))
-        local bk = tonumber(b.name:match("([0-9]+):"))
-        if ak and bk then
-            return ak < bk
-        else
-            return a.name < b.name
+function resortTags()
+    for scr = 1, capi.screen.count() do
+        local tags = awful.tag.gettags(scr)
+        table.sort(tags, function(a, b) 
+            local ak = tonumber(a.name:match("([0-9]+):"))
+            local bk = tonumber(b.name:match("([0-9]+):"))
+            if ak and bk then
+                return ak < bk
+            else
+                return a.name < b.name
+            end
+        end)
+        for i, tag in ipairs(tags) do
+            awful.tag.move(i, tag)
         end
-    end)
-    for i, tag in ipairs(tags) do
-        awful.tag.move(i, tag)
     end
 
 end
