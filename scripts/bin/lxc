@@ -12,14 +12,7 @@ function lxc_get_ip() {
 }
 
 function lxc_list() {
-    for container in $(sudo lxc-ls); do
-        state=$(sudo lxc-info -s -n $container | awk '{print $2}')
-        ip=""
-        if [ "$state" = "RUNNING" ]; then
-            ip=$(lxc_get_ip $container)
-        fi
-        echo -e "$container \t $state \t $ip"
-    done | sort -k2 -k1 | column -t
+    sudo lxc-ls -f -F name,state,ipv4
 }
 
 function lxc_rename() {
