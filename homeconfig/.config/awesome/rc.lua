@@ -255,10 +255,10 @@ globalkeys = awful.util.table.join(
     awful.key({ modkey,           }, "w", function () menubar.show() end),
 
     -- Layout manipulation
-    awful.key({ modkey,           }, "Tab",
+    awful.key({ modkey2,           }, "Tab",
         function ()
-            awful.client.focus.history.previous()
             if client.focus then
+                awful.client.focus.byidx(1)
                 client.focus:raise()
             end
         end),
