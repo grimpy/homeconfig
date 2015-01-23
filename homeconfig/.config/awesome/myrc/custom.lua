@@ -330,11 +330,13 @@ keybindings = awful.util.table.join(
     end),
     awful.key({"Mod3",        }, "o",
           function()
-              local t = client.focus:tags()[1]
-              local s = awful.util.cycle(screen.count(), awful.tag.getscreen(t) + 1)
-              awful.tag.history.restore()
-              t = tagtoscr(s, t)
-              awful.tag.viewonly(t)
+              if client.focus then
+                  local t = client.focus:tags()[1]
+                  local s = awful.util.cycle(screen.count(), awful.tag.getscreen(t) + 1)
+                  awful.tag.history.restore()
+                  t = tagtoscr(s, t)
+                  awful.tag.viewonly(t)
+              end
           end),
     awful.key({ modkey,    }, "c", pushincorner),
     awful.key({ "Mod3",  }, "t", tagmanagement),
