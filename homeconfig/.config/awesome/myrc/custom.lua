@@ -40,7 +40,7 @@ tags = {
         name        = "1:Term",                 -- Call the tag "Term"
         key         = "1",
         init        = false,                   -- Load the tag on startup
-        exec_once   = "urxvt",
+        launch      = "urxvt",
         max_clients = 4,
         exclusive   = true,                   -- Refuse any other type of clients (by classes)
         screen      = {VGA},                  -- Create this tag on screen 1 and screen 2
@@ -50,7 +50,7 @@ tags = {
     {
         name        = "2:IM",                 -- Call the tag "Term"
         key         = "2",
-        exec_once   = "pidgin",
+        launch      = "pidgin",
         exclusive   = true,                   -- Refuse any other type of clients (by classes)
         init        = false,                   -- Load the tag on startup
         screen      = {VGA},                  -- Create this tag on screen 1 and screen 2
@@ -60,7 +60,7 @@ tags = {
     {
         name        = "3:Web",                 -- Call the tag "Term"
         key         = "3",
-        exec_once   = "browser",
+        launch      = "browser",
         init        = false,                   -- Load the tag on startup
         exclusive   = true,                   -- Refuse any other type of clients (by classes)
         screen      = {LCD},                  -- Create this tag on screen 1 and screen 2
@@ -70,7 +70,7 @@ tags = {
     {
         name        = "4:Mail",                 -- Call the tag "Term"
         key         = "4",
-        exec_once   = "thunderbird",
+        launch      = "thunderbird",
         init        = false,                   -- Load the tag on startup
         exclusive   = true,                   -- Refuse any other type of clients (by classes)
         screen      = {LCD},                  -- Create this tag on screen 1 and screen 2
@@ -80,7 +80,7 @@ tags = {
     {
         name        = "5:FS",                 -- Call the tag "Term"
         key         = "5",
-        exec_once   = "pcmanfm",
+        launch      = "pcmanfm",
         init        = false,                   -- Load the tag on startup
         exclusive   = true,                   -- Refuse any other type of clients (by classes)
         screen      = {LCD},                  -- Create this tag on screen 1 and screen 2
@@ -90,7 +90,7 @@ tags = {
     {
         name        = "6:Edit",                 -- Call the tag "Term"
         key         = "6",
-        exec_once   = "gvim",
+        launch      = "gvim",
         init        = false,                   -- Load the tag on startup
         exclusive   = true,                   -- Refuse any other type of clients (by classes)
         screen      = {VGA},                  -- Create this tag on screen 1 and screen 2
@@ -100,7 +100,7 @@ tags = {
     {
         name        = "7:Media",                 -- Call the tag "Term"
         key         = "7",
-        exec_once   = "ario",
+        launch      = "ario",
         init        = false,                   -- Load the tag on startup
         exclusive   = true,                   -- Refuse any other type of clients (by classes)
         screen      = {LCD},                  -- Create this tag on screen 1 and screen 2
@@ -128,7 +128,7 @@ tags = {
     {
         name        = "10:Remote",                 -- Call the tag "Term"
         key         = "x",
-        exec_once   = "xterm -class xbmcremote -e python2 /usr/bin/xbmcremote -c --host xbmc.lan",
+        launch      = "xterm -class xbmcremote -e python2 /usr/bin/xbmcremote -c --host xbmc.lan",
         init        = false,                   -- Load the tag on startup
         exclusive   = true,                   -- Refuse any other type of clients (by classes)
         screen      = {LCD},                  -- Create this tag on screen 1 and screen 2

@@ -355,8 +355,8 @@ for _, tagcfg in pairs(myrc.custom.tags) do
                         if tag then
                            awful.tag.viewonly(tag)
                         else
-                            if tagcfg.exec_once then
-                                awful.util.spawn(tagcfg.exec_once)
+                            if tagcfg.launch then
+                                awful.util.spawn(tagcfg.launch)
                             end
                         end
                         local scr = awful.tag.getscreen(tag)
