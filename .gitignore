@@ -6,5 +6,4 @@ homeconfig/.config/awesome/vicious
 homeconfig/.ssh/known_hosts
 homeconfig/.ssh/known_hosts
 homeconfig/.ssh/agent*
-homeconfig/.zsh.d/S22_bookmarks
 homeconfig/.vim/bundle/*
