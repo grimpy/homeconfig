@@ -1,2 +1,2 @@
 import JumpScale.baselib.redis
-rcl = j.clients.redis.getRedisClient('127.0.0.1', 9999)
+rcl = j.clients.redis.getByInstaceName('system')
