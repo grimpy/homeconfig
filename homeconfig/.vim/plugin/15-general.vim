@@ -19,6 +19,8 @@ set fdm=indent
 set foldlevel=30
 set hlsearch
 set cursorline
+set ignorecase
+set smartcase
 
 if has('gui_running')
     colorscheme molokai
