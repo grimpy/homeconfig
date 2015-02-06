@@ -1,2 +1,2 @@
 import JumpScale.grid
-scl = j.core.osis.getClientForNamespace('system')
+scl = j.clients.osis.getNamespace('system')
