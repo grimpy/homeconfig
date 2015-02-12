@@ -110,8 +110,7 @@ function updateIP()
         return
     end
     myip:set_text(ip)
-    -- local f = io.popen("wpa_cli status | grep '^ssid' | cut -f2 -d=")
-    local f = io.popen("iwconfig " .. gwdev)
+    local f = io.popen("iwconfig | grep -v 'no wireless'")
     local iw = f:read("*all")
     f:close()
     iptooltip:set_markup(string.format("<span font_desc='%s'>%s</span>", device.font, iw))
@@ -179,8 +178,8 @@ vicious.register(mynet, vicious.contrib.net,
            uiunit = 'mb'
            uunit = 'MiB'
         end
-        local down = data["{total down_".. diunit .. "}"]
-        local up = data["{total up_".. uiunit  .. "}"]
+        local down = data["{bond0 down_".. diunit .. "}"]
+        local up = data["{bond0 up_".. uiunit  .. "}"]
         local result = '<span color="#00FF00">%5s %s</span> <span color="#FF0000">%5s %s</span>'
         return string.format(result, down, dunit, up, uunit)
     end
