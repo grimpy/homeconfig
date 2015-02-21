@@ -15,7 +15,7 @@ function xbmc() {
         "PlayPause") c=" " ;;
         *) return 1;
    esac
-   xbmcremote --host=xbmc.lan -k "$c"
+   kodiremote --host=media.lan -k "$c"
 
 }
 
@@ -59,7 +59,7 @@ if ps -eaf | grep -v grep | grep mpv; then
     mpv
 elif ps -eaf | grep -v grep | grep audacious; then
     mpris audacious
-elif ps -eaf | grep -v grep | grep xbmcremote; then
+elif ps -eaf | grep -v grep | grep kodiremote; then
     xbmc
 elif ps -eaf | grep -v grep | grep pragha; then
     praghac
