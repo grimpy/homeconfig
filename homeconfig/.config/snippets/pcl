@@ -1,2 +1,2 @@
 import JumpScale.portal
-pcl = j.core.portal.getClientByInstance('main')
+pcl = j.clients.portal.getByInstance('main')
