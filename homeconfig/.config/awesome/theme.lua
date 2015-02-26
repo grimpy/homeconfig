@@ -18,8 +18,8 @@ theme.fg_normal     = "#aaaaaa"
 theme.fg_focus      = "#ffffff"
 theme.fg_urgent     = "#ffffff"
 theme.fg_minimize   = "#ffffff"
-theme.fg_widget_value   = "#ffffff"
-theme.fg_widget_clock   = "#ffffff"
+theme.fg_widget_value   = "#87CEEB"
+theme.fg_widget_clock   = "#ffffcc"
 theme.fg_widget_value_important   = "#ffffff"
 
 theme.border_width  = 1
