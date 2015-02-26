@@ -1,3 +1,4 @@
+local keydoc = require("keydoc")
 local awful = require("awful")
 local client = client
 local awesome = awesome
@@ -307,31 +308,38 @@ function tagtoscr(scr, t)
     return otag
 end
 
-
+keydoc.group("Launchers")
 keybindings = awful.util.table.join(
-    awful.key({ altkey, "Control" }, "c", function () awful.util.spawn(terminal) end),
-    awful.key({ }, "Print", function () awful.util.spawn(binhome .. "caputereimg.sh /home/Jo/Pictures/SS") end),
-    awful.key({ winkey,           }, "o", function () awful.util.spawn(binhome .. "rotatescreen") end),
-    awful.key({ winkey,           }, "F2", function () awful.util.spawn(binhome .. "musiccontrol PlayPause") end),
-    awful.key({ winkey,           }, "c", function () awful.util.spawn_with_shell("xclip -o | xclip -i -selection clipboard") end),
-    awful.key({ winkey,           }, "F3", function () awful.util.spawn(binhome .. "musiccontrol Previous") end),
-    awful.key({ winkey,           }, "F4", function () awful.util.spawn(binhome .. "musiccontrol Next") end),
-    awful.key({ }, "XF86AudioNext", function () awful.util.spawn(binhome .. "musiccontrol Next") end),
-    awful.key({ }, "XF86AudioPlay", function () awful.util.spawn(binhome .. "musiccontrol PlayPause") end),
-    awful.key({ }, "XF86MonBrightnessUp", function () awful.util.spawn_with_shell("xbacklight -inc 10") end),
-    awful.key({ }, "XF86MonBrightnessDown", function () awful.util.spawn_with_shell("xbacklight -dec 10") end),
-    awful.key({ }, "XF86Battery", suspend),
-    awful.key({ capskey}, "v", myrc.util.resortTags),
-    awful.key({ capskey}, "s", function() keymenu(shutdownkeys, "Shutdown", {bg="#ff3333", fg="#ffffff"}) end),
-    awful.key({ capskey}, "t", function() keymenu(tagkeys, "Tag Management", {}) end),
-    awful.key({ winkey }, "k", function() awful.util.spawn_with_shell("setxkbmap us,ar altgr-intl, ; xmodmap ~/.Xmodmap") end),
-    awful.key({ winkey,           }, "p", function () awful.util.spawn(binhome .. "xrandr.sh --auto") end),
-    awful.key({ winkey, "Shift" }, "l", function () awful.util.spawn("xautolock -disable") end),
-    awful.key({ winkey, "Control" }, "l", function () awful.util.spawn("xautolock -enable") end),
+    awful.key({ capskey, }, "F1", keydoc.display, "This"),
+    awful.key({ altkey, "Control" }, "c", function () awful.util.spawn(terminal) end, "Open Terminal"),
+    awful.key({ }, "Print", function () awful.util.spawn(binhome .. "caputereimg.sh /home/Jo/Pictures/SS") end, "Take Screenshot"),
+    awful.key({ winkey,           }, "c", function () awful.util.spawn_with_shell("xclip -o | xclip -i -selection clipboard") end, "Sync Clipboards"),
+    awful.key({ winkey,           }, "o", function () awful.util.spawn(binhome .. "rotatescreen") end, "Rotate Screen"),
+    awful.key({ }, "XF86Battery", suspend, "Suspend"),
+    awful.key({ capskey}, "v", myrc.util.resortTags, "Resort Tags"),
+    awful.key({ winkey }, "k", function() awful.util.spawn_with_shell("setxkbmap us,ar altgr-intl, ; xmodmap ~/.Xmodmap") end, "Reset Keyboard mods"),
+    keydoc.group("Music"),
+    awful.key({ winkey,           }, "F2", function () awful.util.spawn(binhome .. "musiccontrol PlayPause") end, "Play/Resume"),
+    awful.key({ winkey,           }, "F3", function () awful.util.spawn(binhome .. "musiccontrol Previous") end, "Previous"),
+    awful.key({ winkey,           }, "F4", function () awful.util.spawn(binhome .. "musiccontrol Next") end, "Next"),
+    awful.key({ }, "XF86AudioPlay", function () awful.util.spawn(binhome .. "musiccontrol PlayPause") end, "Play/Resume"),
+    awful.key({ }, "XF86AudioNext", function () awful.util.spawn(binhome .. "musiccontrol Next") end, "Next"),
+    awful.key({ }, "XF86AudioPrev", function () awful.util.spawn(binhome .. "musiccontrol Previous") end, "Previous"),
+    keydoc.group("Screen"),
+    awful.key({ }, "XF86MonBrightnessUp", function () awful.util.spawn_with_shell("xbacklight -inc 10") end, "Brightness +"),
+    awful.key({ }, "XF86MonBrightnessDown", function () awful.util.spawn_with_shell("xbacklight -dec 10") end, "Brightness -"),
+    awful.key({ winkey, "Shift" }, "l", function () awful.util.spawn("xautolock -disable") end, "Disable Autolock"),
+    awful.key({ winkey, "Control" }, "l", function () awful.util.spawn("xautolock -enable") end, "Enable Autolock"),
+    awful.key({ winkey,           }, "p", function () awful.util.spawn(binhome .. "xrandr.sh --auto") end, "Dual/Single Toggle"),
+    keydoc.group("Menus"),
+    awful.key({ capskey}, "s", function() keymenu(shutdownkeys, "Shutdown", {bg="#ff3333", fg="#ffffff"}) end, "Shutdown Menu"),
+    awful.key({ capskey}, "t", function() keymenu(tagkeys, "Tag Management", {}) end, "Tag Management"),
+    awful.key({ capskey,  }, "z", xbmcmote, "Kodi Menu"),
+    keydoc.group("Windows"),
     awful.key({ capskey,           }, "u", function () 
         awful.client.urgent.jumpto()
         removeFile('/tmp/scrolllock')
-    end),
+    end, "Jump to urgent"),
     awful.key({capskey,        }, "o",
           function()
               if client.focus then
@@ -341,17 +349,16 @@ keybindings = awful.util.table.join(
                   t = tagtoscr(s, t)
                   awful.tag.viewonly(t)
               end
-          end),
-    awful.key({ winkey,    }, "c", pushincorner),
-    awful.key({ capskey,  }, "t", tagmanagement),
-    awful.key({ winkey }, "d", awful.tag.viewnone),
+          end, "Move tag to screen"),
+    awful.key({ winkey,    }, "c", pushincorner, "Move window in corner"),
+    awful.key({ winkey }, "d", awful.tag.viewnone, "Show desktop"),
 
     -- Mouse cursor bindings
-    awful.key({ capskey,  }, "Left", function () movecursor(-10,0) end),
-    awful.key({ capskey,  }, "z", xbmcmote),
-    awful.key({ capskey,  }, "Right", function () movecursor(10,0) end),
-    awful.key({ capskey,  }, "Up", function () movecursor(0,-10) end),
-    awful.key({ capskey,  }, "Down", function () movecursor(0,10) end)
+    keydoc.group("Mouse Control"),
+    awful.key({ capskey,  }, "Left", function () movecursor(-10,0) end, "Move left"),
+    awful.key({ capskey,  }, "Right", function () movecursor(10,0) end, "Move right"),
+    awful.key({ capskey,  }, "Up", function () movecursor(0,-10) end, "Move up "),
+    awful.key({ capskey,  }, "Down", function () movecursor(0,10) end, "Move down")
 )
 
 

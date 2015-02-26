@@ -1,3 +1,4 @@
+local keydoc = require("keydoc")
 local cal = require("cal")
 local vicious = require('vicious')
 local awful = require('awful')
@@ -305,13 +306,15 @@ myvoltext:buttons(awful.util.table.join(
 ))
 
 keybindings = awful.util.table.join(
-    awful.key({}, "XF86AudioLowerVolume", decreasevolume),
-    awful.key({winkey}, "Down", decreasevolume),
-    awful.key({}, "XF86AudioRaiseVolume", increasevolume),
-    awful.key({winkey}, "Up", increasevolume),
-    awful.key({capskey}, "y", runprompt),
-    awful.key({capskey}, "i", runsnippets),
-    awful.key({capskey}, "r", cmdprompt),
-    awful.key({}, "XF86AudioMute", mutevolume),
-    awful.key({winkey}, "0", mutevolume)
+    keydoc.group("Music"),
+    awful.key({}, "XF86AudioLowerVolume", decreasevolume, "Decrease Volume"),
+    awful.key({}, "XF86AudioRaiseVolume", increasevolume, "Increase Volume"),
+    awful.key({}, "XF86AudioMute", mutevolume, "Mute Volume"),
+    awful.key({winkey}, "Down", decreasevolume, "Descrease Volume"),
+    awful.key({winkey}, "Up", increasevolume, "Increase Volume"),
+    awful.key({winkey}, "0", mutevolume, "Mute Volume"),
+    keydoc.group("Prompts"),
+    awful.key({capskey}, "y", runprompt, "Search tag"),
+    awful.key({capskey}, "i", runsnippets, "Search snippets"),
+    awful.key({capskey}, "r", cmdprompt, "Run command")
 )
