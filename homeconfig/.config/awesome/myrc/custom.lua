@@ -21,8 +21,9 @@ menubar.menu_gen.all_menu_dirs = { "/usr/share/applications/", "/usr/local/share
 browser = binhome .. "browser"
 terminal = "urxvtc"
 autostart = true
-modkey = "Mod4"
-modkey2 = "Mod1"
+winkey = "Mod4"
+altkey = "Mod1"
+capskey = "Mod3"
 VGA = screen.count()
 LCD = 1
 
@@ -147,8 +148,8 @@ tags = {
 
 clientbuttons=awful.util.table.join(
     awful.button({ }, 1, function (c) client.focus=c; c:raise() end),
-    awful.button({ "Mod1" }, 1, awful.mouse.client.move),
-    awful.button({ "Mod1" }, 3, awful.mouse.client.resize))
+    awful.button({ altkey }, 1, awful.mouse.client.move),
+    awful.button({ altkey }, 3, awful.mouse.client.resize))
 
 
 function pushincorner()
@@ -308,30 +309,30 @@ end
 
 
 keybindings = awful.util.table.join(
-    awful.key({ modkey2, "Control" }, "c", function () awful.util.spawn(terminal) end),
+    awful.key({ altkey, "Control" }, "c", function () awful.util.spawn(terminal) end),
     awful.key({ }, "Print", function () awful.util.spawn(binhome .. "caputereimg.sh /home/Jo/Pictures/SS") end),
-    awful.key({ modkey,           }, "o", function () awful.util.spawn(binhome .. "rotatescreen") end),
-    awful.key({ modkey,           }, "F2", function () awful.util.spawn(binhome .. "musiccontrol PlayPause") end),
-    awful.key({ modkey,           }, "c", function () awful.util.spawn_with_shell("xclip -o | xclip -i -selection clipboard") end),
-    awful.key({ modkey,           }, "F3", function () awful.util.spawn(binhome .. "musiccontrol Previous") end),
-    awful.key({ modkey,           }, "F4", function () awful.util.spawn(binhome .. "musiccontrol Next") end),
+    awful.key({ winkey,           }, "o", function () awful.util.spawn(binhome .. "rotatescreen") end),
+    awful.key({ winkey,           }, "F2", function () awful.util.spawn(binhome .. "musiccontrol PlayPause") end),
+    awful.key({ winkey,           }, "c", function () awful.util.spawn_with_shell("xclip -o | xclip -i -selection clipboard") end),
+    awful.key({ winkey,           }, "F3", function () awful.util.spawn(binhome .. "musiccontrol Previous") end),
+    awful.key({ winkey,           }, "F4", function () awful.util.spawn(binhome .. "musiccontrol Next") end),
     awful.key({ }, "XF86AudioNext", function () awful.util.spawn(binhome .. "musiccontrol Next") end),
     awful.key({ }, "XF86AudioPlay", function () awful.util.spawn(binhome .. "musiccontrol PlayPause") end),
     awful.key({ }, "XF86MonBrightnessUp", function () awful.util.spawn_with_shell("xbacklight -inc 10") end),
     awful.key({ }, "XF86MonBrightnessDown", function () awful.util.spawn_with_shell("xbacklight -dec 10") end),
     awful.key({ }, "XF86Battery", suspend),
-    awful.key({ "Mod3"}, "v", myrc.util.resortTags),
-    awful.key({ "Mod3"}, "s", function() keymenu(shutdownkeys, "Shutdown", {bg="#ff3333", fg="#ffffff"}) end),
-    awful.key({ "Mod3"}, "t", function() keymenu(tagkeys, "Tag Management", {}) end),
-    awful.key({ modkey }, "k", function() awful.util.spawn_with_shell("setxkbmap us,ar altgr-intl, ; xmodmap ~/.Xmodmap") end),
-    awful.key({ modkey,           }, "p", function () awful.util.spawn(binhome .. "xrandr.sh --auto") end),
-    awful.key({ modkey, "Shift" }, "l", function () awful.util.spawn("xautolock -disable") end),
-    awful.key({ modkey, "Control" }, "l", function () awful.util.spawn("xautolock -enable") end),
-    awful.key({ "Mod3",           }, "u", function () 
+    awful.key({ capskey}, "v", myrc.util.resortTags),
+    awful.key({ capskey}, "s", function() keymenu(shutdownkeys, "Shutdown", {bg="#ff3333", fg="#ffffff"}) end),
+    awful.key({ capskey}, "t", function() keymenu(tagkeys, "Tag Management", {}) end),
+    awful.key({ winkey }, "k", function() awful.util.spawn_with_shell("setxkbmap us,ar altgr-intl, ; xmodmap ~/.Xmodmap") end),
+    awful.key({ winkey,           }, "p", function () awful.util.spawn(binhome .. "xrandr.sh --auto") end),
+    awful.key({ winkey, "Shift" }, "l", function () awful.util.spawn("xautolock -disable") end),
+    awful.key({ winkey, "Control" }, "l", function () awful.util.spawn("xautolock -enable") end),
+    awful.key({ capskey,           }, "u", function () 
         awful.client.urgent.jumpto()
         removeFile('/tmp/scrolllock')
     end),
-    awful.key({"Mod3",        }, "o",
+    awful.key({capskey,        }, "o",
           function()
               if client.focus then
                   local t = client.focus:tags()[1]
@@ -341,16 +342,16 @@ keybindings = awful.util.table.join(
                   awful.tag.viewonly(t)
               end
           end),
-    awful.key({ modkey,    }, "c", pushincorner),
-    awful.key({ "Mod3",  }, "t", tagmanagement),
-    awful.key({ modkey }, "d", awful.tag.viewnone),
+    awful.key({ winkey,    }, "c", pushincorner),
+    awful.key({ capskey,  }, "t", tagmanagement),
+    awful.key({ winkey }, "d", awful.tag.viewnone),
 
     -- Mouse cursor bindings
-    awful.key({ "Mod3",  }, "Left", function () movecursor(-10,0) end),
-    awful.key({ "Mod3",  }, "z", xbmcmote),
-    awful.key({ "Mod3",  }, "Right", function () movecursor(10,0) end),
-    awful.key({ "Mod3",  }, "Up", function () movecursor(0,-10) end),
-    awful.key({ "Mod3",  }, "Down", function () movecursor(0,10) end)
+    awful.key({ capskey,  }, "Left", function () movecursor(-10,0) end),
+    awful.key({ capskey,  }, "z", xbmcmote),
+    awful.key({ capskey,  }, "Right", function () movecursor(10,0) end),
+    awful.key({ capskey,  }, "Up", function () movecursor(0,-10) end),
+    awful.key({ capskey,  }, "Down", function () movecursor(0,10) end)
 )
 
 

@@ -20,6 +20,8 @@ vicious.contrib = require("vicious.contrib")
 module("myrc.widgets")
 
 local SNIPPETDIR = os.getenv("HOME") .. "/.config/snippets/"
+local capskey = "Mod3"
+local winkey = "Mod4"
 
 w = {}
 
@@ -304,12 +306,12 @@ myvoltext:buttons(awful.util.table.join(
 
 keybindings = awful.util.table.join(
     awful.key({}, "XF86AudioLowerVolume", decreasevolume),
-    awful.key({"Mod4"}, "Down", decreasevolume),
+    awful.key({winkey}, "Down", decreasevolume),
     awful.key({}, "XF86AudioRaiseVolume", increasevolume),
-    awful.key({"Mod4"}, "Up", increasevolume),
-    awful.key({"Mod3"}, "y", runprompt),
-    awful.key({"Mod3"}, "i", runsnippets),
-    awful.key({"Mod3"}, "r", cmdprompt),
+    awful.key({winkey}, "Up", increasevolume),
+    awful.key({capskey}, "y", runprompt),
+    awful.key({capskey}, "i", runsnippets),
+    awful.key({capskey}, "r", cmdprompt),
     awful.key({}, "XF86AudioMute", mutevolume),
-    awful.key({"Mod4"}, "0", mutevolume)
+    awful.key({winkey}, "0", mutevolume)
 )

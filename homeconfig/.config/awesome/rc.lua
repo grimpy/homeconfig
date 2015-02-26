@@ -51,13 +51,13 @@ end
 confdir = awful.util.getdir("config")
 beautiful.init(confdir .. "/theme.lua")
 
--- Default modkey.
+-- Default capskey.
 -- Usually, Mod4 is the key with a logo between Control and Alt.
 -- If you do not like this or do not have such a key,
 -- I suggest you to remap Mod4 to another key using xmodmap or other tools.
 -- However, you can use another modifier like Mod1, but it may interact with others.
-modkey = "Mod3"
-modkey2 = "Mod1"
+capskey = "Mod3"
+altkey = "Mod1"
 
 -- Table of layouts to cover with awful.layout.inc, order matters.
 local layouts =
@@ -106,9 +106,9 @@ mylayoutbox = {}
 mytaglist = {}
 mytaglist.buttons = awful.util.table.join(
                     awful.button({ }, 1, awful.tag.viewonly),
-                    awful.button({ modkey }, 1, awful.client.movetotag),
+                    awful.button({ capskey }, 1, awful.client.movetotag),
                     awful.button({ }, 3, awful.tag.viewtoggle),
-                    awful.button({ modkey }, 3, awful.client.toggletag),
+                    awful.button({ capskey }, 3, awful.client.toggletag),
                     awful.button({ }, 4, function(t) awful.tag.viewnext(awful.tag.getscreen(t)) end),
                     awful.button({ }, 5, function(t) awful.tag.viewprev(awful.tag.getscreen(t)) end)
                     )
@@ -206,56 +206,56 @@ root.buttons(awful.util.table.join(
 
 -- {{{ Key bindings
 globalkeys = awful.util.table.join(
-    awful.key({ modkey,           }, "p",   awful.tag.viewprev       ),
-    awful.key({ modkey,           }, "n",  awful.tag.viewnext       ),
-    awful.key({ modkey,           }, "Escape", awful.tag.history.restore),
-    awful.key({ modkey,           }, "h",
+    awful.key({ capskey,           }, "p",   awful.tag.viewprev       ),
+    awful.key({ capskey,           }, "n",  awful.tag.viewnext       ),
+    awful.key({ capskey,           }, "Escape", awful.tag.history.restore),
+    awful.key({ capskey,           }, "h",
         function ()
             awful.client.focus.bydirection("left")
             if client.focus then client.focus:raise() end
         end),
-    awful.key({ modkey,           }, "l",
+    awful.key({ capskey,           }, "l",
         function ()
             awful.client.focus.bydirection("right")
             if client.focus then client.focus:raise() end
         end),
-    awful.key({ modkey,           }, "k",
+    awful.key({ capskey,           }, "k",
         function ()
             awful.client.focus.bydirection("up")
             if client.focus then client.focus:raise() end
         end),
-    awful.key({ modkey,           }, "j",
+    awful.key({ capskey,           }, "j",
         function ()
             awful.client.focus.bydirection("down")
             if client.focus then client.focus:raise() end
         end),
 
-    awful.key({ modkey, "Shift"   }, "h",
+    awful.key({ capskey, "Shift"   }, "h",
         function ()
             awful.client.swap.bydirection("left")
             if client.focus then client.focus:raise() end
         end),
-    awful.key({ modkey, "Shift"   }, "l",
+    awful.key({ capskey, "Shift"   }, "l",
         function ()
             awful.client.swap.bydirection("right")
             if client.focus then client.focus:raise() end
         end),
-    awful.key({ modkey, "Shift"   }, "k",
+    awful.key({ capskey, "Shift"   }, "k",
         function ()
             awful.client.swap.bydirection("up")
             if client.focus then client.focus:raise() end
         end),
-    awful.key({ modkey, "Shift"   }, "j",
+    awful.key({ capskey, "Shift"   }, "j",
         function ()
             awful.client.swap.bydirection("down")
             if client.focus then client.focus:raise() end
         end),
 
 
-    awful.key({ modkey,           }, "w", function () menubar.show() end),
+    awful.key({ capskey,           }, "w", function () menubar.show() end),
 
     -- Layout manipulation
-    awful.key({ modkey2,           }, "Tab",
+    awful.key({ altkey,           }, "Tab",
         function ()
             if client.focus then
                 awful.client.focus.byidx(1)
@@ -266,34 +266,34 @@ globalkeys = awful.util.table.join(
     -- Standard program
     myrc.custom.keybindings,
     myrc.widgets.keybindings,
-    awful.key({ modkey, "Control" }, "r", awesome.restart),
-    awful.key({ modkey, "Shift"   }, "q", awesome.quit),
+    awful.key({ capskey, "Control" }, "r", awesome.restart),
+    awful.key({ capskey, "Shift"   }, "q", awesome.quit),
 
-    -- awful.key({ modkey,           }, "l",     function () awful.tag.incmwfact( 0.05)    end),
-    -- awful.key({ modkey,           }, "h",     function () awful.tag.incmwfact(-0.05)    end),
-    -- awful.key({ modkey, "Shift"   }, "h",     function () awful.tag.incnmaster( 1)      end),
-    -- awful.key({ modkey, "Shift"   }, "l",     function () awful.tag.incnmaster(-1)      end),
-    -- awful.key({ modkey, "Control" }, "h",     function () awful.tag.incncol( 1)         end),
-    -- awful.key({ modkey, "Control" }, "l",     function () awful.tag.incncol(-1)         end),
-    awful.key({ modkey,           }, "space", function () awful.layout.inc(layouts,  1) end),
-    awful.key({ modkey, "Shift"   }, "space", function () awful.layout.inc(layouts, -1) end),
+    -- awful.key({ capskey,           }, "l",     function () awful.tag.incmwfact( 0.05)    end),
+    -- awful.key({ capskey,           }, "h",     function () awful.tag.incmwfact(-0.05)    end),
+    -- awful.key({ capskey, "Shift"   }, "h",     function () awful.tag.incnmaster( 1)      end),
+    -- awful.key({ capskey, "Shift"   }, "l",     function () awful.tag.incnmaster(-1)      end),
+    -- awful.key({ capskey, "Control" }, "h",     function () awful.tag.incncol( 1)         end),
+    -- awful.key({ capskey, "Control" }, "l",     function () awful.tag.incncol(-1)         end),
+    awful.key({ capskey,           }, "space", function () awful.layout.inc(layouts,  1) end),
+    awful.key({ capskey, "Shift"   }, "space", function () awful.layout.inc(layouts, -1) end),
 
-    awful.key({ modkey, "Control" }, "n", awful.client.restore)
+    awful.key({ capskey, "Control" }, "n", awful.client.restore)
 )
 
 
 clientkeys = awful.util.table.join(
-    awful.key({ modkey,           }, "f",      function (c) c.fullscreen = not c.fullscreen  end),
-    awful.key({ modkey,           }, "c",      function (c) c:kill()                         end),
-    awful.key({ modkey, "Control" }, "space",  awful.client.floating.toggle                     ),
-    awful.key({ modkey, "Control" }, "Return", function (c) c:swap(awful.client.getmaster()) end),
-    awful.key({ modkey, "Shift"   }, "o",      awful.client.movetoscreen                        ),
-    awful.key({ modkey,           }, "m",
+    awful.key({ capskey,           }, "f",      function (c) c.fullscreen = not c.fullscreen  end),
+    awful.key({ capskey,           }, "c",      function (c) c:kill()                         end),
+    awful.key({ capskey, "Control" }, "space",  awful.client.floating.toggle                     ),
+    awful.key({ capskey, "Control" }, "Return", function (c) c:swap(awful.client.getmaster()) end),
+    awful.key({ capskey, "Shift"   }, "o",      awful.client.movetoscreen                        ),
+    awful.key({ capskey,           }, "m",
         function (c)
             c.maximized_horizontal = not c.maximized_horizontal
             c.maximized_vertical   = not c.maximized_vertical
         end),
-    awful.key({ modkey,           }, "a",
+    awful.key({ capskey,           }, "a",
         function (c)
             local t = shifty.add()
             c:tags({t})
@@ -349,7 +349,7 @@ for _, tagcfg in pairs(myrc.custom.tags) do
     if tagcfg.key then
     globalkeys = awful.util.table.join(globalkeys,
         -- View tag only.
-        awful.key({ modkey }, tagcfg.key,
+        awful.key({ capskey }, tagcfg.key,
                   function ()
                         local tag = getNextTag(tagcfg)
                         if tag then
@@ -365,7 +365,7 @@ for _, tagcfg in pairs(myrc.custom.tags) do
                         end
                   end),
         -- Toggle tag.
-        awful.key({ modkey, "Control" }, tagcfg.key,
+        awful.key({ capskey, "Control" }, tagcfg.key,
                   function ()
                       local tag = getNextTag(tagcfg)
                       if tag then
@@ -373,7 +373,7 @@ for _, tagcfg in pairs(myrc.custom.tags) do
                       end
                   end),
         -- Move client to tag.
-        awful.key({ modkey, "Shift" }, tagcfg.key,
+        awful.key({ capskey, "Shift" }, tagcfg.key,
                   function ()
                       if client.focus then
                           local tag = getNextTag(tagcfg)
@@ -386,7 +386,7 @@ for _, tagcfg in pairs(myrc.custom.tags) do
                      end
                   end),
         -- Toggle tag.
-        awful.key({ modkey, "Control", "Shift" }, tagcfg.key,
+        awful.key({ capskey, "Control", "Shift" }, tagcfg.key,
                   function ()
                       if client.focus then
                           local tag = getNextTag(tagcfg)
@@ -400,8 +400,8 @@ end
 
 clientbuttons = awful.util.table.join(
     awful.button({ }, 1, function (c) client.focus = c; c:raise() end),
-    awful.button({ modkey }, 1, awful.mouse.client.move),
-    awful.button({ modkey }, 3, awful.mouse.client.resize))
+    awful.button({ altkey }, 1, awful.mouse.client.move),
+    awful.button({ altkey }, 3, awful.mouse.client.resize))
 
 -- Set keys
 root.keys(globalkeys)
