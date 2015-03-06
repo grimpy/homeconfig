@@ -30,6 +30,7 @@ alias scpresume="loadrsa; rsync -Pazhv"
 alias git="loadrsa; git"
 alias hg="loadrsa; hg"
 alias mosh="mosh --predict=experimental"
+alias wget="wget --content-disposition"
 
 export LANG="en_US.utf8"
 
