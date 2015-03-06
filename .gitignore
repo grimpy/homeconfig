@@ -4,6 +4,5 @@ homeconfig/.config/awesome/freedesktop
 homeconfig/.config/awesome/myrc/xdg_menu.lua
 homeconfig/.config/awesome/vicious
 homeconfig/.ssh/known_hosts
-homeconfig/.ssh/known_hosts
 homeconfig/.ssh/agent*
 homeconfig/.vim/bundle/*
