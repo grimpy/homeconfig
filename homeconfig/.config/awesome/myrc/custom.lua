@@ -130,7 +130,7 @@ tags = {
     {
         name        = "10:Remote",                 -- Call the tag "Term"
         key         = "x",
-        launch      = "xterm -class xbmcremote -e python2 /usr/bin/xbmcremote -c --host xbmc.lan",
+        launch      = "xterm -class xbmcremote -e python2 /usr/bin/kodiremote -c",
         init        = false,                   -- Load the tag on startup
         exclusive   = true,                   -- Refuse any other type of clients (by classes)
         screen      = {LCD},                  -- Create this tag on screen 1 and screen 2
