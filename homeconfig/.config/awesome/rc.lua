@@ -206,55 +206,32 @@ root.buttons(awful.util.table.join(
 -- }}}
 
 -- {{{ Key bindings
+keydoc.group("Clients")
 globalkeys = awful.util.table.join(
-    awful.key({ capskey,           }, "p",   awful.tag.viewprev       ),
-    awful.key({ capskey,           }, "n",  awful.tag.viewnext       ),
+    awful.key({ capskey,           }, "p",   awful.tag.viewprev, "Goto previous tag"       ),
+    awful.key({ capskey,           }, "n",  awful.tag.viewnext, "Goto next tag"       ),
     awful.key({ capskey,           }, "Escape", awful.tag.history.restore),
+    keydoc.group("Clients Focus"),
     awful.key({ capskey,           }, "h",
         function ()
             awful.client.focus.bydirection("left")
             if client.focus then client.focus:raise() end
-        end),
+        end, "Right "),
     awful.key({ capskey,           }, "l",
         function ()
             awful.client.focus.bydirection("right")
             if client.focus then client.focus:raise() end
-        end),
+        end, "Right"),
     awful.key({ capskey,           }, "k",
         function ()
             awful.client.focus.bydirection("up")
             if client.focus then client.focus:raise() end
-        end),
+        end, "Up"),
     awful.key({ capskey,           }, "j",
         function ()
             awful.client.focus.bydirection("down")
             if client.focus then client.focus:raise() end
-        end),
-
-    awful.key({ capskey, "Shift"   }, "h",
-        function ()
-            awful.client.swap.bydirection("left")
-            if client.focus then client.focus:raise() end
-        end),
-    awful.key({ capskey, "Shift"   }, "l",
-        function ()
-            awful.client.swap.bydirection("right")
-            if client.focus then client.focus:raise() end
-        end),
-    awful.key({ capskey, "Shift"   }, "k",
-        function ()
-            awful.client.swap.bydirection("up")
-            if client.focus then client.focus:raise() end
-        end),
-    awful.key({ capskey, "Shift"   }, "j",
-        function ()
-            awful.client.swap.bydirection("down")
-            if client.focus then client.focus:raise() end
-        end),
-
-
-    awful.key({ capskey,           }, "w", function () menubar.show() end),
-
+        end, "Down"),
     -- Layout manipulation
     awful.key({ altkey,           }, "Tab",
         function ()
@@ -262,13 +239,34 @@ globalkeys = awful.util.table.join(
                 awful.client.focus.byidx(1)
                 client.focus:raise()
             end
-        end),
+        end, "Cycle"),
+    keydoc.group("Clients Swap Location"),
+    awful.key({ capskey, "Shift"   }, "h",
+        function ()
+            awful.client.swap.bydirection("left")
+            if client.focus then client.focus:raise() end
+        end, "Left"),
+    awful.key({ capskey, "Shift"   }, "l",
+        function ()
+            awful.client.swap.bydirection("right")
+            if client.focus then client.focus:raise() end
+        end, "Right"),
+    awful.key({ capskey, "Shift"   }, "k",
+        function ()
+            awful.client.swap.bydirection("up")
+            if client.focus then client.focus:raise() end
+        end, "Up"),
+    awful.key({ capskey, "Shift"   }, "j",
+        function ()
+            awful.client.swap.bydirection("down")
+            if client.focus then client.focus:raise() end
+        end, "Down"),
+
+    awful.key({ capskey,           }, "w", function () menubar.show() end),
 
     -- Standard program
     myrc.custom.keybindings,
     myrc.widgets.keybindings,
-    awful.key({ capskey, "Control" }, "r", awesome.restart),
-    awful.key({ capskey, "Shift"   }, "q", awesome.quit),
 
     -- awful.key({ capskey,           }, "l",     function () awful.tag.incmwfact( 0.05)    end),
     -- awful.key({ capskey,           }, "h",     function () awful.tag.incmwfact(-0.05)    end),
