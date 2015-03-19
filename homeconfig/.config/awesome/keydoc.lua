@@ -1,6 +1,7 @@
 -- Document key bindings
 
 local awful     = require("awful")
+local device    = require 'myrc.device'
 local table     = table
 local ipairs    = ipairs
 local pairs     = pairs
@@ -93,7 +94,7 @@ local function markup(keys)
 	 local help, group = doc[key].help, doc[key].group
 	 local skey = key2str(key)
 	 result[group] = (result[group] or "") ..
-	    '<span font="DejaVu Sans Mono 12" color="' .. beautiful.fg_widget_clock .. '"> ' ..
+	    '<span font="' .. device.font .. '" color="' .. beautiful.fg_widget_clock .. '"> ' ..
 	    string.format("%" .. (longest - unilen(skey)) .. "s  ", "") .. skey ..
 	    '</span>  <span color="' .. beautiful.fg_widget_value .. '">' .. -- if
    -- beautiful.fg_widget_value is not specified in your theme.lua, try changing it to "#E0E0D1"
