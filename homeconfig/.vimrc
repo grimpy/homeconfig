@@ -12,7 +12,7 @@ NeoBundle 'tpope/vim-commentary.git'
 NeoBundle 'tpope/vim-fugitive.git'
 NeoBundle 'tpope/vim-sensible.git'
 NeoBundle 'kevinw/pyflakes-vim.git'
-NeoBundle 'Shougo/neocomplcache.git'
+NeoBundle 'Shougo/neocomplete.git'
 NeoBundle 'Shougo/neosnippet.vim.git'
 NeoBundle 'Shougo/unite.vim'
 NeoBundle 'Shougo/vimproc.vim', {
@@ -33,5 +33,6 @@ NeoBundle 'xolox/vim-misc'
 NeoBundle 'xolox/vim-notes'
 NeoBundle 'mhinz/vim-signify'
 NeoBundle 'vim-scripts/BufOnly.vim'
+NeoBundle 'fatih/vim-go'
 
 call neobundle#end()

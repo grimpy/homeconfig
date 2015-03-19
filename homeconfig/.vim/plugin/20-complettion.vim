@@ -5,8 +5,8 @@ autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
 autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
 
 inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
-let g:neocomplcache_enable_at_startup = 1
-let g:neocomplcache_enable_auto_close_preview = 1
+let g:neocomplete#enable_at_startup = 1
+let g:neocomplete#enable_auto_close_preview = 1
 
 " Plugin key-mappings.
 smap <C-k>     <Plug>(neosnippet_expand_or_jump)
