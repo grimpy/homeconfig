@@ -97,7 +97,7 @@ tags = {
         exclusive   = true,                   -- Refuse any other type of clients (by classes)
         screen      = {VGA},                  -- Create this tag on screen 1 and screen 2
         layout      = awful.layout.suit.tile, -- Use the tile layout
-        class       = {"Geany", "gvim", "Firebug", "sun-awt-X11-XFramePeer", "Devtools", "jetbrains-android-studio"}
+        class       = {"Geany", "gvim", "Firebug", "sun-awt-X11-XFramePeer", "Devtools", "jetbrains-android-studio", "sun-awt-X11-XDialogPeer"}
     },
     {
         name        = "7:Media",                 -- Call the tag "Term"
@@ -169,7 +169,12 @@ function movecursor(x, y)
 end
 
 function lock()
-    awful.util.spawn("xlock")
+    awful.util.spawn("xlock force")
+end
+
+function locktoggle()
+    local res = awful.util.pread("xlock toggle")
+    naughty.notify({title="Lock status", text=res})
 end
 
 function suspend()
@@ -328,8 +333,7 @@ keybindings = awful.util.table.join(
     keydoc.group("Screen"),
     awful.key({ }, "XF86MonBrightnessUp", function () awful.util.spawn_with_shell("xbacklight -inc 10") end, "Brightness +"),
     awful.key({ }, "XF86MonBrightnessDown", function () awful.util.spawn_with_shell("xbacklight -dec 10") end, "Brightness -"),
-    awful.key({ winkey, "Shift" }, "l", function () awful.util.spawn("xautolock -disable") end, "Disable Autolock"),
-    awful.key({ winkey, "Control" }, "l", function () awful.util.spawn("xautolock -enable") end, "Enable Autolock"),
+    awful.key({ winkey, }, "l", locktoggle, "Toggle Autolock"),
     awful.key({ winkey,           }, "p", function () awful.util.spawn(binhome .. "xrandr.sh --auto") end, "Dual/Single Toggle"),
     keydoc.group("Menus"),
     awful.key({ capskey}, "s", function() keymenu(shutdownkeys, "Shutdown", {bg="#ff3333", fg="#ffffff"}) end, "Shutdown Menu"),

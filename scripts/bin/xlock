@@ -1,2 +1,33 @@
 #!/bin/bash
-i3lock -c 222222
+CONFIG=~/.config/xautolock
+option=$1
+
+function lock() {
+    i3lock -c 222222
+}
+
+case $option in
+    enable)
+        touch $CONFIG
+        ;;
+    disable)
+        rm $CONFIG
+        ;;
+    force)
+        lock
+        ;;
+    toggle)
+        if [ -e "$CONFIG" ]; then
+            rm $CONFIG
+            echo "DISABLED"
+        else
+            touch $CONFIG
+            echo "ENABLED"
+        fi
+        ;;
+    *)
+        if [ -e "$CONFIG" ]; then
+            lock
+        fi
+        ;;
+esac
