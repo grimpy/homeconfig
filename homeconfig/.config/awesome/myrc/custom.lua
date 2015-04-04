@@ -13,6 +13,7 @@ local os = os
 local io = io
 local widgets = require("myrc.widgets")
 local myrc = {}
+local lockreplaceid = nil
 myrc.util = require("myrc.util")
 
 module("myrc.custom")
@@ -174,7 +175,15 @@ end
 
 function locktoggle()
     local res = awful.util.pread("xlock toggle")
-    naughty.notify({title="Lock status", text=res})
+    local color = "#0080ff"
+    if res == "DISABLED\n" then
+        color = "FF0000"
+    else
+        color = "00FF00"
+    end
+    local fg= "FFFFFF"
+    local notification = naughty.notify({title="Lock status", text="", fg=fg, bg=color, replaces_id=lockreplaceid})
+    lockreplaceid = notification.id
 end
 
 function suspend()
