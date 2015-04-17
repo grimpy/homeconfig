@@ -4,8 +4,7 @@
 # key [ -mount-options-separated-by-comma ] location
 # For details of the format look at autofs(5).
 #
-/mnt/network	/etc/auto.network --timeout=5 --ghost
-/mnt/media   /etc/auto.usb --timeout=5 --ghost
-/mnt/smb   /etc/auto.smb --timeout=5 --ghost
+/mnt/network   /etc/autofs/my.network --timeout=5 --ghost
+/mnt/cifs  /etc/autofs/auto.smb --timeout=5 --ghost
 #
 +auto.master

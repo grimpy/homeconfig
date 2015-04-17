@@ -1,4 +1,0 @@
-HDMAX -fstype=cifs,file_mode=0644,dir_mode=0755,credentials=/etc/smb.auth,uid=Jo  ://hdmax/C
-HDMAXE -fstype=cifs,file_mode=0644,dir_mode=0755,credentials=/etc/smb.auth,uid=Jo  ://hdmax/E
-Daredevil -fstype=cifs,user=leech,password=leech,uid=Jo  ://192.168.1.2/downloads
-xbox    -fstype=fuse,allow_other,user=xbox:xbox curlftpfs#ftp://xbox.skynet
