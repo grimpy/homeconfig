@@ -16,8 +16,9 @@ case $1 in
         fi
         ;;
     reconnect)
-        for x in `wpa_cli list_networks| grep "DISABLED" | awk '{print $1}'`; do wpa_cli enable_network $x; done
+        for x in `wpa_cli list_networks| grep "DISABLED" | awk '{print $1}'`; do echo "enable_network $x" | wpa_cli; done
         wpa_cli reconnect
+        sudo systemctl restart dhcpcd
         ;;
     *)
         echo "No option given"
