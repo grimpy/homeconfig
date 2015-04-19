@@ -1,6 +1,6 @@
 #!/bin/bash
 function cmd() {
-    ssh xbmc.lan "
+    ssh media.lan "
 export DISPLAY=:0
 $*
 "
@@ -36,7 +36,7 @@ function switchx() {
 }
 
 function sleep() {
-    timeout 3 ssh xbmc.lan "systemctl suspend"
+    timeout 3 ssh media.lan "systemctl suspend"
 }
 
 function wakeup() {
