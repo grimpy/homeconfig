@@ -83,12 +83,12 @@ tags = {
     {
         name        = "5:FS",                 -- Call the tag "Term"
         key         = "5",
-        launch      = "pcmanfm",
+        launch      = "spacefm",
         init        = false,                   -- Load the tag on startup
         exclusive   = true,                   -- Refuse any other type of clients (by classes)
         screen      = {LCD},                  -- Create this tag on screen 1 and screen 2
         layout      = awful.layout.suit.float, -- Use the tile layout
-        class       = {"Thunar", "pcmanfm", "xarchiver", "Squeeze", "File-roller", "Nautilus"}
+        class       = {"Thunar", "spacefm", "pcmanfm", "xarchiver", "Squeeze", "File-roller", "Nautilus"}
     },
     {
         name        = "6:Edit",                 -- Call the tag "Term"
