@@ -1,2 +1,2 @@
 import JumpScale.baselib.redis
-rcl = j.clients.redis.getByInstaceName('system')
+rcl = j.clients.redis.getByInstance('system')
