@@ -34,5 +34,6 @@ NeoBundle 'xolox/vim-notes'
 NeoBundle 'mhinz/vim-signify'
 NeoBundle 'vim-scripts/BufOnly.vim'
 NeoBundle 'fatih/vim-go'
+NeoBundle 'gcmt/taboo.vim'
 
 call neobundle#end()
