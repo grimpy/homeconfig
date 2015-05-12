@@ -83,7 +83,7 @@ tags = {
     {
         name        = "5:FS",                 -- Call the tag "Term"
         key         = "5",
-        launch      = "spacefm",
+        launch      = "thunar",
         init        = false,                   -- Load the tag on startup
         exclusive   = true,                   -- Refuse any other type of clients (by classes)
         screen      = {LCD},                  -- Create this tag on screen 1 and screen 2
