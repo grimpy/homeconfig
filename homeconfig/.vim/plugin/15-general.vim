@@ -21,6 +21,8 @@ set hlsearch
 set cursorline
 set ignorecase
 set smartcase
+set clipboard=unnamedplus
+set wildmenu
 
 if has('gui_running')
     colorscheme molokai

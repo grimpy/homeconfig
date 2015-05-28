@@ -1,8 +1,5 @@
 " Pasting
 nnoremap  <leader>l mzgg=G`z<CR>
-vnoremap <leader>c "*y
-nnoremap <leader>c "*yy
-nnoremap <leader>v "*p
 au InsertLeave * set nopaste
 " Reload vimrc
 nnoremap <leader>R :source $MYVIMRC<CR>
