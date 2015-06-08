@@ -73,7 +73,7 @@ tags = {
     {
         name        = "4:Mail",                 -- Call the tag "Term"
         key         = "4",
-        launch      = "thunderbird",
+        launch      = "emailclient",
         init        = false,                   -- Load the tag on startup
         exclusive   = true,                   -- Refuse any other type of clients (by classes)
         screen      = {LCD},                  -- Create this tag on screen 1 and screen 2
