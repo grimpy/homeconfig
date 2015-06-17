@@ -11,6 +11,7 @@ export BKMRK_jp7=$BKMRK_work/github/jumpscale/jp_jumpscale7
 export BKMRK_ays=$BKMRK_work/github/jumpscale/ays_jumpscale7
 export BKMRK_jpbin=$BKMRK_work/git/binary
 export BKMRK_aydo=$BKMRK_work/git/aydo
+export BKMRK_zcomp=$BKMRK_work/git/0-complexity
 export BKMRK_ms1=$BKMRK_work/github/0-complexity/mothership1
 export BKMRK_jpms1=$BKMRK_work/github/0-complexity/jp_ms1
 export BKMRK_ms1info=$BKMRK_work/gitlab.mothership1.com/ms1-admin/ms1_admin_info
