@@ -26,3 +26,8 @@
 [review "review.cyanogenmod.org"]
 	username = deboeck.jo
 
+[url "git@git.aydo.com:"]
+	insteadOf = https://git.aydo.com/
+
+[url "git@github.com:"]
+	insteadOf = https://github.com/
