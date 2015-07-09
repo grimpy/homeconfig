@@ -1,8 +1,8 @@
 if [[ -z "$TMUX" ]]; then
     NAME=$HOSTNAME
     if tmux has-session -t $NAME 2> /dev/null; then
-        exec tmux at -t $NAME
+        exec tmux -2 at -t $NAME
     else
-        exec tmux new -s $NAME
+        exec tmux -2 new -s $NAME
     fi
 fi
