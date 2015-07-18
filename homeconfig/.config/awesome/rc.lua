@@ -11,8 +11,6 @@ local beautiful = require("beautiful")
 -- Notification library
 local naughty = require("naughty")
 -- Custom
-local menubar = require("menubar")
-require("myrc.autostart")
 require("myrc.custom")
 require("myrc.util")
 require("myrc.widgets")
@@ -45,9 +43,6 @@ end
 -- }}}
 
 local home = os.getenv("HOME")
-if myrc.custom.autostart then
-    myrc.autostart.init(home .. "/.config/autostart/")
-end
 
 confdir = awful.util.getdir("config")
 beautiful.init(confdir .. "/theme.lua")
@@ -87,18 +82,11 @@ end
 -- }}}
 
 
--- {{{ Menu Bar
-menubar.utils.terminal = myrc.custom.terminal -- Set the terminal for applications that require it
 mylauncher = awful.widget.button({ image = beautiful.awesome_icon })
 mylauncher:buttons(awful.util.table.join(
-    awful.button({}, 1, function () menubar.show() end)
+    awful.button({}, 1, function () awful.util.spawn("rofi -show run") end)
     )
 )
-
--- }}}
-
--- Menubar configuration
--- }}}
 
 -- Create a wibox for each screen and add it
 mywibox = {}
@@ -262,8 +250,6 @@ globalkeys = awful.util.table.join(
             if client.focus then client.focus:raise() end
         end, "Down"),
 
-    awful.key({ capskey,           }, "w", function () menubar.show() end),
-
     -- Standard program
     myrc.custom.keybindings,
     myrc.widgets.keybindings,
@@ -291,11 +277,6 @@ clientkeys = awful.util.table.join(
         function (c)
             c.maximized_horizontal = not c.maximized_horizontal
             c.maximized_vertical   = not c.maximized_vertical
-        end),
-    awful.key({ capskey,           }, "a",
-        function (c)
-            local t = shifty.add()
-            c:tags({t})
         end)
 )
 

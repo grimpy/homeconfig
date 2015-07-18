@@ -2,7 +2,6 @@ local keydoc = require("keydoc")
 local awful = require("awful")
 local client = client
 local awesome = awesome
-local menubar = require("menubar")
 local keygrabber = keygrabber
 local screen = screen
 local mouse = mouse
@@ -12,15 +11,14 @@ local string = string
 local os = os
 local io = io
 local widgets = require("myrc.widgets")
+local runonce = require("myrc.runonce")
 local myrc = {}
 local lockreplaceid = nil
 myrc.util = require("myrc.util")
 
 module("myrc.custom")
-binhome = os.getenv("HOME") .. "/mygit/scripts/bin/"
-menubar.menu_gen.all_menu_dirs = { "/usr/share/applications/", "/usr/local/share/applications", "~/.local/share/applications" }
 
-browser = binhome .. "browser"
+browser = "browser"
 terminal = "urxvtc"
 autostart = true
 winkey = "Mod4"
@@ -29,6 +27,7 @@ capskey = "Mod3"
 VGA = screen.count()
 LCD = 1
 
+runonce.run("dex -as ~/.config/autostart")
 
 function removeFile(file)
     local f = io.open(file,"r")
@@ -42,7 +41,7 @@ tags = {
     {
         name        = "1:Term",                 -- Call the tag "Term"
         key         = "1",
-        init        = false,                   -- Load the tag on startup
+        init        = true,                   -- Load the tag on startup
         launch      = "urxvt",
         max_clients = 4,
         exclusive   = true,                   -- Refuse any other type of clients (by classes)
@@ -95,10 +94,10 @@ tags = {
         key         = "6",
         launch      = "gvim",
         init        = false,                   -- Load the tag on startup
-        exclusive   = true,                   -- Refuse any other type of clients (by classes)
+        exclusive   = false,                   -- Refuse any other type of clients (by classes)
         screen      = {VGA},                  -- Create this tag on screen 1 and screen 2
-        layout      = awful.layout.suit.tile, -- Use the tile layout
-        class       = {"Geany", "gvim", "Firebug", "sun-awt-X11-XFramePeer", "Devtools", "jetbrains-android-studio", "sun-awt-X11-XDialogPeer"}
+        layout      = awful.layout.suit.max, -- Use the tile layout
+        class       = {"jetbrains-pycharm-ce", "Geany", "gvim", "Firebug", "sun-awt-X11-XFramePeer", "Devtools", "jetbrains-android-studio", "sun-awt-X11-XDialogPeer"}
     },
     {
         name        = "7:Media",                 -- Call the tag "Term"
@@ -281,13 +280,13 @@ end
 
 function xbmcmote()
     function togglekb()
-        local output = awful.util.pread(binhome .. "xbmcmote kb")
+        local output = awful.util.pread("xbmcmote kb")
         naughty.notify({title="Remote Keyboard", timeout=5, text=output})
     end
     local keys = { {key="r", help="Toggle Remote", callback=togglekb},
-                   {key="x", help="Switch VT", callback=function () awful.util.spawn(binhome .. "xbmcmote x") end},
-                   {key="s", help="Sleep", callback=function () awful.util.spawn(binhome .. "xbmcmote s") end},
-                   {key="w", help="Wakeup", callback=function () awful.util.spawn(binhome .. "xbmcmote w") end}
+                   {key="x", help="Switch VT", callback=function () awful.util.spawn("xbmcmote x") end},
+                   {key="s", help="Sleep", callback=function () awful.util.spawn("xbmcmote s") end},
+                   {key="w", help="Wakeup", callback=function () awful.util.spawn("xbmcmote w") end}
                  }
     keymenu(keys, "XBMCMote", {})
 end
@@ -326,24 +325,26 @@ keydoc.group("Launchers")
 keybindings = awful.util.table.join(
     awful.key({ capskey, }, "F1", keydoc.display, "This"),
     awful.key({ altkey, "Control" }, "c", function () awful.util.spawn(terminal) end, "Open Terminal"),
-    awful.key({ }, "Print", function () awful.util.spawn(binhome .. "caputereimg.sh /home/Jo/Pictures/SS") end, "Take Screenshot"),
+    awful.key({ }, "Print", function () awful.util.spawn("caputereimg.sh /home/Jo/Pictures/SS") end, "Take Screenshot"),
     awful.key({ winkey,           }, "c", function () awful.util.spawn_with_shell("xclip -o | xclip -i -selection clipboard") end, "Sync Clipboards"),
-    awful.key({ winkey,           }, "o", function () awful.util.spawn(binhome .. "rotatescreen") end, "Rotate Screen"),
+    awful.key({ winkey,           }, "o", function () awful.util.spawn("rotatescreen") end, "Rotate Screen"),
     awful.key({ }, "XF86Battery", suspend, "Suspend"),
     awful.key({ capskey}, "v", myrc.util.resortTags, "Resort Tags"),
     awful.key({ winkey }, "k", function() awful.util.spawn_with_shell("setxkbmap us,ar altgr-intl, ; xmodmap ~/.Xmodmap") end, "Reset Keyboard mods"),
+    awful.key({ capskey }, "r", function() awful.util.spawn("rofi -show run") end, "Run commands"),
+    awful.key({ capskey }, "i", function() awful.util.spawn("rofi -modi 'Snippets:rofisnippets' -show Snippets") end, "Copy snippet"),
+    awful.key({ capskey }, "w", function() awful.util.spawn("rofi -show window") end, "Search open windows"),
     keydoc.group("Music"),
-    awful.key({ winkey,           }, "F2", function () awful.util.spawn(binhome .. "musiccontrol PlayPause") end, "Play/Resume"),
-    awful.key({ winkey,           }, "F3", function () awful.util.spawn(binhome .. "musiccontrol Previous") end, "Previous"),
-    awful.key({ winkey,           }, "F4", function () awful.util.spawn(binhome .. "musiccontrol Next") end, "Next"),
-    awful.key({ }, "XF86AudioPlay", function () awful.util.spawn(binhome .. "musiccontrol PlayPause") end, "Play/Resume"),
-    awful.key({ }, "XF86AudioNext", function () awful.util.spawn(binhome .. "musiccontrol Next") end, "Next"),
-    awful.key({ }, "XF86AudioPrev", function () awful.util.spawn(binhome .. "musiccontrol Previous") end, "Previous"),
+    awful.key({ winkey,           }, "F2", function () awful.util.spawn("musiccontrol PlayPause") end, "Play/Resume"),
+    awful.key({ winkey,           }, "F3", function () awful.util.spawn("musiccontrol Previous") end, "Previous"),
+    awful.key({ winkey,           }, "F4", function () awful.util.spawn("musiccontrol Next") end, "Next"),
+    awful.key({ }, "XF86AudioNext", function () awful.util.spawn("musiccontrol Next") end, "Next"),
+    awful.key({ }, "XF86AudioPrev", function () awful.util.spawn("musiccontrol Previous") end, "Previous"),
     keydoc.group("Screen"),
     awful.key({ }, "XF86MonBrightnessUp", function () awful.util.spawn_with_shell("xbacklight -inc 10") end, "Brightness +"),
     awful.key({ }, "XF86MonBrightnessDown", function () awful.util.spawn_with_shell("xbacklight -dec 10") end, "Brightness -"),
     awful.key({ winkey, }, "l", locktoggle, "Toggle Autolock"),
-    awful.key({ winkey,           }, "p", function () awful.util.spawn(binhome .. "xrandr.sh --auto") end, "Dual/Single Toggle"),
+    awful.key({ winkey,           }, "p", function () awful.util.spawn( "xrandr.sh --auto") end, "Dual/Single Toggle"),
     keydoc.group("Menus"),
     awful.key({ capskey}, "s", function() keymenu(shutdownkeys, "Shutdown", {bg="#ff3333", fg="#ffffff"}) end, "Shutdown Menu"),
     awful.key({ capskey}, "t", function() keymenu(tagkeys, "Tag Management", {}) end, "Tag Management"),
@@ -381,7 +382,7 @@ client.connect_signal("property::urgent", function(c)
         window = client.focus.window
     end
     if c.urgent and c.window ~= window then
-        awful.util.spawn(binhome .. "scrolllock")
+        awful.util.spawn("scrolllock")
     elseif not awful.client.urgent.get() then
         removeFile('/tmp/scrolllock')
     end

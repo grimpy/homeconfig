@@ -43,6 +43,8 @@ while True:
         time1, time2, evtype, evcode, evvalue = struct.unpack(format, data)
         if evtype == KEY_TYPE:
             if evcode in (164, 114, 115) and evvalue == 1:
+                if subprocess.call(['pidof', 'i3lock']):
+                    continue
                 print "Found Media button", evcode
                 if evcode == 164: #play pause
                     subprocess.call(['musiccontrol', 'PlayPause'])
@@ -52,5 +54,4 @@ while True:
                     subprocess.call(['ponymix', 'decrease', '5'])
                 elif evcode == 115:
                     subprocess.call(['ponymix', 'increase', '5'])
-                subprocess.call(['pkill', '-RTMIN+1', 'i3blocks'])
 

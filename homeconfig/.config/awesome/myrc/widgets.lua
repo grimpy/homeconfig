@@ -73,21 +73,6 @@ function runprompt()
     prompt.run({prompt='Tag: '}, myprompt, result, completionwrapper(mytagnames), nil)
 end
 
-function runsnippets()
-    local snippets = {}
-    local p = io.popen('find "'.. SNIPPETDIR ..'" -type f -printf "%f\n"')
-    for file in p:lines() do                         --Loop through all files
-        snippets[#snippets+1] = file
-    end
-
-    function result(...)
-        local file = SNIPPETDIR .. ...
-        awful.util.spawn_with_shell("cat " .. file .. " | xsel -i -p")
-        awful.util.spawn_with_shell("cat " .. file .. " | xsel -i -b")
-    end
-    prompt.run({prompt='Snippet: '}, myprompt, result, completionwrapper(snippets), nil)
-
-end
 
 local myip = wibox.widget.textbox()
 myip:set_font(device.font)
@@ -314,7 +299,5 @@ keybindings = awful.util.table.join(
     awful.key({winkey}, "Up", increasevolume, "Increase Volume"),
     awful.key({winkey}, "0", mutevolume, "Mute Volume"),
     keydoc.group("Prompts"),
-    awful.key({capskey}, "y", runprompt, "Search tag"),
-    awful.key({capskey}, "i", runsnippets, "Search snippets"),
-    awful.key({capskey}, "r", cmdprompt, "Run command")
+    awful.key({capskey}, "y", runprompt, "Search tag")
 )
