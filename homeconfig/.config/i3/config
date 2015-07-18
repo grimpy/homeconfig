@@ -259,6 +259,10 @@ bindsym $winkey+o exec rotatescreen
 bindsym $winkey+F2 exec musiccontroler PlayPause
 bindsym $winkey+F3 exec musiccontroler Previous
 bindsym $winkey+F4 exec musiccontroler Next
+#volume
+bindsym $winkey+Up exec ponymix increase 5, exec pkill -RTMIN+1 i3blocks
+bindsym $winkey+Down exec ponymix decrease 5, exec pkill -RTMIN+1 i3blocks
+bindsym $winkey+0 exec ponymix toggle, exec pkill -RTMIN+1 i3blocks
 #screen
 bindsym XF86BrightnessUp exec xbacklight -inc 10
 bindsym XF86BrightnessDown exec xbacklight -dec 10

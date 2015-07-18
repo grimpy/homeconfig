@@ -32,6 +32,7 @@ label=
 instance=130/5
 command=~/.config/i3blocks/blocks/i3blocks-volume-pulse
 interval=once
+signal=1
 
 [wireless]
 label=
