@@ -1,0 +1,7 @@
+#!/bin/bash
+if [ -z $@ ]; then
+    ls -1 ~/.config/snippets
+else
+    cat ~/.config/snippets/$1 | xsel -i -b
+fi
+
