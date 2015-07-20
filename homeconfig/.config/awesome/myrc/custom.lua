@@ -66,7 +66,7 @@ tags = {
         init        = false,                   -- Load the tag on startup
         exclusive   = true,                   -- Refuse any other type of clients (by classes)
         screen      = {LCD},                  -- Create this tag on screen 1 and screen 2
-        layout      = awful.layout.suit.tile, -- Use the tile layout
+        layout      = awful.layout.suit.max, -- Use the tile layout
         class       = {"Chrome", "Chromium", "Midori", "Navigator", "Namoroka","Firefox"}
     },
     {
@@ -336,6 +336,7 @@ keybindings = awful.util.table.join(
     awful.key({ capskey }, "w", function() awful.util.spawn("rofi -show window") end, "Search open windows"),
     keydoc.group("Music"),
     awful.key({ winkey,           }, "F2", function () awful.util.spawn("musiccontrol PlayPause") end, "Play/Resume"),
+    awful.key({ }, "XF86AudioPlay", function () awful.util.spawn("musiccontrol PlayPause") end, "Play/Resume"),
     awful.key({ winkey,           }, "F3", function () awful.util.spawn("musiccontrol Previous") end, "Previous"),
     awful.key({ winkey,           }, "F4", function () awful.util.spawn("musiccontrol Next") end, "Next"),
     awful.key({ }, "XF86AudioNext", function () awful.util.spawn("musiccontrol Next") end, "Next"),
@@ -361,7 +362,9 @@ keybindings = awful.util.table.join(
                   local s = awful.util.cycle(screen.count(), awful.tag.getscreen(t) + 1)
                   awful.tag.history.restore()
                   t = tagtoscr(s, t)
-                  awful.tag.viewonly(t)
+                  if t then
+                      awful.tag.viewonly(t)
+                  end
               end
           end, "Move tag to screen"),
     awful.key({ winkey,    }, "c", pushincorner, "Move window in corner"),
