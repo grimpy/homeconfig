@@ -28,6 +28,8 @@
 
 [url "git@git.aydo.com:"]
 	insteadOf = https://git.aydo.com/
+	insteadOf = http://git.aydo.com/
 
 [url "git@github.com:"]
 	insteadOf = https://github.com/
+	insteadOf = http://github.com/
