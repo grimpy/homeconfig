@@ -1,8 +1,10 @@
 if [[ -z "$TMUX" ]]; then
-    NAME=$HOSTNAME
-    if tmux has-session -t $NAME 2> /dev/null; then
-        exec tmux -2 at -t $NAME
-    else
-        exec tmux -2 new -s $NAME
+    if ! cat /proc/self/cgroup | grep lxc > /dev/null; then
+        NAME=$HOSTNAME
+        if tmux has-session -t $NAME 2> /dev/null; then
+            exec tmux -2 at -t $NAME
+        else
+            exec tmux -2 new -s $NAME
+        fi
     fi
 fi
