@@ -1,6 +1,7 @@
 local os = os
 local pcall = pcall
 local dofile = dofile
+local pairs = pairs
 local awful = require('awful')
 
 module("myrc.device")
@@ -12,9 +13,14 @@ end
 
 local hostname = trim(awful.util.pread("hostname -s"))
 local configdir = awful.util.getdir("config")
-local devicepath = configdir .. "/devices/" .. hostname .. ".lua"
-if not awful.util.file_readable(devicepath) then
-    devicepath = configdir .. "/devices/default" 
-end
+devicepath = configdir .. "/devices/defaults.lua" 
 success, device = pcall(function() return dofile(devicepath) end)
+
+-- loa device specific
+local devicepath = configdir .. "/devices/" .. hostname .. ".lua"
+if awful.util.file_readable(devicepath) then
+    local success, mydevice = pcall(function() return dofile(devicepath) end)
+    for k,v in pairs(mydevice) do device[k] = v end
+
+end
 return device

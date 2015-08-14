@@ -166,8 +166,8 @@ vicious.register(mynet, vicious.contrib.net,
            uiunit = 'mb'
            uunit = 'MiB'
         end
-        local down = data["{bond0 down_".. diunit .. "}"]
-        local up = data["{bond0 up_".. uiunit  .. "}"]
+        local down = data["{"..device.network.." down_".. diunit .. "}"]
+        local up = data["{"..device.network.." up_".. uiunit  .. "}"]
         local result = '<span color="#00FF00">%5s %s</span> <span color="#FF0000">%5s %s</span>'
         return string.format(result, down, dunit, up, uunit)
     end
@@ -198,6 +198,9 @@ local mybat = wibox.widget.textbox()
 mybat:set_font(device.font)
 function updateBat()
     local res = vicious.widgets.bat(nil, device.battery)
+    if not res then
+        return
+    end
     local per = res[2]
     local output = res[1] .. res[2]
     local color
