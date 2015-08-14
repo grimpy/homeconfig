@@ -1,4 +1,4 @@
-if [[ -z "$TMUX" && -z "$SUDO_USER" ]]; then
+if [[ -z "$TMUX" && -z "$SUDO_USER" && -e "/usr/bin/tmux" ]]; then
     if ! cat /proc/self/cgroup | grep lxc > /dev/null; then
         NAME=$HOSTNAME
         if tmux has-session -t $NAME 2> /dev/null; then
