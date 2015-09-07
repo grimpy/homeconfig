@@ -67,7 +67,7 @@ tags = {
         exclusive   = true,                   -- Refuse any other type of clients (by classes)
         screen      = {LCD},                  -- Create this tag on screen 1 and screen 2
         layout      = awful.layout.suit.max, -- Use the tile layout
-        class       = {"Chrome", "Chromium", "Midori", "Navigator", "Namoroka","Firefox"}
+        class       = {"Chrome", "Google-chrome-stable", "Chromium", "Midori", "Navigator", "Namoroka","Firefox"}
     },
     {
         name        = "4:Mail",                 -- Call the tag "Term"
