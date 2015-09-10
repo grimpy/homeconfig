@@ -22,14 +22,8 @@ function kbtoggle() {
 function switchx() {
     vt=$(cmd fgconsole)
     if [ $vt == 7 ]; then
-        synergys
-        if cmd "systemctl status startx" ; then
-            cmd chvt 9
-        else
-            cmd "systemctl start startx"
-        fi
+        cmd chvt 8
     else
-        pkill synergys
         cmd chvt 7
     fi
     
