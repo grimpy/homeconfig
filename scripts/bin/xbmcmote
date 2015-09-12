@@ -22,8 +22,10 @@ function kbtoggle() {
 function switchx() {
     vt=$(cmd fgconsole)
     if [ $vt == 7 ]; then
+        cp ~/.config/koditools/mine.conf ~/.config/koditools/remote.conf
         cmd chvt 8
     else
+        cp ~/.config/koditools/kids.conf ~/.config/koditools/remote.conf
         cmd chvt 7
     fi
     
