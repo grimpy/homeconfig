@@ -6,7 +6,10 @@ import os
 gm = '172.17.0.34'
 cb = '172.17.0.34'
 
-ALLIP = cb
+#ALLIP = '192.168.20.133'
+#ALLIP = '172.17.0.13'
+ALLIP = '172.17.0.7'
+#ALLIP = '37.203.43.220'
 
 isbox = False
 CONNECTIONS = {'default' : ALLIP,
@@ -14,123 +17,46 @@ CONNECTIONS = {'default' : ALLIP,
                'cb': cb,
               }
 REPOBASE = "/home/Jo/work"
-if not isbox:
-    BASE = "/opt/jumpscale/"
-    BINDIR = "/usr/local/bin/"
-    #LIBDIR = "/usr/local/lib/python2.7/site-packages/"
-    LIBDIR = "/opt/jumpscale/libext/"
-    JSDIR = "/usr/local/lib/python2.7/dist-packages/JumpScale/"
+
+files = []
+
+def getmodifiedgit(folder):
+    files = []
+    gitroot = subprocess.Popen(['git', 'rev-parse', '--show-toplevel'], stdout=subprocess.PIPE).communicate()[0].strip()
+    modfiles = subprocess.Popen(['git', 'status', '--porcelain'], cwd=folder, stdout=subprocess.PIPE).communicate()[0].strip()
+    for filepath in modfiles.splitlines():
+        filepath = filepath.strip()[2:]
+        files.append(os.path.join(gitroot, filepath))
+    return files
+
+if len(sys.argv) < 2:
+    files = getmodifiedgit('.')
 else:
-    BASE = "/opt/jsbox/"
-    BINDIR = "/usr/local/bin/"
-    LIBDIR = "/opt/jsbox/libext/"
-    JSDIR = "/opt/jsbox/libjs/JumpScale/"
-
-LIBEXT = os.path.join(BASE, 'libext', '')
-incubaid = {'mothership1' : {
-                'apps': ['apps', BASE, 'cb'],
-                'shellcmds': ['', BINDIR, 'cb'],
-                'apps/cbportal/base/': ['apps/portals/main/base/', BASE, 'gm'],
-                'apps/cloudbroker/base/': ['apps/portals/main/base/', BASE, 'cb'],
-                'apps/billingengine/base/': ['apps/portals/main/base/', BASE, 'cb'],
-                'apps/cloudbroker/cloudbrokerlib/': ['cloudbrokerlib/', LIBDIR, 'gm'],
-                'apps/cloudscalers_fe/base/': ['apps/portals/main/base/', BASE, 'cb'],
-                'libs/agent-scripts': ['apps/agentcontroller/jumpscripts', BASE, 'gm'],
-                'libs/CloudscalerLibcloud': ['', LIBDIR, 'gm'],
-                'apps/billingengine/billingenginelib': ['billingenginelib', LIBEXT, 'gm'],
-                }
-            }
-
-mapping = {
-        'bitbucket': {
-            'incubaid': incubaid,
-            'jumpscale': {
-                'jumpscale_core': {
-                    'apps': ['apps', BASE, 'gm'],
-                    'lib/JumpScale': ['', JSDIR, 'all']
-                    },
-                'jumpscale_grid': {
-                    'apps/vfw/jumpscripts/': ['apps/agentcontroller/jumpscripts/', BASE, 'gm'],
-                    'apps/vfw/actor/vfw/': ['apps/vfw/', BASE, 'gm'],
-                    'apps/vfw/osis/': ['apps/osis/logic/', BASE, 'gm'],
-                    'apps': ['apps', BASE, 'gm'],
-                    'lib/JumpScale': ['', JSDIR, 'all']
-                    },
-                'jumpscale_lib': {
-                    'JumpScale': ['', JSDIR, 'all']
-                    },
-                'jumpscale_portal': {
-                    'apps': ['apps', BASE, 'gm'],
-                    'lib/JumpScale': ['', JSDIR, 'all']
-                    }
-                }
-            },
-        'github': {
-            '0-complexity': incubaid,
-            'jumpscale': {
-                'jumpscale_core': {
-                    'shellcmds': ['', BINDIR, 'all'],
-                    'apps/vfw/jumpscripts/': ['apps/agentcontroller/jumpscripts/', BASE, 'gm'],
-                    'apps/vfw/actor/vfw/': ['apps/portals/main/', BASE, 'gm'],
-                    'apps/gridportal/base/': ['apps/portals/main/base/', BASE, 'gm'],
-                    'apps/portalbase/': ['apps/portals/portalbase/', BASE, 'gm'],
-                    'apps/vfw/osis/': ['apps/osis/logic/', BASE, 'gm'],
-                    'apps': ['apps', BASE, 'gm'],
-                    'lib/JumpScale': ['', JSDIR, 'all']
-                    },
-                }
-            },
-        }
-
-
-file = os.path.abspath(sys.argv[1])
+    file = os.path.abspath(sys.argv[1])
+    if os.path.isfile(file):
+        files.append(file)
+    elif os.path.isdir(file):
+        files = getmodifiedgit('.')
+    else:
+        print "This only works with files or folders"
+        os.exit(1)
 defaultip = None
-if not os.path.isfile(file):
-    print "This only works with files"
-    os.exit(1)
 if len(sys.argv) > 2:
     defaultip = sys.argv[2]
 
-metapath = file[len(REPOBASE)+1:]
-parts = metapath.split('/')
-provider = parts[0]
-repoaccount = parts[1]
-reponame = parts[2]
-abspath = '/'.join(parts[3:])
+connections = [ defaultip or ALLIP ]
 
-if '__' in reponame:
-    reponame = reponame.split('__', 1)[1]
+for file in files:
+    metapath = file[len(REPOBASE)+1:]
+    destfile = os.path.join('/opt', 'code', metapath)
+    if not destfile:
+        print "Could not determine destination"
+        sys.exit(1)
 
-repoinfo = mapping[provider][repoaccount][reponame]
-
-destfile = None
-for key, conf in sorted(repoinfo.iteritems(), key=lambda x: len(x[0])):
-    if len(conf) == 2:
-        value, base = conf
-        connections = [ CONNECTIONS['default'] ]
-    else:
-        value, base, con = conf
-        if defaultip:
-            connections = [ defaultip ]
-        elif con == 'all':
-            connections = CONNECTIONS.values()
-        else:
-            connections = [ CONNECTIONS.get(con, CONNECTIONS['default']) ]
-
-    if abspath.startswith(key):
-        newabspath = abspath.replace(key, value, 1)
-        if newabspath.startswith('/'):
-            newabspath = newabspath[1:]
-        destfile = os.path.join(base, newabspath)
-
-if not destfile:
-    print "Could not determine destination"
-    sys.exit(1)
-
-print destfile
+    print destfile
 
 
-for connection in set(connections):
-    destdir = os.path.dirname(destfile)
-    subprocess.call(["ssh", connection, "mkdir -p '%s'" % destdir])
-    subprocess.call(["scp", file, "%s:%s" % (connection, destfile)])
+    for connection in set(connections):
+        destdir = os.path.dirname(destfile)
+        subprocess.call(["ssh", connection, "mkdir -p '%s'" % destdir])
+        subprocess.call(["scp", file, "%s:%s" % (connection, destfile)])
