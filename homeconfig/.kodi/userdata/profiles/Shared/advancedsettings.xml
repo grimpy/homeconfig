@@ -1,40 +1,40 @@
 <advancedsettings>
  <pathsubstitution>
   <substitute>
-    <from>/media/MEDIAKDISK/Movies/</from>
-    <to>SMB://XBMC/media/Movies</to>
+    <from>/media/6TB/Movies/</from>
+    <to>SMB://192.168.1.3/media/6TB/Movies</to>
   </substitute>
   <substitute>
-    <from>/media/MEDIADISK/Series/</from>
-    <to>SMB://XBMC/media/Series</to>
+    <from>/media/6TB/Series/</from>
+    <to>SMB://192.168.1.3/media/6TB/Series</to>
   </substitute>
   <substitute>
-    <from>/media/MEDIADISK/Intros/</from>
-    <to>SMB://XBMC/media/Intros</to>
+    <from>/media/6TB/Intros/</from>
+    <to>SMB://192.168.1.3/media/6TB/Intros</to>
   </substitute>
   <substitute>
-    <from>/media/MEDIADISK/Pictures/</from>
-    <to>SMB://XBMC/media/Pictures</to>
+    <from>/media/6TB/Pictures/</from>
+    <to>SMB://192.168.1.3/media/6TB/Pictures</to>
   </substitute>
   <substitute>
-    <from>/media/MEDIADISK/Downloads/</from>
-    <to>SMB://XBMC/media/Downloads</to>
+    <from>/media/6TB/Downloads/</from>
+    <to>SMB://192.168.1.3/media/6TB/Downloads</to>
   </substitute>
   <substitute>
-    <from>/media/MEDIADISK/Music/</from>
-    <to>SMB://XBMC/media/Music</to>
+    <from>/media/6TB/Music/</from>
+    <to>SMB://192.168.1.3/media/6TB/Music</to>
   </substitute>
  </pathsubstitution>
  <videodatabase>
   <type>mysql</type>
-  <host>xbmc.lan</host>
+  <host>192.168.1.3</host>
   <port>3306</port>
   <user>xbmc</user>
   <pass>xbmc</pass>
  </videodatabase> 
  <musicdatabase>
   <type>mysql</type>
-  <host>xbmc.lan</host>
+  <host>192.168.1.3</host>
   <port>3306</port>
   <user>xbmc</user>
   <pass>xbmc</pass>
