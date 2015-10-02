@@ -109,7 +109,6 @@
       <t>XBMC.ActivateWindow(Videos, TvShowTitles)</t>
       <m>XBMC.ActivateWindow(Videos, MovieTitles)</m>
       <v>XBMC.ActivateWindow(Videos, MovieTitles)</v>
-      <key id='61952'>XBMC.ActivateWindow(Videos, MovieTitles)</key>
       <!-- Multimedia keyboard keys -->
       <browser_back>Back</browser_back>
       <browser_forward/>
