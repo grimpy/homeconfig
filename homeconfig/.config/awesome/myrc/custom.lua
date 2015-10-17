@@ -330,7 +330,7 @@ keybindings = awful.util.table.join(
     awful.key({ winkey,           }, "o", function () awful.util.spawn("rotatescreen") end, "Rotate Screen"),
     awful.key({ }, "XF86Battery", suspend, "Suspend"),
     awful.key({ capskey}, "v", myrc.util.resortTags, "Resort Tags"),
-    awful.key({ winkey }, "k", function() awful.util.spawn_with_shell("setxkbmap us,ar altgr-intl, ; xmodmap ~/.Xmodmap") end, "Reset Keyboard mods"),
+    awful.key({  }, "Caps_Lock", function() awful.util.spawn_with_shell("fixkeyboard") end, "Reset Keyboard mods"),
     awful.key({ capskey }, "r", function() awful.util.spawn("rofi -show run") end, "Run commands"),
     awful.key({ capskey }, "i", function() awful.util.spawn("rofi -modi 'Snippets:rofisnippets' -show Snippets") end, "Copy snippet"),
     awful.key({ capskey }, "w", function() awful.util.spawn("rofi -show window") end, "Search open windows"),

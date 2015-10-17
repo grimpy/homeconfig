@@ -1,0 +1,6 @@
+#!/bin/bash
+sleep 1
+xkbset nullify lock
+setxkbmap us,ar altgr-intl,
+xset -led 1
+xmodmap ~/.Xmodmap
