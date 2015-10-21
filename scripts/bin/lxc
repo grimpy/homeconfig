@@ -26,7 +26,11 @@ function lxc_rename() {
 
 function clone() {
     sudo lxc-clone -s -o $1 -n $2
-    sudo sed -i "s@$1@$2@" /var/lib/lxc/$2/fstab
+    srcname="$1"
+    destname="$2"
+    dest="${lxc_path}/${destname}"
+    src="${lxc_path}/${srcname}"
+    lxc_rename
 }
 
 if [ "$BASH_SOURCE" != "$0" ]; then
