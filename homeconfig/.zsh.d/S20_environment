@@ -22,8 +22,12 @@ export GOPATH=~/Dev/go
 
 export PATH=$HOME/bin:$HOME/mygit/scripts/bin:$PATH
 export EDITOR=/usr/bin/vim
-loadrsa() {
-        eval `keychain -q --eval --agents ssh id_rsa $1`
-}
+if [ "$(hostname -d)" = "lxc"  ]; then
+    loadrsa() {   }
+else
+    loadrsa() {
+            eval `keychain -q --eval --agents ssh id_rsa $1`
+    }
+fi
 loadrsa --noask
 
