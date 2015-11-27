@@ -26,6 +26,8 @@ function lxc_rename() {
 
 function clone() {
     sudo lxc-clone -s -o $1 -n $2
+    sudo sed -i "/$2/d" /var/lib/misc/dnsmasq.leases
+    sudo systemctl restart dnsmasq
     srcname="$1"
     destname="$2"
     dest="${lxc_path}/${destname}"
