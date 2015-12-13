@@ -194,6 +194,7 @@ assign [class="xterm"] $ws1
 assign [class="Pidgin"] $ws2
 assign [class="Skype"] $ws2
 assign [class="Gajim"] $ws2
+assign [class="Telegram"] $ws2
 assign [class="Firefox"] $ws3
 assign [class="Chrome"] $ws3
 assign [class="Chromium"] $ws3
@@ -220,7 +221,7 @@ mode "$mode_system" {
 }
 bindsym $mod+s mode "$mode_system"
 
-set $mode_workspace Workspace Management (r) Rename, (<>) Move screen
+set $mode_workspace Workspace Management (r) Rename, (Left/Right) Move screen
 mode "$mode_workspace" {
     bindsym r exec --no-startup-id i3-input -F 'rename workspace to "%s"' -P 'New name: ', mode "default"
     
