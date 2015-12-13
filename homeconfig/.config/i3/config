@@ -206,7 +206,7 @@ assign [class="Atom"] $ws6
 
 set $mode_system System (l) lock, (e) logout, (s) suspend, (h) hibernate, (r) reboot, (c) reload config, (p) shutdown
 mode "$mode_system" {
-    bindsym l exec --no-startup-id i3lock, mode "default"
+    bindsym l exec --no-startup-id xlock force, mode "default"
     bindsym e exit, mode "default"
     bindsym c reload, mode "default"
     bindsym s exec --no-startup-id systemctl suspend, mode "default"
@@ -252,17 +252,6 @@ mode "$mode_kodi" {
 }
 bindsym $mod+z mode "$mode_kodi"
 
-#launchers
-bindsym $winkey+p exec xrandr.sh --auto
-bindsym $winkey+o exec rotatescreen
-#music
-bindsym $winkey+F2 exec musiccontroler PlayPause
-bindsym $winkey+F3 exec musiccontroler Previous
-bindsym $winkey+F4 exec musiccontroler Next
-#volume
-bindsym $winkey+Up exec ponymix increase 5, exec pkill -RTMIN+1 i3blocks
-bindsym $winkey+Down exec ponymix decrease 5, exec pkill -RTMIN+1 i3blocks
-bindsym $winkey+0 exec ponymix toggle, exec pkill -RTMIN+1 i3blocks
 #screen
 bindsym XF86BrightnessUp exec xbacklight -inc 10
 bindsym XF86BrightnessDown exec xbacklight -dec 10
