@@ -5,6 +5,14 @@ import select
 import subprocess
 import pyinotify
 
+CMDS = {163: ['musiccontrol', 'Prev'],
+        164: ['musiccontrol', 'PlayPause'],
+        165: ['musiccontrol', 'Next'],
+        113: ['ponymix', 'toggle'],
+        114: ['ponymix', 'decrease', '5'],
+        115: ['ponymix', 'increase', '5'],
+        }
+
 devices = dict()
 for devicepath in glob.glob("/dev/input/event*"):
     devices[devicepath] = open(devicepath)
@@ -42,16 +50,8 @@ while True:
             continue
         time1, time2, evtype, evcode, evvalue = struct.unpack(format, data)
         if evtype == KEY_TYPE:
-            if evcode in (164, 114, 115) and evvalue == 1:
-                if subprocess.call(['pidof', 'i3lock']):
-                    continue
+            if evcode in CMDS and evvalue == 1:
                 print "Found Media button", evcode
-                if evcode == 164: #play pause
-                    subprocess.call(['musiccontrol', 'PlayPause'])
-                elif evcode == 113:
-                    subprocess.call(['ponymix', 'toggle'])
-                elif evcode == 114:
-                    subprocess.call(['ponymix', 'decrease', '5'])
-                elif evcode == 115:
-                    subprocess.call(['ponymix', 'increase', '5'])
-
+                cmd = CMDS[evcode]
+                print 'Command: %s' % cmd
+                subprocess.call(cmd)
