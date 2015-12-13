@@ -254,5 +254,5 @@ mode "$mode_kodi" {
 bindsym $mod+z mode "$mode_kodi"
 
 #screen
-bindsym XF86BrightnessUp exec xbacklight -inc 10
-bindsym XF86BrightnessDown exec xbacklight -dec 10
+bindsym XF86MonBrightnessUp exec xbacklight -inc 10
+bindsym XF86MonBrightnessDown exec xbacklight -dec 10
