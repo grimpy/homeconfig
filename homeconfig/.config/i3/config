@@ -120,12 +120,12 @@ bindsym $mod+a focus parent
 #bindsym $mod+d focus child
 
 # switch to workspace
-bindsym $mod+F1 workspace $ws1
-bindsym $mod+F2 workspace $ws2
-bindsym $mod+F3 workspace $ws3
-bindsym $mod+F4 workspace $ws4
-bindsym $mod+F5 workspace $ws5
-bindsym $mod+F6 workspace $ws6
+bindsym $mod+F1 exec openorlaunchi3 $ws1 /usr/bin/urxvtc
+bindsym $mod+F2 exec openorlaunchi3 $ws2 /usr/bin/telegram
+bindsym $mod+F3 exec openorlaunchi3 $ws3 /usr/bin/firefox
+bindsym $mod+F4 exec openorlaunchi3 $ws4 /usr/bin/Thunderbird
+bindsym $mod+F5 exec openorlaunchi3 $ws5 /usr/bin/pcmanfm
+bindsym $mod+F6 exec openorlaunchi3 $ws6 /usr/bin/pycharm
 bindsym $mod+F7 workspace $ws7
 bindsym $mod+F8 workspace $ws8
 bindsym $mod+F9 workspace $ws9
