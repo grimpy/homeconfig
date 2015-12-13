@@ -181,7 +181,7 @@ bindsym $mod+g mode "resize"
 # finds out, if available)
 bar {
   status_command i3blocks -c ~/.config/i3blocks/config
-  tray_output eDP1
+  tray_output primary
   position top
   colors {
     background #232323
