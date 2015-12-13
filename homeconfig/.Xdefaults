@@ -43,8 +43,9 @@ urxvt.matcher.pattern.1: \\w{8}-\\w{4}-\\w{4}-\\w{4}-\\w{12}
 urxvt.matcher.pattern.2: (https?|ftps?)://[^\\s]+
 urxvt.keysym.Mod4-t: perl:keyboard-select:activate
 urxvt.keysym.Mod4-u: perl:url-select:select_next
-urxvt.keysym.Mod4-v: perl:clipboard:paste
-urxvt.keysym.Mod4-c: perl:clipboard:copy
+urxvt.keysym.C-C: perl:clipboard:copy
+urxvt.keysym.C-V: perl:clipboard:paste
+URxvt.iso14755 : false
 urxvt.clipboard.copycmd:  xsel -ib
 urxvt.clipboard.pastecmd: xsel -ob
 urxvt.keysym.Mod4-minus: perl:font-size:decrease
