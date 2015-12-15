@@ -32,7 +32,7 @@ set $ws10 10:Remote
 # clear in small sizes. However, if you need a lot of unicode glyphs or
 # right-to-left text rendering, you should instead use pango for rendering and
 # chose a FreeType font, such as:
-font pango:FontAwesome 10
+font pango:DejaVu Sans Mono for Powerline 10
 
 # Use Mouse+$mod to drag floating windows to their wanted position
 floating_modifier $altkey
