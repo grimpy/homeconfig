@@ -182,7 +182,7 @@ bindsym $mod+g mode "resize"
 bar {
 #  status_command i3blocks -c ~/.config/i3blocks/config
   status_command  python3 ~/.config/i3/status.py
-  tray_output primary
+  #tray_output primary
   position top
   colors {
     background #232323
@@ -205,6 +205,7 @@ assign [class="Thunar"] $ws5
 assign [class="jetbrains-pycharm-ce"] $ws6
 assign [class="Gvim"] $ws6
 assign [class="Atom"] $ws6
+for_window [class="Float"] floating enable
 
 set $mode_system System (l) lock, (e) logout, (s) suspend, (h) hibernate, (r) reboot, (c) reload config, (p) shutdown
 mode "$mode_system" {
