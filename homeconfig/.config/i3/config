@@ -24,6 +24,8 @@ set $ws7 7:Media
 set $ws8 8:Emu
 set $ws9 9:Mediafs
 set $ws10 10:Remote
+set $ws11 11
+set $ws12 12
 
 # Font for window titles. Will also be used by the bar unless a different font
 # is used in the bar {} block below. ISO 10646 = Unicode
@@ -130,6 +132,8 @@ bindsym $mod+F7 workspace $ws7
 bindsym $mod+F8 workspace $ws8
 bindsym $mod+F9 workspace $ws9
 bindsym $mod+F10 workspace $ws10
+bindsym $mod+F11 workspace $ws11
+bindsym $mod+F12 workspace $ws12
 bindsym $mod+n workspace next
 bindsym $mod+p workspace prev
 
@@ -144,6 +148,8 @@ bindsym $mod+Shift+F7 move container to workspace $ws7
 bindsym $mod+Shift+F8 move container to workspace $ws8
 bindsym $mod+Shift+F9 move container to workspace $ws9
 bindsym $mod+Shift+F10 move container to workspace $ws10
+bindsym $mod+Shift+F11 move container to workspace $ws11
+bindsym $mod+Shift+F12 move container to workspace $ws12
 
 # reload the configuration file
 # restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
@@ -210,7 +216,7 @@ for_window [class="Float"] floating enable
 set $mode_system System (l) lock, (e) logout, (s) suspend, (h) hibernate, (r) reboot, (c) reload config, (p) shutdown
 mode "$mode_system" {
     bindsym l exec --no-startup-id xlock force, mode "default"
-    bindsym e exit, mode "default"
+    bindsym e exec bash -c "loginctl terminate-session $(loginctl show-seat seat0 -p ActiveSession | cut -d = -f 2)", mode "default"
     bindsym c reload, mode "default"
     bindsym s exec --no-startup-id systemctl suspend, mode "default"
     bindsym h exec --no-startup-id systemctl hibernate, mode "default"
@@ -237,9 +243,6 @@ mode "$mode_workspace" {
 bindsym $mod+t mode "$mode_workspace"
 
 bindsym $mod+u [urgent=latest] focus
-
-# startup
-exec dex -a -s ~/.config/autostart
 
 # kodi control
 set $mode_kodi (r) Toggle Remote, (x) Switch VT, (s) Sleep, (w) Wakeup
