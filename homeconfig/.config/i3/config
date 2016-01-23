@@ -135,7 +135,7 @@ bindsym $mod+F10 workspace $ws10
 bindsym $mod+F11 workspace $ws11
 bindsym $mod+F12 workspace $ws12
 bindsym $mod+n workspace next
-bindsym $mod+p workspace prev
+bindsym $mod+p exec xrandr.sh --auto
 
 # move focused container to workspace
 bindsym $mod+Shift+F1 move container to workspace $ws1
