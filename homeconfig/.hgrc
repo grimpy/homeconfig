@@ -1,8 +1,9 @@
 [ui]
-username = Jo De Boeck <deboeckj@incubaid.com>
 editor = /usr/bin/vim -c "r ~/.hgtemplate"
 merge = meld
 ssh = ssh -C
+
+%include ~/.config/hgrc/hgrc
 
 [extensions]
 # fetch simplifies pull merge commit workflow

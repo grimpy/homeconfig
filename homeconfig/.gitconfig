@@ -1,8 +1,5 @@
 [color]
 	ui = true
-[user]
-	name = Jo De Boeck
-	email = deboeck.jo@gmail.com
 [push]
 	default = current
 [pull]
@@ -17,19 +14,12 @@
 [diff]
     tool = meld
 
+[include]
+    path = ~/.config/git/gitconfig
+
 [giggle]
 	main-window-maximized = true
 	main-window-geometry = 0x0+0+0
 	history-view-vpane-position = 274
 	main-window-view = HistoryView
 	file-view-vpane-position = 398
-[review "review.cyanogenmod.org"]
-	username = deboeck.jo
-
-[url "git@git.aydo.com:"]
-	insteadOf = https://git.aydo.com/
-	insteadOf = http://git.aydo.com/
-
-[url "git@github.com:"]
-	insteadOf = https://github.com/
-	insteadOf = http://github.com/
