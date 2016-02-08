@@ -6,3 +6,4 @@ homeconfig/.config/awesome/vicious
 homeconfig/.ssh/known_hosts
 homeconfig/.ssh/agent*
 homeconfig/.vim/bundle/*
+overlay
