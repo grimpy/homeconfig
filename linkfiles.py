@@ -19,7 +19,7 @@ if options.root:
         sys.exit(1)
     else:
         fullpaths.append(os.path.join(repopath, 'osconfig'))
-        overlay = os.path.join(fullpath, 'overlay', 'osconfig')
+        overlay = os.path.join(repopath, 'overlay', 'osconfig')
         if os.path.exists(overlay):
             fullpaths.append(os.path.join(repopath, 'osconfig'))
         target = "/"
