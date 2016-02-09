@@ -5,12 +5,31 @@ import select
 import subprocess
 import pyinotify
 
-CMDS = {163: ['musiccontrol', 'Prev'],
-        164: ['musiccontrol', 'PlayPause'],
-        165: ['musiccontrol', 'Next'],
-        113: ['ponymix', 'toggle'],
-        114: ['ponymix', 'decrease', '5'],
-        115: ['ponymix', 'increase', '5'],
+def call(*args):
+    return lambda : subprocess.Popen(args)
+
+def ponymix(*args):
+    def action():
+        sinks = subprocess.Popen(['pactl', 'list', 'short', 'sinks'], stdout=subprocess.PIPE).stdout.read()
+        bestsink = 0
+        state = 'default'
+        for sink in sinks.splitlines():
+            attribs = sink.split()
+            if attribs[-1] == 'RUNNING':
+                bestsink = attribs[0]
+                state = 'RUNNING'
+            elif attribs[-1] == 'IDLE' and state == 'DEFAULT':
+                bestsink = attribs[0]
+                state = 'IDLE'
+        subprocess.Popen(['ponymix', '-d', bestsink, '--sink'] + list(args))
+    return action
+
+CMDS = {163: call('musiccontrol', 'Prev'),
+        164: call('musiccontrol', 'PlayPause'),
+        165: call('musiccontrol', 'Next'),
+        113: ponymix('toggle'),
+        114: ponymix('decrease', '5'),
+        115: ponymix('increase', '5'),
         }
 
 devices = dict()
@@ -52,6 +71,4 @@ while True:
         if evtype == KEY_TYPE:
             if evcode in CMDS and evvalue == 1:
                 print "Found Media button", evcode
-                cmd = CMDS[evcode]
-                print 'Command: %s' % cmd
-                subprocess.call(cmd)
+                CMDS[evcode]()
