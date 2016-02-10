@@ -21,7 +21,7 @@ export GOPATH=~/Dev/go
 #export TERM=xterm
 
 export PATH=$HOME/bin:$HOME/mygit/scripts/bin:$PATH
-export EDITOR=/usr/bin/vim
+export EDITOR=vim
 if [ "$(hostname -d)" = "lxc"  ]; then
     loadrsa() {   }
 else
