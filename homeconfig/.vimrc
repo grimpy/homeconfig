@@ -12,7 +12,7 @@ NeoBundle 'tpope/vim-commentary.git'
 NeoBundle 'tpope/vim-fugitive.git'
 NeoBundle 'tpope/vim-sensible.git'
 NeoBundle 'kevinw/pyflakes-vim.git'
-NeoBundle 'Shougo/neocomplete.git'
+NeoBundle 'Shougo/deoplete.nvim.git'
 NeoBundle 'Shougo/neosnippet.vim.git'
 NeoBundle 'Shougo/unite.vim'
 NeoBundle 'Shougo/vimproc.vim', {
