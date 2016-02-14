@@ -57,6 +57,11 @@ ssh2(){
     /usr/bin/ssh $ip $@
 }
 
+sshr() {
+    ssh -O exit $@
+    ssh $@
+}
+
 mosh2() {
     ssh2 $1 "apt-get install -y mosh"
     mosh $1
@@ -98,11 +103,6 @@ function cd() {
 
 function yaourt(){
     /usr/bin/yaourt $*
-    hash -r
-}
-
-function pip(){
-    /usr/bin/pip $*
     hash -r
 }
 
