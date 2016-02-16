@@ -10,6 +10,7 @@
     stat = status
     wipe = reset --hard HEAD
     meld = "!sh -c \"git difftool -y $1^!\""
+    dsf = "!git diff --color $@ | diff-so-fancy"
 
 [diff]
     tool = meld
