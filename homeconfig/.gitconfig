@@ -7,9 +7,12 @@
 [help]
 	autocorrect = 1
 [alias]
-    stat = status
+    stat = status -s
     wipe = reset --hard HEAD
     meld = "!sh -c \"git difftool -y $1^!\""
+    lg = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --all
+    delete = !git branch --merged | grep -v \"\\*\" | grep -v master | grep -v dev | xargs -n 1 git branch -d
+    dif = "!git diff --color $@ | diff-so-fancy"
     dsf = "!git diff --color $@ | diff-so-fancy"
 
 [diff]
