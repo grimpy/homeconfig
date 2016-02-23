@@ -70,6 +70,10 @@ status.register("network",
     start_color='white',
     format_up=" {bytes_recv}K  {bytes_sent}K",)
 
+status.register("file",
+        components={'bond': (str, '/sys/class/net/bond0/bonding/active_slave')},
+        format="{bond}")
+
 status.run()
 
 
