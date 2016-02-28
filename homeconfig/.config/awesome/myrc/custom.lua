@@ -23,7 +23,7 @@ terminal = "urxvtc"
 autostart = true
 winkey = "Mod4"
 altkey = "Mod1"
-capskey = "Mod3"
+capskey = "Mod4"
 VGA = screen.count()
 LCD = 1
 
@@ -57,7 +57,7 @@ tags = {
         init        = false,                   -- Load the tag on startup
         screen      = {VGA},                  -- Create this tag on screen 1 and screen 2
         layout      = awful.layout.suit.fair.horizontal, -- Use the tile layout
-        class       = {"Pidgin", "Skype", "gajim"}
+        class       = {"Pidgin", "Skype", "gajim", 'Telegram'}
     },
     {
         name        = "3:Web",                 -- Call the tag "Term"
@@ -266,6 +266,19 @@ function rename_tag()
     end)
 end
 
+function movetagtoscreen()
+    if client.focus then
+        local t = client.focus:tags()[1]
+        local s = awful.util.cycle(screen.count(), awful.tag.getscreen(t) + 1)
+        awful.tag.history.restore()
+        t = tagtoscr(s, t)
+        if t then
+            awful.tag.viewonly(t)
+        end
+    end
+end
+
+
 function movetagmenu()
     local keys = { {key="Left", help="Move Left", callback=function () movetag(-1); return true; end},
                    {key="Right", help="Move Right", callback=function () movetag(1); return true end}
@@ -294,6 +307,7 @@ end
 local tagkeys = { -- {key="a", help="Add", callback=shifty.add},
                   {key="r", help="Rename", callback=rename_tag},
                   {key="m", help="Move", callback=movetagmenu},
+                  {key="s", help="Move to Screen", callback=movetagtoscreen},
                   {key="d", help="Delete", callback=function () 
                     local t = awful.tag.selected() 
                     awful.tag.delete(t)
@@ -320,6 +334,7 @@ function tagtoscr(scr, t)
     end
     return otag
 end
+
 
 keydoc.group("Launchers")
 keybindings = awful.util.table.join(
@@ -355,18 +370,7 @@ keybindings = awful.util.table.join(
         awful.client.urgent.jumpto()
         removeFile('/tmp/scrolllock')
     end, "Jump to urgent"),
-    awful.key({capskey,        }, "o",
-          function()
-              if client.focus then
-                  local t = client.focus:tags()[1]
-                  local s = awful.util.cycle(screen.count(), awful.tag.getscreen(t) + 1)
-                  awful.tag.history.restore()
-                  t = tagtoscr(s, t)
-                  if t then
-                      awful.tag.viewonly(t)
-                  end
-              end
-          end, "Move tag to screen"),
+    awful.key({capskey,        }, "o", movetagtoscreen, "Move tag to screen"),
     awful.key({ winkey,    }, "c", pushincorner, "Move window in corner"),
     awful.key({ winkey }, "d", awful.tag.viewnone, "Show desktop"),
 
