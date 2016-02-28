@@ -351,11 +351,8 @@ keybindings = awful.util.table.join(
     awful.key({ capskey }, "w", function() awful.util.spawn("rofi -show window") end, "Search open windows"),
     keydoc.group("Music"),
     awful.key({ winkey,           }, "F2", function () awful.util.spawn("musiccontrol PlayPause") end, "Play/Resume"),
-    awful.key({ }, "XF86AudioPlay", function () awful.util.spawn("musiccontrol PlayPause") end, "Play/Resume"),
     awful.key({ winkey,           }, "F3", function () awful.util.spawn("musiccontrol Previous") end, "Previous"),
     awful.key({ winkey,           }, "F4", function () awful.util.spawn("musiccontrol Next") end, "Next"),
-    awful.key({ }, "XF86AudioNext", function () awful.util.spawn("musiccontrol Next") end, "Next"),
-    awful.key({ }, "XF86AudioPrev", function () awful.util.spawn("musiccontrol Previous") end, "Previous"),
     keydoc.group("Screen"),
     awful.key({ }, "XF86MonBrightnessUp", function () awful.util.spawn_with_shell("xbacklight -inc 10") end, "Brightness +"),
     awful.key({ }, "XF86MonBrightnessDown", function () awful.util.spawn_with_shell("xbacklight -dec 10") end, "Brightness -"),
@@ -370,16 +367,14 @@ keybindings = awful.util.table.join(
         awful.client.urgent.jumpto()
         removeFile('/tmp/scrolllock')
     end, "Jump to urgent"),
-    awful.key({capskey,        }, "o", movetagtoscreen, "Move tag to screen"),
-    awful.key({ winkey,    }, "c", pushincorner, "Move window in corner"),
     awful.key({ winkey }, "d", awful.tag.viewnone, "Show desktop"),
 
     -- Mouse cursor bindings
     keydoc.group("Mouse Control"),
-    awful.key({ capskey,  }, "Left", function () movecursor(-10,0) end, "Move left"),
-    awful.key({ capskey,  }, "Right", function () movecursor(10,0) end, "Move right"),
-    awful.key({ capskey,  }, "Up", function () movecursor(0,-10) end, "Move up "),
-    awful.key({ capskey,  }, "Down", function () movecursor(0,10) end, "Move down")
+    awful.key({ capskey, "Shift" }, "Left", function () movecursor(-10,0) end, "Move left"),
+    awful.key({ capskey, "Shift" }, "Right", function () movecursor(10,0) end, "Move right"),
+    awful.key({ capskey, "Shift" }, "Up", function () movecursor(0,-10) end, "Move up "),
+    awful.key({ capskey, "Shift" }, "Down", function () movecursor(0,10) end, "Move down")
 )
 
 
