@@ -271,10 +271,9 @@ function movetagtoscreen()
         local t = client.focus:tags()[1]
         local s = awful.util.cycle(screen.count(), awful.tag.getscreen(t) + 1)
         awful.tag.history.restore()
-        t = tagtoscr(s, t)
-        if t then
-            awful.tag.viewonly(t)
-        end
+        if not s or s < 1 or s > screen.count() then return end
+        awful.tag.setscreen(t, s)
+        awful.tag.viewonly(t)
     end
 end
 
@@ -313,28 +312,6 @@ local tagkeys = { -- {key="a", help="Add", callback=shifty.add},
                     awful.tag.delete(t)
                   end}
                 }
-
-function tagtoscr(scr, t)
-    -- break if called with an invalid screen number
-    if not scr or scr < 1 or scr > screen.count() then return end
-    -- tag to move
-    local otag = t or awful.tag.selected()
-
-    awful.tag.setscreen(otag, scr)
-    -- set screen and then reset tag to order properly
-    if #otag:clients() > 0 then
-        for _ , c in ipairs(otag:clients()) do
-            if not c.sticky then
-                c.screen = scr
-                c:tags({otag})
-            else
-                awful.client.toggletag(otag, c)
-            end
-        end
-    end
-    return otag
-end
-
 
 keydoc.group("Launchers")
 keybindings = awful.util.table.join(
