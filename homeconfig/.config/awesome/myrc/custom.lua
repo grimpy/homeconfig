@@ -318,7 +318,6 @@ keybindings = awful.util.table.join(
     awful.key({ capskey, }, "F1", keydoc.display, "This"),
     awful.key({ altkey, "Control" }, "c", function () awful.util.spawn(terminal) end, "Open Terminal"),
     awful.key({ }, "Print", function () awful.util.spawn("caputereimg.sh /home/Jo/Pictures/SS") end, "Take Screenshot"),
-    awful.key({ winkey,           }, "c", function () awful.util.spawn_with_shell("xclip -o | xclip -i -selection clipboard") end, "Sync Clipboards"),
     awful.key({ winkey,           }, "o", function () awful.util.spawn("rotatescreen") end, "Rotate Screen"),
     awful.key({ }, "XF86Battery", suspend, "Suspend"),
     awful.key({ capskey}, "v", myrc.util.resortTags, "Resort Tags"),

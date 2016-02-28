@@ -97,7 +97,10 @@ function updateIP()
         myip:set_text("No IP")
         return
     end
-    myip:set_text(ip)
+    local f = io.open('/sys/class/net/bond0/bonding/active_slave', "r")
+    local t = f:read("*all")
+    f:close()
+    myip:set_text(ip .. ' ' .. t)
     local f = io.popen("iwconfig | grep -v 'no wireless'")
     local iw = f:read("*all")
     f:close()
