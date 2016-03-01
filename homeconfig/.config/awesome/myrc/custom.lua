@@ -266,6 +266,19 @@ function rename_tag()
     end)
 end
 
+function newtag()
+    awful.prompt.run({ prompt = "Enter tag name:" },
+    widgets.myprompt,
+    function(new_name)
+       if not new_name or #new_name == 0 then
+          return
+       else
+          local screen = mouse.screen
+          awful.tag.new({new_name}, screen)
+       end
+    end)
+end
+
 function movetagtoscreen()
     if client.focus then
         local t = client.focus:tags()[1]
@@ -303,7 +316,7 @@ function xbmcmote()
     keymenu(keys, "XBMCMote", {})
 end
 
-local tagkeys = { -- {key="a", help="Add", callback=shifty.add},
+local tagkeys = { {key="n", help="New", callback=newtag},
                   {key="r", help="Rename", callback=rename_tag},
                   {key="m", help="Move", callback=movetagmenu},
                   {key="s", help="Move to Screen", callback=movetagtoscreen},
