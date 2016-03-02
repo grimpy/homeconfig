@@ -11,7 +11,7 @@ def call(*args):
 def ponymix(*args):
     def action():
         sinks = subprocess.Popen(['pactl', 'list', 'short', 'sinks'], stdout=subprocess.PIPE).stdout.read()
-        bestsink = 0
+        bestsink = '0'
         state = 'default'
         for sink in sinks.splitlines():
             attribs = sink.split()
@@ -21,7 +21,8 @@ def ponymix(*args):
             elif attribs[-1] == 'IDLE' and state == 'DEFAULT':
                 bestsink = attribs[0]
                 state = 'IDLE'
-        subprocess.Popen(['ponymix', '-d', bestsink, '--sink'] + list(args))
+        cmd = ['ponymix', '-d', bestsink, '--sink'] + list(args)
+        subprocess.Popen(cmd)
     return action
 
 CMDS = {163: call('musiccontrol', 'Prev'),
