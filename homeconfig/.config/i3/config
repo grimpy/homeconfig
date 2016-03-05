@@ -125,8 +125,8 @@ bindsym $mod+a focus parent
 bindsym $mod+F1 exec openorlaunchi3 $ws1 /usr/bin/urxvtc
 bindsym $mod+F2 exec openorlaunchi3 $ws2 /usr/bin/telegram
 bindsym $mod+F3 exec openorlaunchi3 $ws3 /usr/bin/firefox
-bindsym $mod+F4 exec openorlaunchi3 $ws4 /usr/bin/Thunderbird
-bindsym $mod+F5 exec openorlaunchi3 $ws5 /usr/bin/pcmanfm
+bindsym $mod+F4 exec openorlaunchi3 $ws4 /usr/bin/thunderbird
+bindsym $mod+F5 exec openorlaunchi3 $ws5 ~/bin/files
 bindsym $mod+F6 exec openorlaunchi3 $ws6 /usr/bin/pycharm
 bindsym $mod+F7 workspace $ws7
 bindsym $mod+F8 workspace $ws8
@@ -208,6 +208,7 @@ assign [class="Chromium"] $ws3
 assign [class="Thunderbird"] $ws4
 assign [class="Evolution"] $ws4
 assign [class="Pcmanfm"] $ws5
+assign [class="Files"] $ws5
 assign [class="Thunar"] $ws5
 assign [class="Nautilus"] $ws5
 assign [class="jetbrains-pycharm-ce"] $ws6

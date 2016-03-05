@@ -60,7 +60,7 @@ wfaces = list(filter(lambda x: x.startswith('w'), netifaces.interfaces()))
 if wfaces:
     status.register("network",
         interface=wfaces[0],
-        on_leftclick='wpa_gui',
+        on_leftclick=[spawn('wpa_gui', '-i', 'wlan0')],
         color_up='#FFFFFF',
         format_up="{essid}",)
 
