@@ -1,0 +1,11 @@
+[Unit]
+Description=I3 Events listener
+
+[Service]
+EnvironmentFile=/home/Jo/.config/systemd/user/env
+Restart=on-failure
+RestartSec=30
+ExecStart=/usr/bin/python2 /home/Jo/mygit/source/i3events/i3events.py
+
+[Install]
+WantedBy=multi-user.target
