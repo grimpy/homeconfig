@@ -1,0 +1,10 @@
+[Unit]
+Description=Listen on Media Keys
+
+[Service]
+EnvironmentFile=/home/Jo/.config/systemd/user/env
+Restart=always
+ExecStart=/home/Jo/mygit/scripts/bin/mediakeys
+
+[Install]
+WantedBy=multi-user.target

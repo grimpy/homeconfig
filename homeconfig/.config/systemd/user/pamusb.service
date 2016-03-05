@@ -1,0 +1,10 @@
+[Unit]
+Description=PAM USB Agent
+
+[Service]
+EnvironmentFile=/home/Jo/.config/systemd/user/env
+ExecStart=/usr/bin/pamusb-agent
+Restart=always
+
+[Install]
+WantedBy=multi-user.target

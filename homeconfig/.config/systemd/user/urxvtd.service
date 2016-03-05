@@ -1,0 +1,10 @@
+[Unit]
+Description=urxvt daemon
+
+[Service]
+EnvironmentFile=/home/Jo/.config/systemd/user/env
+ExecStart=/usr/bin/urtxvtd -q -f -o
+Restart=always
+
+[Install]
+WantedBy=multi-user.target
