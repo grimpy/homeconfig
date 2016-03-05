@@ -20,4 +20,8 @@ if not os.path.exists(socketpath):
     print 'I3 is not running'
     sys.exit(3)
 
-i3.Subscription(workspacechange, 'workspace')
+try:
+    i3.Subscription(workspacechange, 'workspace')
+except Exception, e:
+    print 'Failed', e
+    sys.exit(4)
