@@ -32,8 +32,6 @@ alias hg="loadrsa; hg"
 alias mosh="mosh --predict=experimental"
 alias wget="wget --content-disposition"
 
-export LANG="en_US.utf8"
-
 alias grep="grep --colour=auto"
 
 vik(){
