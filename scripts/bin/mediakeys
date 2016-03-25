@@ -8,7 +8,7 @@ import pyinotify
 def call(*args):
     return lambda : subprocess.Popen(args)
 
-def ponymix(*args):
+def controlvolume(cmd):
     def action():
         sinks = subprocess.Popen(['pactl', 'list', 'short', 'sinks'], stdout=subprocess.PIPE).stdout.read()
         bestsink = '0'
@@ -21,16 +21,16 @@ def ponymix(*args):
             elif attribs[-1] == 'IDLE' and state == 'DEFAULT':
                 bestsink = attribs[0]
                 state = 'IDLE'
-        cmd = ['ponymix', '-d', bestsink, '--sink'] + list(args)
-        subprocess.Popen(cmd)
+        command = cmd % bestsink
+        subprocess.Popen(command.split())
     return action
 
 CMDS = {163: call('musiccontrol', 'Prev'),
         164: call('musiccontrol', 'PlayPause'),
         165: call('musiccontrol', 'Next'),
-        113: ponymix('toggle'),
-        114: ponymix('decrease', '5'),
-        115: ponymix('increase', '5'),
+        113: controlvolume('pactl set-sink-mute %s toggle'),
+        114: controlvolume('pactl set-sink-volume %s -5%%'),
+        115: controlvolume('pactl set-sink-volume %s +5%%'),
         }
 
 devices = dict()
