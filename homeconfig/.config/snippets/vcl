@@ -1,2 +1,1 @@
-import JumpScale.grid
-vcl = j.core.osis.getClientForNamespace('vfw')
+vcl = j.clients.osis.getNamespace('vfw')
