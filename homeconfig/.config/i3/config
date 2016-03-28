@@ -14,14 +14,14 @@ set $winkey Mod4
 set $altkey Mod1
 
 
-set $ws1 1:Term
-set $ws2 2:Im
-set $ws3 3:Web
-set $ws4 4:Mail
-set $ws5 5:FS
-set $ws6 6:Edit
-set $ws7 7:Media
-set $ws8 8:Emu
+set $ws1 "1: Term"
+set $ws2 "2: IM"
+set $ws3 "3: Web"
+set $ws4 "4: Mail"
+set $ws5 "5: FS"
+set $ws6 "6: Edit"
+set $ws7 "7: Media"
+set $ws8 "8: Emu"
 set $ws9 9:Mediafs
 set $ws10 10:Remote
 set $ws11 11

@@ -4,13 +4,13 @@ import subprocess
 import os
 import sys
 
-tag = sys.argv[1]
+tag = str(sys.argv[1])
 cmd = sys.argv[2]
 
 proc = subprocess.Popen(['i3-msg', '-t', 'get_workspaces'], stdout=subprocess.PIPE)
 workspaces = json.load(proc.stdout)
 for workspace in workspaces:
-    if workspace['name'] == tag:
+    if workspace['name'].encode('utf8') == tag:
         subprocess.Popen(['i3-msg', 'workspace', tag])
         sys.exit(0)
 
