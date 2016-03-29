@@ -15,4 +15,4 @@ for workspace in workspaces:
         sys.exit(0)
 
 subprocess.Popen(['i3-msg', 'workspace', tag])
-os.execl(cmd, cmd)
+os.execlp(cmd.split()[0], *cmd.split())
