@@ -90,6 +90,12 @@ bindsym $mod+v split v
 # enter fullscreen mode for the focused container
 bindsym $mod+f fullscreen
 
+# Make the currently focused window a scratchpad
+bindsym $mod+Shift+minus move scratchpad
+
+# Show the first scratchpad window
+bindsym $mod+minus scratchpad show
+
 # change container layout (stacked, tabbed, toggle split)
 #
 #
@@ -123,7 +129,7 @@ bindsym $mod+a focus parent
 
 # switch to workspace
 bindsym $mod+F1 exec openorlaunchi3 $ws1 /usr/bin/urxvtc
-bindsym $mod+F2 exec openorlaunchi3 $ws2 /usr/bin/telegram
+bindsym $mod+F2 exec openorlaunchi3 $ws2 "firefox -P webapp --class=webogram --no-remote https://web.telegram.org"
 bindsym $mod+F3 exec openorlaunchi3 $ws3 /usr/bin/firefox
 bindsym $mod+F4 exec openorlaunchi3 $ws4 /usr/bin/thunderbird
 bindsym $mod+F5 exec openorlaunchi3 $ws5 ~/bin/files
@@ -200,6 +206,7 @@ assign [class="URxvt"] $ws1
 assign [class="xterm"] $ws1
 assign [class="Pidgin"] $ws2
 assign [class="Skype"] $ws2
+assign [class="webogram"] $ws2
 assign [class="Gajim"] $ws2
 assign [class="Telegram"] $ws2
 assign [class="Firefox"] $ws3
