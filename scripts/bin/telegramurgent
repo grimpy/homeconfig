@@ -1,2 +1,0 @@
-#!/bin/bash
-wmctrl -b add,demands_attention -r telegram

@@ -129,7 +129,7 @@ bindsym $mod+a focus parent
 
 # switch to workspace
 bindsym $mod+F1 exec openorlaunchi3 $ws1 /usr/bin/urxvtc
-bindsym $mod+F2 exec openorlaunchi3 $ws2 "firefox -P webapp --class=webogram --no-remote https://web.telegram.org"
+bindsym $mod+F2 exec openorlaunchi3 $ws2 /usr/bin/telegram
 bindsym $mod+F3 exec openorlaunchi3 $ws3 /usr/bin/firefox
 bindsym $mod+F4 exec openorlaunchi3 $ws4 /usr/bin/thunderbird
 bindsym $mod+F5 exec openorlaunchi3 $ws5 ~/bin/files
