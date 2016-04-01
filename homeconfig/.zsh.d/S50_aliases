@@ -99,8 +99,8 @@ function cd() {
     builtin cd $*
 }
 
-function yaourt(){
-    /usr/bin/yaourt $*
+function pacaur(){
+    /usr/bin/pacaur $*
     hash -r
 }
 
@@ -123,7 +123,7 @@ function ownedby(){
     else
         filename=$(which "$*")
     fi
-    yaourt -Qo $filename
+    pacman -Qo $filename
 }
 
 function countdown(){
