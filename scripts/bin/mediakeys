@@ -4,6 +4,7 @@ import glob
 import select
 import subprocess
 import pyinotify
+import argparse
 
 def call(*args):
     return lambda : subprocess.Popen(args)
@@ -33,43 +34,58 @@ CMDS = {163: call('musiccontrol', 'Prev'),
         115: controlvolume('pactl set-sink-volume %s +5%%'),
         }
 
-devices = dict()
-for devicepath in glob.glob("/dev/input/event*"):
-    devices[devicepath] = open(devicepath)
+def daemon():
+    devices = dict()
+    for devicepath in glob.glob("/dev/input/event*"):
+        devices[devicepath] = open(devicepath)
 
-class Processor(pyinotify.ProcessEvent):
-    def process_IN_CREATE(self, event):
-        print 'IN', event
-        if event.name.startswith('event'):
-            devices[event.pathname] = open(event.pathname)
+    class Processor(pyinotify.ProcessEvent):
+        def process_IN_CREATE(self, event):
+            print 'IN', event
+            if event.name.startswith('event'):
+                devices[event.pathname] = open(event.pathname)
 
-    def process_IN_DELETE(self, event):
-        print 'DEL', event
-        devices.pop(event.pathname, None)
+        def process_IN_DELETE(self, event):
+            print 'DEL', event
+            devices.pop(event.pathname, None)
 
-watcher = pyinotify.WatchManager()
-watcher.add_watch('/dev/input/', pyinotify.IN_DELETE | pyinotify.IN_CREATE)
-notifier = pyinotify.Notifier(watcher, Processor())
+    watcher = pyinotify.WatchManager()
+    watcher.add_watch('/dev/input/', pyinotify.IN_DELETE | pyinotify.IN_CREATE)
+    notifier = pyinotify.Notifier(watcher, Processor())
 
-format = "llHHi"
+    format = "llHHi"
 
-KEY_TYPE = 1
+    KEY_TYPE = 1
 
-s = struct.calcsize(format)
+    s = struct.calcsize(format)
 
-while True:
-    rlist, wlist, xlist = select.select(devices.values(), [], [], 5)
-    if notifier.check_events(1):
-        notifier.read_events()
-        notifier.process_events()
-    for device in rlist:
-        try:
-            data = device.read(s)
-        except Exception, e:
-            print e
-            continue
-        time1, time2, evtype, evcode, evvalue = struct.unpack(format, data)
-        if evtype == KEY_TYPE:
-            if evcode in CMDS and evvalue == 1:
-                print "Found Media button", evcode
-                CMDS[evcode]()
+    while True:
+        rlist, wlist, xlist = select.select(devices.values(), [], [], 5)
+        if notifier.check_events(1):
+            notifier.read_events()
+            notifier.process_events()
+        for device in rlist:
+            try:
+                data = device.read(s)
+            except Exception, e:
+                print e
+                continue
+            time1, time2, evtype, evcode, evvalue = struct.unpack(format, data)
+            if evtype == KEY_TYPE:
+                if evcode in CMDS and evvalue == 1:
+                    print "Found Media button", evcode
+                    CMDS[evcode]()
+
+
+if __name__ == '__main__':
+    parser = argparse.ArgumentParser()
+    parser.add_argument('-k', '--key', type=int, default=None)
+    options = parser.parse_args()
+    if not options.key:
+        daemon()
+    else:
+        cmd = CMDS.get(options.key)
+        if cmd:
+            cmd()
+
+
