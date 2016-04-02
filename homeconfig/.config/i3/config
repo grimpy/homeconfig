@@ -90,11 +90,6 @@ bindsym $mod+v split v
 # enter fullscreen mode for the focused container
 bindsym $mod+f fullscreen
 
-# Make the currently focused window a scratchpad
-bindsym $mod+Shift+minus move scratchpad
-
-# Show the first scratchpad window
-bindsym $mod+minus scratchpad show
 
 # change container layout (stacked, tabbed, toggle split)
 #
@@ -137,7 +132,8 @@ bindsym $mod+F6 exec openorlaunchi3 $ws6 /usr/bin/pycharm
 bindsym $mod+F7 workspace $ws7
 bindsym $mod+F8 workspace $ws8
 bindsym $mod+F9 workspace $ws9
-bindsym $mod+F10 workspace $ws10
+bindsym $mod+F10 exec $ws10
+bindsym $mod+x exec openorlaunchi3 $ws10 "/bin/xterm -class kodimode -e kodiremote -c"
 bindsym $mod+F11 workspace $ws11
 bindsym $mod+F12 workspace $ws12
 bindsym $mod+n workspace next
@@ -221,6 +217,7 @@ assign [class="Nautilus"] $ws5
 assign [class="jetbrains-pycharm-ce"] $ws6
 assign [class="Gvim"] $ws6
 assign [class="Atom"] $ws6
+assign [class="kodimote"] $ws10
 for_window [class="Float"] floating enable
 
 set $mode_system System (l) lock, (e) logout, (s) suspend, (h) hibernate, (r) reboot, (c) reload config, (p) shutdown
@@ -272,3 +269,9 @@ bindsym $mod+z mode "$mode_kodi"
 bindsym XF86MonBrightnessUp exec xbacklight -inc 10
 bindsym XF86MonBrightnessDown exec xbacklight -dec 10
 bindsym --release Print exec caputereimg.sh ~/Pictures/SS
+
+#music + volume
+bindsym $mod+2 exec musiccontrol PlayPause
+bindsym $mod+0 exec mediakeys -k 113
+bindsym $mod+minus exec mediakeys -k 114
+bindsym $mod+plus exec mediakeys -k 115
