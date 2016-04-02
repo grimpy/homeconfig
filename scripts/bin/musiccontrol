@@ -15,7 +15,7 @@ function xbmc() {
         "PlayPause") c=" " ;;
         *) return 1;
    esac
-   kodiremote --host=media.lan -k "$c"
+   kodiremote -k "$c"
 
 }
 
