@@ -2,8 +2,14 @@
 command=$1
 
 function mpris() {
-   appname=$1
-   dbus-send --print-reply --dest=org.mpris.MediaPlayer2.$appname /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.$command
+    c=""
+    case $command in
+        "Next" ) c="next" ;;
+        "Prev" ) c="previous" ;;
+        "PlayPause") c="play-pause" ;;
+        *) return 1;
+   esac
+   playerctl "$c"
 
 }
 
@@ -57,8 +63,8 @@ function mpc() {
 
 if ps -eaf | grep -v grep | grep mpv; then
     mpv
-elif ps -eaf | grep -v grep | grep audacious; then
-    mpris audacious
+elif playerctl status; then
+    mpris
 elif ps -eaf | grep -v grep | grep kodiremote; then
     xbmc
 elif ps -eaf | grep -v grep | grep pragha; then
