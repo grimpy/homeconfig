@@ -15,7 +15,7 @@ target = os.environ['HOME']
 
 if options.root:
     if os.getuid() != 0:
-        print "Use sudo not root"
+        print("Use sudo not root")
         sys.exit(1)
     else:
         fullpaths.append(os.path.join(repopath, 'osconfig'))
@@ -52,7 +52,7 @@ for mypath in fullpaths:
         relativedir = curdir[striplen:]
         targetdir = os.path.join(target, relativedir)
         if relativedir not in linkfolders:
-            print 'Creating links files for folder', relativedir
+            print('Creating links files for folder', relativedir)
             createRecusiveFolder(targetdir)
             for file_ in files:
                 targetfile = os.path.join(targetdir, file_)
