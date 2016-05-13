@@ -5,6 +5,7 @@ ENABLED=($(xrandr -q | grep "connected [0-9]" | cut -f 1 -d ' '))
 SCALE="1.5"
 EXT=${CON[1]}
 INT=${CON[0]}
+XRANDRQ=""
 
 usage() {
     echo Usage $0 [--single --dual --clone]
@@ -12,7 +13,10 @@ usage() {
 
 
 function getres() {
-    xrandr -q | grep "$1" -A1 | tail -1 | awk '{print $1}' | cut -d x -f $2
+    if [ -z "$XRANDRQ" ]; then
+        XRANDRQ="$(xrandr -q)"
+    fi
+    echo "$XRANDRQ" | grep "$1" -A1 | tail -1 | awk '{print $1}' | cut -d x -f $2
 }
 
 if [ ${#CON[*]} -gt 1 ]; then
@@ -29,20 +33,13 @@ dual() {
         ext_w=$(getres $EXT 1)
         ext_w=$(getres $EXT 1)
         ext_h=$(getres $EXT 2)
-
-
-        pan_w=$(echo "${ext_w} ${SCALE}" | awk '{printf "%.0f\n",$1*$2}')
-        pan_h=$(echo "${ext_h} ${SCALE}" | awk '{printf "%.0f\n",$1*$2}')
-
-        xrandr --output "${INT}" --auto --output "${EXT}" --auto --panning "${pan_w}x${pan_h}+${int_w}+0" --scale "${SCALE}x${SCALE}" --right-of "${INT}"
-
-        ext_h=$(getres $EXT 2)
         int_w=$(getres $INT 1)
 
         pan_w=$(echo "${ext_w} ${SCALE}" | awk '{printf "%.0f\n",$1*$2}')
         pan_h=$(echo "${ext_h} ${SCALE}" | awk '{printf "%.0f\n",$1*$2}')
 
-        xrandr --output "${INT}" --auto --output "${EXT}" --auto --panning "${pan_w}x${pan_h}+${int_w}+0" --scale "${SCALE}x${SCALE}" --right-of "${INT}"
+        sleep 1
+        xrandr --output "${INT}" --auto --output "${EXT}" --auto --scale "${SCALE}x${SCALE}" --right-of "${INT}" --panning "${pan_w}x${pan_h}+${int_w}+0"
     else
         xrandr --output ${CON[0]} --left-of ${CON[1]} --auto
     fi
