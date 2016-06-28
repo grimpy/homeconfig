@@ -27,3 +27,5 @@
 	history-view-vpane-position = 274
 	main-window-view = HistoryView
 	file-view-vpane-position = 398
+[core]
+	excludesfile = ~/.gitignore
