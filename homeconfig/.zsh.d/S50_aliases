@@ -61,7 +61,7 @@ sshr() {
 }
 
 sshm() {
-    ssh -o ControlMaster=no -o ControlPersist=no $@
+    ssh -o ControlPath=none  $@
 }
 
 mosh2() {
