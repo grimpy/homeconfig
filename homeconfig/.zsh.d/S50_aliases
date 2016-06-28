@@ -60,6 +60,10 @@ sshr() {
     ssh $@
 }
 
+sshm() {
+    ssh -o ControlMaster=no -o ControlPersist=no $@
+}
+
 mosh2() {
     ssh2 $1 "apt-get install -y mosh"
     mosh $1
