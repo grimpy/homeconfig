@@ -1,5 +1,5 @@
-if [[ -z "$TMUX" && -z "$SUDO_USER" && -e "/usr/bin/tmux" && $TERM != "linux" ]]; then
-    if ! cat /proc/self/cgroup | grep lxc > /dev/null; then
+if [[ -z "$TMUX" && -z "$SUDO_USER" && -e "/usr/bin/tmux" && $TERM = "rxvt" ]]; then
+    if [ "$(hostname -d)" != "lxc" ]; then
         NAME=$HOSTNAME
         if tmux has-session -t $NAME 2> /dev/null; then
             exec tmux -2 at -t $NAME
