@@ -1,5 +1,5 @@
-*background: black
-*foreground: white
+*background: #272822
+*foreground: #F8F8F2
 *cursorColor: red
 *cursorBlink: true
 *scrollBar: false
@@ -8,30 +8,23 @@
 *tintingType: true
 *tinting: #ffffff
 *tintColor: #FFFFFF
-! black
-*color0  : #2E3436
-*color8  : #555753
-! ! red
-*color1  : #CC0000
-*color9  : #EF2929
-! ! green
-*color2  : #4E9A06
-*color10 : #8AE234
-! ! yellow
-*color3  : #C4A000
-*color11 : #FCE94F
-! ! blue
-*color4  : #3465A4
-*color12 : #729FCF
-! ! magenta
-*color5  : #75507B
-*color13 : #AD7FA8
-! ! cyan
-*color6  : #06989A
-*color14 : #34E2E2
-! ! white
-*color7  : #D3D7CF
-*color15 : #EEEEEC
+*color0 :  #272822
+*color1 :  #f92672
+*color2 :  #a6e22e
+*color3 :  #f4bf75
+*color4 :  #66d9ef
+*color5 :  #ae81ff
+*color6 :  #a1efe4
+*color7 :  #f8f8f2
+*color8 :  #75715e
+*color9 :  #f92672
+*color10 :  #a6e22e
+*color11 :  #f4bf75
+*color12 :  #66d9ef
+*color13 :  #ae81ff
+*color14 :  #a1efe4
+*color15 :  #f9f8f5
+
 *matcher.button: 3
 *colorUL: #86A2BB
 urxvt.url-launcher: /usr/bin/firefox
