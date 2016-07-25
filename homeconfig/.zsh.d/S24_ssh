@@ -1,0 +1,55 @@
+#! /bin/zsh
+
+ssh_gen_config() {
+    cat ~/.ssh/config.d/* >| ~/.ssh/config
+}
+
+ssh_gen_config
+
+if [ "$(hostname -d)" = "lxc"  ]; then
+    loadrsa() {   }
+else
+    loadrsa() {
+            eval `keychain -q --eval --agents ssh id_rsa $1`
+    }
+fi
+loadrsa --noask
+
+
+vik(){
+       sed -i $1d ~/.ssh/known_hosts
+}
+
+ssh2(){
+    ip=$1
+    shift;
+    pubkey=$(cat ~/.ssh/id_rsa.pub)
+    /usr/bin/ssh $ip "
+    if [ ! -e ~/.ssh ]; then
+        mkdir ~/.ssh
+    fi
+    if ! grep \"$pubkey\" ~/.ssh/authorized_keys > /dev/null; then
+        echo \"$pubkey\" >> ~/.ssh/authorized_keys
+        chmod 600 ~/.ssh/authorized_keys
+    fi
+    "
+    /usr/bin/ssh $ip $@
+}
+
+sshr() {
+    ssh -O exit $@
+    ssh $@
+}
+
+sshm() {
+    ssh -o ControlPath=none  $@
+}
+
+mosh2() {
+    ssh2 $1 "apt-get install -y mosh"
+    mosh $1
+}
+
+loadkey(){
+    eval `keychain -q --eval --agents ssh id_rsa`
+}

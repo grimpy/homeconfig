@@ -6,8 +6,11 @@ import subprocess
 import pyinotify
 import argparse
 
+KEYLENGTH = 20
+
 def call(*args):
     return lambda : subprocess.Popen(args)
+
 
 def controlvolume(cmd):
     def action():
@@ -26,13 +29,34 @@ def controlvolume(cmd):
         subprocess.Popen(command.split())
     return action
 
-CMDS = {163: call('musiccontrol', 'Prev'),
-        164: call('musiccontrol', 'PlayPause'),
-        165: call('musiccontrol', 'Next'),
-        113: controlvolume('pactl set-sink-mute %s toggle'),
-        114: controlvolume('pactl set-sink-volume %s -5%%'),
-        115: controlvolume('pactl set-sink-volume %s +5%%'),
+CMDS = {(165, 165): call('xlock', 'force'),
+        (165, 163, 164, 164): call('pkill', 'i3lock'),
+        (164,): call('musiccontrol', 'PlayPause'),
+        (163,): call('musiccontrol', 'Next'),
+        (113,): controlvolume('pactl set-sink-mute %s toggle'),
+        (114,): controlvolume('pactl set-sink-volume %s -5%%'),
+        (115,): controlvolume('pactl set-sink-volume %s +5%%'),
         }
+
+
+def search_pattern(keys):
+    matches = []
+    for pattern in sorted(CMDS.keys(), key=lambda x: len(x), reverse=True):
+        patternlen = len(pattern)
+        for idx in xrange(patternlen):
+            start = -(patternlen - idx)
+            end = -idx or None
+            if pattern[:end] == tuple(keys[start:]):
+                matches.append((abs(start), pattern))
+                break
+    matches.sort(key=lambda x: x[0], reverse=True)
+    if matches:
+        # return first match that is complete
+        lmatch, match = matches[0]
+        if lmatch == len(match):
+            return match
+    else:
+        return None
 
 def daemon():
     devices = dict()
@@ -56,6 +80,7 @@ def daemon():
     format = "llHHi"
 
     KEY_TYPE = 1
+    keys = [0] * KEYLENGTH
 
     s = struct.calcsize(format)
 
@@ -72,9 +97,13 @@ def daemon():
                 continue
             time1, time2, evtype, evcode, evvalue = struct.unpack(format, data)
             if evtype == KEY_TYPE:
-                if evcode in CMDS and evvalue == 1:
-                    print "Found Media button", evcode
-                    CMDS[evcode]()
+                if evvalue == 1:
+                    keys.append(evcode)
+                    keys = keys[-KEYLENGTH:]
+                    pattern = search_pattern(keys)
+                    if pattern:
+                        print "Found Media button", pattern
+                        CMDS[pattern]()
 
 
 if __name__ == '__main__':

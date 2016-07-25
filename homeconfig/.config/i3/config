@@ -222,6 +222,7 @@ assign [class="Geany"] $ws6
 assign [class="Firefox" instance="Devtools"] $ws6
 assign [class="kodimote"] $ws10
 for_window [class="Float"] floating enable
+for_window [class="zoom"] floating enable
 
 set $mode_system System (l) lock, (e) logout, (s) suspend, (h) hibernate, (r) reboot, (c) reload config, (p) shutdown
 mode "$mode_system" {

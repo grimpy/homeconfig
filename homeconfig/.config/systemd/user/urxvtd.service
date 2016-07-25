@@ -3,7 +3,7 @@ Description=urxvt daemon
 
 [Service]
 EnvironmentFile=/home/Jo/.config/systemd/user/env
-ExecStart=/usr/bin/urtxvtd -q -f -o
+ExecStart=/usr/bin/urxvtd -q 
 Restart=always
 
 [Install]

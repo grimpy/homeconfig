@@ -298,9 +298,6 @@ myvoltext:buttons(awful.util.table.join(
 
 keybindings = awful.util.table.join(
     keydoc.group("Music"),
-    awful.key({}, "XF86AudioLowerVolume", decreasevolume, "Decrease Volume"),
-    awful.key({}, "XF86AudioRaiseVolume", increasevolume, "Increase Volume"),
-    awful.key({}, "XF86AudioMute", mutevolume, "Mute Volume"),
     awful.key({winkey}, "Down", decreasevolume, "Descrease Volume"),
     awful.key({winkey}, "Up", increasevolume, "Increase Volume"),
     awful.key({winkey}, "0", mutevolume, "Mute Volume"),

@@ -1,4 +1,5 @@
-*background: #272822
+! *background: #272822
+*background: #121212
 *foreground: #F8F8F2
 *cursorColor: red
 *cursorBlink: true
@@ -30,7 +31,7 @@
 urxvt.url-launcher: /usr/bin/firefox
 urxvt.url-select.launcher: /usr/bin/firefox
 urxvt.url-select.underline: false
-urxvt.font: xft:DejaVu Sans Mono for Powerline:size=9
+urxvt.font: xft:DejaVu Sans Mono for Powerline:size=11
 urxvt.perl-ext-common: default,clipboard,keyboard-select,confirm-paste,url-select,font-size,vtwheel
 urxvt.matcher.pattern.1: \\w{8}-\\w{4}-\\w{4}-\\w{4}-\\w{12}
 urxvt.matcher.pattern.2: (https?|ftps?)://[^\\s]+
