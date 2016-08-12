@@ -273,6 +273,7 @@ bindsym $mod+z mode "$mode_kodi"
 bindsym XF86MonBrightnessUp exec xbacklight -inc 10
 bindsym XF86MonBrightnessDown exec xbacklight -dec 10
 bindsym --release Print exec caputereimg.sh ~/Pictures/SS
+bindsym $winkey+o exec rotatescreen
 
 #music + volume
 bindsym $mod+2 exec musiccontrol PlayPause
