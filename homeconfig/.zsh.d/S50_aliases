@@ -55,6 +55,10 @@ function wd() {
     source ~/.zsh.d/wd/wd.sh
 }
 
+function pjson() {
+    python -m json.tool $1 | pygmentize -l json
+}
+
 
 function pacaur(){
     /usr/bin/pacaur $*
