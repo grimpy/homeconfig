@@ -1,6 +1,6 @@
 #!/bin/bash
 sleep 1
 xkbset nullify lock
-setxkbmap us,ar altgr-intl,
+setxkbmap us,ar altgr-intl, grp:shifts_toggle,caps:super,grp_led:caps
 xset -led 1
 xmodmap ~/.Xmodmap
