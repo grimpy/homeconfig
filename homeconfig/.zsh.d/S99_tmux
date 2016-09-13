@@ -1,4 +1,4 @@
-if [[ -z "$TMUX" && -z "$SUDO_USER" && -e "/usr/bin/tmux" && $TERM = "rxvt" ]]; then
+if [[ -z "$TMUX" && -z "$SUDO_USER" && -e "/usr/bin/tmux" && $TERM = "rxvt-unicode-256color" ]]; then
     if [ "$(hostname -d)" != "lxc" ]; then
         NAME=$HOSTNAME
         if tmux has-session -t $NAME 2> /dev/null; then
