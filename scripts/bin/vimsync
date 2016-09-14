@@ -1,22 +1,16 @@
 #!/usr/bin/env python2
 import subprocess
+import argparse
 import sys
 import os
 
-gm = '172.17.0.34'
-cb = '172.17.0.34'
 
-#ALLIP = '192.168.20.133'
-#ALLIP = '172.17.0.13'
-ALLIP = '172.17.0.7'
-#ALLIP = '37.203.43.220'
+parser = argparse.ArgumentParser()
+parser.add_argument('-f', '--file', help='File to sync', default=None)
+parser.add_argument('-t', '--target', help='Target to sync file to', default=None)
+options = parser.parse_args()
 
-isbox = False
-CONNECTIONS = {'default' : ALLIP,
-               'gm': gm,
-               'cb': cb,
-              }
-REPOBASE = "/home/Jo/work"
+REPOBASE = "/home/Jo/code"
 
 files = []
 
@@ -29,22 +23,19 @@ def getmodifiedgit(folder):
         files.append(os.path.join(gitroot, filepath))
     return files
 
-if len(sys.argv) < 2:
+if options.file is None:
     files = getmodifiedgit('.')
 else:
-    file = os.path.abspath(sys.argv[1])
+    file = options.file
     if os.path.isfile(file):
-        files.append(file)
+        files.append(os.path.abspath(file))
     elif os.path.isdir(file):
         files = getmodifiedgit('.')
     else:
         print "This only works with files or folders"
         os.exit(1)
-defaultip = None
-if len(sys.argv) > 2:
-    defaultip = sys.argv[2]
 
-connections = [ defaultip or ALLIP ]
+connections = options.target.split(',')
 
 for file in files:
     metapath = file[len(REPOBASE)+1:]
