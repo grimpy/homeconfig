@@ -6,7 +6,7 @@ ssh_gen_config() {
 
 ssh_gen_config
 
-if grep '127.*' /etc/hosts > /dev/null; then
+if grep '127.*lxc' /etc/hosts > /dev/null; then
     loadrsa() {   }
 else
     loadrsa() {
