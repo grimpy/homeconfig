@@ -297,16 +297,22 @@ for host in ${HOSTS[@]}; do
 
 	# First Call, inits the tmux-session
 	if [ "${initTmuxCall}" == "true" ]; then
-		tmux new-session -d -s "${TMUX_SESSION_NAME}" -n "${TMUX_WINDOW_NAME}" "${connectString}"
+        basecmd="tmux"
+        if tmux ls | grep "${TMUX_SESSION_NAME}"; then
+            basecmd="${basecmd} new-window -t ${TMUX_SESSION_NAME}"
+        else
+            basecmd="${basecmd} new-session -s ${TMUX_SESSION_NAME}"
+        fi
+        eval ${basecmd} -d -n ${TMUX_WINDOW_NAME} "${connectString}"
 
-    # If our initial ssh connection has failed, do not mark initTmuxCall as false since tmux will have aborted.
-    # We'll need to try to start a new tmux session for the next host.
-    if (( $(tmux ls 2> /dev/null | grep "${TMUX_SESSION_NAME}" | wc -l) > 0 )) ; then
-		  initTmuxCall="false"
-    fi
+        # If our initial ssh connection has failed, do not mark initTmuxCall as false since tmux will have aborted.
+        # We'll need to try to start a new tmux session for the next host.
+        if (( $(tmux ls 2> /dev/null | grep "${TMUX_SESSION_NAME}" | wc -l) > 0 )) ; then
+            initTmuxCall="false"
+        fi
 	else
-    tmux split-window -t "${TMUX_SESSION_NAME}:${TMUX_WINDOW_NAME}" "${connectString}" && \
-    tmux select-layout -t "${TMUX_SESSION_NAME}:${TMUX_WINDOW_NAME}" "${TMUX_LAYOUT}"
+        tmux split-window -t "${TMUX_SESSION_NAME}:${TMUX_WINDOW_NAME}" "${connectString}" && \
+        tmux select-layout -t "${TMUX_SESSION_NAME}:${TMUX_WINDOW_NAME}" "${TMUX_LAYOUT}"
 	fi
 done
 
