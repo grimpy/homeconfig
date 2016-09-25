@@ -1,1 +1,3 @@
 media -fstype=cifs,guest,uid=Jo  ://192.168.1.3/media
+share -fstype=cifs,guest,uid=Jo  ://10.83.1.9/share
+share2 -fstype=cifs,guest,uid=Jo  ://10.83.1.9/share2

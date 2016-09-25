@@ -19,7 +19,7 @@ def getmodifiedgit(folder):
     gitroot = subprocess.Popen(['git', 'rev-parse', '--show-toplevel'], stdout=subprocess.PIPE).communicate()[0].strip()
     modfiles = subprocess.Popen(['git', 'status', '--porcelain'], cwd=folder, stdout=subprocess.PIPE).communicate()[0].strip()
     for filepath in modfiles.splitlines():
-        filepath = filepath.strip()[2:]
+        filepath = filepath.strip()[2:].strip()
         files.append(os.path.join(gitroot, filepath))
     return files
 
