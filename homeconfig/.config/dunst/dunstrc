@@ -222,6 +222,11 @@
 #    summary = "foobar"
 #    format = ""
 
+[telegram_text]
+     appname = "Telegram Desktop"
+     script = dunsttelegram
+     format = ""
+
 #[signed_on]
 #    appname = Pidgin
 #    summary = "*signed on*"
