@@ -1,0 +1,11 @@
+[Unit]
+Description=My Network
+After=systemd-networkd
+
+
+[Service]
+ExecStart=/usr/local/bin/fixnet
+Type=oneshot
+
+[Install]
+WantedBy=multi-user.target

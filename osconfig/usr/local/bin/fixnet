@@ -1,0 +1,14 @@
+#!/bin/bash
+systemctl start systemd-networkd
+wlan=$(basename /sys/class/net/wl*)
+eth=$(basename /sys/class/net/en*)
+if [ -n "$wlan" ]; then
+    ip l s dev $wlan down
+    ip l s dev $wlan master bond0
+    ip l s dev $wlan up
+fi
+systemctl start wpa_supplicant@$wlan
+if [ -n "$eth" ]; then
+    echo $eth >  /sys/class/net/bond0/bonding/primary
+fi
+systemctl start dhcpcd
