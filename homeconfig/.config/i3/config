@@ -223,14 +223,15 @@ assign [class="Firefox" instance="Devtools"] $ws6
 assign [class="kodimote"] $ws10
 for_window [class="Float"] floating enable
 for_window [class="zoom"] floating enable
+for_window [class="Pavucontrol"] floating enable
 
 set $mode_system System (l) lock, (e) logout, (s) suspend, (h) hibernate, (r) reboot, (c) reload config, (p) shutdown
 mode "$mode_system" {
     bindsym l exec --no-startup-id xlock force, mode "default"
     bindsym e exec bash -c "loginctl terminate-session $(loginctl show-seat seat0 -p ActiveSession | cut -d = -f 2)", mode "default"
     bindsym c reload, mode "default"
-    bindsym s exec --no-startup-id systemctl suspend, mode "default"
-    bindsym h exec --no-startup-id systemctl hibernate, mode "default"
+    bindsym s exec xlock force; exec systemctl suspend, mode "default"
+    bindsym h exec xlock force; exec systemctl hiber-sleep, mode "default"
     bindsym r exec --no-startup-id systemctl reboot, mode "default"
     bindsym p exec --no-startup-id systemctl poweroff, mode "default"
 
