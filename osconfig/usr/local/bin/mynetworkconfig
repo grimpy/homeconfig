@@ -1,6 +1,6 @@
 #!/bin/bash
 systemctl start systemd-networkd # create lxc bridge
-mastermac=$(cat /sys/class/net/en*/address | head -n 1)
+mastermac=$(cat /sys/class/net/wl*/address | head -n 1)
 ip l a bond0 address $mastermac type bond
 echo 0 > /sys/class/net/bond0/bonding/primary_reselect
 
