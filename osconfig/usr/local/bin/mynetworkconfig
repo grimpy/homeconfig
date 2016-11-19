@@ -2,6 +2,7 @@
 systemctl start systemd-networkd # create lxc bridge
 mastermac=$(cat /sys/class/net/en*/address | head -n 1)
 ip l a bond0 address $mastermac type bond
+echo 0 > /sys/class/net/bond0/bonding/primary_reselect
 
 function slave() {
     iface=$1    
@@ -10,6 +11,7 @@ function slave() {
     ip l s dev $iface up
 }
 
+echo $(basename /sys/class/net/enp*u* || basename /sys/class/net/enp*) >  /sys/class/net/bond0/bonding/primary # prefer usb ethernet
 
 for wlan in /sys/class/net/wl*; do
     wlan=$(basename $wlan)
@@ -19,7 +21,6 @@ done
 for eth in /sys/class/net/en*; do
     eth=$(basename $eth)
     slave $eth
-    echo $eth >  /sys/class/net/bond0/bonding/primary # last one wins
 done
 
 systemctl start dhcpcd
