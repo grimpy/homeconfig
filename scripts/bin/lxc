@@ -28,7 +28,7 @@ function clone() {
     sudo cp "${src}/config" "${dest}/config"
     sudo cp "${src}/fstab" "${dest}/fstab"
     sudo btrfs subvolume snapshot "${src}/rootfs" "${dest}/rootfs"
-    sudo sed -i "/$srcname/d" /var/lib/misc/dnsmasq.leases
+    sudo sed -i "/$destname/d" /var/lib/misc/dnsmasq.leases
     sudo systemctl restart dnsmasq
     lxc_rename
 }
