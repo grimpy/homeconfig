@@ -1,10 +1,9 @@
 [Unit]
 Description=My Network
-After=systemd-networkd
-
+After=network.target
 
 [Service]
-ExecStart=/usr/local/bin/fixnet
+ExecStart=/usr/local/bin/mynetworkconfig
 Type=oneshot
 
 [Install]

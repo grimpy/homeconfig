@@ -1,0 +1,26 @@
+#!/bin/bash
+systemctl start systemd-networkd # create lxc bridge
+mastermac=$(cat /sys/class/net/en*/address | head -n 1)
+ip l a bond0 address $mastermac type bond
+
+function slave() {
+    iface=$1    
+    ip l s dev $iface down
+    ip l s dev $iface master bond0
+    ip l s dev $iface up
+}
+
+
+for wlan in /sys/class/net/wl*; do
+    wlan=$(basename $wlan)
+    slave $wlan
+    systemctl start wpa_supplicant@$wlan
+done
+for eth in /sys/class/net/en*; do
+    eth=$(basename $eth)
+    slave $eth
+    echo $eth >  /sys/class/net/bond0/bonding/primary # last one wins
+done
+
+systemctl start dhcpcd
+
