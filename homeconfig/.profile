@@ -1,4 +1,5 @@
 export PYTHONPATH=$HOME/work/pythonenv
+export I3SOCK=/run/user/1000/i3/ctrl.socket
 export GOPATH=$HOME/Dev/go
 export PATH=$HOME/mygit/scripts/bin:$HOME/bin:$GOPATH/bin:$PATH
 export GTK2_RC_FILES="$HOME/.gtkrc-2.0"

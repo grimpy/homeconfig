@@ -1,0 +1,39 @@
+#!/bin/bash
+NAME=$(basename $0)
+statedir=/tmp/$NAME
+lockfile=$statedir/lock
+mkdir -p $statedir
+
+if [ "$1" == 'off' ];then
+    rm $lockfile
+    exit 0
+fi
+
+function setled() {
+    action=$1
+    for file in /sys/class/leds/*scrolllock /sys/class/leds/*kbd_backlight; do
+        if [ $action == 'on' ]; then
+            max=$(cat $file/max_brightness)
+            echo $max | sudo tee $file/brightness > /dev/null
+        elif [ $action == 'off' ]; then
+            echo 0 | sudo tee $file/brightness > /dev/null
+        elif [ $action == 'store' ]; then
+            cp $file/brightness "$statedir/$(basename $file)"
+        elif [ $action == 'restore' ]; then
+            cat "$statedir/$(basename $file)" | sudo tee $file/brightness > /dev/null
+
+        fi
+    done
+}
+
+if [ ! -e $lockfile ];then
+	touch $lockfile
+    setled store
+	while [ -e $lockfile ]; do
+        setled on
+		/bin/sleep 1
+        setled off
+		/bin/sleep 1
+	done
+    setled restore
+fi
