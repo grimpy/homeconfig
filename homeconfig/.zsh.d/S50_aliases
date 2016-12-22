@@ -59,6 +59,10 @@ function pjson() {
     python -m json.tool $1 | pygmentize -l json
 }
 
+function pvdd () {
+  pv ${1} | sudo dd of=${2} bs=1M conv=fdatasync oflag=dsync
+}
+
 
 function pacaur(){
     /usr/bin/pacaur $*
