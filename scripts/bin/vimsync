@@ -50,4 +50,4 @@ for file in files:
     for connection in set(connections):
         destdir = os.path.dirname(destfile)
         subprocess.call(["ssh", connection, "mkdir -p '%s'" % destdir])
-        subprocess.call(["scp", file, "%s:%s" % (connection, destfile)])
+        subprocess.call(["scp", file, "%s:'%s'" % (connection, destfile)])
