@@ -221,10 +221,14 @@ assign [class="Gvim"] $ws6
 assign [class="Atom"] $ws6
 assign [class="Geany"] $ws6
 assign [class="Firefox" instance="Devtools"] $ws6
+assign [class="zoom"] $ws9
 assign [class="kodimote"] $ws10
 for_window [class="Float"] floating enable
 for_window [class="zoom"] floating enable
 for_window [class="Pavucontrol"] floating enable
+for_window [class="Thunderbird" instance="Msgcompose"] floating enable
+for_window [class="Thunderbird" instance="Calendar"] floating enable
+for_window [class="Thunderbird" window_role="addressbook"] floating enable
 
 set $mode_system System (l) lock, (e) logout, (s) suspend, (h) hibernate, (r) reboot, (c) reload config, (p) shutdown
 mode "$mode_system" {
