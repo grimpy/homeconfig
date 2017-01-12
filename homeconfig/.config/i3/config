@@ -116,9 +116,6 @@ bindsym $mod+space focus mode_toggle
 bindsym $altkey+Tab focus right
 bindsym $altkey+Shift+Tab focus left
 
-# focus the parent container
-bindsym $mod+a focus parent
-
 # focus the child container
 #bindsym $mod+d focus child
 
@@ -221,6 +218,7 @@ assign [class="Gvim"] $ws6
 assign [class="Atom"] $ws6
 assign [class="Geany"] $ws6
 assign [class="Firefox" instance="Devtools"] $ws6
+assign [class="Spotify" instance="Spotify"] $ws7
 assign [class="zoom"] $ws9
 assign [class="kodimote"] $ws10
 for_window [class="Float"] floating enable
@@ -256,7 +254,6 @@ mode "$mode_workspace" {
     bindsym Escape mode "default"
     bindsym Return mode "default"
 }
-
 bindsym $mod+t mode "$mode_workspace"
 
 bindsym $mod+u [urgent=latest] focus
@@ -275,6 +272,22 @@ mode "$mode_kodi" {
 }
 bindsym $mod+z mode "$mode_kodi"
 
+# audio control
+set $mode_audio (t) Toggle headset mode (0) mute (+) volume up (-) volume down (m) Toggle mic mute
+mode "$mode_audio" {
+    bindsym t exec bluehead toggle, mode "default"
+    bindsym m exec bluehead mictoggle, mode "default"
+    bindsym minus exec mediakeys -k 114
+    bindsym plus exec mediakeys -k 115
+    bindsym up exec mediakeys -k 115
+    bindsym down exec mediakeys -k 114
+
+    # back to normal: Enter or Escape
+    bindsym Return mode "default"
+    bindsym Escape mode "default"
+}
+bindsym $mod+a mode "$mode_audio"
+
 #screen
 bindsym XF86MonBrightnessUp exec xbacklight -inc 10
 bindsym XF86MonBrightnessDown exec xbacklight -dec 10
@@ -286,3 +299,4 @@ bindsym $mod+2 exec musiccontrol PlayPause
 bindsym $mod+0 exec mediakeys -k 113
 bindsym $mod+minus exec mediakeys -k 114
 bindsym $mod+plus exec mediakeys -k 115
+bindsym XF86AudioMicMute exec bluehead mictoggle
