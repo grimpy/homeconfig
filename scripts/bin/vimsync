@@ -8,6 +8,7 @@ import os
 parser = argparse.ArgumentParser()
 parser.add_argument('-f', '--file', help='File to sync', default=None)
 parser.add_argument('-t', '--target', help='Target to sync file to', default=None)
+parser.add_argument('-p', '--port', help='SSH port', default='22')
 options = parser.parse_args()
 
 REPOBASE = "/home/Jo/code"
@@ -49,5 +50,5 @@ for file in files:
 
     for connection in set(connections):
         destdir = os.path.dirname(destfile)
-        subprocess.call(["ssh", connection, "mkdir -p '%s'" % destdir])
-        subprocess.call(["scp", file, "%s:'%s'" % (connection, destfile)])
+        subprocess.call(["ssh", "-p", options.port, connection, "mkdir -p '%s'" % destdir])
+        subprocess.call(["scp", '-P', options.port,  file, "%s:'%s'" % (connection, destfile)])
