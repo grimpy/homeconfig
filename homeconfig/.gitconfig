@@ -4,6 +4,8 @@
 	default = current
 [pull]
     strategy = rebase
+[commit]
+    gpgSign = 1
 [help]
 	autocorrect = 1
 [alias]
@@ -29,3 +31,5 @@
 	file-view-vpane-position = 398
 [core]
 	excludesfile = ~/.gitignore
+[user]
+	signingkey = 07BC0B42CB1078162C6C1202E809C912CC8B6F67
