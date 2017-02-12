@@ -51,6 +51,7 @@ bindsym $mod+c kill
 bindsym $mod+r exec rofi -show run
 #snippet launcher
 bindsym $mod+i exec rofi -modi "Snippets:rofisnippets" -show Snippets
+bindsym $mod+m exec rofi -modi "MathExpr:mathexpr" -show MathExpr 
 bindsym $mod+w exec rofi -show window
 # There also is the (new) i3-dmenu-desktop which only displays applications
 # shipping a .desktop file. It is a wrapper around dmenu, so you need that
@@ -219,6 +220,7 @@ assign [class="Atom"] $ws6
 assign [class="Geany"] $ws6
 assign [class="Firefox" instance="Devtools"] $ws6
 assign [class="Spotify" instance="Spotify"] $ws7
+assign [class="winbox.exe"] $ws8
 assign [class="zoom"] $ws9
 assign [class="kodimote"] $ws10
 for_window [class="Float"] floating enable
