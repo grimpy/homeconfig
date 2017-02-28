@@ -1,0 +1,20 @@
+#!/usr/bin/env python3
+from sys import argv
+import os
+from psutil import process_iter
+
+if len(argv) == 1: # scriptname
+    uid = os.getuid()
+    for proc in process_iter():
+        name = ' '.join(proc.cmdline())
+        if proc.uids().real != uid:
+            continue
+        if not name:
+            name = proc.name()
+        print("{pid}: {name}".format(pid=proc.pid, name=name))
+else:
+    expr = "".join(argv[1:])
+    pid = int(expr.split(":")[0])
+    os.kill(pid, 9)
+
+

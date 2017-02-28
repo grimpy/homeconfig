@@ -52,17 +52,13 @@ bindsym $mod+r exec rofi -show run
 #snippet launcher
 bindsym $mod+i exec rofi -modi "Snippets:rofisnippets" -show Snippets
 bindsym $mod+m exec rofi -modi "MathExpr:mathexpr" -show MathExpr 
+bindsym $mod+k exec rofi -modi "Process:processkill" -show Process
 bindsym $mod+w exec rofi -show window
 # There also is the (new) i3-dmenu-desktop which only displays applications
 # shipping a .desktop file. It is a wrapper around dmenu, so you need that
 # installed.
 # bindsym $mod+d exec --no-startup-id i3-dmenu-desktop
 
-# change focus
-bindsym $mod+h focus left
-bindsym $mod+j focus down
-bindsym $mod+k focus up
-bindsym $mod+l focus right
 
 # alternatively, you can use the cursor keys:
 bindsym $mod+Left focus left
