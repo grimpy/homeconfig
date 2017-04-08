@@ -29,6 +29,7 @@ function vcsa() {
 
 alias hga="vcsa .hg hgp"
 alias gita="vcsa .git git"
+alias gitc="export GPG_TTY=$(tty); git"
 
 function hgr() {
     local hgroot=$(hg root)
