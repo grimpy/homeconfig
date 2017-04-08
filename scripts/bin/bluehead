@@ -1,0 +1,38 @@
+#!/bin/bash
+card=$(pactl list | grep 'Name: bluez_c' | awk '{print $2}')
+function get_prop() {
+    local name=$1
+    local prop=$2
+    local ltype=$3
+    modus=$(pactl list $ltype | grep -Pzo "Name: $name(.|\n)+?(\n\n|$)" | tr '\0' ' ' | grep $prop | awk -F ': ' '{print $2}')
+    echo $modus
+}
+
+case $1 in
+    head)
+        modus="headset_head_unit"
+        ;;
+    a2dp|audio)
+        modus="a2dp_sink"
+        ;;
+    mictoggle)
+        cards=($(pactl list sources | grep Name | grep -v monitor | awk '{print $2}'))
+        status=$(get_prop ${cards[0]} Mute sources)
+        value=1
+        if [ "$status" == "yes" ]; then
+            value=0
+        fi
+        for x in ${cards[@]}; do 
+            pactl set-source-mute $x $value
+        done
+        ;;
+    *)
+        modus=$(get_prop $card Active cards)
+        if [ "$modus" == "a2dp_sink" ]; then
+            modus="headset_head_unit"
+        else
+            modus="a2dp_sink"
+        fi
+        ;;
+esac
+pactl set-card-profile $card $modus
