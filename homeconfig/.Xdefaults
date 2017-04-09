@@ -28,33 +28,32 @@
 
 *matcher.button: 3
 *colorUL: #86A2BB
-urxvt.url-launcher: /usr/bin/firefox
-urxvt.url-select.launcher: /usr/bin/firefox
-urxvt.url-select.underline: false
-urxvt.font: xft:DejaVu Sans Mono for Powerline:size=9
-urxvt.perl-ext-common: default,clipboard,keyboard-select,confirm-paste,url-select,font-size,vtwheel
-urxvt.matcher.pattern.1: \\w{8}-\\w{4}-\\w{4}-\\w{4}-\\w{12}
-urxvt.matcher.pattern.2: (https?|ftps?)://[^\\s]+
-urxvt.keysym.Mod4-t: perl:keyboard-select:activate
-urxvt.keysym.Mod4-u: perl:url-select:select_next
-urxvt.keysym.C-C: perl:clipboard:copy
-urxvt.keysym.C-V: perl:clipboard:paste
+URxvt.url-launcher: /usr/bin/firefox
+URxvt.url-select.launcher: /usr/bin/firefox
+URxvt.url-select.underline: false
+URxvt.font: xft:DejaVu Sans Mono for Powerline:size=9
+URxvt.perl-ext-common: default,clipboard,keyboard-select,confirm-paste,url-select,font-size,vtwheel
+URxvt.matcher.pattern.1: \\w{8}-\\w{4}-\\w{4}-\\w{4}-\\w{12}
+URxvt.matcher.pattern.2: (https?|ftps?)://[^\\s]+
+URxvt.keysym.C-T: perl:keyboard-select:activate
+URxvt.keysym.C-U: perl:url-select:select_next
+URxvt.keysym.C-C: perl:clipboard:copy
+URxvt.keysym.C-V: perl:clipboard:paste
 URxvt.iso14755 : false
-urxvt.clipboard.copycmd:  xsel -ib
-urxvt.clipboard.pastecmd: xsel -ob
-urxvt.keysym.Mod4-minus: perl:font-size:decrease
-urxvt.keysym.Mod4-equal: perl:font-size:increase
-urxvt.shading:    20
-urxvt.transparent:false
-urxvt.cutchars:'"'&()*,;<=>?@[]^{|}
-urxvt.termName: rxvt-unicode-256color
-urxvt.urgentOnBell: True
-urxvt.saveLines: 10000
+URxvt.clipboard.copycmd:  xsel -ib
+URxvt.clipboard.pastecmd: xsel -ob
+URxvt.keysym.C-minus: perl:font-size:decrease
+URxvt.keysym.C-equal: perl:font-size:increase
+URxvt.shading:    20
+URxvt.transparent:false
+URxvt.cutchars:'"'&()*,;<=>?@[]^{|}
+URxvt.termName: rxvt-unicode-256color
+URxvt.urgentOnBell: True
+URxvt.saveLines: 10000
 ! do not scroll with output
-urxvt*scrollTtyOutput: false
+URxvt*scrollTtyOutput: false
 ! scroll in relation to buffer (with mouse scroll or Shift+Page Up)
-urxvt*scrollWithBuffer: true
+URxvt*scrollWithBuffer: true
 ! scroll back to the bottom on keypress
-urxvt*scrollTtyKeypress: true
+URxvt*scrollTtyKeypress: true
 xterm.font: xft:DejaVu Sans Mono for Powerline:size=9
-
