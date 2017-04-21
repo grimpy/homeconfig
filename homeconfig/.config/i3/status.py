@@ -26,7 +26,7 @@ status.register('now_playing',
                 'stop': ''})
 
 status.register("temp",
-    format="{temp:.0f}°C",)
+    format=" {temp:.0f}°C",)
 
 status.register("cpu_usage_bar",
                 format='<span color="#FFFFFF"></span> {usage_bar}',
@@ -34,13 +34,12 @@ status.register("cpu_usage_bar",
                 on_leftclick=[spawn('xterm', '-class', 'Float', '-geometry', '120x40', '-e', 'htop')],
                 bar_type='vertical'
                 )
-status.register("mem",
-                hints = {"markup": "pango"},
-                format='<span color="#FFFFFF"> </span> {used_mem} / {total_mem} GiB',
-                divisor=1024**3)
+status.register("mem_bar",
+                multi_colors=True,
+                format='{used_mem_bar}')
 
 status.register("battery",
-    format='<span color="#FFFFFF">{status}</span> {percentage:.0f}% <span color="#FFFFFF">{remaining:%E%hh:%Mm}</span>',
+    format='<span color="#FFFFFF">{status}</span> {percentage:.0f}% <span color="#FFFFFF">{remaining:%E%hh:%Mm}</span> ',
     hints = {"markup": "pango"},
     alert=True,
     alert_percentage=5,
