@@ -203,7 +203,7 @@ bar {
   }
 }
 
-assign [class="URxvt"] $ws1
+assign [class="URxvt" instance="urxvt"] $ws1
 assign [class="xterm"] $ws1
 assign [class="Pidgin"] $ws2
 assign [class="Skype"] $ws2
@@ -224,6 +224,7 @@ assign [class="jetbrains-idea-ce"] $ws6
 assign [class="Gvim"] $ws6
 assign [class="Atom"] $ws6
 assign [class="Geany"] $ws6
+assign [class="URxvt" instance="EditTerm"] $ws6
 assign [class="Firefox" instance="Devtools"] $ws6
 assign [class="Spotify" instance="Spotify"] $ws7
 assign [class="winbox.exe"] $ws8

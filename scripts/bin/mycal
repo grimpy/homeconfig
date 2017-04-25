@@ -1,0 +1,1 @@
+xterm -class Float -geometry 74x9 -e 'cal -3 -w; read'

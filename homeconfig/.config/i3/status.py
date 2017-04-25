@@ -40,7 +40,8 @@ status.register("clock",
         format=" %a %-d %b %H:%M")
 
 status.register("pulseaudio",
-    format="♪{volume}",)
+    format="♪{volume}", bar_type="horizontal",
+    multi_colors=True)
 
 status.register('now_playing',
                 status={'play': '',
@@ -53,12 +54,12 @@ status.register("temp",
 status.register("cpu_usage_bar",
                 format='<span color="#FFFFFF"></span> {usage_bar}',
                 hints = {"markup": "pango"},
-                on_rightclick='xterm -rv -class Float -geometry 120x40 -e htop',
+                on_rightclick='xterm -class Float -geometry 120x40 -e htop',
                 bar_type='vertical'
                 )
 status.register("mem_bar",
                 multi_colors=True,
-                on_rightclick='xterm -rv -class Float -geometry 120x40 -e htop',
+                on_rightclick='xterm -class Float -geometry 120x40 -e htop',
                 format='{used_mem_bar}')
 
 status.register("battery",
@@ -92,7 +93,7 @@ status.register("network",
     interface="bond0",
     divisor=1024,
     start_color='white',
-    on_rightclick="xterm -rv -class Float -geometry 150x50 -e 'sudo jnettop -i bond0'",
+    on_rightclick="xterm -class Float -geometry 150x50 -e 'sudo jnettop -i bond0'",
     format_up=" {bytes_recv}K  {bytes_sent}K",)
 
 status.register("file",
