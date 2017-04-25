@@ -309,3 +309,4 @@ bindsym $mod+0 exec mediakeys -k 113
 bindsym $mod+minus exec mediakeys -k 114
 bindsym $mod+plus exec mediakeys -k 115
 bindsym XF86AudioMicMute exec bluehead mictoggle
+exec dex -a -s /home/Jo/.config/autostart
