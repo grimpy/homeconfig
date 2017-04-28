@@ -1,11 +1,5 @@
 #! /bin/zsh
 
-ssh_gen_config() {
-    cat ~/.ssh/config.d/* >| ~/.ssh/config
-}
-
-ssh_gen_config
-
 if grep '127.*lxc' /etc/hosts > /dev/null; then
     loadrsa() {   }
 else
