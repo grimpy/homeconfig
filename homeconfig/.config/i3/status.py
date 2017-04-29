@@ -57,10 +57,11 @@ status.register("mem",
                 hints = {"markup": "pango"},
                 format='<span color="#FFFFFF"></span> {percent_used_mem}%')
 status.register("battery",
-                format='<span color="#FFFFFF">{status}</span> {percentage:.0f}% <span color="#FFFFFF">{remaining:%E%hh:%Mm}</span>',
+                format='<span color="#FFFFFF">{status}</span>{percentage:.0f}%<span color="#FFFFFF"> {remaining:%E%hh:%Mm}</span>',
                 hints = {"markup": "pango"},
                 alert=True,
                 alert_percentage=5,
+                full_color="#FFFFFF",
                 status={
                        "DIS": "",
                        "CHR": "",
