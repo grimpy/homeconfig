@@ -36,7 +36,7 @@ class VodaFone(IntervalModule):
 status = Status(standalone=True, logfile='$HOME/.cache/i3pystatus.log')
 status.register("clock",
                on_rightclick='mycal',
-               format=" %a %-d %b %H:%M")
+               format=" %H:%M")
 status.register("pulseaudio",
                 format="♪{volume}", bar_type="horizontal",
                 multi_colors=True)
