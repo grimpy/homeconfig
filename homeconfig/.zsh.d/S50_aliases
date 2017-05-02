@@ -114,3 +114,16 @@ function decrypt() {
     openssl aes-256-cbc -d -a -in "$1" -out "$1.decrypt"
 }
 
+function dbash() {
+    local name=$1
+    shift
+    docker exec -e AYSBRANCH -e JSBRANCH -e OVCBRANCH -ti $name bash
+}
+
+function dssh() {
+    local name=$1
+    shift
+    dip=$(docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' $name)
+    ssh -A -o UserknownHostsFile=/dev/null -o StrictHostKeyChecking=no root@$dip $@
+}
+
