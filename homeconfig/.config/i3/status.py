@@ -77,7 +77,7 @@ group.register("network",
                interface="bond0",
                divisor=1024,
                start_color='white',
-               on_rightclick="xterm -class Float -geometry 150x50 -e 'sudo jnettop -i bond0'",
+               on_rightclick="xterm -class Float -geometry 150x50 -e 'sudo mynet'",
                format_up=" {bytes_recv}K  {bytes_sent}K",)
 group.register("network",
                interface="bond0",
