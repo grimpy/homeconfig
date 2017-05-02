@@ -34,9 +34,14 @@ class VodaFone(IntervalModule):
 
 
 status = Status(standalone=True, logfile='$HOME/.cache/i3pystatus.log')
-status.register("clock",
+dategroup = Group()
+dategroup.register("clock",
                on_rightclick='mycal',
-               format=" %H:%M")
+               format=" %H:%M")
+dategroup.register("clock",
+               on_rightclick='mycal',
+               format=" %a %-d %b %Y")
+status.register(dategroup)
 status.register("pulseaudio",
                 format="♪{volume}", bar_type="horizontal",
                 multi_colors=True)
@@ -70,9 +75,15 @@ status.register("battery",
 group = Group()
 group.register("network",
                interface="bond0",
+               divisor=1024,
+               start_color='white',
+               on_rightclick="xterm -class Float -geometry 150x50 -e 'sudo jnettop -i bond0'",
+               format_up=" {bytes_recv}K  {bytes_sent}K",)
+group.register("network",
+               interface="bond0",
                color_up='#FFFFFF',
                on_rightclick='sudo systemctl restart dhcpcd',
-               format_up="{v4}",)
+               format_up="{v4}",)
 
 wfaces = list(filter(lambda x: x.startswith('w'), netifaces.interfaces()))
 if wfaces:
@@ -82,16 +93,17 @@ if wfaces:
                    color_up='#FFFFFF',
                    format_up="{essid}",)
 
-group.register("network",
-               interface="bond0",
-               divisor=1024,
-               start_color='white',
-               on_rightclick="xterm -class Float -geometry 150x50 -e 'sudo jnettop -i bond0'",
-               format_up=" {bytes_recv}K  {bytes_sent}K",)
-group.register("file",
-               components={'bond': (str, '/sys/class/net/bond0/bonding/active_slave')},
-               format="{bond}")
 status.register(group)
+
+def bond_icon(data):
+    if data.startswith('en'):
+        return ''
+    else:
+        return ''
+
+status.register("file",
+               components={'bond': (bond_icon, '/sys/class/net/bond0/bonding/active_slave')},
+               format="{bond}")
 status.register(VodaFone, on_leftclick="refresh", interval=3600)
 
 status.run()
