@@ -282,10 +282,11 @@ mode "$mode_kodi" {
 bindsym $mod+z mode "$mode_kodi"
 
 # audio control
-set $mode_audio (t) Toggle headset mode (0) mute (+) volume up (-) volume down (m) Toggle mic mute
+set $mode_audio (t) Toggle headset mode (0) mute (+) volume up (-) volume down (m) Toggle mic mute (r) reconnect bt
 mode "$mode_audio" {
     bindsym t exec bluehead toggle, mode "default"
     bindsym m exec bluehead mictoggle, mode "default"
+    bindsym r exec btreconnect, mode "default"
     bindsym minus exec mediakeys -k 114
     bindsym plus exec mediakeys -k 115
     bindsym up exec mediakeys -k 115
