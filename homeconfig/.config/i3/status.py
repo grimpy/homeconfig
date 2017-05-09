@@ -17,7 +17,11 @@ class VodaFone(IntervalModule):
     def run(self):
         if self.vf is None:
             return
-        self.vf.parse()
+        try:
+            self.vf.parse()
+        except:
+            return
+
         daypercent = (self.vf.dayused / self.vf.daylimit) * 100
         nightpercent = (self.vf.nightused / self.vf.nightlimit) * 100
         remainingpercent = 100 - (self.vf.daysleft / self.vf.totaldays) * 100
@@ -83,7 +87,7 @@ group.register("network",
                interface="bond0",
                color_up='#FFFFFF',
                on_rightclick='sudo systemctl restart dhcpcd',
-               format_up="{v4}",)
+               format_up="{v4:.<7}",)
 
 wfaces = list(filter(lambda x: x.startswith('w'), netifaces.interfaces()))
 if wfaces:
