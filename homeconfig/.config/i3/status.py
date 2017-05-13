@@ -28,7 +28,7 @@ class VodaFone(IntervalModule):
         if remainingpercent < daypercent or remainingpercent < nightpercent:
             color = "#FF0000"
         else:
-            color = "#000000"
+            color = "#FFFFFF"
         self.data = self.vf.__dict__
         self.output = {"full_text": " D{day:.0f}% N{night:.0f}% R{remaining:.0f}%".format(day=daypercent, night=nightpercent, remaining=remainingpercent),
                        'color': color}
