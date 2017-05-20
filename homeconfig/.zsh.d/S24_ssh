@@ -7,7 +7,6 @@ else
             eval `keychain -q --eval --agents ssh id_rsa $1`
     }
 fi
-loadrsa --noask
 
 
 vik(){
@@ -42,8 +41,4 @@ sshm() {
 mosh2() {
     ssh2 $1 "apt-get install -y mosh"
     mosh $1
-}
-
-loadkey(){
-    eval `keychain -q --eval --agents ssh id_rsa`
 }
