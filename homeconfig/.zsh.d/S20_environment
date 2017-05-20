@@ -21,4 +21,4 @@ if [ -z "$DISPLAY" ]; then
     export DISPLAY=:0
 fi
 
-export PATH=$HOME/bin:$HOME/mygit/scripts/bin:$PATH
+source ~/.profile
