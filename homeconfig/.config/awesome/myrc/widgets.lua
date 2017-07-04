@@ -1,4 +1,3 @@
-local keydoc = require("keydoc")
 local cal = require("cal")
 local vicious = require('vicious')
 local awful = require('awful')
@@ -16,12 +15,13 @@ local screen = screen
 local io = { open = io.open, popen = io.popen, stderr= io.stderr}
 local string = {find = string.find, match = string.match, format=string.format}
 local device = require("myrc.device")
+myrc.util = require("myrc.util")
+local asyncspawn = myrc.util.asyncspawn
 vicious.contrib = require("vicious.contrib")
 
 module("myrc.widgets")
 
-local SNIPPETDIR = os.getenv("HOME") .. "/.config/snippets/"
-local capskey = "Mod3"
+local capskey = "Mod4"
 local winkey = "Mod4"
 
 w = {}
@@ -81,44 +81,44 @@ local iptooltip = awful.tooltip({})
 iptooltip:add_to_object(myip)
 
 function updateIP()
+    local f = io.open('/sys/class/net/bond0/bonding/active_slave', "r")
+    local t = f:read("*all")
+    local neticon = ''
+    if string.match(t, "wl.-") then
+        neticon = ''
+    end
     local f = io.popen("ip r")
     local ipr = f:read("*all")
+    local ipinfo = ""
     f:close()
     local gwdev = string.match(ipr, 'default via .- dev (.-) ')
     if not gwdev then
-        myip:set_text("No GW")
-        return
+        ipinfo = "No GW"
+    else
+        f = io.popen("ip a s " .. gwdev)
+        local ipa = f:read("*all")
+        f:close()
+        local ip = string.match(ipa, "inet (.-)/")
+        if not ip then
+            ipinfo = "No IP"
+        else
+            ipinfo = ip
+        end
     end
-    f = io.popen("ip a s " .. gwdev)
-    local ipa = f:read("*all")
-    f:close()
-    local ip = string.match(ipa, "inet (.-)/")
-    if not ip then
-        myip:set_text("No IP")
-        return
-    end
-    local f = io.open('/sys/class/net/bond0/bonding/active_slave', "r")
-    local t = f:read("*all")
-    f:close()
-    myip:set_text(ip .. ' ' .. t)
+
+    myip:set_markup(string.format("<span color='#66C0FF'>%s %s</span>", neticon, ipinfo))
     local f = io.popen("iwconfig | grep -v 'no wireless'")
     local iw = f:read("*all")
     f:close()
-    iptooltip:set_markup(string.format("<span font_desc='%s'>%s</span>", device.font, iw))
+    iptooltip:set_markup(string.format("<span  font_desc='%s'>%s</span>", device.font, iw))
 end
 
 updateIP()
 dbusCallBack("system", "name.marples.roy.dhcpcd", updateIP)
 w[#w+1] = myip
 
-function asyncspawn(cmd)
-    function spawn()
-        awful.util.spawn(cmd)
-    end
-    return spawn
-end
 
-local netmenucfg = { 
+local netmenucfg = {
              {"Restart DHCP", asyncspawn("sudo systemctl restart dhcpcd"), },
              {"WiFi reconnect", asyncspawn("wifi reconnect"), },
              {"Open WPA", asyncspawn("wpa_gui")},
@@ -131,7 +131,7 @@ local netmenu = awful.menu.new(args)
 
 myip:buttons(awful.util.table.join(
     awful.button({}, 1, updateIP),
-    awful.button({}, 3, function() 
+    awful.button({}, 3, function()
         local apmode = string.match(awful.util.pread("wifi mode"), "(AP)") == "AP"
         local icon = ""
         if apmode then
@@ -149,13 +149,13 @@ myip:buttons(awful.util.table.join(
         end
         netmenu:delete(4)
         netmenu:add({"Enable Hotspot", switchap, icon})
-        netmenu:show() 
+        netmenu:show()
     end)
 ))
 
 local mynet = wibox.widget.textbox()
 mynet:set_font(device.font)
-vicious.register(mynet, vicious.contrib.net, 
+vicious.register(mynet, vicious.contrib.net,
     function(widget, data)
         local uiunit = "kb"
         local diunit = 'kb'
@@ -171,7 +171,7 @@ vicious.register(mynet, vicious.contrib.net,
         end
         local down = data["{"..device.network.." down_".. diunit .. "}"]
         local up = data["{"..device.network.." up_".. uiunit  .. "}"]
-        local result = '<span color="#00FF00">%5s %s</span> <span color="#FF0000">%5s %s</span>'
+        local result = '<span color="#00FF00">%5s %s</span> <span color="#FF0000">%5s %s</span>'
         return string.format(result, down, dunit, up, uunit)
     end
 
@@ -180,7 +180,7 @@ w[#w+1] = mynet
 
 local mytemp = wibox.widget.textbox()
 mytemp:set_font(device.font)
-vicious.register(mytemp, vicious.widgets.thermal, 
+vicious.register(mytemp, vicious.widgets.thermal,
     function(widget, data)
         local tmp = data[1]
         local color
@@ -191,7 +191,7 @@ vicious.register(mytemp, vicious.widgets.thermal,
         else
             color = "#FF0000"
         end
-        return string.format('<span color="%s">%s°C</span>', color, tmp)
+        return string.format(' <span color="%s">%s </span>', color, tmp)
     end
     , 2, {"thermal_zone0", "sys"})
 w[#w+1] = mytemp
@@ -205,19 +205,31 @@ function updateBat()
         return
     end
     local per = res[2]
-    local output = res[1] .. res[2]
     local color
+    local icon = "⚡"
     if res[1] == "+" then
+        icon = ""
         color = "#0080ff"
     else
-        if per > 40 then
+        icon = ""
+        if per > 80 then
+            icon = ""
             color = "#00FF00"
-        elseif per > 15 then
+        elseif per > 60 then
+            icon = ""
+            color = "#00FF00"
+        elseif per > 40 then
+            icon = ""
+            color = "#00FF00"
+        elseif per > 20 then
+            icon = ""
             color = "#ff9c00"
         else
+            icon = ""
             color = "#FF0000"
         end
     end
+    local output = icon .. res[2]
     output = '<span color="' .. color  ..  '">' .. output  .. "</span>"
     mybat:set_markup(output)
 end
@@ -229,17 +241,25 @@ tm:start()
 
 w[#w+1] = mybat
 
-local mymem = awful.widget.progressbar()
-mymem:set_width(6)
-mymem:set_vertical(true)
-mymem:set_background_color("#494B4F")
-mymem:set_border_color(nil)
-mymem:set_color({ type = "linear", from = { 0, 0 }, to = { 10,0 }, stops = { {0, "#AECF96"}, {0.5, "#88A175"}, 
-                    {1, "#FF5656"}}})
+local mymem = wibox.widget {
+    {
+        max_value     = 1,
+        value         = 0.75,
+        widget        = wibox.widget.progressbar,
+        background_color = "#494b4f",
+        color = {type = "linear", from = {0, 0}, to = {10, 0}, stops = { {0, "#AECF96"}, {0.5, "#88A175"}, {1, "#FF5656"} } }
+    },
+    forced_height = 100,
+    forced_width  = 6,
+    direction     = 'east',
+    layout        = wibox.container.rotate,
+}
 
 local memtooltip = awful.tooltip({})
 memtooltip:add_to_object(mymem)
-vicious.register(mymem, vicious.widgets.mem, function(widget, data) 
+vicious.register(mymem.widget, vicious.widgets.mem, function(widget, data)
+    widget.value = data[1] / 100
+    mymem.value = data[1] / 100
     memtooltip:set_markup(string.format("<span font_desc='%s'>%s%%</span>", device.font, data[1]))
     return data[1]
     end
@@ -247,7 +267,7 @@ vicious.register(mymem, vicious.widgets.mem, function(widget, data)
 w[#w+1] = mymem
 
 
-local mycpu = awful.widget.graph()
+local mycpu = wibox.widget.graph()
 mycpu:set_width(50)
 mycpu:set_background_color("#494B4F")
 mycpu:set_color({ type = "linear", from = { 0, 0 }, to = { 0,10 }, stops = { {0, "#FF0000"}, {2, "#33FF00"}, {10, "#00FF00" }}})
@@ -268,7 +288,7 @@ end
 updatevol()
 w[#w+1] = myvoltext
 
-local mycal = awful.widget.textclock("%a %d/%m - %R")
+local mycal = wibox.widget.textclock("%a %d/%m - %R")
 mycal:set_font(device.font)
 cal.register(mycal)
 w[#w+1] = mycal
@@ -297,10 +317,8 @@ myvoltext:buttons(awful.util.table.join(
 ))
 
 keybindings = awful.util.table.join(
-    keydoc.group("Music"),
-    awful.key({winkey}, "Down", decreasevolume, "Descrease Volume"),
-    awful.key({winkey}, "Up", increasevolume, "Increase Volume"),
-    awful.key({winkey}, "0", mutevolume, "Mute Volume"),
-    keydoc.group("Prompts"),
-    awful.key({capskey}, "y", runprompt, "Search tag")
+    awful.key({winkey}, "Down", decreasevolume, {description="Descrease Volume", group="sound"}),
+    awful.key({winkey}, "Up", increasevolume, {description="Increase Volume", group="sound"}),
+    awful.key({winkey}, "0", mutevolume, {description="Mute Volume", group="sound"}),
+    awful.key({capskey}, "y", runprompt, {description="Search Tag", group="tag"})
 )

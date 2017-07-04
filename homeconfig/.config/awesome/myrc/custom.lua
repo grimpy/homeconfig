@@ -1,6 +1,6 @@
-local keydoc = require("keydoc")
 local awful = require("awful")
 local client = client
+local gears = require("gears")
 local awesome = awesome
 local keygrabber = keygrabber
 local screen = screen
@@ -15,6 +15,7 @@ local runonce = require("myrc.runonce")
 local myrc = {}
 local lockreplaceid = nil
 myrc.util = require("myrc.util")
+local asyncspawn = myrc.util.asyncspawn
 
 module("myrc.custom")
 
@@ -39,8 +40,8 @@ end
 
 tags = {
     {
-        name        = "1:Term",                 -- Call the tag "Term"
-        key         = "1",
+        name        = "1: Term",                 -- Call the tag "Term"
+        key         = "F1",
         init        = true,                   -- Load the tag on startup
         launch      = "urxvt",
         max_clients = 4,
@@ -50,28 +51,29 @@ tags = {
         class       = {"xterm" , "urxvt" , "aterm","URxvt","XTerm","konsole","terminator","gnome-terminal"}
     },
     {
-        name        = "2:IM",                 -- Call the tag "Term"
-        key         = "2",
-        launch      = "pidgin",
+        name        = "2: IM",                 -- Call the tag "Term"
+        key         = "F2",
+        launch      = "telegram-desktop",
         exclusive   = true,                   -- Refuse any other type of clients (by classes)
         init        = false,                   -- Load the tag on startup
         screen      = {VGA},                  -- Create this tag on screen 1 and screen 2
         layout      = awful.layout.suit.fair.horizontal, -- Use the tile layout
-        class       = {"Pidgin", "Skype", "gajim", 'Telegram'}
+        class       = {"Pidgin", "Skype", "gajim", 'TelegramDesktop'}
     },
     {
-        name        = "3:Web",                 -- Call the tag "Term"
-        key         = "3",
+        name        = "3: Web",                 -- Call the tag "Term"
+        key         = "F3",
         launch      = "browser",
         init        = false,                   -- Load the tag on startup
         exclusive   = true,                   -- Refuse any other type of clients (by classes)
         screen      = {LCD},                  -- Create this tag on screen 1 and screen 2
         layout      = awful.layout.suit.max, -- Use the tile layout
-        class       = {"Chrome", "Google-chrome-stable", "Chromium", "Midori", "Navigator", "Namoroka","Firefox"}
+        class       = {"Chrome", "Google-chrome-stable", "Chromium", "Midori", "Navigator",
+                       "Namoroka","Firefox", "Vivaldi-stable"}
     },
     {
-        name        = "4:Mail",                 -- Call the tag "Term"
-        key         = "4",
+        name        = "4: Mail",                 -- Call the tag "Term"
+        key         = "F4",
         launch      = "emailclient",
         init        = false,                   -- Load the tag on startup
         exclusive   = true,                   -- Refuse any other type of clients (by classes)
@@ -80,8 +82,8 @@ tags = {
         class       = {"Thunderbird", "Mail", "Msgcompose", "Evolution"}
     },
     {
-        name        = "5:FS",                 -- Call the tag "Term"
-        key         = "5",
+        name        = "5: FS",                 -- Call the tag "Term"
+        key         = "F5",
         launch      = "thunar",
         init        = false,                   -- Load the tag on startup
         exclusive   = true,                   -- Refuse any other type of clients (by classes)
@@ -90,18 +92,18 @@ tags = {
         class       = {"Thunar", "spacefm", "pcmanfm", "xarchiver", "Squeeze", "File-roller", "Nautilus"}
     },
     {
-        name        = "6:Edit",                 -- Call the tag "Term"
-        key         = "6",
-        launch      = "gvim",
+        name        = "6: Edit",                 -- Call the tag "Term"
+        key         = "F6",
+        launch      = "atom",
         init        = false,                   -- Load the tag on startup
         exclusive   = false,                   -- Refuse any other type of clients (by classes)
         screen      = {VGA},                  -- Create this tag on screen 1 and screen 2
         layout      = awful.layout.suit.max, -- Use the tile layout
-        class       = {"jetbrains-pycharm-ce", "Geany", "gvim", "Firebug", "sun-awt-X11-XFramePeer", "Devtools", "jetbrains-android-studio", "sun-awt-X11-XDialogPeer"}
+        class       = {"jetbrains-pycharm-ce", "Geany", "gvim", "Firebug", "sun-awt-X11-XFramePeer", "Devtools", "jetbrains-android-studio", "sun-awt-X11-XDialogPeer", "Atom"}
     },
     {
-        name        = "7:Media",                 -- Call the tag "Term"
-        key         = "7",
+        name        = "7: Media",                 -- Call the tag "Term"
+        key         = "F7",
         launch      = "ario",
         init        = false,                   -- Load the tag on startup
         exclusive   = true,                   -- Refuse any other type of clients (by classes)
@@ -110,8 +112,8 @@ tags = {
         class       = {"MPlayer", "ario", "Audacious", "pragha", "mplayer2", "bino", "mpv"}
     },
     {
-        name        = "8:Emu",                 -- Call the tag "Term"
-        key         = "8",
+        name        = "8: Emu",                 -- Call the tag "Term"
+        key         = "F8",
         init        = false,                   -- Load the tag on startup
         exclusive   = true,                   -- Refuse any other type of clients (by classes)
         screen      = {VGA},                  -- Create this tag on screen 1 and screen 2
@@ -119,13 +121,13 @@ tags = {
         class       = {"VirtualBox"}
     },
     {
-        name        = "9:Mediafs",                 -- Call the tag "Term"
-        key         = "9",
+        name        = "9: Mediafs",                 -- Call the tag "Term"
+        key         = "F9",
         init        = false,                   -- Load the tag on startup
         exclusive   = true,                   -- Refuse any other type of clients (by classes)
         screen      = {VGA},                  -- Create this tag on screen 1 and screen 2
         layout      = awful.layout.suit.tile, -- Use the tile layout
-        class       = {"xbmc.bin", "Kodi"}
+        class       = {"xbmc.bin", "Kodi", "zoom"}
     },
     {
         name        = "10:Remote",                 -- Call the tag "Term"
@@ -147,11 +149,10 @@ tags = {
     }
 }
 
-clientbuttons=awful.util.table.join(
-    awful.button({ }, 1, function (c) client.focus=c; c:raise() end),
+clientbuttons = gears.table.join(
+    awful.button({ }, 1, function (c) client.focus = c; c:raise() end),
     awful.button({ altkey }, 1, awful.mouse.client.move),
     awful.button({ altkey }, 3, awful.mouse.client.resize))
-
 
 function pushincorner()
     local sel=client.focus
@@ -209,7 +210,7 @@ function keymenu(keys, naughtytitle, naughtypreset)
         local stopped = false
         local continue = false
         for _, key in ipairs(keys) do
-            if key.key == pkey then 
+            if key.key == pkey then
                 stopped = true
                 keygrabber.stop()
                 continue = key.callback()
@@ -224,7 +225,7 @@ function keymenu(keys, naughtytitle, naughtypreset)
         if continue then
             keymenu(keys, naughtytitle, naughtypreset)
         end
-   end)
+    end)
 end
 
 local shutdownkeys = { {key="s", help="for suspend", callback=suspend},
@@ -234,8 +235,16 @@ local shutdownkeys = { {key="s", help="for suspend", callback=suspend},
                        {key="p", help="for poweroff", callback=function() awful.util.spawn("systemctl poweroff") end},
                        {key="l", help="for lock", callback=lock}
                     }
+local rofimenu = {
+    {key="r", help="Run command", callback=asyncspawn("rofi -show run")},
+    {key="s", help="Snippets", callback=asyncspawn("rofi -modi 'Snippets:rofisnippets' -show Snippets")},
+    {key="p", help="Randr", callback=asyncspawn("rofi -modi 'Randr:rofirandr' -show Randr")},
+    {key="m", help="Math", callback=asyncspawn("rofi -modi 'MathExpr:mathexpr' -show MathExpr")},
+    {key="k", help="Kill Process", callback=asyncspawn("rofi -modi 'Process:processkill' -show Process")},
+    {key="w", help="Windows Select", callback=asyncspawn("rofi -show window")}
+}
 
-function movetag(offset, idx) 
+function movetag(offset, idx)
     local screen=client.focus.screen
     local tag = awful.tag.selected(screen)
     local idx = idx or awful.tag.getidx(tag)
@@ -320,54 +329,38 @@ local tagkeys = { {key="n", help="New", callback=newtag},
                   {key="r", help="Rename", callback=rename_tag},
                   {key="m", help="Move", callback=movetagmenu},
                   {key="s", help="Move to Screen", callback=movetagtoscreen},
-                  {key="d", help="Delete", callback=function () 
-                    local t = awful.tag.selected() 
+                  {key="d", help="Delete", callback=function ()
+                    local t = awful.tag.selected()
                     awful.tag.delete(t)
                   end}
                 }
 
-keydoc.group("Launchers")
 keybindings = awful.util.table.join(
-    awful.key({ capskey, }, "F1", keydoc.display, "This"),
-    awful.key({ altkey, "Control" }, "c", function () awful.util.spawn(terminal) end, "Open Terminal"),
-    awful.key({ }, "Print", function () awful.util.spawn("caputereimg.sh /home/Jo/Pictures/SS") end, "Take Screenshot"),
-    awful.key({ winkey,           }, "o", function () awful.util.spawn("rotatescreen") end, "Rotate Screen"),
-    awful.key({ }, "XF86Battery", suspend, "Suspend"),
-    awful.key({ capskey}, "v", myrc.util.resortTags, "Resort Tags"),
-    awful.key({  }, "Caps_Lock", function() awful.util.spawn_with_shell("fixkeyboard") end, "Reset Keyboard mods"),
-    awful.key({ capskey }, "r", function() awful.util.spawn("rofi -show run") end, "Run commands"),
-    awful.key({ capskey }, "i", function() awful.util.spawn("rofi -modi 'Snippets:rofisnippets' -show Snippets") end, "Copy snippet"),
+    awful.key({ altkey, "Control" }, "c", function () awful.util.spawn(terminal) end, {description="Open Terminal", group="launcher"}),
+    awful.key({ }, "Print", function () awful.util.spawn("caputereimg.sh /home/Jo/Pictures/SS") end, {description="Take Screenshot", group="launcher"}),
+    awful.key({ winkey,           }, "o", function () awful.util.spawn("rotatescreen") end, {description="Rotate Screen", group="screen"}),
+    awful.key({ }, "XF86Battery", suspend, {description="Suspend", group="launcher"}),
+    awful.key({ capskey}, "v", myrc.util.resortTags, {description="Resort Tags", group="launcher"}),
+    awful.key({  }, "Caps_Lock", function() awful.util.spawn_with_shell("fixkeyboard") end, {description="Reset Keyboard mods", group="launcher"}),
+    awful.key({ capskey }, "r", function() awful.util.spawn("rofi -show run") end, {description="Run commands", group="launcher"}),
     awful.key({ capskey }, "w", function() awful.util.spawn("rofi -show window") end, "Search open windows"),
-    keydoc.group("Music"),
-    awful.key({ winkey,           }, "F2", function () awful.util.spawn("musiccontrol PlayPause") end, "Play/Resume"),
-    awful.key({ winkey,           }, "F3", function () awful.util.spawn("musiccontrol Previous") end, "Previous"),
-    awful.key({ winkey,           }, "F4", function () awful.util.spawn("musiccontrol Next") end, "Next"),
-    keydoc.group("Screen"),
-    awful.key({ }, "XF86MonBrightnessUp", function () awful.util.spawn_with_shell("xbacklight -inc 10") end, "Brightness +"),
-    awful.key({ }, "XF86MonBrightnessDown", function () awful.util.spawn_with_shell("xbacklight -dec 10") end, "Brightness -"),
-    awful.key({ winkey, }, "l", locktoggle, "Toggle Autolock"),
-    awful.key({ winkey,           }, "p", function () awful.util.spawn( "xrandr.sh --auto") end, "Dual/Single Toggle"),
-    keydoc.group("Menus"),
-    awful.key({ capskey}, "s", function() keymenu(shutdownkeys, "Shutdown", {bg="#ff3333", fg="#ffffff"}) end, "Shutdown Menu"),
-    awful.key({ capskey}, "t", function() keymenu(tagkeys, "Tag Management", {}) end, "Tag Management"),
-    awful.key({ capskey,  }, "z", xbmcmote, "Kodi Menu"),
-    keydoc.group("Windows"),
-    awful.key({ capskey,           }, "u", function () 
+    awful.key({ }, "XF86MonBrightnessUp", function () awful.util.spawn_with_shell("xbacklight -inc 10") end, {description="Brightness +", group="screen"}),
+    awful.key({ }, "XF86MonBrightnessDown", function () awful.util.spawn_with_shell("xbacklight -dec 10") end, {description="Brightness -", group="screen"}),
+    awful.key({ winkey, }, "l", locktoggle, {description="Toggle Autolock", group="lock"}),
+    awful.key({ winkey,           }, "p", function () awful.util.spawn( "xrandr.sh --auto") end, {description="Dual/Single Toggle", group="screen"}),
+    awful.key({ winkey}, "s", function() keymenu(shutdownkeys, "Shutdown", {bg="#ff3333", fg="#ffffff"}) end, {description="Shutdown Menu", group="menus"}),
+    awful.key({ capskey}, "t", function() keymenu(tagkeys, "Tag Management", {}) end, {description="Tag Management", group="menus"}),
+    awful.key({ capskey}, "r", function() keymenu(rofimenu, "Rofi Menu", {}) end, {description="Rofi Menu", group="menus"}),
+    awful.key({ capskey,  }, "z", xbmcmote, {description="Kodi Menu", group="menus"}),
+    awful.key({ capskey,           }, "u", function ()
         awful.client.urgent.jumpto()
         removeFile('/tmp/scrolllock')
-    end, "Jump to urgent"),
-    awful.key({ winkey }, "d", awful.tag.viewnone, "Show desktop"),
-
-    -- Mouse cursor bindings
-    keydoc.group("Mouse Control"),
-    awful.key({ capskey, "Shift" }, "Left", function () movecursor(-10,0) end, "Move left"),
-    awful.key({ capskey, "Shift" }, "Right", function () movecursor(10,0) end, "Move right"),
-    awful.key({ capskey, "Shift" }, "Up", function () movecursor(0,-10) end, "Move up "),
-    awful.key({ capskey, "Shift" }, "Down", function () movecursor(0,10) end, "Move down")
+    end, {description="Jump to urgent", group="tag"}),
+    awful.key({ winkey }, "d", awful.tag.viewnone, {description="Show desktop", group="tag"})
 )
 
 
-client.connect_signal("property::urgent", function(c) 
+client.connect_signal("property::urgent", function(c)
     local window = nil
     if client.focus then
         window = client.focus.window

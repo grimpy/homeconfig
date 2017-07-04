@@ -44,3 +44,10 @@ function resortTags()
     end
 
 end
+
+function asyncspawn(cmd)
+    function spawn()
+        awful.util.spawn(cmd)
+    end
+    return spawn
+end
