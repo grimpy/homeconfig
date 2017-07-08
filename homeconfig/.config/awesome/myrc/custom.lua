@@ -244,6 +244,14 @@ local rofimenu = {
     {key="w", help="Windows Select", callback=asyncspawn("rofi -show window")}
 }
 
+local audiomenu = {
+    {key="t", help="Toggle headset mode", callback=asyncspawn("bluehead toggle")},
+    {key="m", help="Toggle headset mute", callback=asyncspawn("bluehead mictoggle")},
+    {key="r", help="Reconnect headset", callback=asyncspawn("btreconnect")},
+    {key="-", help="Volume down", callback=asyncspawn("mediakeys -l 114")},
+    {key="+", help="Volume up", callback=asyncspawn("mediakeys -l 115")},
+}
+
 function movetag(offset, idx)
     local screen=client.focus.screen
     local tag = awful.tag.selected(screen)
@@ -351,6 +359,7 @@ keybindings = awful.util.table.join(
     awful.key({ winkey}, "s", function() keymenu(shutdownkeys, "Shutdown", {bg="#ff3333", fg="#ffffff"}) end, {description="Shutdown Menu", group="menus"}),
     awful.key({ capskey}, "t", function() keymenu(tagkeys, "Tag Management", {}) end, {description="Tag Management", group="menus"}),
     awful.key({ capskey}, "r", function() keymenu(rofimenu, "Rofi Menu", {}) end, {description="Rofi Menu", group="menus"}),
+    awful.key({ capskey}, "a", function() keymenu(audiomenu, "Audio Menu", {}) end, {description="Audio Menu", group="menus"}),
     awful.key({ capskey,  }, "z", xbmcmote, {description="Kodi Menu", group="menus"}),
     awful.key({ capskey,           }, "u", function ()
         awful.client.urgent.jumpto()
