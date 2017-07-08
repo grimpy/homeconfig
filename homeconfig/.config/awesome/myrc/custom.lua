@@ -207,23 +207,18 @@ function keymenu(keys, naughtytitle, naughtypreset)
     end
     keygrabber.run(function(mod, pkey, event)
         if event == "release" then return end
-        local stopped = false
-        local continue = false
+        local stop = false
         for _, key in ipairs(keys) do
             if key.key == pkey then
-                stopped = true
-                keygrabber.stop()
-                continue = key.callback()
+                stop = not key.callback()
             end
         end
-        if not stopped then
+        if pkey == 'Escape' or stop  then
+            stop = true
             keygrabber.stop()
         end
-        if noti then
+        if noti and stop then
             naughty.destroy(noti)
-        end
-        if continue then
-            keymenu(keys, naughtytitle, naughtypreset)
         end
     end)
 end

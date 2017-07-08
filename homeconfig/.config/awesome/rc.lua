@@ -16,7 +16,6 @@ local hotkeys_popup = require("awful.hotkeys_popup").widget
 require("myrc.custom")
 require("myrc.util")
 require("myrc.widgets")
-local mylogger = require("mylogger")
 
 
 
