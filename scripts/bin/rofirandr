@@ -1,0 +1,7 @@
+#!/bin/bash
+if [ -z $@ ]; then
+    randrctl list
+else
+    randrctl switch-to "$1"
+fi
+
