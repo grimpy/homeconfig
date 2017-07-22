@@ -23,7 +23,7 @@ function getActiveTag()
     else
         scr = capi.mouse.screen or 1
     end
-    return awful.tag.selected(scr)
+    return scr.selected_tag
 end
 
 function resortTags()
@@ -50,7 +50,7 @@ end
 
 function asyncspawn(cmd)
     function spawn()
-        awful.util.spawn(cmd)
+        awful.spawn(cmd)
     end
     return spawn
 end

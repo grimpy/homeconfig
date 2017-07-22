@@ -170,7 +170,7 @@ function movecursor(x, y)
 end
 
 function lock()
-    awful.util.spawn("xlock force")
+    awful.spawn("xlock force")
 end
 
 function locktoggle()
@@ -188,7 +188,7 @@ end
 
 function suspend()
     lock()
-    awful.util.spawn("systemctl suspend")
+    awful.spawn("systemctl suspend")
 end
 
 function keymenu(keys, naughtytitle, naughtypreset)
@@ -224,10 +224,10 @@ function keymenu(keys, naughtytitle, naughtypreset)
 end
 
 local shutdownkeys = { {key="s", help="for suspend", callback=suspend},
-                       {key="r", help="for reboot", callback=function() awful.util.spawn("systemctl reboot") end},
+                       {key="r", help="for reboot", callback=asyncspawn("systemctl reboot")},
                        {key="e", help="for logout", callback=awesome.quit},
                        {key="c", help="for reload", callback=awesome.restart},
-                       {key="p", help="for poweroff", callback=function() awful.util.spawn("systemctl poweroff") end},
+                       {key="p", help="for poweroff", callback=asyncspawn("systemctl poweroff")},
                        {key="l", help="for lock", callback=lock}
                     }
 local rofimenu = {
@@ -321,9 +321,9 @@ function xbmcmote()
         naughty.notify({title="Remote Keyboard", timeout=5, text=output})
     end
     local keys = { {key="r", help="Toggle Remote", callback=togglekb},
-                   {key="x", help="Switch VT", callback=function () awful.util.spawn("xbmcmote x") end},
-                   {key="s", help="Sleep", callback=function () awful.util.spawn("xbmcmote s") end},
-                   {key="w", help="Wakeup", callback=function () awful.util.spawn("xbmcmote w") end}
+                   {key="x", help="Switch VT", callback=asyncspawn("xbmcmote x")},
+                   {key="s", help="Sleep", callback=asyncspawn("xbmcmote s")},
+                   {key="w", help="Wakeup", callback=asyncspawn("xbmcmote w")}
                  }
     keymenu(keys, "XBMCMote", {})
 end
@@ -339,18 +339,18 @@ local tagkeys = { {key="n", help="New", callback=newtag},
                 }
 
 keybindings = awful.util.table.join(
-    awful.key({ altkey, "Control" }, "c", function () awful.util.spawn(terminal) end, {description="Open Terminal", group="launcher"}),
-    awful.key({ }, "Print", function () awful.util.spawn("caputereimg.sh /home/Jo/Pictures/SS") end, {description="Take Screenshot", group="launcher"}),
-    awful.key({ winkey,           }, "o", function () awful.util.spawn("rotatescreen") end, {description="Rotate Screen", group="screen"}),
+    awful.key({ altkey, "Control" }, "c", function () awful.spawn(terminal) end, {description="Open Terminal", group="launcher"}),
+    awful.key({ }, "Print", function () awful.spawn("caputereimg.sh /home/Jo/Pictures/SS") end, {description="Take Screenshot", group="launcher"}),
+    awful.key({ winkey,           }, "o", function () awful.spawn("rotatescreen") end, {description="Rotate Screen", group="screen"}),
     awful.key({ }, "XF86Battery", suspend, {description="Suspend", group="launcher"}),
     awful.key({ capskey}, "v", myrc.util.resortTags, {description="Resort Tags", group="launcher"}),
-    awful.key({  }, "Caps_Lock", function() awful.util.spawn_with_shell("fixkeyboard") end, {description="Reset Keyboard mods", group="launcher"}),
-    awful.key({ capskey }, "r", function() awful.util.spawn("rofi -show run") end, {description="Run commands", group="launcher"}),
-    awful.key({ capskey }, "w", function() awful.util.spawn("rofi -show window") end, "Search open windows"),
-    awful.key({ }, "XF86MonBrightnessUp", function () awful.util.spawn_with_shell("xbacklight -inc 10") end, {description="Brightness +", group="screen"}),
-    awful.key({ }, "XF86MonBrightnessDown", function () awful.util.spawn_with_shell("xbacklight -dec 10") end, {description="Brightness -", group="screen"}),
+    awful.key({  }, "Caps_Lock", function() awful.spawn_with_shell("fixkeyboard") end, {description="Reset Keyboard mods", group="launcher"}),
+    awful.key({ capskey }, "r", function() awful.spawn("rofi -show run") end, {description="Run commands", group="launcher"}),
+    awful.key({ capskey }, "w", function() awful.spawn("rofi -show window") end, "Search open windows"),
+    awful.key({ }, "XF86MonBrightnessUp", function () awful.spawn_with_shell("xbacklight -inc 10") end, {description="Brightness +", group="screen"}),
+    awful.key({ }, "XF86MonBrightnessDown", function () awful.spawn_with_shell("xbacklight -dec 10") end, {description="Brightness -", group="screen"}),
     awful.key({ winkey, }, "l", locktoggle, {description="Toggle Autolock", group="lock"}),
-    awful.key({ winkey,           }, "p", function () awful.util.spawn( "xrandr.sh --auto") end, {description="Dual/Single Toggle", group="screen"}),
+    awful.key({ winkey,           }, "p", function () awful.spawn( "xrandr.sh --auto") end, {description="Dual/Single Toggle", group="screen"}),
     awful.key({ winkey}, "s", function() keymenu(shutdownkeys, "Shutdown", {bg="#ff3333", fg="#ffffff"}) end, {description="Shutdown Menu", group="menus"}),
     awful.key({ capskey}, "t", function() keymenu(tagkeys, "Tag Management", {}) end, {description="Tag Management", group="menus"}),
     awful.key({ capskey}, "r", function() keymenu(rofimenu, "Rofi Menu", {}) end, {description="Rofi Menu", group="menus"}),
@@ -370,7 +370,7 @@ client.connect_signal("property::urgent", function(c)
         window = client.focus.window
     end
     if c.urgent and c.window ~= window then
-        awful.util.spawn("scrolllock")
+        awful.spawn("scrolllock")
     elseif not awful.client.urgent.get() then
         removeFile('/tmp/scrolllock')
     end

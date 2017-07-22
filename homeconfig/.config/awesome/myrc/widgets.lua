@@ -4,13 +4,13 @@ local awful = require('awful')
 local util = require('awful.util')
 local prompt = require('awful.prompt')
 local theme = require("theme")
+local gears = require("gears")
 local ipairs = ipairs
 local type = type
 local completion = require('awful.completion')
 local wibox = require('wibox')
 local dbus = dbus
 local os = os
-local timer = timer
 local screen = screen
 local io = { open = io.open, popen = io.popen, stderr= io.stderr}
 local string = {find = string.find, match = string.match, format=string.format}
@@ -235,9 +235,11 @@ function updateBat()
 end
 updateBat()
 dbusCallBack("system", "org.freedesktop.UPower.Device", updateBat)
-tm = timer({timeout=60})
-tm:connect_signal("timeout", updateBat)
-tm:start()
+gears.timer {
+    timeout=60,
+    autostart=true,
+    callback=updateBat
+}
 
 w[#w+1] = mybat
 

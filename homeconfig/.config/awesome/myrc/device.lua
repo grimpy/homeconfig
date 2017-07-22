@@ -4,7 +4,6 @@ local pcall = pcall
 local dofile = dofile
 local pairs = pairs
 local awful = require('awful')
-local mylogger = require('mylogger')
 
 module("myrc.device")
 
@@ -22,7 +21,6 @@ success, device = pcall(function() return dofile(devicepath) end)
 
 -- loa device specific
 local devicepath = configdir .. "/devices/" .. hostname .. ".lua"
-mylogger.log('device', devicepath)
 if awful.util.file_readable(devicepath) then
     local success, mydevice = pcall(function() return dofile(devicepath) end)
     for k,v in pairs(mydevice) do device[k] = v end

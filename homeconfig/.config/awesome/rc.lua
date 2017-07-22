@@ -410,10 +410,7 @@ clientkeys = awful.util.table.join(
 
 
 function getNextTag(tagcfg)
-    function getInfo(tag)
-        return {tag=tag, scr=awful.tag.getscreen(tag), idx=awful.tag.getproperty(tag, 'index')}
-    end
-    local cur = getInfo(myrc.util.getActiveTag())
+    local cur = myrc.util.getActiveTag()
     local scrcnt = screen:count()
     local tags = {}
 
@@ -421,24 +418,23 @@ function getNextTag(tagcfg)
         for idx, tag in ipairs(s.tags) do
             local keymatch = tag.name:match("([0-9]?):")
             if tag.name == tagcfg.name or tagcfg.key == keymatch then
-                taginfo = getInfo(tag)
-                tags[#tags+1] = taginfo
+                tags[#tags+1] = tag
             end
         end
     end
     function score(tag)
         local score = 0
         -- same screen
-        if tag.idx == cur.idx and tag.scr == cur.scr then
+        if tag.index == cur.index and tag.screen == cur.screen then
             return 999999999
-        elseif tag.scr == cur.scr then
-            if tag.idx > cur.idx then
-                return tag.idx - cur.idx
+        elseif tag.screen == cur.screen then
+            if tag.index > cur.index then
+                return tag.index - cur.index
             else
-                return 100 * (scrcnt + 1) + tag.idx
+                return 100 * (scrcnt + 1) + tag.index
             end
         else
-            return 100 * scrcnt + tag.idx
+            return 100 * scrcnt + tag.index
         end
     end
     function sorter(tag1, tag2)
@@ -446,7 +442,7 @@ function getNextTag(tagcfg)
     end
     table.sort(tags, sorter)
     if #tags >= 1 then
-        return tags[1].tag
+        return tags[1]
     else
         return
     end
@@ -461,7 +457,7 @@ for _, tagcfg in pairs(myrc.custom.tags) do
                         local tag = getNextTag(tagcfg)
                         if not tag then
                             if tagcfg.launch then
-                                awful.util.spawn(tagcfg.launch)
+                                awful.spawn(tagcfg.launch)
                             end
                             return
                         end
@@ -643,6 +639,16 @@ client.connect_signal("mouse::enter", function(c)
     if awful.layout.get(c.screen) ~= awful.layout.suit.magnifier
         and awful.client.focus.filter(c) then
         client.focus = c
+    end
+end)
+
+client.connect_signal("property::name", function(c)
+    if c.class == 'TelegramDesktop' then
+        if c.name == 'Telegram' then
+            c.urgent = false
+        else
+            c.urgent = true
+        end
     end
 end)
 
