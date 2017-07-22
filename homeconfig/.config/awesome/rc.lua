@@ -12,6 +12,7 @@ local beautiful = require("beautiful")
 local naughty = require("naughty")
 local menubar = require("menubar")
 local hotkeys_popup = require("awful.hotkeys_popup").widget
+local mylogger = require("mylogger")
 -- Custom
 require("myrc.custom")
 require("myrc.util")
@@ -413,11 +414,11 @@ function getNextTag(tagcfg)
         return {tag=tag, scr=awful.tag.getscreen(tag), idx=awful.tag.getproperty(tag, 'index')}
     end
     local cur = getInfo(myrc.util.getActiveTag())
-    local scrcnt = screen.count()
+    local scrcnt = screen:count()
     local tags = {}
 
-    for i = 1, screen.count() do
-        for idx, tag in ipairs(awful.tag.gettags(i)) do
+    for s in screen do
+        for idx, tag in ipairs(s.tags) do
             local keymatch = tag.name:match("([0-9]?):")
             if tag.name == tagcfg.name or tagcfg.key == keymatch then
                 taginfo = getInfo(tag)
@@ -458,14 +459,14 @@ for _, tagcfg in pairs(myrc.custom.tags) do
         awful.key({ modkey }, tagcfg.key,
                   function ()
                         local tag = getNextTag(tagcfg)
-                        if tag then
-                           awful.tag.viewonly(tag)
-                        else
+                        if not tag then
                             if tagcfg.launch then
                                 awful.util.spawn(tagcfg.launch)
                             end
+                            return
                         end
-                        local scr = awful.tag.getscreen(tag)
+                        tag:view_only()
+                        local scr = tag.screen
                         if scr then
                             awful.screen.focus(scr)
                         end

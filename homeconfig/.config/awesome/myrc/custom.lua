@@ -79,7 +79,7 @@ tags = {
         exclusive   = true,                   -- Refuse any other type of clients (by classes)
         screen      = {LCD},                  -- Create this tag on screen 1 and screen 2
         layout      = awful.layout.suit.tile, -- Use the tile layout
-        class       = {"Thunderbird", "Mail", "Msgcompose", "Evolution"}
+        class       = {"Thunderbird", "Mail", "Msgcompose", "Evolution", "openwmail"}
     },
     {
         name        = "5: FS",                 -- Call the tag "Term"
@@ -99,7 +99,7 @@ tags = {
         exclusive   = false,                   -- Refuse any other type of clients (by classes)
         screen      = {VGA},                  -- Create this tag on screen 1 and screen 2
         layout      = awful.layout.suit.max, -- Use the tile layout
-        class       = {"jetbrains-pycharm-ce", "Geany", "gvim", "Firebug", "sun-awt-X11-XFramePeer", "Devtools", "jetbrains-android-studio", "sun-awt-X11-XDialogPeer", "Atom"}
+        class       = {"jetbrains-pycharm-ce", "Geany", "gvim", "Firebug", "sun-awt-X11-XFramePeer", "Devtools", "jetbrains-android-studio", "sun-awt-X11-XDialogPeer", "Atom", "code - insiders"}
     },
     {
         name        = "7: Media",                 -- Call the tag "Term"

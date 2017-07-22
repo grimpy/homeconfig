@@ -27,8 +27,8 @@ function getActiveTag()
 end
 
 function resortTags()
-    for scr = 1, capi.screen.count() do
-        local tags = awful.tag.gettags(scr)
+    for s in capi.screen do
+        local tags = s.tags
         table.sort(tags, function(a, b) 
             local ak = tonumber(a.name:match("([0-9]+):"))
             local bk = tonumber(b.name:match("([0-9]+):"))
@@ -39,7 +39,10 @@ function resortTags()
             end
         end)
         for i, tag in ipairs(tags) do
-            awful.tag.move(i, tag)
+            tag.index = i
+            if #tag:clients() == 0 then
+                tag:delete()
+            end
         end
     end
 
