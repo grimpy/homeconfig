@@ -484,17 +484,12 @@ for _, tagcfg in pairs(myrc.custom.tags) do
                           local curcl = client.focus
                           local srctag = client.focus.first_tag or nil
                           if not tag then
-                              tag = awful.tag.add(tagcfg.name,{screen=tagcfg.screen[1] })
-                              myrc.util.resortTags()
+                              tag = awful.tag.add(tagcfg.name, {screen=client.screen })
                           end
                           awful.client.movetotag(tag)
-                          awful.tag.viewonly(tag)
+                          tag:view_only()
                           client.focus = curcl
-                          if srctag then
-                             if #srctag:clients() == 0 then
-                                 awful.tag.delete(srctag)
-                             end
-                          end
+                          myrc.util.resortTags()
                      end
                   end,
                   {description = "move focused client to tag #"..tagcfg.key, group = "tag"}),
