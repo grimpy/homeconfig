@@ -109,7 +109,7 @@ tags = {
         exclusive   = true,                   -- Refuse any other type of clients (by classes)
         screen      = {LCD},                  -- Create this tag on screen 1 and screen 2
         layout      = awful.layout.suit.float, -- Use the tile layout
-        class       = {"MPlayer", "ario", "Audacious", "pragha", "mplayer2", "bino", "mpv"}
+        class       = {"MPlayer", "ario", "Audacious", "pragha", "mplayer2", "bino", "mpv", "Spotify"}
     },
     {
         name        = "8: Emu",                 -- Call the tag "Term"
@@ -118,7 +118,7 @@ tags = {
         exclusive   = true,                   -- Refuse any other type of clients (by classes)
         screen      = {VGA},                  -- Create this tag on screen 1 and screen 2
         layout      = awful.layout.suit.tile, -- Use the tile layout
-        class       = {"VirtualBox"}
+        class       = {"VirtualBox", "Insomnia"}
     },
     {
         name        = "9: Mediafs",                 -- Call the tag "Term"
