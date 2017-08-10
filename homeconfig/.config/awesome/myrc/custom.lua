@@ -48,7 +48,7 @@ tags = {
         exclusive   = true,                   -- Refuse any other type of clients (by classes)
         screen      = {VGA},                  -- Create this tag on screen 1 and screen 2
         layout      = awful.layout.suit.tile, -- Use the tile layout
-        class       = {"xterm" , "urxvt" , "aterm","URxvt","XTerm","konsole","terminator","gnome-terminal"}
+        class       = {"xterm" , "urxvt" , "aterm","URxvt","XTerm","konsole","terminator","gnome-terminal", "Termite"}
     },
     {
         name        = "2: IM",                 -- Call the tag "Term"

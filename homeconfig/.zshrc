@@ -22,4 +22,9 @@ for zshrc_snipplet in ~/.zsh.d/S[0-9][0-9]*[^~] ; do
         source $zshrc_snipplet
 done
 
+if [[ $TERM == xterm-termite ]]; then
+  . /etc/profile.d/vte.sh
+  __vte_osc7
+fi
+
 PATH=$PATH:/sbin
