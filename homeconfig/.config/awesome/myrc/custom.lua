@@ -20,7 +20,7 @@ local asyncspawn = myrc.util.asyncspawn
 module("myrc.custom")
 
 browser = "browser"
-terminal = "urxvtc"
+terminal = "terminal"
 autostart = true
 winkey = "Mod4"
 altkey = "Mod1"
@@ -43,7 +43,7 @@ tags = {
         name        = "1: Term",                 -- Call the tag "Term"
         key         = "F1",
         init        = true,                   -- Load the tag on startup
-        launch      = "urxvt",
+        launch      = "terminal",
         max_clients = 4,
         exclusive   = true,                   -- Refuse any other type of clients (by classes)
         screen      = {VGA},                  -- Create this tag on screen 1 and screen 2
@@ -347,8 +347,8 @@ keybindings = awful.util.table.join(
     awful.key({  }, "Caps_Lock", function() awful.spawn_with_shell("fixkeyboard") end, {description="Reset Keyboard mods", group="launcher"}),
     awful.key({ capskey }, "r", function() awful.spawn("rofi -show run") end, {description="Run commands", group="launcher"}),
     awful.key({ capskey }, "w", function() awful.spawn("rofi -show window") end, "Search open windows"),
-    awful.key({ }, "XF86MonBrightnessUp", function () awful.spawn_with_shell("xbacklight -inc 10") end, {description="Brightness +", group="screen"}),
-    awful.key({ }, "XF86MonBrightnessDown", function () awful.spawn_with_shell("xbacklight -dec 10") end, {description="Brightness -", group="screen"}),
+    awful.key({ }, "XF86MonBrightnessUp", function () awful.spawn("xbacklight -inc 10") end, {description="Brightness +", group="screen"}),
+    awful.key({ }, "XF86MonBrightnessDown", function () awful.spawn("xbacklight -dec 10") end, {description="Brightness -", group="screen"}),
     awful.key({ winkey, }, "l", locktoggle, {description="Toggle Autolock", group="lock"}),
     awful.key({ winkey,           }, "p", function () awful.spawn( "xrandr.sh --auto") end, {description="Dual/Single Toggle", group="screen"}),
     awful.key({ winkey}, "s", function() keymenu(shutdownkeys, "Shutdown", {bg="#ff3333", fg="#ffffff"}) end, {description="Shutdown Menu", group="menus"}),
