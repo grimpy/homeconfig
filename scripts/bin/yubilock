@@ -1,0 +1,16 @@
+#!/usr/bin/env python3
+import pyudev
+import subprocess
+
+context = pyudev.Context()
+
+monitor = pyudev.Monitor.from_netlink(context)
+monitor.filter_by('usb')
+
+for device in iter(monitor.poll, None):
+    if device.action == 'remove':
+        vendorid = device.get('ID_VENDOR_ID')
+        modelid = device.get('ID_MODEL_ID')
+        if vendorid == '1050' and modelid == '0120':
+            print(device, vendorid, modelid)
+            subprocess.Popen(['dm-tool', 'lock'])
