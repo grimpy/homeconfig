@@ -345,8 +345,6 @@ keybindings = awful.util.table.join(
     awful.key({ }, "XF86Battery", suspend, {description="Suspend", group="launcher"}),
     awful.key({ capskey}, "v", myrc.util.resortTags, {description="Resort Tags", group="launcher"}),
     awful.key({  }, "Caps_Lock", function() awful.spawn_with_shell("fixkeyboard") end, {description="Reset Keyboard mods", group="launcher"}),
-    awful.key({ capskey }, "r", function() awful.spawn("rofi -show run") end, {description="Run commands", group="launcher"}),
-    awful.key({ capskey }, "w", function() awful.spawn("rofi -show window") end, "Search open windows"),
     awful.key({ }, "XF86MonBrightnessUp", function () awful.spawn("xbacklight -inc 10") end, {description="Brightness +", group="screen"}),
     awful.key({ }, "XF86MonBrightnessDown", function () awful.spawn("xbacklight -dec 10") end, {description="Brightness -", group="screen"}),
     awful.key({ winkey, }, "l", locktoggle, {description="Toggle Autolock", group="lock"}),
