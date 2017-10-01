@@ -12,6 +12,7 @@ local os = os
 local io = io
 local widgets = require("myrc.widgets")
 local runonce = require("myrc.runonce")
+local mylogger = require('mylogger')
 local myrc = {}
 local lockreplaceid = nil
 myrc.util = require("myrc.util")
@@ -230,6 +231,14 @@ local shutdownkeys = { {key="s", help="for suspend", callback=suspend},
                        {key="p", help="for poweroff", callback=asyncspawn("systemctl poweroff")},
                        {key="l", help="for lock", callback=lock}
                     }
+local mousekeys = { {key="Up", help="Move Mouse Up", callback=function () movecursor(0, -20); return true end},
+                    {key="Down", help="Move Mouse Down", callback=function () movecursor(0, 20); return true end},
+                    {key="Left", help="Move Mouse Left", callback=function () movecursor(-20, 0); return true end},
+                    {key="Right", help="Move Mosue Right", callback=function () movecursor(20, 0); return true end},
+                    {key="Delete", help="Left Click", callback=function () awful.spawn('xdotool click 1') end},
+                    {key="End", help="Middle Click", callback=function () awful.spawn('xdotool click 2') end},
+                    {key="Next", help="Right Click", callback=function () awful.spawn('xdotool click 3'); return true end}
+                  }
 local rofimenu = {
     {key="r", help="Run command", callback=asyncspawn("rofi -show run")},
     {key="s", help="Snippets", callback=asyncspawn("rofi -modi 'Snippets:rofisnippets' -show Snippets")},
@@ -351,6 +360,7 @@ keybindings = awful.util.table.join(
     awful.key({ winkey, }, "l", locktoggle, {description="Toggle Autolock", group="lock"}),
     awful.key({ winkey,           }, "p", function () awful.spawn( "xrandr.sh --auto") end, {description="Dual/Single Toggle", group="screen"}),
     awful.key({ winkey}, "s", function() keymenu(shutdownkeys, "Shutdown", {bg="#ff3333", fg="#ffffff"}) end, {description="Shutdown Menu", group="menus"}),
+    awful.key({ winkey}, "e", function() keymenu(mousekeys, "Mouse Movement") end, {description="Mouse Movement", group="menus"}),
     awful.key({ capskey}, "t", function() keymenu(tagkeys, "Tag Management", {}) end, {description="Tag Management", group="menus"}),
     awful.key({ capskey}, "r", function() keymenu(rofimenu, "Rofi Menu", {}) end, {description="Rofi Menu", group="menus"}),
     awful.key({ capskey}, "a", function() keymenu(audiomenu, "Audio Menu", {}) end, {description="Audio Menu", group="menus"}),
