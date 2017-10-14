@@ -70,7 +70,7 @@ tags = {
         screen      = {LCD},                  -- Create this tag on screen 1 and screen 2
         layout      = awful.layout.suit.max, -- Use the tile layout
         class       = {"Chrome", "Google-chrome-stable", "Chromium", "Midori", "Navigator",
-                       "Namoroka","Firefox", "Vivaldi-stable"}
+                       "Namoroka","Firefox", "Vivaldi-stable", "Firefox Beta"}
     },
     {
         name        = "4: Mail",                 -- Call the tag "Term"
