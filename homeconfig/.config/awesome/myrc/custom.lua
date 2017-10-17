@@ -379,8 +379,8 @@ client.connect_signal("property::urgent", function(c)
         window = client.focus.window
     end
     if c.urgent and c.window ~= window then
-        awful.spawn("scrolllock")
+        awful.spawn("mynotification")
     elseif not awful.client.urgent.get() then
-        removeFile('/tmp/scrolllock')
+        removeFile('/tmp/mynotification/lock')
     end
 end)

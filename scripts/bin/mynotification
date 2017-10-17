@@ -11,7 +11,10 @@ fi
 
 function setled() {
     action=$1
-    for file in /sys/class/leds/*scrolllock /sys/class/leds/*kbd_backlight; do
+    files="$(find /sys/class/leds/ -name '*scrolllock')"
+    files="$files $(find /sys/class/leds/ -name '*kbd_backlight')"
+    files="$files $(find /sys/class/leds/ -name '*power')"
+    for file in $files; do
         if [ $action == 'on' ]; then
             max=$(cat $file/max_brightness)
             echo $max | sudo tee $file/brightness > /dev/null
@@ -21,7 +24,6 @@ function setled() {
             cp $file/brightness "$statedir/$(basename $file)"
         elif [ $action == 'restore' ]; then
             cat "$statedir/$(basename $file)" | sudo tee $file/brightness > /dev/null
-
         fi
     done
 }
