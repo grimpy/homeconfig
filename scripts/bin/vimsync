@@ -8,7 +8,7 @@ import os
 parser = argparse.ArgumentParser()
 parser.add_argument('-f', '--file', help='File to sync', default=None)
 parser.add_argument('-t', '--target', help='Target to sync file to', default=None)
-parser.add_argument('-p', '--port', help='SSH port', default='22')
+parser.add_argument('-p', '--port', help='SSH port', default=None)
 options = parser.parse_args()
 
 REPOBASE = "/home/Jo/code"
@@ -39,6 +39,8 @@ else:
 connections = options.target.split(',')
 
 for file in files:
+    if os.path.isdir(file):
+        continue
     metapath = file[len(REPOBASE)+1:]
     destfile = os.path.join('/opt', 'code', metapath)
     if not destfile:
@@ -50,5 +52,12 @@ for file in files:
 
     for connection in set(connections):
         destdir = os.path.dirname(destfile)
-        subprocess.call(["ssh", "-p", options.port, connection, "mkdir -p '%s'" % destdir])
-        subprocess.call(["scp", '-P', options.port,  file, "%s:'%s'" % (connection, destfile)])
+        sshcall = ['ssh']
+        scpcall = ['scp']
+        if options.port:
+            sshcall.extend(['-p', options.port])
+            scpcall.extend(['-P', options.port])
+        sshcall.extend([connection, "mkdir -p '%s'" % destdir])
+        scpcall.extend([file, "%s:'%s'" % (connection, destfile)])
+        subprocess.call(sshcall)
+        subprocess.call(scpcall)
