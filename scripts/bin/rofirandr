@@ -1,6 +1,6 @@
 #!/bin/bash
 if [ -z $@ ]; then
-    randrctl list
+    ls -1 ~/.config/randrctl/profiles
 else
     randrctl switch-to "$1"
 fi
