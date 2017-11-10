@@ -3,7 +3,6 @@ export GOPATH=$HOME/code/gopath
 export PATH=$HOME/mygit/scripts/bin:$HOME/bin:$GOPATH/bin:$PATH
 eval $(keychain -q --eval --agents ssh id_rsa --noask --systemd)
 export GTK2_RC_FILES="$HOME/.gtkrc-2.0"
-export XDG_CURRENT_DESKTOP=gnome
 export QT_GRAPHICSSYSTEM=native
 export QT_QPA_PLATFORMTHEME=gtk2
 export _JAVA_AWT_WM_NONREPARENTING=1
