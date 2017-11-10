@@ -1,10 +1,12 @@
-if [[ -z "$TMUX" && -z "$SUDO_USER" && -e "/usr/bin/tmux" && $TERM = "rxvt-unicode-256color" ]]; then
-    if ! grep '127.*lxc' /etc/hosts > /dev/null; then
-        NAME=$HOSTNAME
-        if tmux has-session -t $NAME 2> /dev/null; then
-            exec tmux -2 at -t $NAME
-        else
-            exec tmux -2 new -s $NAME
+if [[ -z "$TMUX" && -z "$SUDO_USER" && -e "/usr/bin/tmux" ]]; then
+    if [[ $TERM = "rxvt-unicode-256color" || $TERM == "xterm-termite" ]]; then
+        if ! grep '127.*lxc' /etc/hosts > /dev/null; then
+            NAME=$HOSTNAME
+            if tmux has-session -t $NAME 2> /dev/null; then
+                exec tmux -2 at -t $NAME
+            else
+                exec tmux -2 new -s $NAME
+            fi
         fi
     fi
 fi
