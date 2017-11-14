@@ -4,6 +4,8 @@ call denite#custom#var('file_rec/git', 'command',
 	\ ['git', 'ls-files', '-co', '--exclude-standard'])
 nnoremap <leader>f :<C-u>Denite
                 \ `finddir('.git', ';') != '' ? 'file_rec/git' : 'file_rec'`<CR>
+nnoremap <silent><C-p> :<C-u>Denite
+                \ `finddir('.git', ';') != '' ? 'file_rec/git' : 'file_rec'`<CR>
 nnoremap <leader>a :Denite -auto-preview grep:.<cr>
 nnoremap <leader>b :Denite buffer:-<cr>
 nnoremap <leader>y :Denite history/yank<cr>
