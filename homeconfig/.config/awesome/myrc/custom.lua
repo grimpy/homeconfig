@@ -100,7 +100,7 @@ tags = {
         exclusive   = false,                   -- Refuse any other type of clients (by classes)
         screen      = {VGA},                  -- Create this tag on screen 1 and screen 2
         layout      = awful.layout.suit.max, -- Use the tile layout
-        class       = {"jetbrains-pycharm-ce", "Geany", "gvim", "Firebug", "sun-awt-X11-XFramePeer", "Devtools", "jetbrains-android-studio", "sun-awt-X11-XDialogPeer", "Atom", "code - insiders"}
+        class       = {"jetbrains-pycharm-ce", "Geany", "gvim", "Firebug", "sun-awt-X11-XFramePeer", "Devtools", "jetbrains-android-studio", "sun-awt-X11-XDialogPeer", "Atom", "code - insiders", "code"}
     },
     {
         name        = "7: Media",                 -- Call the tag "Term"
@@ -242,6 +242,8 @@ local mousekeys = { {key="Up", help="Move Mouse Up", callback=function () movecu
 local rofimenu = {
     {key="r", help="Run command", callback=asyncspawn("rofi -show run")},
     {key="s", help="Snippets", callback=asyncspawn("rofi -modi 'Snippets:rofisnippets' -show Snippets")},
+    {key="w", help="Password", callback=asyncspawn("rofi -modi 'Password:rofipass' -show Password")},
+    {key="o", help="OTP", callback=asyncspawn("rofi -modi 'OTP:rofiotp' -show OTP")},
     {key="c", help="Clipboard", callback=asyncspawn("roficlip")},
     {key="p", help="Randr", callback=asyncspawn("rofi -modi 'Randr:rofirandr' -show Randr")},
     {key="m", help="Math", callback=asyncspawn("rofi -modi 'MathExpr:mathexpr' -show MathExpr")},
