@@ -352,7 +352,8 @@ local tagkeys = { {key="n", help="New", callback=newtag},
 
 keybindings = awful.util.table.join(
     awful.key({ altkey, "Control" }, "c", function () awful.spawn(terminal) end, {description="Open Terminal", group="launcher"}),
-    awful.key({ }, "Print", function () awful.spawn("caputereimg.sh /home/Jo/Pictures/SS") end, {description="Take Screenshot", group="launcher"}),
+    awful.key({ "Shift" }, "Print", function () awful.spawn("caputereimg.sh /home/Jo/Pictures/SS") end, {description="Take Screenshot", group="launcher"}),
+    awful.key({ }, "Print", function () awful.spawn("caputereimg.sh") end, {description="Take Screenshot", group="launcher"}),
     awful.key({ winkey,           }, "o", function () awful.spawn("rotatescreen") end, {description="Rotate Screen", group="screen"}),
     awful.key({ }, "XF86Battery", suspend, {description="Suspend", group="launcher"}),
     awful.key({ capskey}, "v", myrc.util.resortTags, {description="Resort Tags", group="launcher"}),

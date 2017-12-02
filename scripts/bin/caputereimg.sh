@@ -1,6 +1,8 @@
 #!/bin/bash
-if [ -d $1 ]; then
+if [ -d "$1" ]; then
     timestamp=`date +%y%m%d_%H%M%S`
-    import ${1}/${timestamp}.png
-    echo "${1}/${timestamp}.png" | xsel -p
+    maim -s -k -u ${1}/${timestamp}.png
+    echo -n "${1}/${timestamp}.png" | xclip -selection clipboard
+else 
+    maim -s -k -u |  xclip -selection clipboard -t image/png
 fi
