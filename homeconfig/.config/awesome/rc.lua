@@ -108,7 +108,7 @@ tyrannical.tags = myrc.custom.tags
 tyrannical.properties.intrusive = {
   "ksnapshot"     , "pinentry"       , "gtksu"     , "kcalc"        , "xcalc"               ,
   "feh"           , "Gradient editor", "About KDE" , "Paste Special", "Background color"    ,
-  "kcolorchooser" , "plasmoidviewer" , "Xephyr"    , "kruler"       , "plasmaengineexplorer",
+  "kcolorchooser" , "keepassxc" , "Xephyr"    , "kruler"       , "plasmaengineexplorer",
 }
 
 -- Ignore the tiled layout for the matching clients
@@ -545,11 +545,13 @@ awful.rules.rules = {
           "Sxiv",
           "Wpa_gui",
           "pinentry",
+          "keepassxc",
           "veromix",
           "xtightvncviewer"},
 
         name = {
           "Event Tester",  -- xev.
+          "Auto-Type - KeePassXC",
         },
         role = {
           "AlarmWindow",  -- Thunderbird's calendar.
@@ -560,7 +562,7 @@ awful.rules.rules = {
     -- @DOC_DIALOG_RULE@
     -- Add titlebars to normal clients and dialogs
     { rule_any = {type = { "normal", "dialog" }
-      }, properties = { titlebars_enabled = false }
+      }, properties = { titlebars_enabled = false, floating = true }
     },
 
     -- Set Firefox to always map on the tag named "2" on screen 1.
