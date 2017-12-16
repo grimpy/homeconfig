@@ -3,6 +3,8 @@ CONFIG=~/.config/xautolock
 option=$1
 
 function lock() {
+    echo "KILLAGENT" | gpg-connect-agent
+    wmctrl -x -r keepassxc -b add,hidden
     dm-tool lock
 }
 
