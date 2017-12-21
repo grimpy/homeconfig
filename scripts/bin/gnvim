@@ -1,2 +1,6 @@
 #!/bin/bash
-termite --class code -e nvim
+if [[ $# -eq 0 ]]; then
+    termite --class code -t "NVIM" -e nvim
+else
+    termite --class code -t "NVIM $1" -e "ssh -o RequestTTY=true $1 nvim"
+fi
