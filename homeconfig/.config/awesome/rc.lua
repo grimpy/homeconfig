@@ -562,7 +562,10 @@ awful.rules.rules = {
     -- @DOC_DIALOG_RULE@
     -- Add titlebars to normal clients and dialogs
     { rule_any = {type = { "normal", "dialog" }
-      }, properties = { titlebars_enabled = false, floating = true }
+      }, properties = { titlebars_enabled = false}
+    },
+    { rule_any = {type = { "dialog" }
+      }, properties = { floating = true}
     },
 
     -- Set Firefox to always map on the tag named "2" on screen 1.
