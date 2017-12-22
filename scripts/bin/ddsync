@@ -1,0 +1,2 @@
+#!/bin/bash
+dd conv=fsync status=progress $@

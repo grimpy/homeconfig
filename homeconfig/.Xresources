@@ -1,4 +1,4 @@
-Xft.dpi: 96
+Xft.dpi: 180
 Xft.autohint: 0
 Xft.lcdfilter:  lcddefault
 Xft.hintstyle:  hintfull
@@ -16,32 +16,44 @@ rofi.color-normal: #273238, #c1c1c1, #273238, #394249, #ffffff
 rofi.color-active: #273238, #80cbc4, #273238, #394249, #80cbc4
 rofi.color-urgent: #273238, #ff1844, #273238, #394249, #ff1844
 
-*background: #121212
-*foreground: #F8F8F2
-*cursorColor: red
-*cursorBlink: true
-*scrollBar: false
-*boarderColor: red
-*loginShell: true
-*tintingType: true
-*tinting: #ffffff
-*tintColor: #FFFFFF
-*color0 :  #272822
-*color1 :  #f92672
-*color2 :  #a6e22e
-*color3 :  #f4bf75
-*color4 :  #66d9ef
-*color5 :  #ae81ff
-*color6 :  #a1efe4
-*color7 :  #f8f8f2
-*color8 :  #75715e
-*color9 :  #f92672
-*color10 :  #a6e22e
-*color11 :  #f4bf75
-*color12 :  #66d9ef
-*color13 :  #ae81ff
-*color14 :  #a1efe4
-*color15 :  #f9f8f5
+! special
+*.foreground:   #c0c5ce
+*.background:   #2b303b
+*.cursorColor:  #c0c5ce
+
+! black
+*.color0:       #2b303b
+*.color8:       #65737e
+
+! red
+*.color1:       #bf616a
+*.color9:       #bf616a
+
+! green
+*.color2:       #a3be8c
+*.color10:      #a3be8c
+
+! yellow
+*.color3:       #ebcb8b
+*.color11:      #ebcb8b
+
+! blue
+*.color4:       #8fa1b3
+*.color12:      #8fa1b3
+
+! magenta
+*.color5:       #b48ead
+*.color13:      #b48ead
+
+! cyan
+*.color6:       #96b5b4
+*.color14:      #96b5b4
+
+! white
+*.color7:       #c0c5ce
+*.color15:      #eff1f5
+
+
 
 *matcher.button: 3
 *colorUL: #86A2BB

@@ -1,6 +1,6 @@
 #!/bin/bash
 if [[ $# -eq 0 ]]; then
-    termite --class code -t "NVIM" -e nvim
+    kitty --class=code --title="NVIM" nvim
 else
-    termite --class code -t "NVIM $1" -e "ssh -o RequestTTY=true $1 nvim"
+    kitty --class=code --title="NVIM $1" "ssh -o RequestTTY=true $1 nvim"
 fi

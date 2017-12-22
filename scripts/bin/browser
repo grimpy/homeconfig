@@ -1,4 +1,5 @@
 #!/bin/bash
 #/usr/bin/opera -newpage $@
+#vivaldi-stable $@
 firefox $@
 #chromium $@

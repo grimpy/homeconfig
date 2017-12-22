@@ -1,2 +1,2 @@
 #!/bin/bash
-termite $@
+kitty -1 "$@"

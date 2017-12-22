@@ -1,0 +1,9 @@
+#!/bin/bash
+uri=${1:6}
+echo $uri
+port=$(echo $uri | cut -f 2 -d ':')
+userhost=$(echo $uri | cut -f 1 -d ':')
+if [[ "$port" == "$userhost" ]]; then
+    port=22
+fi
+terminal -e "ssh -p $port $userhost"
