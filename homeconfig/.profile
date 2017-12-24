@@ -1,4 +1,5 @@
 export I3SOCK=/run/user/1000/i3/ctrl.socket
+export GTK_IM_MODULE="xim"
 export FZF_DEFAULT_COMMAND='ag --hidden --ignore .git -g ""'
 export GOPATH=$HOME/code/gopath
 export PATH=$HOME/mygit/scripts/bin:$HOME/bin:$GOPATH/bin:$PATH
