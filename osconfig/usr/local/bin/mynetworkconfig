@@ -16,7 +16,7 @@ echo $(basename /sys/class/net/enp*u* || basename /sys/class/net/enp*) >  /sys/c
 for wlan in /sys/class/net/wl*; do
     wlan=$(basename $wlan)
     slave $wlan
-    systemctl start wpa_supplicant@$wlan
+    systemctl start wpa_supplicant@$wlan &
 done
 for eth in /sys/class/net/en*; do
     eth=$(basename $eth)

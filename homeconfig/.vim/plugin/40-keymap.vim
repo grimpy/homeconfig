@@ -7,7 +7,7 @@ nnoremap <leader>R :source $MYVIMRC<CR>
 nnoremap <leader>/ :noh<cr>
 nnoremap <leader>m :only<CR>
 nnoremap <leader>p :! autopep8-python2 --max-line-length=160 -i %<CR>
-nnoremap <leader>s :! vimsync %<CR>
+nnoremap <leader>s :! vimsync -t be-g8-4-master -f %<CR>
 
 " For snippet_complete marker.
 if has('conceal')

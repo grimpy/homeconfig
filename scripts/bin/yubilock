@@ -13,4 +13,4 @@ for device in iter(monitor.poll, None):
         modelid = device.get('ID_MODEL_ID')
         if vendorid == '1050' and modelid == '0120':
             print(device, vendorid, modelid)
-            subprocess.Popen(['dm-tool', 'lock'])
+            subprocess.Popen(['xlock', 'force'])
