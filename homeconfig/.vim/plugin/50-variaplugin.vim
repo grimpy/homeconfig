@@ -14,6 +14,8 @@ let g:airline_powerline_fonts = 1
 
 let Tlist_GainFocus_On_ToggleOpen = 1
 let Tlist_Use_Right_Window = 1
+let g:gh_open_command = 'xdg-open '
+let g:gh_use_canonical = 0
 
 " Plugin keymaps
 nnoremap <F3> :TlistToggle<CR>
