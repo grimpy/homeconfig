@@ -1,6 +1,8 @@
 let NERDTreeQuitOnOpen = 1
 let NERDTreeShowBookmarks = 1
 let NERDTreeChDirMode = 2
+let NERDTreeBookmarksSort = 0
+let NERDTreeMinimalUI = 1
 let NERDTreeIgnore = ['.*\.pyc$']
 
 nnoremap <leader>n :NERDTreeFind<CR>
