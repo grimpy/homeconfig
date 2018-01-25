@@ -9,6 +9,7 @@ parser = argparse.ArgumentParser()
 parser.add_argument('-f', '--file', help='File to sync', default=None)
 parser.add_argument('-t', '--target', help='Target to sync file to', default=None)
 parser.add_argument('-p', '--port', help='SSH port', default=None)
+parser.add_argument('-d', '--dest', help='destination path', default='/opt/code/')
 options = parser.parse_args()
 
 REPOBASE = "/home/Jo/code"
@@ -42,7 +43,7 @@ for file in files:
     if os.path.isdir(file):
         continue
     metapath = file[len(REPOBASE)+1:]
-    destfile = os.path.join('/opt', 'code', metapath)
+    destfile = os.path.join(options.dest, metapath)
     if not destfile:
         print "Could not determine destination"
         sys.exit(1)
