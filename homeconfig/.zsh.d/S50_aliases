@@ -23,11 +23,8 @@ alias cdr="cd \$vcs_info_msg_1_"
 alias tmux="tmux -2"
 
 #rsa stuff
-alias ssh="loadrsa; ssh"
-alias scp="loadrsa; scp"
-alias scpresume="loadrsa; rsync -Pazhv"
-alias git="loadrsa; hub"
-alias hg="loadrsa; hg"
+alias scpresume="rsync -Pazhv"
+alias git="hub"
 alias mosh="mosh --predict=experimental"
 alias wget="wget --content-disposition"
 alias dd="dd status=progress"
