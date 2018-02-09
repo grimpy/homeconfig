@@ -16,6 +16,10 @@ local capi = {
 
 module("myrc.util")
 
+winkey = "Mod4"
+altkey = "Mod1"
+capskey = "Mod4"
+
 function getActiveTag()
     local scr
     if capi.client.focus then

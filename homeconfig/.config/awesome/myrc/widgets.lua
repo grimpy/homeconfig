@@ -15,14 +15,14 @@ local screen = screen
 local io = { open = io.open, popen = io.popen, stderr= io.stderr}
 local string = {find = string.find, match = string.match, format=string.format}
 local device = require("myrc.device")
-myrc.util = require("myrc.util")
+local util = require("myrc.util")
 local asyncspawn = myrc.util.asyncspawn
 vicious.contrib = require("vicious.contrib")
 
 module("myrc.widgets")
 
-local capskey = "Mod4"
-local winkey = "Mod4"
+local capskey = util.capskey
+local winkey = util.winkey
 
 w = {}
 

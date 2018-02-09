@@ -23,9 +23,9 @@ module("myrc.custom")
 browser = "browser"
 terminal = "terminal"
 autostart = true
-winkey = "Mod4"
-altkey = "Mod1"
-capskey = "Mod4"
+winkey = myrc.util.winkey
+altkey = myrc.util.altkey
+capskey = myrc.util.capskey
 VGA = screen.count()
 LCD = 1
 
@@ -362,8 +362,8 @@ keybindings = awful.util.table.join(
     awful.key({ }, "XF86MonBrightnessDown", function () awful.spawn("xbacklight -dec 10") end, {description="Brightness -", group="screen"}),
     awful.key({ winkey, }, "l", locktoggle, {description="Toggle Autolock", group="lock"}),
     awful.key({ winkey,           }, "p", function () awful.spawn( "xrandr.sh --auto") end, {description="Dual/Single Toggle", group="screen"}),
-    awful.key({ winkey}, "s", function() keymenu(shutdownkeys, "Shutdown", {bg="#ff3333", fg="#ffffff"}) end, {description="Shutdown Menu", group="menus"}),
-    awful.key({ winkey}, "e", function() keymenu(mousekeys, "Mouse Movement") end, {description="Mouse Movement", group="menus"}),
+    awful.key({ capskey}, "s", function() keymenu(shutdownkeys, "Shutdown", {bg="#ff3333", fg="#ffffff"}) end, {description="Shutdown Menu", group="menus"}),
+    awful.key({ capskey}, "e", function() keymenu(mousekeys, "Mouse Movement") end, {description="Mouse Movement", group="menus"}),
     awful.key({ capskey}, "t", function() keymenu(tagkeys, "Tag Management", {}) end, {description="Tag Management", group="menus"}),
     awful.key({ capskey}, "r", function() keymenu(rofimenu, "Rofi Menu", {}) end, {description="Rofi Menu", group="menus"}),
     awful.key({ capskey}, "a", function() keymenu(audiomenu, "Audio Menu", {}) end, {description="Audio Menu", group="menus"}),
