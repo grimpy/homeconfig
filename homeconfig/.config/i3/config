@@ -34,7 +34,7 @@ set $ws12 12
 # clear in small sizes. However, if you need a lot of unicode glyphs or
 # right-to-left text rendering, you should instead use pango for rendering and
 # chose a FreeType font, such as:
-font pango:DejaVu Sans Mono for Powerline 10
+font pango:FontAwesome Sans Mono for Powerline 9
 
 # Use Mouse+$mod to drag floating windows to their wanted position
 floating_modifier $altkey
@@ -48,14 +48,14 @@ bindsym Control+Mod1+c exec i3-sensible-terminal
 bindsym $mod+c kill
 
 # start dmenu (a program launcher)
-
-
-set $mode_rofi Rofi (r) Run, (m) Math, (s) Snippets, (k) Process Kill, (w) Window
+set $mode_rofi Rofi (r) Run, (m) Math, (s) Snippets, (k) Process Kill, (w) Window, (c) Clipboard
 mode "$mode_rofi" {
     bindsym r exec rofi -show run, mode "default"
     bindsym s exec rofi -modi "Snippets:rofisnippets" -show Snippets, mode "default"
     bindsym m exec rofi -modi "MathExpr:mathexpr" -show MathExpr , mode "default"
     bindsym k exec rofi -modi "Process:processkill" -show Process, mode "default"
+    bindsym p exec rofi -modi "Rrandr:rofirandr" -show Randr, mode "default"
+    bindsym c exec roficlip, mode "default"
     bindsym w exec rofi -show window, mode "default"
     # back to normal: Enter or Escape
     bindsym Return mode "default"
@@ -127,12 +127,12 @@ bindsym $altkey+Shift+Tab focus left
 #bindsym $mod+d focus child
 
 # switch to workspace
-bindsym $mod+F1 exec openorlaunchi3 $ws1 /usr/bin/urxvtc
+bindsym $mod+F1 exec openorlaunchi3 $ws1 /usr/bin/kitty
 bindsym $mod+F2 exec openorlaunchi3 $ws2 /usr/bin/telegram-desktop
 bindsym $mod+F3 exec openorlaunchi3 $ws3 /usr/bin/firefox
 bindsym $mod+F4 exec openorlaunchi3 $ws4 /usr/bin/thunderbird
 bindsym $mod+F5 exec openorlaunchi3 $ws5 ~/bin/files
-bindsym $mod+F6 exec openorlaunchi3 $ws6 /usr/bin/pycharm
+bindsym $mod+F6 exec openorlaunchi3 $ws6 ~/mygit/scripts/bin/gnvim
 bindsym $mod+F7 workspace $ws7
 bindsym $mod+F8 workspace $ws8
 bindsym $mod+F9 workspace $ws9
@@ -205,6 +205,7 @@ bar {
 
 assign [class="URxvt" instance="urxvt"] $ws1
 assign [class="xterm"] $ws1
+assign [class="kitty"] $ws1
 assign [class="Pidgin"] $ws2
 assign [class="Skype"] $ws2
 assign [class="webogram"] $ws2
@@ -225,6 +226,7 @@ assign [class="Gvim"] $ws6
 assign [class="Atom"] $ws6
 assign [class="Geany"] $ws6
 assign [class="URxvt" instance="EditTerm"] $ws6
+assign [class="code"] $ws6
 assign [class="Firefox" instance="Devtools"] $ws6
 assign [class="Spotify" instance="Spotify"] $ws7
 assign [class="winbox.exe"] $ws8
@@ -311,3 +313,4 @@ bindsym $mod+minus exec mediakeys -k 114
 bindsym $mod+plus exec mediakeys -k 115
 bindsym XF86AudioMicMute exec bluehead mictoggle
 exec dex -a -s /home/Jo/.config/autostart
+exec python3 ~/mygit/source/i3events/i3events.py 
