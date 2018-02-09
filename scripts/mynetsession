@@ -1,0 +1,3 @@
+layout vertical
+launch sudo jnettop -i bond0
+launch sudo nethogs

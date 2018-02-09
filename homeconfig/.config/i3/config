@@ -42,7 +42,7 @@ focus_follows_mouse no
 new_window 1pixel
 
 # start a terminal
-bindsym Control+Mod1+c exec i3-sensible-terminal
+bindsym Control+Mod1+c exec terminal
 
 # kill focused window
 bindsym $mod+c kill
@@ -303,11 +303,13 @@ bindsym $mod+a mode "$mode_audio"
 #screen
 bindsym XF86MonBrightnessUp exec xbacklight -inc 10
 bindsym XF86MonBrightnessDown exec xbacklight -dec 10
-bindsym --release Print exec caputereimg.sh ~/Pictures/SS
+bindsym --release Print exec caputereimg.sh
 bindsym $winkey+o exec rotatescreen
 
 #music + volume
+bindsym $mod+1 exec musiccontrol Prev
 bindsym $mod+2 exec musiccontrol PlayPause
+bindsym $mod+3 exec musiccontrol Next
 bindsym $mod+0 exec mediakeys -k 113
 bindsym $mod+minus exec mediakeys -k 114
 bindsym $mod+plus exec mediakeys -k 115

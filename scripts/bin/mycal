@@ -1,1 +1,2 @@
-xterm -class Float -geometry 74x9 -e 'cal -3 -s -w; read'
+#!/bin/bash
+kitty --class=Float -o initial_window_width=900 -o initial_window_height=250 -o remember_window_size=no bash -c "cal -3 -s; read"

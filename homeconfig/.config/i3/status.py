@@ -57,11 +57,11 @@ status.register("temp", format=" {temp:.0f}°C",)
 status.register("cpu_usage_bar",
                 format='<span color="#FFFFFF"></span> {usage_bar}',
                 hints = {"markup": "pango"},
-                on_rightclick='xterm -class Float -geometry 120x40 -e htop',
+                on_rightclick='ftop',
                 bar_type='vertical'
                 )
 status.register("mem",
-                on_rightclick='xterm -class Float -geometry 120x40 -e htop',
+                on_rightclick='ftop',
                 color='#FFFFFF',
                 hints = {"markup": "pango"},
                 format='<span color="#FFFFFF"></span> {percent_used_mem}%')
@@ -81,7 +81,7 @@ group.register("network",
                interface="bond0",
                divisor=1024,
                start_color='white',
-               on_rightclick="xterm -class Float -geometry 150x50 -e 'sudo mynet'",
+               on_rightclick="mynet",
                format_up=" {bytes_recv}K  {bytes_sent}K",)
 group.register("network",
                interface="bond0",
