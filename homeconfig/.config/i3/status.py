@@ -22,15 +22,14 @@ class VodaFone(IntervalModule):
         except:
             return
 
-        daypercent = (self.vf.dayused / self.vf.daylimit) * 100
-        nightpercent = (self.vf.nightused / self.vf.nightlimit) * 100
+        percent = (self.vf.used / self.vf.limit) * 100
         remainingpercent = 100 - (self.vf.daysleft / self.vf.totaldays) * 100
-        if remainingpercent < daypercent or remainingpercent < nightpercent:
+        if remainingpercent < percent:
             color = "#FF0000"
         else:
             color = "#FFFFFF"
         self.data = self.vf.__dict__
-        self.output = {"full_text": " D{day:.0f}% N{night:.0f}% R{remaining:.0f}%".format(day=daypercent, night=nightpercent, remaining=remainingpercent),
+        self.output = {"full_text": " {limit:.0f}% R{remaining:.0f}%".format(limit=percent, remaining=remainingpercent),
                        'color': color}
 
     def refresh(self):

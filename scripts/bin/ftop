@@ -1,2 +1,2 @@
 #!/bin/bash
-kitty --class=Float -o initial_window_width=2000 -o initial_window_height=1200 -o remember_window_size=no htop
+fterm 1300 800 htop

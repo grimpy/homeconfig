@@ -54,7 +54,7 @@ mode "$mode_rofi" {
     bindsym s exec rofi -modi "Snippets:rofisnippets" -show Snippets, mode "default"
     bindsym m exec rofi -modi "MathExpr:mathexpr" -show MathExpr , mode "default"
     bindsym k exec rofi -modi "Process:processkill" -show Process, mode "default"
-    bindsym p exec rofi -modi "Rrandr:rofirandr" -show Randr, mode "default"
+    bindsym p exec rofi -modi "Randr:rofirandr" -show Randr, mode "default"
     bindsym c exec roficlip, mode "default"
     bindsym w exec rofi -show window, mode "default"
     # back to normal: Enter or Escape

@@ -1,2 +1,2 @@
 #!/bin/bash
-kitty --class=Float -o initial_window_width=900 -o initial_window_height=250 -o remember_window_size=no bash -c "cal -3 -s; read"
+fterm 600 170 bash -c "cal -3 -s; read"
