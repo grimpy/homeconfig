@@ -3,5 +3,6 @@ fisherman/done
 fisherman/fzf
 fisherman/getopts
 fisherman/humanize_duration
+oh-my-fish/plugin-thefuck
 joehillen/to-fish
 fisherman/transfer

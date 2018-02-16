@@ -20,6 +20,10 @@ function dssh
     set dip (docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' $name)
     ssh -A -o UserknownHostsFile=/dev/null -o StrictHostKeyChecking=no root@$dip $arv[2..-1]
 end
+function fish_user_key_bindings
+  bind \e\e 'thefuck-command-line'  # Bind EscEsc to thefuck
+end
+
 set -g theme_display_git yes
 set -g theme_display_k8s_context no
 set -g theme_display_user no
