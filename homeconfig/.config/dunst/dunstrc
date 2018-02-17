@@ -11,7 +11,7 @@
     # <http://developer.gnome.org/pango/stable/PangoMarkupFormat.html>.
     # If markup is not allowed, those tags will be stripped out of the
     # message.
-    allow_markup = yes
+    markup = full
     
     # The format of the message.  Possible variables are:
     #   %a  appname
@@ -47,6 +47,7 @@
     # Split notifications into multiple lines if they don't fit into
     # geometry.
     word_wrap = yes
+    max_icon_size = 128
     
     # Ignore newlines '\n' in notifications.
     ignore_newline = no
@@ -142,14 +143,13 @@
     browser = /usr/bin/firefox -new-tab
 
     # Align icons left/right/off
-    icon_position = off
+    icon_position = left
 
     # Paths to default icons.
-    icon_folders = /usr/share/icons/gnome/16x16/status/:/usr/share/icons/gnome/16x16/devices/
+    icon_path = /usr/share/icons/Paper/48x48/status/:/usr/share/icons/Paper/48x48/devices/:/usr/share/icons/Paper/48x48/apps/
 
-[frame]
-    width = 3
-    color = "#aaaaaa"
+    frame_width = 3
+    frame_color = "#aaaaaa"
 
 [shortcuts]
 
