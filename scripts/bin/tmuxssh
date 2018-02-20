@@ -1,0 +1,59 @@
+#!/usr/bin/python3
+import subprocess
+import argparse
+import libtmux
+import psutil
+import os
+
+def execute(*args):
+    proc = subprocess.Popen(args)
+    proc.wait()
+
+def tmuxhandler(host):
+    cmd = 'ssh {}'.format(host)
+    server = libtmux.Server()
+    fragments = host.split('-')
+    sessionname = 'ssh'
+    windowname = host
+    if len(fragments) > 2 and fragments[-2] in ('cpu', 'stor', 'storage'):
+        windowname = '-'.join(fragments[:-2])
+    elif fragments[-1] in ('git', 'master', 'controller'):
+        windowname = '-'.join(fragments[:-1])
+    else:
+        fragments = host.split('.')
+        if fragments[-1] == 'lxc':
+            windowname = 'lxc'
+    target = "{}:{}".format(sessionname, windowname)
+    # check if session exists
+    for session in server.list_sessions():
+        if session.name == sessionname:
+            break
+    else:
+        server.cmd('new-session', '-d', '-n', windowname, '-s', sessionname, cmd)
+        server.cmd('switch-client', '-t', target)
+        return
+    for window in session.list_windows():
+        if window.name == windowname:
+            break
+    else:
+        window = session.new_window(windowname, window_shell="ssh {}".format(host))
+        server.cmd('switch-client', '-t', target)
+        return
+    for pane in window.list_panes():
+        process = psutil.Process(int(pane.pid))
+        if 'ssh {}'.format(host) in process.cmdline():
+            server.cmd('switch-client', '-t', target)
+            return
+    else:
+        window.cmd('split-window', '-d', cmd)
+        window.select_layout('tiled')
+        server.cmd('switch-client', '-t', target)
+
+
+
+if __name__ == '__main__':
+    os.environ.pop('TMUX', None)
+    parser = argparse.ArgumentParser()
+    parser.add_argument('--host')
+    options = parser.parse_args()
+    tmuxhandler(options.host)
