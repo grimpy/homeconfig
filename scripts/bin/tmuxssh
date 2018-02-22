@@ -15,7 +15,7 @@ def tmuxhandler(host):
     fragments = host.split('-')
     sessionname = 'ssh'
     windowname = host
-    if len(fragments) > 2 and fragments[-2] in ('cpu', 'stor', 'storage'):
+    if len(fragments) > 2 and fragments[-2] in ('cpu', 'stor', 'storage', 'controller'):
         windowname = '-'.join(fragments[:-2])
     elif fragments[-1] in ('git', 'master', 'controller'):
         windowname = '-'.join(fragments[:-1])
@@ -39,15 +39,19 @@ def tmuxhandler(host):
         window = session.new_window(windowname, window_shell="ssh {}".format(host))
         server.cmd('switch-client', '-t', target)
         return
-    for pane in window.list_panes():
-        process = psutil.Process(int(pane.pid))
-        if 'ssh {}'.format(host) in process.cmdline():
-            server.cmd('switch-client', '-t', target)
-            return
-    else:
+
+    def find_pane():
+        for pane in window.list_panes():
+            process = psutil.Process(int(pane.pid))
+            if 'ssh {}'.format(host) in process.cmdline():
+                return pane
+
+    pane = find_pane()
+    if not pane:
         window.cmd('split-window', '-d', cmd)
         window.select_layout('tiled')
-        server.cmd('switch-client', '-t', target)
+        pane = find_pane()
+    server.cmd('switch-client', '-t', pane.id)
 
 
 
