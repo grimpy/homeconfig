@@ -4,7 +4,7 @@ from sys import argv
 if len(argv) == 1: # scriptname
     print("Enter math expression to evaluate")
 else:
-    expr = "".join(argv[1:])
+    expr = ("".join(argv[1:])).strip()
     result = str(eval(expr))
     width = max(len(expr), len(result)) + 3
     print("{0: >{1}}".format(expr, width))
