@@ -1,0 +1,25 @@
+#!/bin/bash
+env > /tmp/env
+export MYCOMMAND=$1
+re='^[0-9]+$'
+if [ -z $@ ]; then
+    echo "Cal"
+    echo "Timer"
+    echo "Stopwatch"
+elif [ "$1" == "Cal" ]; then
+    cal -3
+elif [ "$1" == "Timer" ]; then
+    echo Enter Timer Time
+    echo 10
+    echo 30
+    echo 60
+elif [ "$1" == "Stopwatch" ]; then
+    nohup pclock -t stopwatch > /dev/null &
+elif [[ $1 =~ $re ]]; then
+    nohup pclock -t timer -c $1 > /dev/null &
+else
+    echo "Cal"
+    echo "Timer"
+    echo "Stopwatch"
+fi
+

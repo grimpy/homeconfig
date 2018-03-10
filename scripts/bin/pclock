@@ -1,0 +1,65 @@
+#!/usr/bin/env python2
+from argparse import ArgumentParser
+import pynotify
+import time
+import gobject
+import datetime
+
+class PClock(object):
+    def __init__(self):
+        pynotify.init('pclock')
+        self.notification = pynotify.Notification('Timer')
+        self.loop = None
+        self.start = None
+
+    def countdown(self, counter):
+        self.start = time.time()
+        self.loop = gobject.MainLoop()
+        self.notification.connect("closed", self.stop)
+        gobject.idle_add(self.show_countdown, counter)
+        self.loop.run()
+
+    def show_countdown(self, counter):
+        stopat = self.start + counter
+        remaining = int(stopat - time.time())
+        self.notification.update('Timer', str(datetime.timedelta(seconds=remaining)))
+        if remaining <= 0:
+            self.notification.set_urgency(2)
+        self.notification.show()
+        if remaining <= 0:
+            self.stop()
+        else:
+            time.sleep(1)
+            gobject.idle_add(self.show_countdown, counter)
+
+    def stopwatch(self):
+        self.loop = gobject.MainLoop()
+        self.start = time.time()
+        self.notification.connect("closed", self.stop)
+        gobject.idle_add(self.show)
+        self.loop.run()
+
+    def show(self):
+        elapsed = int(time.time() - self.start)
+        self.notification.update('Stop Watch', str(datetime.timedelta(seconds=elapsed)))
+        self.notification.show()
+        time.sleep(1)
+        gobject.idle_add(self.show)
+
+    def stop(self, *args, **kwargs):
+        self.loop.quit()
+
+
+if __name__ == '__main__':
+    global loop
+    loop = gobject.MainLoop()
+    parser = ArgumentParser()
+    parser.add_argument('-t', '--type', help='Countdown or stopwatch', choices=['stopwatch', 'timer'])
+    parser.add_argument('-c', '--count', type=int, default=10)
+    options = parser.parse_args()
+    clock = PClock()
+    if options.type == 'timer':
+        clock.countdown(options.count)
+    elif options.type == 'stopwatch':
+        clock.stopwatch()
+

@@ -39,7 +39,7 @@ class VodaFone(IntervalModule):
 status = Status(standalone=True, logfile='$HOME/.cache/i3pystatus.log')
 dategroup = Group()
 dategroup.register("clock",
-               on_rightclick='mycal',
+               on_rightclick='rofi -modi "Clock:roficlock" -show Clock',
                format=" %H:%M")
 dategroup.register("clock",
                on_rightclick='mycal',
