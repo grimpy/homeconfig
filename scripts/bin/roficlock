@@ -7,7 +7,7 @@ if [ -z $@ ]; then
     echo "Timer"
     echo "Stopwatch"
 elif [ "$1" == "Cal" ]; then
-    cal -3
+    nohup mycal > /dev/null &
 elif [ "$1" == "Timer" ]; then
     echo Enter Timer Time
     echo 10
