@@ -1,4 +1,4 @@
 #!/bin/bash
 sleep 1
-setxkbmap us,ar altgr-intl, grp:shifts_toggle,caps:super,grp_led:caps
+setxkbmap us,ar altgr-intl, grp:shifts_toggle,caps:hyper,grp_led:caps
 xset -led 1

@@ -29,7 +29,7 @@ def tmuxhandler(host):
         if session.name == sessionname:
             break
     else:
-        server.cmd('new-session', '-d', '-n', windowname, '-s', sessionname, cmd)
+        server.new_session(sessionname, window_name=windowname, shell=cmd)
         server.cmd('switch-client', '-t', target)
         return
     for window in session.list_windows():
