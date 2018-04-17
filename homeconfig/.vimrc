@@ -8,7 +8,6 @@ Plug 'aklt/plantuml-syntax'
 Plug 'alfredodeza/pytest.vim'
 Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-sensible'
-Plug 'kevinw/pyflakes-vim'
 function! DoRemote(arg)
   UpdateRemotePlugins
 endfunction
@@ -24,7 +23,7 @@ Plug 'junegunn/fzf'
 Plug 'roxma/nvim-completion-manager'
 Plug 'Shougo/denite.nvim'
 Plug 'Shougo/echodoc.vim'
-Plug 'tomasr/molokai'
+Plug 'joshdick/onedark.vim'
 Plug 'scrooloose/nerdtree'
 Plug 'mhinz/vim-signify'
 Plug 'ruanyl/vim-gh-line'
