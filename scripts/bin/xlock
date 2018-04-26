@@ -4,7 +4,7 @@ option=$1
 
 function lock() {
     echo "KILLAGENT" | gpg-connect-agent
-    light-locker-command -a -l
+    i3lock -c 333333
 }
 
 case $option in
