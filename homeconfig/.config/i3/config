@@ -293,14 +293,31 @@ mode "$mode_audio" {
     bindsym r exec btreconnect, mode "default"
     bindsym minus exec mediakeys -k 114
     bindsym plus exec mediakeys -k 115
-    bindsym up exec mediakeys -k 115
-    bindsym down exec mediakeys -k 114
+    bindsym Up exec mediakeys -k 115
+    bindsym Down exec mediakeys -k 114
 
     # back to normal: Enter or Escape
     bindsym Return mode "default"
     bindsym Escape mode "default"
 }
 bindsym $mod+a mode "$mode_audio"
+
+set $mode_mouse (arrows) move cursor (del) left button (end) middle button (PageDown) right button
+mode "$mode_mouse" {
+    bindsym Up exec xdotool mousemove_relative -- 0 -10
+    bindsym Down exec xdotool mousemove_relative -- 0 10
+    bindsym Left exec xdotool mousemove_relative -- -10 0
+    bindsym Right exec xdotool mousemove_relative -- 10 0
+    
+    bindsym Delete exec xdotool click 1
+    bindsym End exec xdotool click 2
+    bindsym Next exec xdotool click 3
+
+    # back to normal: Enter or Escape
+    bindsym Return mode "default"
+    bindsym Escape mode "default"
+}
+bindsym $mod+m mode "$mode_mouse"
 
 #screen
 bindsym XF86MonBrightnessUp exec xbacklight -inc 10
