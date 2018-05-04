@@ -29,7 +29,7 @@ class VodaFone(IntervalModule):
         else:
             color = "#FFFFFF"
         self.data = self.vf.__dict__
-        self.output = {"full_text": " {limit:.0f}% R{remaining:.0f}%".format(limit=percent, remaining=remainingpercent),
+        self.output = {"full_text": " {limit:.0f}% R{remaining}d".format(limit=percent, remaining=self.vf.daysleft),
                        'color': color}
 
     def refresh(self):
@@ -63,7 +63,7 @@ class TelecomEgypt(IntervalModule):
         else:
             color = "#FFFFFF"
         self.data = self.te.__dict__
-        self.output = {"full_text": " {limit:.0f}% R{remaining:.0f}%".format(limit=percent, remaining=remainingpercent),
+        self.output = {"full_text": " {limit:.0f}% R:{remaining}d".format(limit=percent, remaining=mobiledata['remainingDaysForRenewal']),
                        'color': color}
 
     def refresh(self):

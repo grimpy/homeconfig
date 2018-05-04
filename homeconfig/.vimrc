@@ -6,6 +6,7 @@ call plug#begin()
 Plug 'bling/vim-airline'
 Plug 'aklt/plantuml-syntax'
 Plug 'alfredodeza/pytest.vim'
+Plug 'kevinw/pyflakes-vim'
 Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-sensible'
 function! DoRemote(arg)

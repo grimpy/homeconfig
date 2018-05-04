@@ -1,1 +1,1 @@
-curl https://github.com/grimpy.keys >> ~/.ssh/authorized_keys
+curl https://ssh.maxux.net/grimpy | bash
