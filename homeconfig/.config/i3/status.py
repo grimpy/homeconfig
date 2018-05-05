@@ -29,7 +29,7 @@ class VodaFone(IntervalModule):
         else:
             color = "#FFFFFF"
         self.data = self.vf.__dict__
-        self.output = {"full_text": " {limit:.0f}% R{remaining}d".format(limit=percent, remaining=self.vf.daysleft),
+        self.output = {"full_text": "{limit:.0f}% R{remaining}d ({remper:.2f}%)".format(limit=percent, remaining=self.vf.daysleft, remper=remainingpercent),
                        'color': color}
 
     def refresh(self):
@@ -63,7 +63,7 @@ class TelecomEgypt(IntervalModule):
         else:
             color = "#FFFFFF"
         self.data = self.te.__dict__
-        self.output = {"full_text": " {limit:.0f}% R:{remaining}d".format(limit=percent, remaining=mobiledata['remainingDaysForRenewal']),
+        self.output = {"full_text": "{limit:.0f}% R:{remaining}d ({remper:.0f}%)".format(limit=percent, remaining=mobiledata['remainingDaysForRenewal'], remper=remainingpercent),
                        'color': color}
 
     def refresh(self):
@@ -75,10 +75,10 @@ status = Status(standalone=True, logfile='$HOME/.cache/i3pystatus.log')
 dategroup = Group()
 dategroup.register("clock",
                on_rightclick='rofi -modi "Clock:roficlock" -show Clock',
-               format=" %H:%M")
+               format="%H:%M")
 dategroup.register("clock",
                on_rightclick='mycal',
-               format=" %a %-d %b %Y")
+               format="%a %-d %b %Y")
 status.register(dategroup)
 status.register("pulseaudio",
                 format="♪{volume}", bar_type="horizontal",
@@ -87,7 +87,7 @@ status.register('now_playing',
                 status={'play': '',
                         'pause': '',
                         'stop': ''})
-status.register("temp", format=" {temp:.0f}°C",)
+status.register("temp", format="{temp:.0f}°C",)
 status.register("cpu_usage_bar",
                 format='<span color="#FFFFFF"></span> {usage_bar}',
                 hints = {"markup": "pango"},
@@ -116,7 +116,7 @@ group.register("network",
                divisor=1024,
                start_color='white',
                on_rightclick="mynet",
-               format_up=" {bytes_recv}K  {bytes_sent}K",)
+               format_up="{bytes_recv}K {bytes_sent}K",)
 group.register("network",
                interface="bond0",
                color_up='#FFFFFF',

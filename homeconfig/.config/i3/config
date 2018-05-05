@@ -15,15 +15,15 @@ set $altkey Mod1
 
 
 set $ws1 "1: Term"
-set $ws2 "2: IM"
+set $ws2 "2: IM"
 set $ws3 "3: Web"
-set $ws4 "4: Mail"
-set $ws5 "5: FS"
-set $ws6 "6: Edit"
+set $ws4 "4:Mail"
+set $ws5 "5:FS"
+set $ws6 "6:Edit"
 set $ws7 "7: Media"
-set $ws8 "8: Emu"
-set $ws9 9:Mediafs
-set $ws10 10:Remote
+set $ws8 "8:Emu"
+set $ws9 "9:Mediafs"
+set $ws10 "10:Remote"
 set $ws11 11
 set $ws12 12
 
@@ -34,7 +34,7 @@ set $ws12 12
 # clear in small sizes. However, if you need a lot of unicode glyphs or
 # right-to-left text rendering, you should instead use pango for rendering and
 # chose a FreeType font, such as:
-font pango:FontAwesome Sans Mono for Powerline 9
+font pango:MonoSpace 9, FontAwesome 9
 
 # Use Mouse+$mod to drag floating windows to their wanted position
 floating_modifier $altkey

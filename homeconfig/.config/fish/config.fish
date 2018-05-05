@@ -30,6 +30,7 @@ function fish_user_key_bindings
   bind \cR '__fzf_reverse_isearch'
   bind \cO '__fzf_cd'
   bind \cJ 'findbookmark; fish_prompt'
+  bind \cN 'roficlip'
 end
 function gitpp -w git
     git push -u; and git pull-request $argv
