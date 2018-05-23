@@ -26,7 +26,6 @@ if options.root:
 else:
     fullpaths.append(os.path.join(repopath, 'homeconfig'))
     overlay = os.path.join(repopath, 'overlay', 'homeconfig')
-    shutil.
     if os.path.exists(overlay):
         fullpaths.append(overlay)
 

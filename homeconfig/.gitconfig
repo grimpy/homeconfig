@@ -14,14 +14,22 @@
     rh1 = reset --hard HEAD^
     ls = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --all
     delete = !git branch --merged | grep -v \"\\*\" | grep -v master | grep -v dev | xargs -n 1 git branch -d
-    dif = "!git diff --color $@ | diff-so-fancy | less -R"
+    dif = "!git difftool --no-symlinks --dir-diff"
     dsf = "!git diff --color $@ | diff-so-fancy | less -R" 
     cleanup = "!git branch -vv | grep ': gone]' | awk '{print $1}' | xargs git branch -D"
     cleanupremote = "!git branch --remote --merged | grep -v 'origin/master$' | cut -d '/' -f 2 | xargs -I@ git push origin :@"
     noremote = "!git branch -vv | grep -v 'origin' | awk '{print $1}' | xargs git branch -D"
 
 [diff]
-    tool = meld
+    tool = kitty
+    guitool = kitty.gui
+[difftool]
+    prompt = false
+    trustExitCode = true
+[difftool "kitty"]
+    cmd = kitty +kitten diff $LOCAL $REMOTE
+[difftool "kitty.gui"]
+    cmd = kitty kitty +kitten diff $LOCAL $REMOTE
 
 [include]
     path = ~/.config/git/gitconfig
