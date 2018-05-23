@@ -21,13 +21,24 @@ def -docstring 'invoke fzf to select a buffer' \
       fi
     fi
 } }
+def -docstring 'ranger in current file' \
+  ranger-currentfile %{ %sh{
+    echo "ranger --selectfile=$kak_buffile"
+}}
+
+hook global BufWritePost .* %{
+    git show-diff
+}
+hook global BufOpenFile .* %{
+    git show-diff
+}
 
 hook global InsertCompletionShow .* %{
     try %{
-        # this command temporarily removes cursors preceded by whitespace;
-        # if there are no cursors left, it raises an error, does not
-        # continue to execute the mapping commands, and the error is eaten
-        # by the `try` command so no warning appears.
+        #this command temporarily removes cursors preceded by whitespace;
+        #if there are no cursors left, it raises an error, does not
+        #continue to execute the mapping commands, and the error is eaten
+        #by the `try` command so no warning appears.
         execute-keys -draft 'h<a-K>\h<ret>'
         map window insert <tab> <c-n>
         map window insert <s-tab> <c-p>
@@ -38,13 +49,26 @@ hook global InsertCompletionHide .* %{
     unmap window insert <s-tab> <c-p>
 }
 
-map global insert <tab> '<a-;><gt>'
+hook global InsertChar \t %{
+      exec -draft h@
+}
+
 map global insert <s-tab> '<a-;><lt>'
 
+hook global InsertChar \t %{
+    exec -draft h@
+}
 
+
+alias global x write-quit
+alias global vsplit tmux-new-horizontal
+set-option global tabstop 4
+set-option global indentwidth 4
 map global user f ":fzf-file<ret>"
 map global user b ":fzf-buffer<ret>"
+map global user n ":ranger-currentfile<ret>"
 map global user s ":tmux-new-horizontal<ret>"
 map global normal '#' :comment-line<ret> -docstring 'comment line'
 map global normal '<a-#>' :comment-block<ret> -docstring 'comment block'
+colorscheme tomorrow-night
 %sh{kak-lsp --kakoune}
