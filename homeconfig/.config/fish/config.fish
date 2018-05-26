@@ -15,6 +15,9 @@ end
 function vik
     sed -i $argv[1]d ~/.ssh/known_hosts
 end
+function sshj
+    ssh -o ProxyJump=$argv[1] $argv[2..-1]
+end
 function dssh
     set name $argv[1]
     set dip (docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' $name)
@@ -40,6 +43,8 @@ function git -w git
     hub $argv
 end
 
+set -U GOPATH ~/code/gopath/
+set -U fish_user_paths ~/mygit/scripts/bin ~/bin $GOPATH/bin ~/.local/bin
 set -g theme_display_git yes
 set -g theme_display_k8s_context no
 set -g theme_display_user no
