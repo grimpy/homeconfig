@@ -1,0 +1,4 @@
+#!/bin/bash
+dip=$(docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' $1)
+shift
+ssh -A -o UserknownHostsFile=/dev/null -o StrictHostKeyChecking=no root@$dip $@

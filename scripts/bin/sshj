@@ -1,0 +1,4 @@
+#!/bin/bash
+proxy=$1
+shift;
+ssh -o ProxyJump=$proxy $@

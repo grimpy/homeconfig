@@ -5,24 +5,6 @@ end
 function cdr
   cd (__bobthefish_git_project_dir )
 end
-function sshr -w ssh
-    ssh -O exit $argv
-    ssh $argv
-end
-function sshm -w ssh
-    ssh -o ControlPath=none $argv
-end
-function vik
-    sed -i $argv[1]d ~/.ssh/known_hosts
-end
-function sshj
-    ssh -o ProxyJump=$argv[1] $argv[2..-1]
-end
-function dssh
-    set name $argv[1]
-    set dip (docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' $name)
-    ssh -A -o UserknownHostsFile=/dev/null -o StrictHostKeyChecking=no root@$dip $argv[2..-1]
-end
 function findbookmark
     set -l bkmrk (ls -1 ~/.tofish | fzf)
     cd ~/.tofish/$bkmrk
@@ -52,4 +34,3 @@ set -g theme_display_hostname no
 set -g theme_nerd_fonts no
 set -g theme_color_scheme solarized
 set -g theme_prompt_pwd_dir_length -1
-set -x GPG_TTY (tty)
