@@ -1,4 +1,5 @@
 #! /bin/zsh
+if [ -e /usr/share/zsh-theme-powerlevel9k/powerlevel9k.zsh-theme ]; then
 POWERLEVEL9K_MODE='awesome-fontconfig'
 POWERLEVEL9K_SHORTEN_DIR_LENGTH=1
 POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(virtualenv dir vcs)
@@ -16,3 +17,114 @@ POWERLEVEL9K_CONTEXT_DEFAULT_FOREGROUND="white"
 POWERLEVEL9K_VCS_CLEAN_FOREGROUND="232"
 
 source /usr/share/zsh-theme-powerlevel9k/powerlevel9k.zsh-theme
+else
+
+setopt prompt_subst
+autoload colors
+autoload vcs_info
+colors
+
+local _rst="%{%b%s%u$reset_color%}"
+local _bgc="%{%(?.$_rst.%S)%}"
+zstyle ':vcs_info:*' enable git hg svn
+zstyle ':vcs_info:*' check-for-changes true
+zstyle ':vcs_info:*' stagedstr  'S '
+zstyle ':vcs_info:*' unstagedstr  'U '
+zstyle ':vcs_info:*' actionformats '%F{5}[%F{2}%c%u%b%F{3}|%F{1}%a%F{5}]%f' '%R'
+zstyle ':vcs_info:*' formats       '%F{5}[%F{2}%c%u%b%F{5}]%f' '%R'
+zstyle ':vcs_info:(sv[nk]|bzr):*' branchformat '%b%F{1}:%F{3}%r'
+precmd_functions+='vcs_info'
+
+function lprompt {
+    local col1 col2 ch1 ch2
+    col1="%{%b$fg[$2]%}"
+    col2="%{$4$fg[$3]%}"
+    ch1=$col1${1[1]}
+    ch2=$col1${1[2]}
+
+    PROMPT1="\
+$_bgc$ch1\
+$_bgc$col2%B%1~%b\
+$ch2$_rst\
+$col2$_rst " #%#$_rst "
+    PROMPT='${vcs_info_msg_0_}$PROMPT1'
+}
+
+function _rprompt_dir {
+    local col_p rest lead
+    col_p="%{$fg[yellow]%}"
+
+    local short
+    short="${PWD/$HOME/~}"
+
+    if test -n "${vcs_info_msg_1_}" ; then
+        lead="${vcs_info_msg_1_/$HOME/~}"
+    else
+        echo -n "$short"
+        return
+    fi
+
+    rest=${${short#$lead}#/}
+
+    echo -n "$lead$col_p/$rest"
+}
+
+function rprompt {
+    local col1 col2 ch1 ch2
+    col1="%{$fg[$2]%}"
+    col2="%{$4$fg[$3]%}"
+    ch1=$col1${1[1]}
+    ch2=$col1${1[2]}
+
+    local _dir='$(_rprompt_dir)'
+
+    RPROMPT="\
+$_rst$ch1\
+$col2%n@%m\
+$col1:\
+$col2%B$_dir%b\
+$ch2$_rst"
+}
+
+if [ $UID -eq 0 ]; then
+    lprompt '[]' yellow red
+    rprompt '()' red red
+elif [ -n "$SSH_CLIENT" ]; then
+    lprompt '<>' yellow blue
+    rprompt '<>' red white
+else
+    lprompt '[]' bold green
+    rprompt '()' yellow white
+fi
+
+if [ -n "$debian_chroot" ]; then
+    PROMPT="$_bgc%{$fg[yellow]%}%B${debian_chroot}%b ${PROMPT}"
+fi
+
+
+function zle-line-init zle-keymap-select {
+    color="${${KEYMAP/vicmd/blue}/(main|viins)/white}"
+    rprompt '()' yellow $color
+    zle reset-prompt
+}
+
+zle -N zle-line-init
+zle -N zle-keymap-select
+
+
+
+if [[ "$TERM" != "linux" ]]; then
+
+  # this updates title bar before prompt is printed
+  precmd () {
+    echo  -n \\033\]2\;$USER@$HOST:$_\\07;
+  }
+
+  # this updates title bar while command is running
+  xterm-accept-line () { print -nr -- "]2;$BUFFER"; zle .accept-line; }
+    zle -N accept-line xterm-accept-line
+
+fi #TERM
+
+
+fi
