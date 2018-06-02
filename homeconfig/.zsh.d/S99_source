@@ -7,3 +7,11 @@ fi
 if [ -e /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh ]; then
     source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 fi
+if [ -e /usr/share/gbt ]; then
+    export GBT_HOME=/usr/share/gbt
+elif [ -e /data/data/com.termux/files/usr/share/gbt ]; then
+    export GBT_HOME=/data/data/com.termux/files/usr/share/gbt
+fi
+if [ -n GBT_HOME ]; then
+    source $GBT_HOME/sources/prompt_forwarding/local
+fi

@@ -1,4 +1,18 @@
 #! /bin/zsh
+
+export GBT_CAR_DIR_BG='236'
+export GBT_CAR_DIR_FG='white'
+export GBT_CAR_DIR_HOMESIGN=''
+export GBT_CAR_SIGN_FORMAT=" "
+#export GBT_CAR_GIT_BEHIND_TEXT=" "
+#export GBT_CAR_GIT_AHEAD_TEXT=" "
+export GBT_CAR_GIT_SEP=""
+export GBT_CAR_GIT_ICON_TEXT=''
+
+export GBT_CARS='Dir, Git, Sign'
+export GBT_RCARS='Status, ExecTime'
+export GBT_CAR_EXECTIME_BELL='5'
+
 if [ -e /usr/share/zsh-theme-powerlevel9k/powerlevel9k.zsh-theme ]; then
 POWERLEVEL9K_MODE='awesome-fontconfig'
 POWERLEVEL9K_SHORTEN_DIR_LENGTH=1
@@ -20,6 +34,9 @@ POWERLEVEL9K_TIME_FORMAT=" %D{%H:%M:%S}"
 POWERLEVEL9K_LOCK_ICON="🔒"
 
 source /usr/share/zsh-theme-powerlevel9k/powerlevel9k.zsh-theme
+elif which gbt 2> /dev/null; then
+export PROMPT='$(gbt $?)'
+export RPROMPT='$(gbt --right $?)'
 else
 
 setopt prompt_subst
