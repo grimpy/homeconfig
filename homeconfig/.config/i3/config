@@ -48,15 +48,15 @@ bindsym Control+Mod1+c exec terminal
 bindsym $mod+c kill
 
 # start dmenu (a program launcher)
-set $mode_rofi Rofi (r) Run, (m) Math, (s) Snippets, (k) Process Kill, (w) Window, (c) Clipboard (t) SSH
+set $mode_rofi Rofi (r) Run, (m) Math, (s) Snippets, (k) Process Kill, (w) Window, (c) Clipboard (y) SSH (t) Timers/Cal
 mode "$mode_rofi" {
     bindsym r exec rofi -show run, mode "default"
     bindsym s exec rofi -modi "Snippets:rofisnippets" -show Snippets, mode "default"
     bindsym m exec rofi -modi "MathExpr:mathexpr" -show MathExpr , mode "default"
     bindsym k exec rofi -modi "Process:processkill" -show Process, mode "default"
     bindsym p exec rofi -modi "Randr:rofirandr" -show Randr, mode "default"
-    bindsym u exec rofi -modi "Clock:roficlock" -show Clock, mode "default"
-    bindsym t exec rofi -show ssh, mode "default"
+    bindsym t exec rofi -modi "Clock:roficlock" -show Clock, mode "default"
+    bindsym y exec rofi -show ssh, mode "default"
     bindsym c exec roficlip < /dev/null, mode "default"
     bindsym w exec rofi -show window, mode "default"
     # back to normal: Enter or Escape
