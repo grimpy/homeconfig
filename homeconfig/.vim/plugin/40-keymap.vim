@@ -50,3 +50,8 @@ vnoremap L $
 "easy command mode
 nnoremap ; :
 nnoremap <leader>h *<C-O>
+
+" nuake
+nnoremap <F3> :Nuake<CR>
+inoremap <F3> <C-\><C-n>:Nuake<CR>
+tnoremap <F3> <C-\><C-n>:Nuake<CR>

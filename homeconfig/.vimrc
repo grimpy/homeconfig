@@ -21,7 +21,8 @@ Plug 'autozimu/LanguageClient-neovim', {
     \ }
 
 Plug 'junegunn/fzf'
-Plug 'roxma/nvim-completion-manager'
+Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+Plug 'Lenovsky/nuake'
 Plug 'Shougo/denite.nvim'
 Plug 'Shougo/echodoc.vim'
 Plug 'joshdick/onedark.vim'

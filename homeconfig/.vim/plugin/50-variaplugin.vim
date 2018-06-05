@@ -18,7 +18,6 @@ let g:gh_open_command = 'xdg-open '
 let g:gh_use_canonical = 0
 
 " Plugin keymaps
-nnoremap <F3> :TlistToggle<CR>
 nmap <silent><Leader>tf <Esc>:Pytest file<CR>
 nmap <silent><Leader>tc <Esc>:Pytest class<CR>
 nmap <silent><Leader>tm <Esc>:Pytest method<CR>
