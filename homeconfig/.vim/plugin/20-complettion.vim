@@ -22,3 +22,4 @@ smap <expr><TAB> neosnippet#expandable_or_jumpable() ?
 
 imap <C-Space> <C-x><C-o>
 imap <C-@> <C-Space>
+let g:jedi#completions_enabled = 0

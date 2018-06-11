@@ -3,38 +3,44 @@ filetype off                  " required
 
 call plug#begin()
 
-Plug 'bling/vim-airline'
+" Plantuml
 Plug 'aklt/plantuml-syntax'
+" Python
 Plug 'alfredodeza/pytest.vim'
 Plug 'kevinw/pyflakes-vim'
+Plug 'zchee/deoplete-jedi'
+Plug 'davidhalter/jedi-vim'
+" GO
+Plug 'fatih/vim-go'
+" Git
+Plug 'mhinz/vim-signify'
+Plug 'ruanyl/vim-gh-line'
+" Tim's stuff
 Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-sensible'
 function! DoRemote(arg)
   UpdateRemotePlugins
 endfunction
+" Shougo stuff
 Plug 'Shougo/vimproc.vim', { 'do': 'make' }
 Plug 'Shougo/neosnippet.vim'
 Plug 'Shougo/neosnippet-snippets'
-Plug 'autozimu/LanguageClient-neovim', {
-    \ 'branch': 'next',
-    \ 'do': 'bash install.sh',
-    \ }
-
-Plug 'junegunn/fzf'
-Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
-Plug 'Lenovsky/nuake'
 Plug 'Shougo/denite.nvim'
-Plug 'Shougo/echodoc.vim'
-Plug 'joshdick/onedark.vim'
+Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+" Guake like terminal
+Plug 'Lenovsky/nuake'
+" NErdtree
 Plug 'scrooloose/nerdtree'
+" Swap args around
 Plug 'machakann/vim-swap'
-Plug 'mhinz/vim-signify'
-Plug 'ruanyl/vim-gh-line'
+" Gui stuff
 Plug 'vim-scripts/BufOnly.vim'
-Plug 'fatih/vim-go'
-Plug 'gcmt/taboo.vim'
 Plug 'dzhou121/gonvim-fuzzy'
+Plug 'gcmt/taboo.vim'
+Plug 'bling/vim-airline'
 Plug 'equalsraf/neovim-gui-shim'
+Plug 'joshdick/onedark.vim'
+"Others
 
 call plug#end()
 

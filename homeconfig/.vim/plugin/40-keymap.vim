@@ -55,3 +55,4 @@ nnoremap <leader>h *<C-O>
 nnoremap <F3> :Nuake<CR>
 inoremap <F3> <C-\><C-n>:Nuake<CR>
 tnoremap <F3> <C-\><C-n>:Nuake<CR>
+let g:nuake_per_tab = 1
