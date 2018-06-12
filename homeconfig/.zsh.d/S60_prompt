@@ -14,6 +14,7 @@ export GBT_RCARS='Status, ExecTime'
 export GBT_CAR_EXECTIME_BELL='5'
 
 if [ -e /usr/share/zsh-theme-powerlevel9k/powerlevel9k.zsh-theme ]; then
+DEFAULT_USER="Jo"
 POWERLEVEL9K_MODE='awesome-fontconfig'
 POWERLEVEL9K_SHORTEN_DIR_LENGTH=1
 POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(virtualenv dir vcs dir_writable)
