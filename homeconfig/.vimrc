@@ -40,6 +40,7 @@ Plug 'gcmt/taboo.vim'
 Plug 'bling/vim-airline'
 Plug 'equalsraf/neovim-gui-shim'
 Plug 'joshdick/onedark.vim'
+Plug 'numirias/semshi', {'do': ':UpdateRemotePlugins'}
 "Others
 
 call plug#end()
