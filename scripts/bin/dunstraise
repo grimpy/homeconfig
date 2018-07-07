@@ -1,0 +1,6 @@
+#!/bin/bash
+classname="$1"
+if [ "$classname" == "Telegram Desktop" ]; then
+    classname="telegram-desktop"
+fi
+wmctrl -b add,demands_attention -r "$classname" -x

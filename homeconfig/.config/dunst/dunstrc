@@ -224,8 +224,12 @@
 
 [telegram_text]
      appname = "Telegram Desktop"
-     script = dunsttelegram
+     script = dunstraise
      format = ""
+
+[firefox]
+    appname = "Firefox"
+    script = dunstraise
 
 #[signed_on]
 #    appname = Pidgin
