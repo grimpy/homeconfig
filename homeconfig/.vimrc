@@ -5,11 +5,13 @@ call plug#begin()
 
 " Plantuml
 Plug 'aklt/plantuml-syntax'
+" Capnpn
+Plug 'peter-edge/vim-capnp'
 " Python
 Plug 'alfredodeza/pytest.vim'
 Plug 'kevinw/pyflakes-vim'
-Plug 'zchee/deoplete-jedi'
-Plug 'davidhalter/jedi-vim'
+"Plug 'zchee/deoplete-jedi'
+"Plug 'davidhalter/jedi-vim'
 " GO
 Plug 'fatih/vim-go'
 " Git
@@ -26,13 +28,22 @@ Plug 'Shougo/vimproc.vim', { 'do': 'make' }
 Plug 'Shougo/neosnippet.vim'
 Plug 'Shougo/neosnippet-snippets'
 Plug 'Shougo/denite.nvim'
-Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+"Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 " Guake like terminal
 Plug 'Lenovsky/nuake'
 " NErdtree
 Plug 'scrooloose/nerdtree'
 " Swap args around
 Plug 'machakann/vim-swap'
+" Completion
+Plug 'ncm2/ncm2'
+Plug 'roxma/nvim-yarp'
+Plug 'ncm2/ncm2-bufword'
+Plug 'ncm2/ncm2-tmux'
+Plug 'ncm2/ncm2-path'
+Plug 'ncm2/ncm2-jedi'
+Plug 'ncm2/ncm2-markdown-subscope'
+Plug 'ncm2/ncm2-html-subscope'
 " Gui stuff
 Plug 'vim-scripts/BufOnly.vim'
 Plug 'dzhou121/gonvim-fuzzy'
