@@ -197,7 +197,7 @@ bindsym $mod+g mode "resize"
 bar {
 #  status_command i3blocks -c ~/.config/i3blocks/config
   status_command  python3 ~/.config/i3/status.py
-  #tray_output primary
+  tray_output primary
   position top
   colors {
     background #232323

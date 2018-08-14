@@ -12,6 +12,6 @@ if [ -e /usr/share/gbt ]; then
 elif [ -e /data/data/com.termux/files/usr/share/gbt ]; then
     export GBT_HOME=/data/data/com.termux/files/usr/share/gbt
 fi
-if [ -n GBT_HOME ]; then
+if [ -n "$GBT_HOME" ]; then
     source $GBT_HOME/sources/prompt_forwarding/local
 fi

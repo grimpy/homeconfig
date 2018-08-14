@@ -1,4 +1,4 @@
-#!/usr/bin/python2
+#!/usr/bin/python3
 import json
 import subprocess
 import os
@@ -10,7 +10,7 @@ cmd = sys.argv[2]
 proc = subprocess.Popen(['i3-msg', '-t', 'get_workspaces'], stdout=subprocess.PIPE)
 workspaces = json.load(proc.stdout)
 for workspace in workspaces:
-    if workspace['name'].encode('utf8') == tag:
+    if workspace['name'] == tag:
         subprocess.Popen(['i3-msg', 'workspace', tag])
         sys.exit(0)
 

@@ -21,7 +21,7 @@ if options.root:
         fullpaths.append(os.path.join(repopath, 'osconfig'))
         overlay = os.path.join(repopath, 'overlay', 'osconfig')
         if os.path.exists(overlay):
-            fullpaths.append(os.path.join(repopath, 'osconfig'))
+            fullpaths.append(os.path.join(repopath, 'overlay', 'osconfig'))
         target = "/"
 else:
     fullpaths.append(os.path.join(repopath, 'homeconfig'))

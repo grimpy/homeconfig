@@ -31,6 +31,9 @@ currentWindowId () {
 }
 
 tmux_inactive () {
+    if [ -n "$TMUX" ]; then
+	return 1
+    fi
     local mypid=$$
 	tmux list-panes -a -F "#{session_attached} #{window_active} #{pane_pid}" | grep "1 0 $mypid" > /dev/null
     return $?
