@@ -10,6 +10,8 @@ Plug 'peter-edge/vim-capnp'
 " Python
 Plug 'alfredodeza/pytest.vim'
 Plug 'kevinw/pyflakes-vim'
+Plug 'heavenshell/vim-pydocstring'
+Plug 'ambv/black'
 "Plug 'zchee/deoplete-jedi'
 "Plug 'davidhalter/jedi-vim'
 " GO
