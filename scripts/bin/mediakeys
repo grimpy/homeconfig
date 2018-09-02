@@ -5,6 +5,7 @@ import select
 import subprocess
 import pyinotify
 import argparse
+import time
 
 KEYLENGTH = 20
 
@@ -32,6 +33,7 @@ def controlvolume(cmd):
 CMDS = {(165, 165): call('xlock', 'force'),
         (165, 163, 164, 164): call('pkill', 'i3lock'),
         (164,): call('musiccontrol', 'PlayPause'),
+        (200,): call('musiccontrol', 'PlayPause'),
         (163,): call('musiccontrol', 'Next'),
         (113,): controlvolume('pactl set-sink-mute %s toggle'),
         (114,): controlvolume('pactl set-sink-volume %s -5%%'),
@@ -67,7 +69,12 @@ def daemon():
         def process_IN_CREATE(self, event):
             print 'IN', event
             if event.name.startswith('event'):
-                devices[event.pathname] = open(event.pathname)
+                try:
+                    devices[event.pathname] = open(event.pathname)
+                except IOError as e:
+                    if e.errno == 13:
+                        time.sleep(3)
+                        self.process_IN_CREATE(event)
 
         def process_IN_DELETE(self, event):
             print 'DEL', event

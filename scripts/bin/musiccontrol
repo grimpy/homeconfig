@@ -50,10 +50,10 @@ function mpc() {
 
 }
 
-if playerctl status; then
-    mpris
-elif ps -eaf | grep -v grep | grep kodiremote; then
+if ps -eaf | grep -v grep | grep kodiremote; then
     xbmc
+elif playerctl status; then
+    mpris
 elif ps -eaf | grep -v grep | grep pragha; then
     praghac
 else
