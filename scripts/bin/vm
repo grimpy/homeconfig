@@ -1,9 +1,10 @@
 #!/bin/bash
+set -e
 
 debug=0
 reset=0
 bridge=virbr0
-storage=storage
+storage=
 basepath="$HOME/.cache/vm/"
 image="$basepath/vmlinuz.efi"
 kernelargs=""
@@ -47,34 +48,7 @@ vmdir="$basepath/$name"
 md5=$(echo -n $name | md5sum | awk '{print $1}')
 uuid="${md5:0:8}-${md5:8:4}-${md5:12:4}-${md5:16:4}-${md5:20}"
 basemac="54:${md5:2:2}:${md5:4:2}:${md5:6:2}:${md5:8:2}:${md5:10:1}"
-
-if [ ! -e /sys/class/net/$bridge ]; then
-    echo "Management bridge $bridge does not exists!"
-    echo "  Maybe default network isn't started? Try 'virsh net-start default'"
-    exit 1
-fi
-
-if [ ! -e /sys/class/net/$storage ]; then
-    sudo ip l a $storage type bridge
-fi
-if [ ! -e /etc/qemu/bridge.conf ]; then
-    sudo mkdir -p /etc/qemu
-    sudo tee /etc/qemu/bridge.conf << EOF
-allow $storage
-allow $bridge
-EOF
-fi
-if ! grep $bridge /etc/qemu/bridge.conf > /dev/null; then
-    sudo tee -a /etc/qemu/bridge.conf << EOF
-allow $bridge
-EOF
-fi
-if ! grep $storage /etc/qemu/bridge.conf > /dev/null; then
-    sudo tee -a /etc/qemu/bridge.conf << EOF
-allow $storage
-EOF
-fi
-
+storageline=""
 
 createdisks() {
     mkdir -p $vmdir
@@ -95,18 +69,86 @@ if ps -eaf | grep -v grep | grep "$uuid" > /dev/null; then
     echo "VM $name is already running"
     exit 1
 fi
-if [ -e $vmdir/overlay ]; then
-    overlay="$vmdir/overlay"
-else
-    overlay="$basepath/overlay"
-    mkdir -p $overlay
+
+overlay="$vmdir/overlay"
+
+mkdir -p "$vmdir/overlay/etc/zero-os/conf/"
+touch "$vmdir/overlay/.zero-os-debug"
+cat << EOF > "$vmdir/overlay/etc/zero-os/conf/ash.toml"
+[startup.ashlogin]
+name = "bash"
+after = ["init"]
+
+[startup.ashlogin.args]
+script = """
+# Enable ip forwarding
+while true; do
+getty -l /bin/ash -n 19200 ttyS1
+done
+"""
+EOF
+
+netfile="$vmdir/overlay/etc/zero-os/network.toml"
+if [[ "$bridge" == "docker0" && ! -e "$netfile" ]]; then
+cat << EOF > "$netfile"
+[network]
+auto = false
+
+[interface.eth0]
+protocol = "static"
+
+[static.eth0]
+ip = "172.17.2.$(( 16#${md5:10:2} ))/16"
+gateway = "172.17.0.1"
+
+[interface.lo]
+protocol = "static"
+
+[static.lo]
+ip = "127.0.0.1/8"
+EOF
+cat << EOF > "$vmdir/overlay/etc/resolv.conf"
+nameserver 8.8.8.8
+EOF
 fi
+
+if [ ! -e /sys/class/net/$bridge ]; then
+    echo "Management bridge $bridge does not exists!"
+    echo "  Maybe default network isn't started? Try 'virsh net-start default'"
+    exit 1
+fi
+
+if [ ! -e /etc/qemu/bridge.conf ]; then
+    sudo mkdir -p /etc/qemu
+    sudo tee /etc/qemu/bridge.conf << EOF
+allow $bridge
+EOF
+fi
+if ! grep $bridge /etc/qemu/bridge.conf > /dev/null; then
+    sudo tee -a /etc/qemu/bridge.conf << EOF
+allow $bridge
+EOF
+fi
+
+if [ -n "$storage" ]; then
+    if [ ! -e /sys/class/net/$storage ]; then
+        sudo ip l a $storage type bridge
+    fi
+    if ! grep $storage /etc/qemu/bridge.conf > /dev/null; then
+        sudo tee -a /etc/qemu/bridge.conf << EOF
+    allow $storage
+EOF
+    fi
+    storageline="-netdev bridge,id=storage,br=$storage -device virtio-net-pci,netdev=storage,mac=${basemac}2"
+fi
+
+
 
 qemu-system-x86_64 -kernel $image \
     -m 4096 -enable-kvm -cpu host \
     -uuid $uuid \
     -netdev bridge,id=management,br=$bridge -device virtio-net-pci,netdev=management,mac="${basemac}1" \
-    -netdev bridge,id=storage,br=$storage -device virtio-net-pci,netdev=storage,mac=${basemac}2  \
+    $storageline \
     -drive file=fat:rw:$overlay,format=raw \
     -serial null -serial mon:stdio \
     -append "${cmdline}" \
