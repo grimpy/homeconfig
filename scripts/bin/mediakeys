@@ -36,6 +36,7 @@ CMDS = {(165, 165): call('xlock', 'force'),
         (200,): call('musiccontrol', 'PlayPause'),
         (163,): call('musiccontrol', 'Next'),
         (113,): controlvolume('pactl set-sink-mute %s toggle'),
+        (151,): controlvolume('pactl set-sink-mute %s toggle'),
         (114,): controlvolume('pactl set-sink-volume %s -5%%'),
         (115,): controlvolume('pactl set-sink-volume %s +5%%'),
         }
