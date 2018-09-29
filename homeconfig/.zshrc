@@ -28,3 +28,5 @@ if [[ $TERM == xterm-termite ]]; then
 fi
 
 PATH=$PATH:/sbin
+
+eval $(thefuck --alias)
