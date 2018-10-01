@@ -1,0 +1,57 @@
+#!/usr/bin/env python3
+from http.server import SimpleHTTPRequestHandler, test, BaseHTTPRequestHandler
+from functools import partial
+from urllib.parse import quote
+import socket
+import subprocess
+import sys
+import os
+
+class RequestHandler(SimpleHTTPRequestHandler):
+    def __init__(self, *args, file, **kwargs):
+        self.__file = file
+        BaseHTTPRequestHandler.__init__(self, *args, **kwargs)
+
+    def translate_path(self, path):
+        return self.__file
+
+class MyApp:
+    def __init__(self, port, bind, file):
+        self.__port = port
+        self.__bind = bind
+        self.__file = file
+
+    def get_my_ip(self):
+        sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+        try:
+            sock.connect(('8.8.8.8', 53))
+            return sock.getsockname()[0]
+        finally:
+            sock.close()
+
+    def start(self):
+        basename = quote(os.path.basename(self.__file))
+        url = "http://{}:{}/{}".format(self.get_my_ip(), self.__port, basename)
+        print(url)
+        proc = subprocess.Popen(["xsel", "-b"], stdin=subprocess.PIPE)
+        proc.stdin.write(url.encode('utf-8'))
+        proc.stdin.close()
+        proc.wait()
+        handlerclass = partial(RequestHandler, file=self.__file)
+        test(HandlerClass=handlerclass, port=self.__port, bind=self.__bind)
+
+
+if __name__ == '__main__':
+    import argparse
+
+    parser = argparse.ArgumentParser()
+    parser.add_argument('--port', type=int, default=8000)
+    parser.add_argument('--bind', default='')
+    parser.add_argument('file')
+    options = parser.parse_args()
+    if not os.path.exists(options.file):
+        print("File {} does not exists".format(options.file))
+        sys.exit(1)
+    app = MyApp(options.port, options.bind, options.file)
+    app.start()
+
