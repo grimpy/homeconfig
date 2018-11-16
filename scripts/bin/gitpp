@@ -1,2 +1,2 @@
 #!/bin/bash
-git push -u && git pull-request $@
+hub push -u && hub pull-request $@

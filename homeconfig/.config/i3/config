@@ -230,6 +230,7 @@ assign [class="Atom"] $ws6
 assign [class="Geany"] $ws6
 assign [class="URxvt" instance="EditTerm"] $ws6
 assign [class="code"] $ws6
+assign [class="Electron"] $ws6
 assign [class="Firefox" instance="Devtools"] $ws6
 assign [class="Spotify" instance="Spotify"] $ws7
 assign [class="winbox.exe"] $ws8
@@ -321,8 +322,8 @@ mode "$mode_mouse" {
 bindsym $mod+m mode "$mode_mouse"
 
 #screen
-bindsym XF86MonBrightnessUp exec xbacklight -inc 10
-bindsym XF86MonBrightnessDown exec xbacklight -dec 10
+bindsym XF86MonBrightnessUp exec brillo -A 10
+bindsym XF86MonBrightnessDown exec brillo -U 10
 bindsym --release Print exec caputereimg.sh
 bindsym $winkey+o exec rotatescreen
 

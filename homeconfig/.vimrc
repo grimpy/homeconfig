@@ -13,7 +13,7 @@ Plug 'kevinw/pyflakes-vim'
 Plug 'heavenshell/vim-pydocstring'
 Plug 'ambv/black'
 "Plug 'zchee/deoplete-jedi'
-"Plug 'davidhalter/jedi-vim'
+Plug 'davidhalter/jedi-vim'
 " GO
 Plug 'fatih/vim-go'
 " Git
