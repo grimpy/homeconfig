@@ -44,6 +44,7 @@ Plug 'ncm2/ncm2-bufword'
 Plug 'ncm2/ncm2-tmux'
 Plug 'ncm2/ncm2-path'
 Plug 'ncm2/ncm2-jedi'
+Plug 'ncm2/ncm2-go'
 Plug 'ncm2/ncm2-markdown-subscope'
 Plug 'ncm2/ncm2-html-subscope'
 " Gui stuff

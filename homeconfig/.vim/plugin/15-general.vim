@@ -7,6 +7,7 @@ autocmd BufWritePost .vimrc filetype plugin indent on
 
 set t_Co=256
 set background=dark
+filetype plugin on
 
 set tabstop=4
 set shiftwidth=4
