@@ -31,7 +31,7 @@ currentWindowId () {
 }
 
 tmux_inactive () {
-    if [ -n "$TMUX" ]; then
+    if [ -z "$TMUX" ]; then
 	return 1
     fi
     local mypid=$$
@@ -53,7 +53,7 @@ bgnotify_end() {
   elapsed=$(( EPOCHSECONDS - bgnotify_timestamp ))
   past_threshold=$(( elapsed >= bgnotify_threshold ))
   if (( bgnotify_timestamp > 0 )) && (( past_threshold )); then
-    if [ $(currentWindowId) != "$bgnotify_windowid" ] || tmux_inactive; then
+    if [ "$(currentWindowId)" != "$bgnotify_windowid" ] || tmux_inactive; then
       print -n "\a"
       bgnotify_formatted "$didexit" "$bgnotify_lastcmd" "$elapsed"
     fi
