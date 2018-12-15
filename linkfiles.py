@@ -9,7 +9,7 @@ parser.add_option("-r", "--root", dest="root", action="store_true", default=Fals
 (options, args) = parser.parse_args()
 repopath = os.path.abspath(os.path.dirname(sys.argv[0]))
 fullpaths = []
-linkfolders = ['.config/awesome', '.config/autostart', '.vim', '.urxvt', '.config/i3', '.config/i3blocks']
+linkfolders = ['.config/awesome', '.vim', '.urxvt', '.config/i3', '.config/i3blocks']
 copydirs = ['etc/udev/rules.d', 'etc/systemd/system']
 target = os.environ['HOME']
 
