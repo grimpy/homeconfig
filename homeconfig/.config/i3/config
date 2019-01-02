@@ -244,11 +244,12 @@ for_window [class="Thunderbird" instance="Msgcompose"] floating enable
 for_window [class="Thunderbird" instance="Calendar"] floating enable
 for_window [class="Thunderbird" window_role="addressbook"] floating enable
 
-set $mode_system System (l) lock, (e) logout, (s) suspend, (h) hibernate, (r) reboot, (c) reload config, (p) shutdown
+set $mode_system System (l) lock, (e) logout, (s) suspend, (h) hibernate, (r) reboot, (c) reload config, (mod+c) restart i3, (p) shutdown
 mode "$mode_system" {
     bindsym l exec --no-startup-id xlock force, mode "default"
     bindsym e exec bash -c "loginctl terminate-session $(loginctl show-seat seat0 -p ActiveSession | cut -d = -f 2)", mode "default"
     bindsym c reload, mode "default"
+    bindsym $mod+c restart, mode "default"
     bindsym s exec xlock force; exec systemctl suspend -i, mode "default"
     bindsym h exec xlock force; exec systemctl hybrid-sleep, mode "default"
     bindsym r exec --no-startup-id systemctl reboot -i, mode "default"
