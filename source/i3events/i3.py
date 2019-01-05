@@ -24,6 +24,7 @@ import socket
 import struct
 import threading
 import time
+import os
 
 ModuleType = type(sys)
 
@@ -443,7 +444,10 @@ def get_socket_path():
     """
     Gets the socket path via i3 command.
     """
-    cmd = ['i3', '--get-socketpath']
+    if 'WAYLAND_DISPLAY' in os.environ:
+        cmd = ['sway', '--get-socketpath']
+    else:
+        cmd = ['i3', '--get-socketpath']
     output = __call_cmd__(cmd)
     return output
 
