@@ -214,12 +214,14 @@ bar {
 assign [class="URxvt" instance="urxvt"] $ws1
 assign [class="xterm"] $ws1
 assign [class="kitty"] $ws1
+assign [app_id="kitty"] $ws1
 assign [class="Gvncviewer"] $ws8
 assign [class="Pidgin"] $ws2
 assign [class="Skype"] $ws2
 assign [class="webogram"] $ws2
 assign [class="Gajim"] $ws2
 assign [class="Telegram"] $ws2
+assign [app_id="telegram-desktop"] $ws2
 assign [class="Firefox" instance="Navigator"] $ws3
 assign [class="Chrome"] $ws3
 assign [class="Chromium"] $ws3
@@ -236,6 +238,7 @@ assign [class="Atom"] $ws6
 assign [class="Geany"] $ws6
 assign [class="URxvt" instance="EditTerm"] $ws6
 assign [class="code"] $ws6
+assign [app_id="code"] $ws6
 assign [class="Electron"] $ws6
 assign [class="Firefox" instance="Devtools"] $ws6
 assign [class="Spotify" instance="Spotify"] $ws7
@@ -343,3 +346,4 @@ bindsym $mod+plus exec mediakeys -k 115
 bindsym XF86AudioMicMute exec bluehead mictoggle
 #exec dex -a -s /home/Jo/.config/autostart
 exec python3 ~/mygit/source/i3events/i3events.py 
+exec mako
