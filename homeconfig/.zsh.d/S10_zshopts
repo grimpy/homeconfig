@@ -162,7 +162,7 @@ setopt transient_rprompt    # better for cut/paste
 #setopt unset                #
 #setopt verbose              #
 #setopt vi                   # use bindkeys
-setopt no_xtrace            # do not debug by default
+#setopt no_xtrace            # do not debug by default
 setopt zle                  # use zsh le
 
 is-at-least 4.3.0 && {

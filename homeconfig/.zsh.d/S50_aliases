@@ -66,6 +66,11 @@ function pacaur(){
     hash -r
 }
 
+function yay(){
+    /usr/bin/ya $*
+    hash -r
+}
+
 function apt-get(){
     /usr/bin/apt-get $*
     hash -r
