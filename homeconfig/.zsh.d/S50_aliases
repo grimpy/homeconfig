@@ -67,7 +67,7 @@ function pacaur(){
 }
 
 function yay(){
-    /usr/bin/ya $*
+    /usr/bin/yay $*
     hash -r
 }
 

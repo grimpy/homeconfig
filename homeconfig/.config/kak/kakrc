@@ -1,30 +1,5 @@
-def -docstring 'invoke fzf to open a file' \
-  fzf-file %{ %sh{
-    if [ -z "$TMUX" ]; then
-      echo echo only works inside tmux
-    else
-      FILE=$(find * -type f | fzf-tmux -d 15)
-      if [ -n "$FILE" ]; then
-        printf 'eval -client %%{%s} edit %%{%s}\n' "${kak_client}" "${FILE}" | kak -p "${kak_session}"
-      fi
-    fi
-} }
-
-def -docstring 'invoke fzf to select a buffer' \
-  fzf-buffer %{ %sh{
-    if [ -z "$TMUX" ]; then
-      echo echo only works inside tmux
-    else
-      BUFFER=$(printf %s\\n "${kak_buflist}" | tr : '\n' | fzf-tmux -d 15)
-      if [ -n "$BUFFER" ]; then
-        echo "eval -client '$kak_client' 'buffer ${BUFFER}'" | kak -p ${kak_session}
-      fi
-    fi
-} }
-def -docstring 'ranger in current file' \
-  ranger-currentfile %{ %sh{
-    echo "ranger --selectfile=$kak_buffile"
-}}
+source "%val{config}/plugins/plug.kak/rc/plug.kak"
+plug "andreyorst/fzf.kak"
 
 hook global BufWritePost .* %{
     git show-diff
@@ -64,11 +39,15 @@ alias global x write-quit
 alias global vsplit tmux-new-horizontal
 set-option global tabstop 4
 set-option global indentwidth 4
-map global user f ":fzf-file<ret>"
-map global user b ":fzf-buffer<ret>"
+map global normal <c-p> ': fzf-mode<ret>'
 map global user n ":ranger-currentfile<ret>"
 map global user s ":tmux-new-horizontal<ret>"
 map global normal '#' :comment-line<ret> -docstring 'comment line'
 map global normal '<a-#>' :comment-block<ret> -docstring 'comment block'
-colorscheme tomorrow-night
-%sh{kak-lsp --kakoune}
+colorscheme solarized-dark
+set-option global fzf_file_command 'ag --hidden --ignore .git -g ""'
+set-option global fzf_highlighter 'bat'
+eval %sh{kak-lsp --kakoune -s $kak_session}
+lsp-enable
+lsp-auto-hover-enable
+map global normal <c-l> ': enter-user-mode lsp<ret>'
