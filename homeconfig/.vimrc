@@ -56,6 +56,7 @@ Plug 'equalsraf/neovim-gui-shim'
 Plug 'joshdick/onedark.vim'
 Plug 'numirias/semshi', {'do': ':UpdateRemotePlugins'}
 "Others
+Plug 'junegunn/fzf.vim'
 
 call plug#end()
 

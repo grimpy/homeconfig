@@ -11,6 +11,7 @@ alias la="ls --color=always -a"
 alias ll="ls --color=always -l"
 alias lla="ls --color=always -la"
 alias lal="ls --color=always -la"
+alias ctop="docker run --rm -ti --name=ctop -v /var/run/docker.sock:/var/run/docker.sock quay.io/vektorlab/ctop:latest"
 
 # cd stuff
 alias .="cd .."
