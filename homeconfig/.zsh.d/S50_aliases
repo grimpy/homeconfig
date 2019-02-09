@@ -19,13 +19,13 @@ alias ..="cd ../.."
 alias ...="cd ../../.."
 alias ....="cd ../../../.."
 
-alias cdr="cd \$vcs_info_msg_1_"
-
 alias tmux="tmux -2"
 
 #rsa stuff
 alias scpresume="rsync -Pazhv"
-alias git="hub"
+if which hub > /dev/null; then
+    alias git="hub"
+fi
 alias mosh="mosh --predict=experimental"
 alias wget="wget --content-disposition"
 alias dd="dd status=progress"
@@ -47,6 +47,21 @@ function v(){
         array[2]="0"
     fi
     $vimbin "${array[1]}" "+${array[2]}"
+}
+
+function cdr() {
+    rootdir=$(readlink -f $(pwd))    
+    while [ "$rootdir" != "/"  ]; do
+        if [ -d "$rootdir/.git" ]; then
+            break
+        elif [ -e "$rootdir/.hg" ]; then
+            break
+        fi
+        rootdir=$(dirname "$rootdir")
+    done
+    if [ "$rootdir" != "/"  ]; then
+        cd "$rootdir"
+    fi
 }
 
 function wd() {
