@@ -6,7 +6,11 @@ alias mmv='noglob zmv -W'
 alias du="du -hcs"
 alias df="df -h"
 
-alias ls="ls --color=auto"
+if [ -e /usr/bin/exa ]; then
+  alias ls="exa --git"
+else
+  alias ls="ls --color=auto"
+fi
 alias la="ls --color=always -a"
 alias ll="ls --color=always -l"
 alias lla="ls --color=always -la"
