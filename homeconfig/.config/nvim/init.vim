@@ -57,6 +57,5 @@ Plug 'joshdick/onedark.vim'
 Plug 'numirias/semshi', {'do': ':UpdateRemotePlugins'}
 "Others
 Plug 'junegunn/fzf.vim'
-
+Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() }}
 call plug#end()
-
