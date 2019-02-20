@@ -1,0 +1,5 @@
+#!/bin/bash
+base=$(basename "$1")
+url=$(curl --upload-file "$1" https://transfer.sh/$base)
+echo "wget $url"
+echo "wget $url" | xsel -b

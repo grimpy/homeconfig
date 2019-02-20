@@ -10,6 +10,7 @@ nnoremap <leader>t :terminal<CR>
 let g:black_fast = 1
 nnoremap <leader>p :Black<CR>
 nnoremap <leader>s :! vimsync -t be-g8-4-master -f %<CR>
+nnoremap <leader>t :! transfer %<CR>
 tnoremap <Esc> <C-\><C-n>
 
 " For snippet_complete marker.
