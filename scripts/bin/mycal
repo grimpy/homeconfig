@@ -1,2 +1,2 @@
 #!/bin/bash
-fterm 600 170 bash -c "cal -3 -s; read"
+fterm 72 20 bash -c "minical -3"

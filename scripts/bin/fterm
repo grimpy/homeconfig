@@ -3,11 +3,4 @@ width=$1
 height=$2
 shift
 shift
-if [[ "$HOSTNAME" == "Spidy" ]]; then
-    multiplier=1.5
-else 
-    multiplier=1
-fi
-width=$(echo "$width $multiplier" | awk '{printf "%i\n", $1*$2}')
-height=$(echo "$height $multiplier" | awk '{printf "%i\n", $1*$2}')
-kitty --class=Float -o initial_window_width=$width -o initial_window_height=$height -o remember_window_size=no "$@"
+kitty --class=Float -o initial_window_width=${width}c -o initial_window_height=${height}c -o remember_window_size=no "$@"

@@ -1,0 +1,16 @@
+#!/bin/bash
+if [ -z "$1" ]; then
+  cat ~/.warprc | cut -f 1 -d : 
+  exit 0
+fi
+
+project=$(bash -c "echo $(grep "^${1}:" ~/.warprc | cut -f 2 -d :)")
+session=$(echo $project | sha256sum | awk '{print $1}')
+if tmux list-windows -F "#{session_name}:#{window_name}" | grep "code:$1" > /dev/null; then
+    tmux select-window -t "code:$1"
+    exit 0
+elif tmux list-sessions | grep "^code:" > /dev/null; then
+    tmux new-window -c "$project" -n "$1" -t "code" kak -s "$session" > /dev/null
+else
+    exec kitty --class=code --title="Kakoune" tmux new-session -s "code" -c "$project" -n "$1" kak -s "$session" > /dev/null
+fi

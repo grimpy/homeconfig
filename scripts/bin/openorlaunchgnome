@@ -1,0 +1,28 @@
+#!/usr/bin/python3
+import subprocess
+import os
+import sys
+import psutil
+
+tag = int(sys.argv[1]) - 1
+cmd = sys.argv[2].split()
+
+def get_process(cmd):
+    for proc in psutil.process_iter():
+        try:
+            cmdline = proc.cmdline()
+            if cmdline:
+                if cmdline[0] in ["/bin/bash"]:
+                    cmdline = cmdline[1:]
+            if cmdline and cmd in cmdline[0]:
+                return proc
+        except psutil.NoSuchProcess:
+            continue
+    return None
+
+
+proc = get_process(cmd[0])
+subprocess.Popen(["wmctrl", '-s', str(tag)])
+if not proc:
+    os.execlp(cmd[0], *cmd)
+

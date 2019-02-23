@@ -1,2 +1,2 @@
 #!/bin/bash
-fterm 1300 800 htop
+fterm 160 40 htop

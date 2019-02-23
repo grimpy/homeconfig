@@ -1,2 +1,2 @@
 #!/bin/bash
-fterm 1300 800 --session=$HOME/mygit/scripts/mynetsession
+fterm 160 40 --session=$HOME/mygit/scripts/mynetsession

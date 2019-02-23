@@ -1,0 +1,95 @@
+[system/locale]
+region='en_GB.UTF-8'
+
+[org/gnome/settings-daemon/plugins/media-keys]
+custom-keybindings=['/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/', '/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom1/', '/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom2/', '/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom3/', '/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom4/', '/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom5/']
+screenshot=''
+area-screenshot-clip='Print'
+
+[org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom2]
+binding='<Super>F3'
+command='/home/Jo/mygit/scripts/bin/openorlaunchgnome 3 firefox'
+name='Browser Open'
+
+[org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom5]
+binding='<Super>F6'
+command='/home/Jo/mygit/scripts/bin/openorlaunchgnome 6 gnvim'
+name='VIM Open'
+
+[org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom1]
+binding='<Super>F2'
+command='/home/Jo/mygit/scripts/bin/openorlaunchgnome 2 telegram-desktop'
+name='Message Open'
+
+[org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom4]
+binding='<Super>F5'
+command='/home/Jo/mygit/scripts/bin/openorlaunchgnome 5 nautilus'
+name='Files Open'
+
+[org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0]
+binding='<Super>1'
+command='/home/Jo/mygit/scripts/bin/openorlaunchgnome 1 kitty'
+name='Terminal Open'
+
+[org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom3]
+binding='<Super>F4'
+command='/home/Jo/mygit/scripts/bin/openorlaunchgnome 4 evolution'
+name='Evolution Open'
+
+[org/gnome/settings-daemon/peripherals/keyboard]
+numlock-state='off'
+
+[org/gnome/shell/keybindings]
+focus-active-notification=['<Super>u']
+
+[org/gnome/shell]
+favorite-apps=['kitty.desktop', 'telegramdesktop.desktop', 'firefox.desktop', 'org.gnome.Evolution.desktop', 'org.gnome.Nautilus.desktop']
+
+[org/gnome/shell/window-switcher]
+current-workspace-only=false
+app-icon-mode='both'
+
+[org/gnome/shell/extensions/vitals]
+position-in-panel=2
+
+[org/gnome/shell/extensions/no-title-bar]
+button-position='after-app-menu'
+hide-buttons=false
+
+[org/gnome/shell/extensions/auto-move-windows]
+application-list=['geany.desktop:6', 'kitty.desktop:1', 'firefox.desktop:3', 'pcmanfm.desktop:5', 'code-oss.desktop:6', 'org.gnome.Evolution.desktop:4', 'org.gnome.Nautilus.desktop:5', 'telegramdesktop.desktop:2']
+
+[org/gnome/nautilus/preferences]
+default-folder-viewer='list-view'
+search-filter-time-type='last_modified'
+
+[org/gnome/nautilus/window-state]
+maximized=false
+
+[org/gnome/desktop/wm/preferences]
+mouse-button-modifier='<Alt>'
+button-layout='appmenu:maximize,close'
+resize-with-right-button=true
+num-workspaces=11
+workspace-names=['Terminal', 'Messaging', 'Web', 'Email', 'Files', 'Editor', 'Media', 'EMU', 'FS Media']
+
+[org/gnome/desktop/wm/keybindings]
+close=['<Super>c']
+move-to-workspace-1=['<Shift><Super>F1']
+move-to-workspace-2=['<Shift><Super>F2']
+move-to-workspace-3=['<Shift><Super>F3']
+move-to-workspace-4=['<Shift><Super>F4']
+move-to-workspace-5=['<Shift><Super>F5']
+move-to-workspace-6=['<Shift><Super>F6']
+move-to-workspace-7=['<Shift><Super>F7']
+move-to-workspace-8=['<Shift><Super>F8']
+move-to-workspace-9=['<Shift><Super>F9']
+switch-to-workspace-7=['<Super>F7']
+switch-to-workspace-8=['<Super>F8']
+switch-to-workspace-9=['<Super>F9']
+panel-run-dialog=['<Super>r']
+
+[org/gnome/desktop/input-sources]
+sources=[('xkb', 'us+altgr-intl')]
+xkb-options=['caps:super']
+

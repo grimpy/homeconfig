@@ -74,7 +74,8 @@ class TelecomEgypt(IntervalModule):
 status = Status(standalone=True, logfile='$HOME/.cache/i3pystatus.log')
 dategroup = Group()
 dategroup.register("clock",
-               on_rightclick='rofi -modi "Clock:roficlock" -show Clock',
+               on_rightclick='mycal',
+               on_leftclick='rofi -modi "Clock:roficlock" -show Clock',
                format="%H:%M")
 dategroup.register("clock",
                on_rightclick='mycal',
@@ -83,6 +84,15 @@ status.register(dategroup)
 status.register("pulseaudio",
                 format="♪{volume}", bar_type="horizontal",
                 multi_colors=True)
+status.register("mpd",
+    on_leftclick="switch_playpause",
+    on_rightclick=["mpd_command", "stop"],
+    on_middleclick=["mpd_command", "shuffle"],
+    on_upscroll=["mpd_command", "seekcur -10"],
+    status={'play': '',
+            'pause': '',
+            'stop': ''},
+    on_downscroll=["mpd_command", "seekcur +10"])
 status.register('now_playing',
                 status={'play': '',
                         'pause': '',
