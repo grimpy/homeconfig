@@ -9,21 +9,22 @@
 #
 # Please see http://i3wm.org/docs/userguide.html for a complete reference!
 
+#xwayland disable
 set $mod Mod4
 set $winkey Mod4
 set $altkey Mod1
 
 
-set $ws1 "1  Term"
-set $ws2 "2 IM"
-set $ws3 "3  Web"
-set $ws4 "4 Mail"
-set $ws5 "5 FS"
-set $ws6 "6 Edit"
-set $ws7 "7  Media"
-set $ws8 "8 Emu"
-set $ws9 "9 Mediafs"
-set $ws10 "10 Remote"
+set $ws1 "1 "
+set $ws2 "2"
+set $ws3 "3 "
+set $ws4 "4 "
+set $ws5 "5 "
+set $ws6 "6 "
+set $ws7 "7 "
+set $ws8 "8 "
+set $ws9 "9 "
+set $ws10 "10 "
 set $ws11 11
 set $ws12 12
 
@@ -41,6 +42,10 @@ floating_modifier $altkey
 focus_follows_mouse no
 default_border none
 
+output eDP-1 {
+    pos 0 0    
+}
+
 # start a terminal
 bindsym Control+Mod1+c exec terminal
 
@@ -57,7 +62,7 @@ mode "$mode_rofi" {
     bindsym p exec rofi -modi "Randr:rofirandr" -show Randr, mode "default"
     bindsym t exec rofi -modi "Clock:roficlock" -show Clock, mode "default"
     bindsym y exec rofi -show ssh, mode "default"
-    bindsym c exec roficlip < /dev/null, mode "default"
+    bindsym c exec clipmenu < /dev/null, mode "default"
     bindsym w exec rofi -show window, mode "default"
     # back to normal: Enter or Escape
     bindsym Return mode "default"
@@ -203,7 +208,7 @@ bindsym $mod+g mode "resize"
 bar {
 #  status_command i3blocks -c ~/.config/i3blocks/config
   status_command  python3 ~/.config/i3/status.py
-  tray_output primary
+  tray_bindcode 273 Activate
   position top
   colors {
     background #232323
@@ -246,8 +251,10 @@ assign [class="winbox.exe"] $ws8
 assign [class="zoom"] $ws9
 assign [class="kodimote"] $ws10
 for_window [class="Float"] floating enable
+for_window [app_id="Float"] floating enable
 for_window [class="zoom"] floating enable
 for_window [class="Pavucontrol"] floating enable
+for_window [app_id="pavucontrol"] floating enable
 for_window [class="Thunderbird" instance="Msgcompose"] floating enable
 for_window [class="Thunderbird" instance="Calendar"] floating enable
 for_window [class="Thunderbird" window_role="addressbook"] floating enable
@@ -347,3 +354,4 @@ bindsym XF86AudioMicMute exec bluehead mictoggle
 #exec dex -a -s /home/Jo/.config/autostart
 exec python3 ~/mygit/source/i3events/i3events.py 
 exec mako
+exec clipmenud

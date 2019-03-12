@@ -2,6 +2,10 @@
 if [ -z $@ ]; then
     ls -1 ~/.config/snippets
 else
-    cat ~/.config/snippets/$1 | xsel -i -b
+    if [ -n "$WAYLAND_DISPLAY" ]; then
+        cat ~/.config/snippets/$1 | wl-copy
+    else
+        cat ~/.config/snippets/$1 | xsel -i -b
+    fi
 fi
 

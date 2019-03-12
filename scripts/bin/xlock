@@ -4,7 +4,11 @@ option=$1
 
 function lock() {
     echo "KILLAGENT" | gpg-connect-agent
-    i3lock -c 333333
+    if [ -n "$WAYLAND_DISPLAY" ]; then
+        swaylock -c 333333 -F
+    else
+        i3lock -c 333333
+    fi
 }
 
 case $option in

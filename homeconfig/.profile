@@ -11,3 +11,4 @@ export _JAVA_AWT_WM_NONREPARENTING=1
 export EDITOR=nvim
 unset LC_ALL
 export XKB_DEFAULT_OPTIONS=grp:shifts_toggle,caps:super,grp_led:caps
+export CM_LAUNCHER=rofi

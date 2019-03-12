@@ -39,7 +39,7 @@ def windowchange(ws, wsp, *args):
         if instance == TELEGRAMINSTANCE:
             print(title)
             # if exact match then notifcation has been cleared
-            if 'title' == 'Telegram':
+            if title == 'Telegram':
                 print('Request removal')
                 if iswayland:
                     subprocess.Popen(SWAYCMD_DISABLE)

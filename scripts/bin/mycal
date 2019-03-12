@@ -1,2 +1,2 @@
 #!/bin/bash
-fterm 72 20 bash -c "minical -3"
+fterm 72 20 bash -c "minical -3 -s"
