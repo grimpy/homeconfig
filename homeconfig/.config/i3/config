@@ -14,17 +14,17 @@ set $winkey Mod4
 set $altkey Mod1
 
 
-set $ws1 "1  Term"
-set $ws2 "2 IM"
-set $ws3 "3  Web"
-set $ws4 "4 Mail"
-set $ws5 "5 FS"
-set $ws6 "6 Edit"
-set $ws7 "7  Media"
-set $ws8 "8 Emu"
-set $ws9 "9 Mediafs"
-set $ws10 "10 Remote"
-set $ws11 "11  Droid"
+set $ws1 "1 "
+set $ws2 "2"
+set $ws3 "3 "
+set $ws4 "4 "
+set $ws5 "5 "
+set $ws6 "6 "
+set $ws7 "7 "
+set $ws8 "8 "
+set $ws9 "9 "
+set $ws10 "10 "
+set $ws11 "11 "
 set $ws12 12
 
 # Font for window titles. Will also be used by the bar unless a different font
