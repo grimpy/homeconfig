@@ -16,15 +16,25 @@ set $altkey Mod1
 
 
 set $ws1 "1 "
+workspace $ws1 output DP-1 eDP-1
 set $ws2 "2"
+workspace $ws2 output DP-1 eDP-1
 set $ws3 "3 "
+workspace $ws3 output eDP-1 DP-1
 set $ws4 "4 "
+workspace $ws4 output DP-1 eDP-1
 set $ws5 "5 "
+workspace $ws5 output DP-1 eDP-1
 set $ws6 "6 "
+workspace $ws6 output DP-1 eDP-1
 set $ws7 "7 "
+workspace $ws7 output DP-1 eDP-1
 set $ws8 "8 "
+workspace $ws8 output DP-1 eDP-1
 set $ws9 "9 "
+workspace $ws9 output eDP-1 DP-1
 set $ws10 "10 "
+workspace $ws10 output eDP-1 DP-1
 set $ws11 11
 set $ws12 12
 
@@ -250,6 +260,7 @@ assign [class="Spotify" instance="Spotify"] $ws7
 assign [class="winbox.exe"] $ws8
 assign [class="zoom"] $ws9
 assign [class="kodimote"] $ws10
+assign [app_id="kodimote"] $ws10
 for_window [class="Float"] floating enable
 for_window [app_id="Float"] floating enable
 for_window [class="zoom"] floating enable
