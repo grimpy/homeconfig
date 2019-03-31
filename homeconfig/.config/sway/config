@@ -16,25 +16,25 @@ set $altkey Mod1
 
 
 set $ws1 "1 "
-workspace $ws1 output DP-1 eDP-1
+workspace $ws1 output DP-1 HDMI-A-1 eDP-1
 set $ws2 "2"
-workspace $ws2 output DP-1 eDP-1
+workspace $ws2 output DP-1 HDMI-A-1eDP-1
 set $ws3 "3 "
-workspace $ws3 output eDP-1 DP-1
+workspace $ws3 output eDP-1 HDMI-A-1 DP-1
 set $ws4 "4 "
-workspace $ws4 output DP-1 eDP-1
+workspace $ws4 output DP-1 HDMI-A-1 eDP-1
 set $ws5 "5 "
-workspace $ws5 output DP-1 eDP-1
+workspace $ws5 output DP-1 HDMI-A-1 eDP-1
 set $ws6 "6 "
-workspace $ws6 output DP-1 eDP-1
+workspace $ws6 output DP-1 HDMI-A-1 eDP-1
 set $ws7 "7 "
-workspace $ws7 output DP-1 eDP-1
+workspace $ws7 output DP-1 HDMI-A-1 eDP-1
 set $ws8 "8 "
-workspace $ws8 output DP-1 eDP-1
+workspace $ws8 output DP-1 HDMI-A-1 eDP-1
 set $ws9 "9 "
-workspace $ws9 output eDP-1 DP-1
+workspace $ws9 output eDP-1 DP-1 HDMI-A-1
 set $ws10 "10 "
-workspace $ws10 output eDP-1 DP-1
+workspace $ws10 output eDP-1 DP-1 HDMI-A-1
 set $ws11 11
 set $ws12 12
 
@@ -355,13 +355,13 @@ bindsym --release Print exec caputereimg.sh
 bindsym $winkey+o exec rotatescreen
 
 #music + volume
-bindsym $mod+1 exec musiccontrol Prev
-bindsym $mod+2 exec musiccontrol PlayPause
-bindsym $mod+3 exec musiccontrol Next
-bindsym $mod+0 exec mediakeys -k 113
-bindsym $mod+minus exec mediakeys -k 114
-bindsym $mod+plus exec mediakeys -k 115
-bindsym XF86AudioMicMute exec bluehead mictoggle
+bindsym --locked $mod+1 exec musiccontrol Prev
+bindsym --locked $mod+2 exec musiccontrol PlayPause
+bindsym --locked $mod+3 exec musiccontrol Next
+bindsym --locked $mod+0 exec mediakeys -k 113
+bindsym --locked $mod+minus exec mediakeys -k 114
+bindsym --locked $mod+plus exec mediakeys -k 115
+bindsym --locked XF86AudioMicMute exec bluehead mictoggle
 #exec dex -a -s /home/Jo/.config/autostart
 exec python3 ~/mygit/source/i3events/i3events.py 
 exec mako

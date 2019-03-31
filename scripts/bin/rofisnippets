@@ -4,6 +4,7 @@ if [ -z $@ ]; then
 else
     if [ -n "$WAYLAND_DISPLAY" ]; then
         cat ~/.config/snippets/$1 | wl-copy
+        pkill rofi
     else
         cat ~/.config/snippets/$1 | xsel -i -b
     fi

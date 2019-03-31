@@ -22,7 +22,6 @@
 " 
 " imap <C-Space> <C-x><C-o>
 " imap <C-@> <C-Space>
-" let g:jedi#completions_enabled = 0
 "
 set shortmess+=c
 autocmd BufEnter * call ncm2#enable_for_buffer()
@@ -30,4 +29,7 @@ set completeopt=noinsert,menuone,noselect
 " Use <TAB> to select the popup menu:
 inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
 inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
-
+let g:jedi#completions_enabled = 0
+let g:jedi#documentation_command = ""
+let g:jedi#goto_command = "gt"
+let g:jedi#usages_command = "gu"

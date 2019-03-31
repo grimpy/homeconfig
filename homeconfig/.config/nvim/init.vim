@@ -21,6 +21,7 @@ Plug 'mhinz/vim-signify'
 Plug 'ruanyl/vim-gh-line'
 " Tim's stuff
 Plug 'tpope/vim-commentary'
+Plug 'tpope/vim-surround'
 Plug 'tpope/vim-sensible'
 function! DoRemote(arg)
   UpdateRemotePlugins
