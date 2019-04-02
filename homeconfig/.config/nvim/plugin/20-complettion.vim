@@ -31,5 +31,5 @@ inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
 inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
 let g:jedi#completions_enabled = 0
 let g:jedi#documentation_command = ""
-let g:jedi#goto_command = "gt"
+let g:jedi#goto_command = "gd"
 let g:jedi#usages_command = "gu"
