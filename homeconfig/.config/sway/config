@@ -66,11 +66,11 @@ bindsym $mod+c kill
 set $mode_rofi Rofi (r) Run, (m) Math, (s) Snippets, (k) Process Kill, (w) Window, (c) Clipboard (y) SSH (t) Timers/Cal
 mode "$mode_rofi" {
     bindsym r exec rofi -show run, mode "default"
-    bindsym s exec rofi -modi "Snippets:rofisnippets" -show Snippets, mode "default"
-    bindsym m exec rofi -modi "MathExpr:mathexpr" -show MathExpr , mode "default"
-    bindsym k exec rofi -modi "Process:processkill" -show Process, mode "default"
-    bindsym p exec rofi -modi "Randr:rofirandr" -show Randr, mode "default"
-    bindsym t exec rofi -modi "Clock:roficlock" -show Clock, mode "default"
+    bindsym s exec swofi rofisnippets, mode "default"
+    bindsym m exec swofi mathexpr, mode "default"
+    bindsym k exec swofi processkill, mode "default"
+    bindsym p exec swofi rofirandr, mode "default"
+    bindsym t exec swofi roficlock, mode "default"
     bindsym y exec rofi -show ssh, mode "default"
     bindsym c exec clipmenu < /dev/null, mode "default"
     bindsym w exec rofi -show window, mode "default"
@@ -160,7 +160,7 @@ bindsym $mod+F7 workspace $ws7
 bindsym $mod+F8 workspace $ws8
 bindsym $mod+F9 workspace $ws9
 bindsym $mod+F10 exec $ws10
-bindsym $mod+x exec openorlaunchi3 $ws10 "/bin/xterm -class kodimode -e kodiremote -c"
+bindsym $mod+x exec openorlaunchi3 $ws10 "kitty --class kodimote kodiremote -c"
 bindsym $mod+F11 workspace $ws11
 bindsym $mod+F12 workspace $ws12
 bindsym $mod+n workspace next
@@ -257,6 +257,7 @@ assign [app_id="code"] $ws6
 assign [class="Electron"] $ws6
 assign [class="Firefox" instance="Devtools"] $ws6
 assign [class="Spotify" instance="Spotify"] $ws7
+assign [class="mpv"] $ws7
 assign [class="winbox.exe"] $ws8
 assign [class="zoom"] $ws9
 assign [class="kodimote"] $ws10

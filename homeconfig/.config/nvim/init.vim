@@ -12,7 +12,6 @@ Plug 'alfredodeza/pytest.vim'
 Plug 'kevinw/pyflakes-vim'
 Plug 'heavenshell/vim-pydocstring'
 Plug 'ambv/black'
-"Plug 'zchee/deoplete-jedi'
 Plug 'davidhalter/jedi-vim'
 " GO
 Plug 'fatih/vim-go'
@@ -23,27 +22,23 @@ Plug 'ruanyl/vim-gh-line'
 Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-sensible'
-function! DoRemote(arg)
-  UpdateRemotePlugins
-endfunction
-" Shougo stuff
-Plug 'Shougo/vimproc.vim', { 'do': 'make' }
-Plug 'Shougo/neosnippet.vim'
-Plug 'Shougo/neosnippet-snippets'
-Plug 'Shougo/denite.nvim'
-"Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 " Guake like terminal
 Plug 'Lenovsky/nuake'
 " NErdtree
 Plug 'scrooloose/nerdtree'
 " Swap args around
 Plug 'machakann/vim-swap'
+" Snitppets
+Plug 'SirVer/ultisnips'
+Plug 'honza/vim-snippets'
 " Completion
 Plug 'ncm2/ncm2'
+Plug 'ncm2/ncm2-ultisnips'
 Plug 'roxma/nvim-yarp'
 Plug 'ncm2/ncm2-bufword'
 Plug 'ncm2/ncm2-tmux'
 Plug 'ncm2/ncm2-path'
+"Plug 'ncm2/float-preview.nvim'
 Plug 'ncm2/ncm2-jedi'
 Plug 'ncm2/ncm2-go'
 Plug 'ncm2/ncm2-markdown-subscope'

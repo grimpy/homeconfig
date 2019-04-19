@@ -42,7 +42,7 @@ class TelecomEgypt(IntervalModule):
         super().__init__(*args, **kwargs)
         try:
             import telecomegypt
-            self.te = telecomegypt.TelecomEgypt('01550165809', 'bZbbrcgicCUq9grzG0qJtNTWfJrxXmAOUn5W5xqMsiY=')
+            self.te = telecomegypt.TelecomEgypt('01550165809', 'bZbbrcgicCUq9grzG0qJtPEmzME/66IHk1Y639flKN8=')
             self.te.login()
         except ImportError:
             self.te = None
