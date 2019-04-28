@@ -244,6 +244,7 @@ for_window [title="^https://gigtechnology.slack.com.*"] move container to worksp
 for_window [class="Float"] floating enable
 for_window [class="zoom"] floating enable
 for_window [class="Pavucontrol"] floating enable
+for_window [class="Evolution" window_role="^EMsgComposer"] floating enable
 for_window [class="Thunderbird" instance="Msgcompose"] floating enable
 for_window [class="Thunderbird" instance="Calendar"] floating enable
 for_window [class="Thunderbird" window_role="addressbook"] floating enable
