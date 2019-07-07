@@ -288,6 +288,7 @@ mode "$mode_workspace" {
 bindsym $mod+t mode "$mode_workspace"
 
 bindsym $mod+u [urgent=latest] focus
+bindsym $mod+shift+u [urgent=latest] exec rm /tmp/mynotification/lock
 
 # kodi control
 set $mode_kodi (r) Toggle Remote, (x) Switch VT, (s) Sleep, (w) Wakeup
@@ -350,6 +351,20 @@ bindsym $mod+3 exec musiccontrol Next
 bindsym $mod+0 exec mediakeys -k 113
 bindsym $mod+minus exec mediakeys -k 114
 bindsym $mod+plus exec mediakeys -k 115
+
+# koditools remote
+bindsym Mod5+F1 exec kodiremote -k "KEY_F1"
+bindsym Mod5+F2 exec kodiremote -k "KEY_F2"
+bindsym Mod5+F3 exec kodiremote -k "KEY_F3"
+bindsym Mod5+F11 exec kodiremote -k "KEY_F11"
+bindsym Mod5+F12 exec kodiremote -k "KEY_F12"
+bindsym Mod5+minus exec kodiremote -k "-"
+bindsym Mod5+plus exec kodiremote -k "+"
+bindsym Mod5+Up exec kodiremote -k "KEY_UP"
+bindsym Mod5+Down exec kodiremote -k "KEY_DOWN"
+bindsym Mod5+Left exec kodiremote -k "KEY_LEFT"
+bindsym Mod5+Right exec kodiremote -k "KEY_RIGHT"
+
 bindsym XF86AudioMicMute exec bluehead mictoggle
 exec dex -a -s /home/Jo/.config/autostart
 exec python3 ~/mygit/source/i3events/i3events.py 

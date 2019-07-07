@@ -1,74 +1,8 @@
 # coding=utf-8
-from i3pystatus import Status, IntervalModule
+from i3pystatus import Status
 from i3pystatus.group import Group
 import netifaces
-
-
-class VodaFone(IntervalModule):
-    interval = 3600
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        try:
-            import vodafone
-            self.vf = vodafone.Vodafone()
-        except ImportError:
-            self.vf = None
-
-    def run(self):
-        if self.vf is None:
-            return
-        try:
-            self.vf.parse()
-        except:
-            return
-
-        percent = (self.vf.used / self.vf.limit) * 100
-        remainingpercent = 100 - (self.vf.daysleft / self.vf.totaldays) * 100
-        if remainingpercent < percent:
-            color = "#FF0000"
-        else:
-            color = "#FFFFFF"
-        self.data = self.vf.__dict__
-        self.output = {"full_text": "{limit:.0f}% R{remaining}d ({remper:.2f}%)".format(limit=percent, remaining=self.vf.daysleft, remper=remainingpercent),
-                       'color': color}
-
-    def refresh(self):
-        self.run()
-
-
-class TelecomEgypt(IntervalModule):
-    interval = 3600
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        try:
-            import telecomegypt
-            self.te = telecomegypt.TelecomEgypt('01550165809', 'bZbbrcgicCUq9grzG0qJtPEmzME/66IHk1Y639flKN8=')
-            self.te.login()
-        except ImportError:
-            self.te = None
-
-    def run(self):
-        if self.te is None:
-            return
-        try:
-            data = self.te.get_data()
-        except:
-            return
-
-        mobiledata = data['body']['detailedLineUsageList'][0]
-        percent = mobiledata['usagePercentage']
-        remainingpercent = 100 - (mobiledata['remainingDaysForRenewal'] / 31) * 100
-        if remainingpercent < percent:
-            color = "#FF0000"
-        else:
-            color = "#FFFFFF"
-        self.data = self.te.__dict__
-        self.output = {"full_text": "{limit:.0f}% R:{remaining}d ({remper:.0f}%)".format(limit=percent, remaining=mobiledata['remainingDaysForRenewal'], remper=remainingpercent),
-                       'color': color}
-
-    def refresh(self):
-        self.run()
-
+from isp_status import TelecomEgypt, VodaFone
 
 
 status = Status(standalone=True, logfile='$HOME/.cache/i3pystatus.log')
@@ -152,7 +86,7 @@ def bond_icon(data):
 status.register("file",
                components={'bond': (bond_icon, '/sys/class/net/bond0/bonding/active_slave')},
                format="{bond}")
-#status.register(VodaFone, on_leftclick="refresh", interval=3600)
+status.register(VodaFone, on_leftclick="refresh", interval=3600)
 status.register(TelecomEgypt, on_leftclick="refresh", interval=3600)
 
 status.run()
