@@ -216,6 +216,7 @@ assign [class="webogram"] $ws2
 assign [class="Gajim"] $ws2
 assign [class="Telegram"] $ws2
 assign [class="Firefox" instance="Navigator"] $ws3
+assign [class="firefox" instance="Navigator"] $ws3
 assign [class="Chrome"] $ws3
 assign [class="Chromium"] $ws3
 assign [class="Thunderbird"] $ws4
