@@ -78,7 +78,7 @@ if wfaces:
 status.register(group)
 
 def bond_icon(data):
-    if data.startswith('en'):
+    if data.startswith(('en', 'eth')):
         return ''
     else:
         return ''
@@ -86,7 +86,7 @@ def bond_icon(data):
 status.register("file",
                components={'bond': (bond_icon, '/sys/class/net/bond0/bonding/active_slave')},
                format="{bond}")
-status.register(VodaFone, on_leftclick="refresh", interval=3600)
+status.register(VodaFone, on_leftclick="refresh", interval=3601)
 status.register(TelecomEgypt, on_leftclick="refresh", interval=3600)
 
 status.run()
