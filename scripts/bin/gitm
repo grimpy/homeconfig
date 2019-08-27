@@ -1,6 +1,6 @@
 #!/bin/bash
-for dir in $(find . -maxdepth 1 -mindepth 1 -type d); do
-    pushd $dir
+for dir in $(find . -maxdepth 4 -mindepth 2 -type d -name '.git'); do
+    pushd "$(dirname $dir)"
     git "$@"
     popd > /dev/null
 done
