@@ -68,7 +68,7 @@ end
 function M.run(shellCommand)
     -- check and Execute
     if M.shallExecute() then
-        awful.util.spawn_with_shell(shellCommand)
+        awful.spawn.with_shell(shellCommand)
     end
 end
 
