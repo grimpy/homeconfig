@@ -19,6 +19,7 @@ module("myrc.util")
 winkey = "Mod4"
 altkey = "Mod1"
 capskey = "Mod4"
+altgrkey = "Mod5"
 
 function getActiveTag()
     local scr

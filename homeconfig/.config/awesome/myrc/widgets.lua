@@ -1,4 +1,3 @@
-local cal = require("cal")
 local vicious = require('vicious')
 local awful = require('awful')
 local util = require('awful.util')
@@ -121,7 +120,6 @@ w[#w+1] = myip
 local netmenucfg = {
              {"Restart DHCP", asyncspawn("sudo systemctl restart dhcpcd"), },
              {"WiFi reconnect", asyncspawn("wifi reconnect"), },
-             {"Open WPA", asyncspawn("wpa_gui")},
              {"Enable Hotspot", switchap}
            }
 local args = {}
@@ -147,7 +145,7 @@ myip:buttons(awful.util.table.join(
                 awful.util.spawn("wifi enablewifi")
             end
         end
-        netmenu:delete(4)
+        netmenu:delete(3)
         netmenu:add({"Enable Hotspot", switchap, icon})
         netmenu:show()
     end)
@@ -292,7 +290,8 @@ w[#w+1] = myvoltext
 
 local mycal = wibox.widget.textclock("%a %d/%m - %R")
 mycal:set_font(device.font)
-cal.register(mycal)
+local month_calendar = awful.widget.calendar_popup.month({start_sunday=true, spacing=1})
+month_calendar:attach(mycal, 'tr')
 w[#w+1] = mycal
 
 function increasevolume()

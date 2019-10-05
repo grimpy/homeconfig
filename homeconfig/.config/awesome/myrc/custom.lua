@@ -26,7 +26,8 @@ autostart = true
 winkey = myrc.util.winkey
 altkey = myrc.util.altkey
 capskey = myrc.util.capskey
-VGA = screen.count()
+altgrkey = myrc.util.altgrkey
+HDMI = screen.count()
 LCD = 1
 
 runonce.run("dex -as ~/.config/autostart")
@@ -47,7 +48,7 @@ tags = {
         launch      = "terminal",
         max_clients = 4,
         exclusive   = true,                   -- Refuse any other type of clients (by classes)
-        screen      = {VGA},                  -- Create this tag on screen 1 and screen 2
+        screen      = {HDMI},                  -- Create this tag on screen 1 and screen 2
         layout      = awful.layout.suit.tile, -- Use the tile layout
         class       = {"xterm", "urxvt", "aterm", "URxvt", "XTerm", "konsole", "terminator", "gnome-terminal", "Termite", "kitty"}
     },
@@ -57,7 +58,7 @@ tags = {
         launch      = "telegram-desktop",
         exclusive   = true,                   -- Refuse any other type of clients (by classes)
         init        = false,                   -- Load the tag on startup
-        screen      = {VGA},                  -- Create this tag on screen 1 and screen 2
+        screen      = {HDMI},                  -- Create this tag on screen 1 and screen 2
         layout      = awful.layout.suit.fair.horizontal, -- Use the tile layout
         class       = {"Pidgin", "Skype", "gajim", 'TelegramDesktop'}
     },
@@ -98,7 +99,7 @@ tags = {
         launch      = "atom",
         init        = false,                   -- Load the tag on startup
         exclusive   = false,                   -- Refuse any other type of clients (by classes)
-        screen      = {VGA},                  -- Create this tag on screen 1 and screen 2
+        screen      = {HDMI},                  -- Create this tag on screen 1 and screen 2
         layout      = awful.layout.suit.max, -- Use the tile layout
         class       = {"jetbrains-pycharm-ce", "Geany", "gvim", "Firebug", "sun-awt-X11-XFramePeer", "Devtools", "jetbrains-android-studio", "sun-awt-X11-XDialogPeer", "Atom", "code - insiders", "code"}
     },
@@ -117,7 +118,7 @@ tags = {
         key         = "F8",
         init        = false,                   -- Load the tag on startup
         exclusive   = true,                   -- Refuse any other type of clients (by classes)
-        screen      = {VGA},                  -- Create this tag on screen 1 and screen 2
+        screen      = {HDMI},                  -- Create this tag on screen 1 and screen 2
         layout      = awful.layout.suit.tile, -- Use the tile layout
         class       = {"VirtualBox", "Insomnia"}
     },
@@ -126,7 +127,7 @@ tags = {
         key         = "F9",
         init        = false,                   -- Load the tag on startup
         exclusive   = true,                   -- Refuse any other type of clients (by classes)
-        screen      = {VGA},                  -- Create this tag on screen 1 and screen 2
+        screen      = {HDMI},                  -- Create this tag on screen 1 and screen 2
         layout      = awful.layout.suit.tile, -- Use the tile layout
         class       = {"xbmc.bin", "Kodi", "zoom"}
     },
@@ -145,7 +146,7 @@ tags = {
         key         = "0",
         init        = false,                   -- Load the tag on startup
         fallback    = true,
-        screen      = {VGA},                  -- Create this tag on screen 1 and screen 2
+        screen      = {HDMI},                  -- Create this tag on screen 1 and screen 2
         layout      = awful.layout.suit.tile -- Use the tile layout
     }
 }
@@ -242,8 +243,6 @@ local mousekeys = { {key="Up", help="Move Mouse Up", callback=function () movecu
 local rofimenu = {
     {key="r", help="Run command", callback=asyncspawn("rofi -show run")},
     {key="s", help="Snippets", callback=asyncspawn("rofi -modi 'Snippets:rofisnippets' -show Snippets")},
-    {key="w", help="Password", callback=asyncspawn("rofi -modi 'Password:rofipass' -show Password")},
-    {key="o", help="OTP", callback=asyncspawn("rofi -modi 'OTP:rofiotp' -show OTP")},
     {key="c", help="Clipboard", callback=asyncspawn("roficlip")},
     {key="p", help="Randr", callback=asyncspawn("rofi -modi 'Randr:rofirandr' -show Randr")},
     {key="m", help="Math", callback=asyncspawn("rofi -modi 'MathExpr:mathexpr' -show MathExpr")},
@@ -306,10 +305,12 @@ end
 function movetagtoscreen()
     if client.focus then
         local t = client.focus:tags()[1]
-        local s = awful.util.cycle(screen.count(), awful.tag.getscreen(t) + 1)
+        local s = t.screen.index + 1
         awful.tag.history.restore()
-        if not s or s < 1 or s > screen.count() then return end
-        awful.tag.setscreen(t, s)
+        if s > screen.count() then
+            s = 1
+        end
+        t.screen = screen[s]
         awful.tag.viewonly(t)
     end
 end
@@ -351,17 +352,22 @@ local tagkeys = { {key="n", help="New", callback=newtag},
                 }
 
 keybindings = awful.util.table.join(
-    awful.key({ altkey, "Control" }, "c", function () awful.spawn(terminal) end, {description="Open Terminal", group="launcher"}),
-    awful.key({ "Shift" }, "Print", function () awful.spawn("caputereimg.sh /home/Jo/Pictures/SS") end, {description="Take Screenshot", group="launcher"}),
-    awful.key({ }, "Print", function () awful.spawn("caputereimg.sh") end, {description="Take Screenshot", group="launcher"}),
-    awful.key({ winkey,           }, "o", function () awful.spawn("rotatescreen") end, {description="Rotate Screen", group="screen"}),
+    awful.key({ altkey, "Control" }, "c", asyncspawn(terminal), {description="Open Terminal", group="launcher"}),
+    awful.key({ "Shift" }, "Print", asyncspawn("caputereimg.sh /home/Jo/Pictures/SS"), {description="Take Screenshot", group="launcher"}),
+    awful.key({ }, "Print", asyncspawn("caputereimg.sh"), {description="Take Screenshot", group="launcher"}),
+    awful.key({ winkey,           }, "o", asyncspawn("rotatescreen"), {description="Rotate Screen", group="screen"}),
     awful.key({ }, "XF86Battery", suspend, {description="Suspend", group="launcher"}),
     awful.key({ capskey}, "v", myrc.util.resortTags, {description="Resort Tags", group="launcher"}),
-    awful.key({  }, "Caps_Lock", function() awful.spawn("fixkeyboard") end, {description="Reset Keyboard mods", group="launcher"}),
-    awful.key({ }, "XF86MonBrightnessUp", function () awful.spawn("xbacklight -inc 10") end, {description="Brightness +", group="screen"}),
-    awful.key({ }, "XF86MonBrightnessDown", function () awful.spawn("xbacklight -dec 10") end, {description="Brightness -", group="screen"}),
+    awful.key({  }, "Caps_Lock", asyncspawn("fixkeyboard"), {description="Reset Keyboard mods", group="launcher"}),
+    awful.key({ altgrkey}, "F12", asyncspawn("kodiremote -k 'KEY_F12'"), {description="Airoc", group="launcher"}),
+    awful.key({ }, "XF86MonBrightnessUp", asyncspawn("brillo -A 10"), {description="Brightness +", group="screen"}),
+    awful.key({ }, "XF86MonBrightnessDown", asyncspawn("brillo -U 10"), {description="Brightness -", group="screen"}),
+    -- media keys
+    awful.key({ winkey}, "1", asyncspawn("musiccontrol Prev"), {description="Previous", group="media"}),
+    awful.key({ winkey}, "2", asyncspawn("musiccontrol PlayPause"), {description="PlayPause", group="media"}),
+    awful.key({ winkey}, "3", asyncspawn("musiccontrol Next"), {description="Next", group="media"}),
     awful.key({ winkey, }, "l", locktoggle, {description="Toggle Autolock", group="lock"}),
-    awful.key({ winkey,           }, "p", function () awful.spawn( "xrandr.sh --auto") end, {description="Dual/Single Toggle", group="screen"}),
+    awful.key({ winkey,           }, "p", asyncspawn( "xrandr.sh --auto"), {description="Dual/Single Toggle", group="screen"}),
     awful.key({ capskey}, "s", function() keymenu(shutdownkeys, "Shutdown", {bg="#ff3333", fg="#ffffff"}) end, {description="Shutdown Menu", group="menus"}),
     awful.key({ capskey}, "e", function() keymenu(mousekeys, "Mouse Movement") end, {description="Mouse Movement", group="menus"}),
     awful.key({ capskey}, "t", function() keymenu(tagkeys, "Tag Management", {}) end, {description="Tag Management", group="menus"}),
