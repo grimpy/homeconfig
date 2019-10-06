@@ -295,17 +295,17 @@ month_calendar:attach(mycal, 'tr')
 w[#w+1] = mycal
 
 function increasevolume()
-    awful.util.pread("amixer -M set " .. device.amixer .. " 5%+")
+    awful.spawn("amixer -M set " .. device.amixer .. " 5%+")
     updatevol()
 end
 
 function decreasevolume()
-    awful.util.pread("amixer -M set " .. device.amixer .. " 5%-")
+    awful.spawn("amixer -M set " .. device.amixer .. " 5%-")
     updatevol()
 end
 
 function mutevolume()
-    awful.util.pread("amixer -M set " .. device.amixer .. " toggle")
+    awful.spawn("amixer -M set " .. device.amixer .. " toggle")
     updatevol()
 end
 

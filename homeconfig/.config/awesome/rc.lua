@@ -483,7 +483,7 @@ for _, tagcfg in pairs(myrc.custom.tags) do
                           if not tag then
                               tag = awful.tag.add(tagcfg.name, {screen=client.screen })
                           end
-                          awful.client.movetotag(tag)
+                          curcl:move_to_tag(tag)
                           tag:view_only()
                           client.focus = curcl
                           myrc.util.resortTags()
@@ -631,6 +631,7 @@ client.connect_signal("request::titlebars", function(c)
 end)
 
 awesome.connect_signal("spawn::completed", function() myrc.util.resortTags() end)
+client.connect_signal("manage", function(c) myrc.util.resortTags() end)
 -- Enable sloppy focus, so that focus follows mouse.
 client.connect_signal("mouse::enter", function(c)
     if awful.layout.get(c.screen) ~= awful.layout.suit.magnifier

@@ -44,7 +44,7 @@ tags = {
     {
         name        = "1: Term",                 -- Call the tag "Term"
         key         = "F1",
-        init        = true,                   -- Load the tag on startup
+        init        = false,                   -- Load the tag on startup
         launch      = "terminal",
         max_clients = 4,
         exclusive   = true,                   -- Refuse any other type of clients (by classes)
@@ -96,7 +96,7 @@ tags = {
     {
         name        = "6: Edit",                 -- Call the tag "Term"
         key         = "F6",
-        launch      = "atom",
+        launch      = "gnvim",
         init        = false,                   -- Load the tag on startup
         exclusive   = false,                   -- Refuse any other type of clients (by classes)
         screen      = {HDMI},                  -- Create this tag on screen 1 and screen 2
@@ -312,6 +312,7 @@ function movetagtoscreen()
         end
         t.screen = screen[s]
         awful.tag.viewonly(t)
+        myrc.util.resortTags()
     end
 end
 
