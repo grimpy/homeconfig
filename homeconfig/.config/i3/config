@@ -246,9 +246,11 @@ for_window [class="Float"] floating enable
 for_window [class="zoom"] floating enable
 for_window [class="Pavucontrol"] floating enable
 for_window [class="Evolution" window_role="^EMsgComposer"] floating enable
+for_window [class="evolution-alarm-notify"] floating enable
 for_window [class="Thunderbird" instance="Msgcompose"] floating enable
 for_window [class="Thunderbird" instance="Calendar"] floating enable
 for_window [class="Thunderbird" window_role="addressbook"] floating enable
+for_window [class="keepassxc" title="Unlock Database - KeePassXC"] floating enable
 
 set $mode_system System (l) lock, (e) logout, (s) suspend, (h) hibernate, (r) reboot, (c) reload config, (mod+c) restart i3, (p) shutdown
 mode "$mode_system" {
