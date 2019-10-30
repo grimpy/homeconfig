@@ -12,3 +12,5 @@ export EDITOR=nvim
 unset LC_ALL
 export XKB_DEFAULT_OPTIONS=grp:shifts_toggle,caps:super,grp_led:caps
 export CM_LAUNCHER=rofi
+export USE_CCACHE=1
+export JACK_SERVER_VM_ARGUMENTS="-Dfile.encoding=UTF-8 -XX:+TieredCompilation -Xmx4096m"
