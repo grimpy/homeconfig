@@ -144,7 +144,7 @@ bindsym $mod+x exec openorlaunchi3 $ws10 "/bin/xterm -class kodimode -e kodiremo
 bindsym $mod+F11 exec openorlaunchi3 $ws11 myphone connect
 bindsym $mod+F12 workspace $ws12
 bindsym $mod+n workspace next
-bindsym $mod+p exec randrctl switch-to dual
+bindsym $mod+p workspace prev
 bindsym $mod+Shift+p exec randrctl switch-to single
 
 # move focused container to workspace
@@ -209,6 +209,8 @@ bar {
 assign [class="URxvt" instance="urxvt"] $ws1
 assign [class="xterm"] $ws1
 assign [class="kitty"] $ws1
+assign [class="Alacritty" instance="code"] $ws6
+assign [class="Alacritty"] $ws1
 assign [class="Gvncviewer"] $ws8
 assign [class="Pidgin"] $ws2
 assign [class="Skype"] $ws2
@@ -371,4 +373,4 @@ bindsym Mod5+Right exec kodiremote -k "KEY_RIGHT"
 bindsym XF86AudioMicMute exec bluehead mictoggle
 exec dex -a -s /home/Jo/.config/autostart
 exec python3 ~/mygit/source/i3events/i3events.py 
-exec compton --vsync opengl-swc --backend glx
+exec compton --vsync --backend glx
