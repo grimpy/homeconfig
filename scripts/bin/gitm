@@ -1,6 +1,8 @@
 #!/bin/bash
 for dir in $(find . -maxdepth 4 -mindepth 2 -type d -name '.git'); do
-    pushd "$(dirname $dir)"
+    pushd "$(dirname $dir)" > /dev/null
+    echo -e "\e[34mPath: $(dirname $dir):\e[0m"
     git "$@"
     popd > /dev/null
+    echo -e ""
 done
