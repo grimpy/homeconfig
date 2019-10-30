@@ -1,4 +1,4 @@
-#!/usr/bin/env python2
+#!/usr/bin/env python3
 import subprocess
 import argparse
 import sys
@@ -7,19 +7,19 @@ import os
 
 parser = argparse.ArgumentParser()
 parser.add_argument('-f', '--file', help='File to sync', default=None)
-parser.add_argument('-t', '--target', help='Target to sync file to', default=None)
+parser.add_argument('-t', '--target', help='Target to sync file to', default="3bot.grid.tf")
 parser.add_argument('-p', '--port', help='SSH port', default=None)
-parser.add_argument('-d', '--dest', help='destination path', default='/opt/code/')
+parser.add_argument('-d', '--dest', help='destination path', default=None)
 options = parser.parse_args()
 
-REPOBASE = "/home/Jo/code"
+BASES = {"/home/Jo/code/": "/opt/code/", "/home/Jo/sandbox/": "/sandbox/"}
 
 files = []
 
 def getmodifiedgit(folder):
     files = []
-    gitroot = subprocess.Popen(['git', 'rev-parse', '--show-toplevel'], stdout=subprocess.PIPE).communicate()[0].strip()
-    modfiles = subprocess.Popen(['git', 'status', '--porcelain'], cwd=folder, stdout=subprocess.PIPE).communicate()[0].strip()
+    gitroot = subprocess.Popen(['git', 'rev-parse', '--show-toplevel'], stdout=subprocess.PIPE).communicate()[0].strip().decode()
+    modfiles = subprocess.Popen(['git', 'status', '--porcelain'], cwd=folder, stdout=subprocess.PIPE).communicate()[0].strip().decode()
     for filepath in modfiles.splitlines():
         filepath = filepath.strip()[2:].strip().strip('"')
         files.append(os.path.join(gitroot, filepath))
@@ -34,7 +34,7 @@ else:
     elif os.path.isdir(file):
         files = getmodifiedgit('.')
     else:
-        print "This only works with files or folders"
+        print("This only works with files or folders")
         os.exit(1)
 
 connections = options.target.split(',')
@@ -42,13 +42,18 @@ connections = options.target.split(',')
 for file in files:
     if os.path.isdir(file):
         continue
-    metapath = file[len(REPOBASE)+1:]
-    destfile = os.path.join(options.dest, metapath)
+    for base, destdir in BASES.items():
+        if file.startswith(base):
+            metapath = file[len(base):]
+            break
+    else:
+        raise RuntimeError("Could not find base")
+    destfile = os.path.join(options.dest or destdir, metapath)
     if not destfile:
-        print "Could not determine destination"
+        print("Could not determine destination")
         sys.exit(1)
 
-    print destfile
+    print(destfile)
 
 
     for connection in set(connections):
