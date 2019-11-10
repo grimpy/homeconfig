@@ -375,4 +375,4 @@ bindsym XF86AudioMicMute exec bluehead mictoggle
 exec dex -a -s /home/Jo/.config/autostart
 exec python3 ~/mygit/source/i3events/i3events.py 
 exec dunst
-exec compton --vsync --backend glx
+exec compton
