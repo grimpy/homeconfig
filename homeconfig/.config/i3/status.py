@@ -1,8 +1,17 @@
 # coding=utf-8
-from i3pystatus import Status
+from i3pystatus import Status, IntervalModule
 from i3pystatus.group import Group
 import netifaces
+import os
 from isp_status import TelecomEgypt, VodaFone
+
+class KernelStatus(IntervalModule):
+    def run(self):
+        release = os.uname().release
+        msg = ""
+        if not os.path.exists(os.path.join("/lib/modules", release)):
+            msg = f"!{release}"
+        self.output = {"full_text": msg, "color": "#FF0000"}
 
 
 status = Status(standalone=True, logfile='$HOME/.cache/i3pystatus.log')
@@ -88,6 +97,7 @@ status.register("file",
                format="{bond}")
 status.register(VodaFone, on_leftclick="refresh", interval=3601)
 status.register(TelecomEgypt, on_leftclick="refresh", interval=3600)
+status.register(KernelStatus, interval=3600)
 
 status.run()
 

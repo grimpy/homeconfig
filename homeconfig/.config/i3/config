@@ -352,6 +352,7 @@ bindsym $winkey+o exec rotatescreen
 #music + volume
 bindsym $mod+1 exec musiccontrol Prev
 bindsym $mod+2 exec musiccontrol PlayPause
+bindsym XF86AudioPlay exec musiccontrol PlayPause
 bindsym $mod+3 exec musiccontrol Next
 bindsym $mod+0 exec mediakeys -k 113
 bindsym $mod+minus exec mediakeys -k 114
@@ -373,4 +374,5 @@ bindsym Mod5+Right exec kodiremote -k "KEY_RIGHT"
 bindsym XF86AudioMicMute exec bluehead mictoggle
 exec dex -a -s /home/Jo/.config/autostart
 exec python3 ~/mygit/source/i3events/i3events.py 
+exec dunst
 exec compton --vsync --backend glx
