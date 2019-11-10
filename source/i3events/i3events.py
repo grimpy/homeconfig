@@ -4,7 +4,8 @@ import sys
 import subprocess
 
 TELEGRAMINSTANCE = 'telegram-desktop'
-name = 'mynotification'
+NOTIFY = 'mynotification'
+LOCKFILE = "/tmp/mynotification/lock"
 X11CMD_ENABLE = ['wmctrl', '-b', 'add,demands_attention', '-r', TELEGRAMINSTANCE, '-x']
 X11CMD_DISABLE = ['wmctrl', '-b', 'remove,demands_attention', '-r', TELEGRAMINSTANCE, '-x']
 SWAYCMD_ENABLE = ['swaymsg', '-t', 'command', '[app_id={}]'.format(TELEGRAMINSTANCE), 'urgent', 'enable']
@@ -20,10 +21,14 @@ def workspacechange(ws, wsp, *args):
             urgent |= ws['urgent']
         if urgent:
             print('Turn on notifcation')
-            subprocess.Popen([name], shell=True)
+            if not os.path.exists(LOCKFILE):
+                subprocess.Popen([NOTIFY])
         else:
             print('Turn off notifcation')
-            subprocess.Popen("{} off".format(name), shell=True)
+            try:
+                os.remove(LOCKFILE)
+            except FileNotFoundError:
+                pass
 
 def get_instance_title(ws):
     props = ws['container'].get('window_properties')
@@ -42,17 +47,17 @@ def windowchange(ws, wsp, *args):
             if title == 'Telegram':
                 print('Request removal')
                 if iswayland:
-                    subprocess.Popen(SWAYCMD_DISABLE)
+                    subprocess.run(SWAYCMD_DISABLE)
                 else:
-                    subprocess.Popen(X11CMD_DISABLE)
+                    subprocess.run(X11CMD_DISABLE)
 
             else:
                 if not ws['container']['urgent']:
                     print('Request adding')
                     if iswayland:
-                        subprocess.Popen(SWAYCMD_ENABLE)
+                        subprocess.run(SWAYCMD_ENABLE)
                     else:
-                        subprocess.Popen(X11CMD_ENABLE)
+                        subprocess.run(X11CMD_ENABLE)
 
 
 socketpath = i3.get_socket_path()
