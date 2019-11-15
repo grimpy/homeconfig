@@ -5,6 +5,7 @@ alias mmv='noglob zmv -W'
 # For giggles
 alias du="du -hcs"
 alias df="df -h"
+alias rg="rg --hidden --follow --glob '!.git/*'"
 
 if [ -e /usr/bin/exa ]; then
   alias ls="exa --git"
