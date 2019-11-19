@@ -6,7 +6,7 @@ call plug#begin()
 " Plantuml
 Plug 'aklt/plantuml-syntax'
 " Capnpn
-Plug 'peter-edge/vim-capnp'
+Plug 'cstrahan/vim-capnp'
 " Python
 Plug 'alfredodeza/pytest.vim'
 Plug 'heavenshell/vim-pydocstring'
