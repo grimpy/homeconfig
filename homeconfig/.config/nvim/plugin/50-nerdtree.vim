@@ -4,7 +4,7 @@ let NERDTreeChDirMode = 2
 let NERDTreeBookmarksSort = 0
 let NERDTreeMinimalUI = 1
 let NERDTreeIgnore = ['.*\.pyc$']
-let g:NERDTreeChDirCMD = "tcd"
+let g:NERDTreeUseTCD = 1
 
 nnoremap <leader>n :NERDTreeFind<CR>
 nnoremap <leader>N :NERDTreeToggle<CR>
