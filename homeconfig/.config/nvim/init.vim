@@ -9,7 +9,6 @@ Plug 'aklt/plantuml-syntax'
 Plug 'peter-edge/vim-capnp'
 " Python
 Plug 'alfredodeza/pytest.vim'
-Plug 'kevinw/pyflakes-vim'
 Plug 'heavenshell/vim-pydocstring'
 Plug 'ambv/black'
 Plug 'davidhalter/jedi-vim'
@@ -38,11 +37,13 @@ Plug 'roxma/nvim-yarp'
 Plug 'ncm2/ncm2-bufword'
 Plug 'ncm2/ncm2-tmux'
 Plug 'ncm2/ncm2-path'
-"Plug 'ncm2/float-preview.nvim'
+Plug 'ncm2/float-preview.nvim'
 Plug 'ncm2/ncm2-jedi'
 Plug 'ncm2/ncm2-go'
 Plug 'ncm2/ncm2-markdown-subscope'
 Plug 'ncm2/ncm2-html-subscope'
+" Validator
+Plug 'dense-analysis/ale'
 " Gui stuff
 Plug 'vim-scripts/BufOnly.vim'
 Plug 'dzhou121/gonvim-fuzzy'
@@ -53,5 +54,6 @@ Plug 'joshdick/onedark.vim'
 Plug 'numirias/semshi', {'do': ':UpdateRemotePlugins'}
 "Others
 Plug 'junegunn/fzf.vim'
+" Plug 'liuchengxu/vim-clap'
 Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() }}
 call plug#end()

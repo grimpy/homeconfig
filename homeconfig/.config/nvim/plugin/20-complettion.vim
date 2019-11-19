@@ -8,6 +8,8 @@ let g:jedi#completions_enabled = 0
 let g:jedi#documentation_command = ""
 let g:jedi#goto_command = "gd"
 let g:jedi#usages_command = "gu"
+let g:float_preview#docked = 1
+let g:float_preview#auto_close = 1
 
 inoremap <silent> <expr> <CR> ncm2_ultisnips#expand_or("\<CR>", 'n')
 " c-j c-k for moving in snippet
