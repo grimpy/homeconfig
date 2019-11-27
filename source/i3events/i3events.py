@@ -15,20 +15,20 @@ print(iswayland)
 
 
 def workspacechange(ws, wsp, *args):
-    if ws['change'] == 'urgent':
-        urgent = False
-        for ws in wsp:
-            urgent |= ws['urgent']
-        if urgent:
-            print('Turn on notifcation')
-            if not os.path.exists(LOCKFILE):
-                subprocess.Popen([NOTIFY])
-        else:
-            print('Turn off notifcation')
-            try:
-                os.remove(LOCKFILE)
-            except FileNotFoundError:
-                pass
+    urgent = False
+    for ws in wsp:
+        urgent |= ws['urgent']
+    if urgent:
+        print('Turn on notifcation')
+        if not os.path.exists(LOCKFILE):
+            subprocess.Popen([NOTIFY])
+    else:
+        print('Turn off notifcation')
+        try:
+            os.remove(LOCKFILE)
+        except FileNotFoundError:
+            pass
+
 
 def get_instance_title(ws):
     props = ws['container'].get('window_properties')
@@ -36,7 +36,7 @@ def get_instance_title(ws):
         return props['instance'], props['title']
     else:
         return ws['container']['app_id'], ws['container']['name']
-    
+
 
 def windowchange(ws, wsp, *args):
     if ws['change'] == 'title':
