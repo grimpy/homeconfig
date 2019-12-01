@@ -1,0 +1,16 @@
+#!/usr/bin/env python3
+import daemon
+import sys
+import subprocess
+
+
+def main():
+    with daemon.DaemonContext():
+        i3lock = subprocess.Popen(["i3lock", "-n"] + sys.argv[1:])
+        i3lock.wait()
+        subprocess.run(["iwctl", "station", "wlan0", "scan"])
+        subprocess.run(["bluetoothctl", "connect", "04:52:C7:0A:5E:0B"])
+
+
+if __name__ == "__main__":
+    main()

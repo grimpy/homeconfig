@@ -7,7 +7,7 @@ function lock() {
     if [ -n "$WAYLAND_DISPLAY" ]; then
         swaylock -c 333333aa -F
     else
-        i3lock -c 333333 --indicator -k -m --bar-indicator --timecolor=0080ffff --datecolor=00ccffff -B 0.5 --bar-orientation=vertical
+        pylock -c 333333 --indicator -k -m --bar-indicator --timecolor=0080ffff --datecolor=00ccffff -B 0.5 --bar-orientation=vertical
     fi
 }
 
