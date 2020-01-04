@@ -17,13 +17,13 @@ function setled() {
     for file in $files; do
         if [ $action == 'on' ]; then
             max=$(cat $file/max_brightness)
-            echo $max | sudo tee $file/brightness > /dev/null
+            echo $max >  $file/brightness
         elif [ $action == 'off' ]; then
-            echo 0 | sudo tee $file/brightness > /dev/null
+            echo 0 > $file/brightness
         elif [ $action == 'store' ]; then
             cp $file/brightness "$statedir/$(basename $file)"
         elif [ $action == 'restore' ]; then
-            cat "$statedir/$(basename $file)" | sudo tee $file/brightness > /dev/null
+            cat "$statedir/$(basename $file)" > $file/brightness
         fi
     done
 }
