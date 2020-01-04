@@ -134,12 +134,12 @@ tags = {
     {
         name        = "10:Remote",                 -- Call the tag "Term"
         key         = "x",
-        launch      = "xterm -class xbmcremote -e python2 /usr/bin/kodiremote -c",
+        launch      = "/bin/xterm -class kodimode -e kodiremote -c",
         init        = false,                   -- Load the tag on startup
         exclusive   = true,                   -- Refuse any other type of clients (by classes)
         screen      = {LCD},                  -- Create this tag on screen 1 and screen 2
         layout      = awful.layout.suit.tile, -- Use the tile layout
-        class       = {"xbmcremote"}
+        class       = {"kodimode"}
     },
     {
         name        = "0:",                 -- Call the tag "Term"
@@ -254,8 +254,8 @@ local audiomenu = {
     {key="t", help="Toggle headset mode", callback=asyncspawn("bluehead toggle")},
     {key="m", help="Toggle headset mute", callback=asyncspawn("bluehead mictoggle")},
     {key="r", help="Reconnect headset", callback=asyncspawn("btreconnect")},
-    {key="-", help="Volume down", callback=asyncspawn("mediakeys -l 114")},
-    {key="+", help="Volume up", callback=asyncspawn("mediakeys -l 115")},
+    {key="-", help="Volume down", callback=asyncspawn("mediakeys -k 114")},
+    {key="+", help="Volume up", callback=asyncspawn("mediakeys -k 115")},
 }
 
 function movetag(offset, idx)

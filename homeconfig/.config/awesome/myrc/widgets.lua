@@ -6,6 +6,8 @@ local theme = require("theme")
 local gears = require("gears")
 local ipairs = ipairs
 local type = type
+local tostring = tostring
+local pcall = pcall
 local completion = require('awful.completion')
 local wibox = require('wibox')
 local dbus = dbus
@@ -16,6 +18,7 @@ local string = {find = string.find, match = string.match, format=string.format}
 local device = require("myrc.device")
 local util = require("myrc.util")
 local asyncspawn = myrc.util.asyncspawn
+local mpc = require("mpc")
 vicious.contrib = require("vicious.contrib")
 
 module("myrc.widgets")
@@ -273,6 +276,39 @@ mycpu:set_background_color("#494B4F")
 mycpu:set_color({ type = "linear", from = { 0, 0 }, to = { 0,10 }, stops = { {0, "#FF0000"}, {2, "#33FF00"}, {10, "#00FF00" }}})
 vicious.register(mycpu, vicious.widgets.cpu, "$1")
 w[#w+1] = mycpu
+
+local mpd_widget = wibox.widget.textbox()
+local state, title, artist, file = "stop", "", "", ""
+local function update_widget()
+    local text = tostring(artist or "") .. " - " .. tostring(title or "")
+    local status = "(" .. state .. ")"
+    if state == "pause" then
+        status = ""
+    elseif state == "stop" then
+        status = ""
+    elseif state == "play" then
+        status = ""
+    end
+    mpd_widget:set_markup(string.format("<span color='#FFFFFF'>%s %s</span>", status, text))
+end
+local connection
+local function error_handler(err)
+    mpd_widget:set_text("Error: " .. tostring(err))
+    -- Try a reconnect soon-ish
+    gears.timer.start_new(10, function()
+        connection:send("ping")
+    end)
+end
+connection = mpc.new(nil, nil, nil, error_handler,
+    "status", function(_, result)
+        state = result.state
+    end,
+    "currentsong", function(_, result)
+        title, artist, file = result.title, result.artist, result.file
+        pcall(update_widget)
+end)
+mpd_widget:buttons(awful.button({}, 1, function() connection:toggle_play() end))
+w[#w+1] = mpd_widget
 
 local myvoltext = wibox.widget.textbox()
 function updatevol()

@@ -108,7 +108,7 @@ tyrannical.tags = myrc.custom.tags
 tyrannical.properties.intrusive = {
   "ksnapshot"     , "pinentry"       , "gtksu"     , "kcalc"        , "xcalc"               ,
   "feh"           , "Gradient editor", "About KDE" , "Paste Special", "Background color"    ,
-  "kcolorchooser" , "keepassxc" , "Xephyr"    , "kruler"       , "plasmaengineexplorer",
+  "kcolorchooser" , "keepassxc" , "Xephyr"    , "kruler"       , "plasmaengineexplorer", "Pavucontrol",
 }
 
 -- Ignore the tiled layout for the matching clients
@@ -116,7 +116,7 @@ tyrannical.properties.floating = {
   "MPlayer"      , "pinentry"        , "ksnapshot"  , "pinentry"     , "gtksu"          ,
   "xine"         , "feh"             , "kmix"       , "kcalc"        , "xcalc"          ,
   "yakuake"      , "Select Color$"   , "kruler"     , "kcolorchooser", "Paste Special"  ,
-  "New Form"     , "Insert Picture"  , "kcharselect", "mythfrontend" , "plasmoidviewer"
+  "New Form"     , "Insert Picture"  , "Pavucontrol", "mythfrontend" , "plasmoidviewer"
 }
 
 -- Make the matching clients (by classes) on top of the default layout
