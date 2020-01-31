@@ -10,7 +10,6 @@ Plug 'cstrahan/vim-capnp'
 " Python
 Plug 'alfredodeza/pytest.vim'
 Plug 'heavenshell/vim-pydocstring'
-Plug 'ambv/black'
 Plug 'davidhalter/jedi-vim'
 " GO
 Plug 'fatih/vim-go'
