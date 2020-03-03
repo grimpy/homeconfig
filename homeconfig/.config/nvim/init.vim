@@ -9,7 +9,6 @@ Plug 'aklt/plantuml-syntax'
 Plug 'cstrahan/vim-capnp'
 " Python
 Plug 'alfredodeza/pytest.vim'
-Plug 'heavenshell/vim-pydocstring'
 Plug 'davidhalter/jedi-vim'
 " GO
 Plug 'fatih/vim-go'
