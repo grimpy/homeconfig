@@ -52,7 +52,7 @@ function mpc() {
 
 if ps -eaf | grep -v grep | grep kodiremote; then
     xbmc
-elif [ -n "$(playerctl -l 2>| /dev/null)" ]; then
+elif [ "$(playerctl -l | wc -l )" -gt "1" ]; then
     mpris
 elif ps -eaf | grep -v grep | grep pragha; then
     praghac
