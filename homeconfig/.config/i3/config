@@ -130,7 +130,7 @@ bindsym $altkey+Shift+Tab focus left
 #bindsym $mod+d focus child
 
 # switch to workspace
-bindsym $mod+F1 exec openorlaunchi3 $ws1 /usr/bin/kitty
+bindsym $mod+F1 exec openorlaunchi3 $ws1 terminal
 bindsym $mod+F2 exec openorlaunchi3 $ws2 /usr/bin/telegram-desktop
 bindsym $mod+F3 exec openorlaunchi3 $ws3 /usr/bin/firefox
 bindsym $mod+F4 exec openorlaunchi3 $ws4 /usr/bin/thunderbird

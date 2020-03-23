@@ -3,4 +3,4 @@ width=$1
 height=$2
 shift
 shift
-kitty --class=Float -o initial_window_width=${width}c -o initial_window_height=${height}c -o remember_window_size=no "$@"
+kitty -1 --class=Float -o initial_window_width=${width}c -o initial_window_height=${height}c -o remember_window_size=no "$@"
