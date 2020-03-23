@@ -89,3 +89,5 @@ if [[ "$TERM" = screen* ]]; then
     [ "$HOSTNAME" = "DareDevil" ] && PROMPT_COMMAND='rename_screen_tab ${SCREEN_TAB:-$USER}'
 fi
 
+
+source /home/Jo/.config/broot/launcher/bash/br

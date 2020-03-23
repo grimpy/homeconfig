@@ -5,7 +5,7 @@
 [pull]
     strategy = rebase
 [commit]
-    gpgSign = 1
+	gpgSign = true
 [help]
 	autocorrect = 1
 [alias]
@@ -43,7 +43,13 @@
 	file-view-vpane-position = 398
 [core]
 	excludesfile = ~/.gitignore
+	quotepath = false
+	commitGraph = true
 #[user]
 #	signingkey = 07BC0B42CB1078162C6C1202E809C912CC8B6F67
 [fetch]
 	prune = true
+[tag]
+	forceSignAnnotated = true
+[gc]
+	writeCommitGraph = true

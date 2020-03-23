@@ -1,4 +1,4 @@
-export I3SOCK=/run/user/1000/i3/ctrl.socket
+#export I3SOCK=/run/user/1000/i3/ctrl.socket
 export GTK_IM_MODULE="xim"
 export FZF_DEFAULT_COMMAND="rg --files --hidden --follow --glob '!.git/*'"
 export GOPATH=$HOME/code/gopath

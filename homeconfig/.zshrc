@@ -30,3 +30,5 @@ fi
 PATH=$PATH:/sbin
 
 eval $(thefuck --alias)
+
+source /home/Jo/.config/broot/launcher/bash/br
