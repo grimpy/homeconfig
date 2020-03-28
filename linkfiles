@@ -1,0 +1,73 @@
+#!/bin/bash
+set -e
+linkdirs=( ".config/awesome" ".urxvt" ".config/i3" )
+copydirs=( "etc/udev/rules.d" "etc/systemd/system" )
+cleanuppath() {
+    if test -L "$1"; then
+        rm "$1"
+    elif test -e "$1"; then
+        rm "$1"
+    fi
+}
+
+createparent() {
+    mkdir -p "${1}/../"
+}
+
+linkfile() {
+    sourcepath="$1"
+    target="$2"
+    file="$3"
+    if ! test -e "$file"; then
+        echo "File $file does not exists skipping"
+        return
+    fi
+    for linkdir in "${linkdirs[@]}"; do
+        if [[ "$file" == $linkdir ]]; then
+            break
+        elif [[ "$file" == $linkdir* ]]; then
+            return
+        fi
+    done
+    fullpath="$1/$file"
+    cleanuppath "$target/$file"
+    for copydir in "${copydirs[@]}"; do
+        if "$file" == $copydir*; then
+            cp "$fullpath" "$target/$file"
+            return
+        fi
+    done
+    ln -s "$fullpath" "$target/$file"
+}
+
+linkfiles() {
+    if ! test -e $1; then
+        echo "Source $1 does not exists"
+        return
+    fi
+    target="$2"
+    pushd "$1" > /dev/null 
+    for file in $(find -type f -printf '%P\n'); do
+        linkfile "$1" "$2" "$file"
+    done
+    for linkdir in "${linkdirs[@]}"; do
+        linkfile "$1" "$2" "$linkdir"
+    done
+    popd > /dev/null
+}
+
+
+ROOT=""
+scripdir="$(dirname $(readlink -f "$0"))"
+if [ "$1" == "--root" ]; then
+    if [ "$UID" != "0" ]; then
+        echo "--root requires you to be root"
+        exit 1
+    fi
+    linkfiles "${scripdir}/osconfig" "/"
+    linkfiles "${scripdir}/overlay/osconfig" "/"
+else
+    linkfiles "${scripdir}/homeconfig" "$HOME"
+    linkfiles "${scripdir}/overlay/homeconfig" "$HOME"
+fi
+
