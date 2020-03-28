@@ -10,8 +10,6 @@ Plug 'cstrahan/vim-capnp'
 " Python
 Plug 'alfredodeza/pytest.vim'
 Plug 'davidhalter/jedi-vim'
-" GO
-Plug 'fatih/vim-go'
 " Git
 Plug 'mhinz/vim-signify'
 Plug 'ruanyl/vim-gh-line'
@@ -37,9 +35,13 @@ Plug 'ncm2/ncm2-tmux'
 Plug 'ncm2/ncm2-path'
 Plug 'ncm2/float-preview.nvim'
 Plug 'ncm2/ncm2-jedi'
-Plug 'ncm2/ncm2-go'
 Plug 'ncm2/ncm2-markdown-subscope'
 Plug 'ncm2/ncm2-html-subscope'
+Plug 'autozimu/LanguageClient-neovim', {
+    \ 'branch': 'next',
+    \ 'do': 'bash install.sh',
+    \ }
+
 " Validator
 Plug 'dense-analysis/ale'
 " Gui stuff

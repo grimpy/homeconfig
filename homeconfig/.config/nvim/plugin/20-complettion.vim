@@ -20,3 +20,13 @@ let g:UltiSnipsRemoveSelectModeMappings = 0
 let g:ale_fixers = {
 \   'python': ['black'],
 \}
+
+let g:LanguageClient_serverCommands = {
+    \ 'go': ['gopls'],
+    \ }
+
+nnoremap <leader>lm :call LanguageClient_contextMenu()<CR>
+nnoremap <leader>lh :call LanguageClient#textDocument_hover()<CR>
+" Or map each action separately
+nnoremap <silent>gd :call LanguageClient#textDocument_definition()<CR>
+nnoremap <leader>r :call LanguageClient#textDocument_rename()<CR>
