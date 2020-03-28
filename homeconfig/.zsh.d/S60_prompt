@@ -13,7 +13,7 @@ export GBT_CARS='Dir, Git, Sign'
 export GBT_RCARS='Status, ExecTime'
 export GBT_CAR_EXECTIME_BELL='5'
 
-if [ -e /usr/share/zsh-theme-powerlevel9k/powerlevel9k.zsh-theme ]; then
+if [ -e /usr/share/zsh-theme-powerlevel10k/powerlevel10k.zsh-theme ]; then
 DEFAULT_USER="Jo"
 POWERLEVEL9K_MODE='awesome-fontconfig'
 POWERLEVEL9K_SHORTEN_DIR_LENGTH=1
@@ -34,7 +34,7 @@ POWERLEVEL9K_STATUS_OK=false
 POWERLEVEL9K_TIME_FORMAT=" %D{%H:%M:%S}"
 POWERLEVEL9K_LOCK_ICON="🔒"
 
-source /usr/share/zsh-theme-powerlevel9k/powerlevel9k.zsh-theme
+source /usr/share/zsh-theme-powerlevel10k/powerlevel10k.zsh-theme
 elif which gbt 2> /dev/null; then
 export PROMPT='$(gbt $?)'
 export RPROMPT='$(gbt --right $?)'
