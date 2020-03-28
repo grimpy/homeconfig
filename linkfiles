@@ -30,9 +30,11 @@ linkfile() {
         fi
     done
     fullpath="$1/$file"
-    cleanuppath "$target/$file"
+    targetpath="$target/$file"
+    cleanuppath "$targetpath"
+    createparent $(dirname $targetpath)
     for copydir in "${copydirs[@]}"; do
-        if "$file" == $copydir*; then
+        if [[ "$file" == $copydir* ]]; then
             cp "$fullpath" "$target/$file"
             return
         fi
