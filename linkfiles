@@ -10,36 +10,34 @@ cleanuppath() {
     fi
 }
 
-createparent() {
-    mkdir -p "${1}/../"
+islinkdir() {
+    for linkdir in "${linkdirs[@]}"; do
+        if [[ "$file" == $linkdir ]]; then
+            return 0
+        fi
+    done
+    return 1
+}
+
+join_by() {
+    local IFS="$1"; shift; echo "$*";
 }
 
 linkfile() {
+    cmd="ln -s"
     sourcepath="$1"
     target="$2"
     file="$3"
-    if ! test -e "$file"; then
-        echo "File $file does not exists skipping"
-        return
-    fi
-    for linkdir in "${linkdirs[@]}"; do
-        if [[ "$file" == $linkdir ]]; then
-            break
-        elif [[ "$file" == $linkdir* ]]; then
-            return
-        fi
-    done
     fullpath="$1/$file"
     targetpath="$target/$file"
     cleanuppath "$targetpath"
-    createparent $(dirname $targetpath)
     for copydir in "${copydirs[@]}"; do
         if [[ "$file" == $copydir* ]]; then
-            cp "$fullpath" "$target/$file"
-            return
+            cmd="cp"
+            break
         fi
     done
-    ln -s "$fullpath" "$target/$file"
+    $cmd "$fullpath" "$target/$file"
 }
 
 linkfiles() {
@@ -49,11 +47,21 @@ linkfiles() {
     fi
     target="$2"
     pushd "$1" > /dev/null 
-    for file in $(find -type f -printf '%P\n'); do
+    for file in $(find -type d -printf '%P\n'); do
+        if ! islinkdir $file; then
+            mkdir -p "$target/$file"
+        fi
+    done
+    skipme=$(join_by \| "${linkdirs[@]}")
+    for file in $(find -type f -printf '%P\n' | grep -v "($skipme)"); do
         linkfile "$1" "$2" "$file"
     done
     for linkdir in "${linkdirs[@]}"; do
-        linkfile "$1" "$2" "$linkdir"
+        if ! test -e "$linkdir"; then
+            echo "Dir $linkdir does not exists skipping"
+            continue
+        fi
+        linkfile "$1" "$target" "$linkdir"
     done
     popd > /dev/null
 }
