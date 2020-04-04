@@ -1,8 +1,141 @@
-#!/bin/bash
-for dir in $(find . -maxdepth 4 -mindepth 2 -type d -name '.git'); do
-    pushd "$(dirname $dir)" > /dev/null
-    echo -e "\e[34mPath: $(dirname $dir):\e[0m"
-    git "$@"
-    popd > /dev/null
-    echo -e ""
-done
+#!/usr/bin/env python3
+import subprocess
+import os
+import sys
+import shutil
+import select
+from collections import defaultdict
+
+ERROR_COLOR = "\u001b[31m"
+RESET_COLOR = "\u001b[0m"
+COLORBLUE = "\u001b[34m"
+COLORGREEN = "\u001b[32m"
+CURSORUP = "\u001b[{n}A"
+CLEAREOL = "\u001b[0K"
+COLORRED = "\u001b[31m"
+
+
+class Gitm:
+    def __init__(self, basedir):
+        self.basedir = basedir
+        self._gitcmd = None
+        self._devnull = None
+
+    def list_repos(self):
+        for subdir in os.listdir(self.basedir):
+            repodir = os.path.join(self.basedir, subdir)
+            if os.path.exists(os.path.join(repodir, ".git")):
+                yield repodir
+
+    @property
+    def devnull(self):
+        if self._devnull is None:
+            self._devnull = open(os.devnull, "w+")
+        return self._devnull
+
+    @property
+    def gitcmd(self):
+        if self._gitcmd is None:
+            self._gitcmd = shutil.which("hub")
+            if self._gitcmd is None:
+                self._gitcmd = shutil.which("git")
+        return self._gitcmd
+
+    def _execute(self, *args):
+        procs = []
+        for repo in self.list_repos():
+            proc = subprocess.Popen(
+                [self.gitcmd] + list(args),
+                cwd=repo,
+                stdout=subprocess.PIPE,
+                stderr=self.devnull,
+            )
+            proc.repo = repo
+            procs.append(proc)
+        return procs
+
+    def status(self):
+        procs = self._execute("status", "--porcelain")
+        for proc in procs:
+            types = defaultdict(lambda: 0)
+            for line in proc.stdout:
+                types[line.split()[0].decode("utf8")] += 1
+
+            status = ", ".join([f"{v}{k}" for k, v in types.items()])
+            branch = self.get_branch(proc.repo)
+            baserepo = os.path.basename(proc.repo)
+            print(f"{COLORBLUE}{branch}{COLORGREEN} {baserepo}{RESET_COLOR}: {status}")
+
+    def get_branch(self, repo):
+        with open(os.path.join(repo, ".git", "HEAD")) as fd:
+            content = fd.read()
+            return content.split("/")[-1].strip()
+
+    def pull(self):
+        status = {}
+
+        def print_status():
+            for repo, stat in status.items():
+                basename = os.path.basename(repo)
+                print(
+                    f"{COLORBLUE}{basename} {COLORGREEN}+{stat['+']} {COLORRED}-{stat['-']}{RESET_COLOR}"
+                )
+
+        procs = self._execute("pull")
+        for proc in procs:
+            status[proc.repo] = {"+": 0, "-": 0}
+        print_status()
+
+        def process_line(proc):
+            read, _, _ = select.select([proc.stdout], [], [], 1)
+            while read:
+                line = read[0].readline().strip().decode("utf8")
+                if not line:
+                    break
+                status[proc.repo]["+"] += line.count("+")
+                status[proc.repo]["-"] += line.count("-")
+                if line.count("+") or line.count("-"):
+                    print(CURSORUP.format(n=len(status) + 1))
+                    print_status()
+                read, _, _ = select.select([proc.stdout], [], [], 1)
+            if proc.poll() is not None:
+                procs.remove(proc)
+
+        while procs:
+            for proc in procs[:]:
+                process_line(proc)
+
+    def close(self):
+        if self._devnull:
+            self._devnull.close()
+            self._devnull = None
+
+    def process(self):
+        try:
+            self._process()
+        finally:
+            self.close()
+
+    def _process(self):
+        if sys.argv[1] == "status":
+            self.status()
+        elif sys.argv[1] == "pull":
+            self.pull()
+        else:
+            procs = []
+            for repo in self.list_repos():
+                proc = subprocess.Popen(
+                    [self.gitcmd] + sys.argv[1:], cwd=repo, stdout=subprocess.PIPE
+                )
+                proc.repo = repo
+                procs.append(proc)
+            for proc in procs:
+                print(os.path.basename(proc.repo))
+                if proc.wait() != 0:
+                    print(proc.stdout)
+
+
+if __name__ == "__main__":
+    curdir = os.getcwd()
+    git = Gitm(curdir)
+    git.process()
