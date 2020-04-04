@@ -1,6 +1,7 @@
 let mapleader = ","
 
 au BufNewFile,BufRead *.wiki set filetype=confluencewiki
+au BufNewFile,BufRead *.go setlocal noet ts=4 sw=4 sts=4
 
 autocmd BufWritePost .vimrc source $MYVIMRC
 autocmd BufWritePost .vimrc filetype plugin indent on
