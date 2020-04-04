@@ -53,8 +53,8 @@ linkfiles() {
         fi
     done
     skipme=$(join_by \| "${linkdirs[@]}")
-    for file in $(find -type f -printf '%P\n' | grep -v "($skipme)"); do
-        linkfile "$1" "$2" "$file"
+    for file in $(find -type f -printf '%P\n' | grep -E -v "($skipme)"); do
+        linkfile "$1" "$target" "$file"
     done
     for linkdir in "${linkdirs[@]}"; do
         if ! test -e "$linkdir"; then
