@@ -64,7 +64,7 @@ class Gitm:
             status = ", ".join([f"{v}{k}" for k, v in types.items()])
             branch = self.get_branch(proc.repo)
             baserepo = os.path.basename(proc.repo)
-            print(f"{COLORBLUE}{branch}{COLORGREEN} {baserepo}{RESET_COLOR}: {status}")
+            print(f"{COLORGREEN}{branch}{COLORBLUE} {baserepo}{RESET_COLOR}: {status}")
 
     def get_branch(self, repo):
         with open(os.path.join(repo, ".git", "HEAD")) as fd:
@@ -73,12 +73,17 @@ class Gitm:
 
     def pull(self):
         status = {}
+        branches = {}
 
         def print_status():
             for repo, stat in status.items():
                 basename = os.path.basename(repo)
+                branch = branches.get(basename)
+                if not branch:
+                    branches[basename] = self.get_branch(repo)
+                    branch = branches[basename]
                 print(
-                    f"{COLORBLUE}{basename} {COLORGREEN}+{stat['+']} {COLORRED}-{stat['-']}{RESET_COLOR}"
+                    f"{COLORGREEN}{branch}{COLORBLUE} {COLORBLUE}{basename} {COLORGREEN}+{stat['+']} {COLORRED}-{stat['-']}{RESET_COLOR}"
                 )
 
         procs = self._execute("pull")
