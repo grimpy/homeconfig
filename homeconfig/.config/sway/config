@@ -18,7 +18,7 @@ set $altkey Mod1
 set $ws1 "1 "
 workspace $ws1 output DP-1 HDMI-A-1 eDP-1
 set $ws2 "2"
-workspace $ws2 output DP-1 HDMI-A-1eDP-1
+workspace $ws2 output DP-1 HDMI-A-1 eDP-1
 set $ws3 "3 "
 workspace $ws3 output eDP-1 HDMI-A-1 DP-1
 set $ws4 "4 "
@@ -52,8 +52,20 @@ floating_modifier $altkey
 focus_follows_mouse no
 default_border none
 
+set $laptop eDP-1
+bindswitch --reload lid:on output $laptop disable
+bindswitch --reload lid:off output $laptop enable
+
 output eDP-1 {
     pos 0 0    
+}
+output HDMI-A-1 {
+    pos 0 0    
+}
+output DP-1 {
+    pos 1920 0
+    scale 1.5
+    scale_filter linear
 }
 
 # start a terminal
@@ -66,25 +78,25 @@ bindsym $mod+c kill
 set $mode_rofi Rofi (r) Run, (m) Math, (s) Snippets, (k) Process Kill, (w) Window, (c) Clipboard (y) SSH (t) Timers/Cal
 mode "$mode_rofi" {
     bindsym r exec rofi -show run, mode "default"
-    bindsym s exec swofi rofisnippets, mode "default"
-    bindsym m exec swofi mathexpr, mode "default"
-    bindsym k exec swofi processkill, mode "default"
-    bindsym p exec swofi rofirandr, mode "default"
-    bindsym t exec swofi roficlock, mode "default"
+    bindsym s exec rofi -modi "Snippets:rofisnippets" -show Snippets, mode "default"
+    bindsym m exec rofi -modi "MathExpr:mathexpr" -show MathExpr , mode "default"
+    bindsym k exec rofi -modi "Process:processkill" -show Process, mode "default"
+    bindsym p exec rofi -modi "Randr:rofirandr" -show Randr, mode "default"
+    bindsym t exec rofi -modi "Clock:roficlock" -show Clock, mode "default"
+    bindsym e exec rofi -modi "Edit:rofiedit" -show Edit, mode "default"
     bindsym y exec rofi -show ssh, mode "default"
-    bindsym c exec clipmenu < /dev/null, mode "default"
-    bindsym w exec rofi -show window, mode "default"
+    bindsym c exec clipman pick --tool=wofi, mode "default"
     # back to normal: Enter or Escape
     bindsym Return mode "default"
     bindsym Escape mode "default"
 }
 bindsym $mod+r mode "$mode_rofi"
 
-#input "1:1:AT_Translated_Set_2_keyboard" {
-#    xkb_layout us,ar
-#    xkb_variant altgr-int,
-#    xkb_options grp:shifts_toggle,caps:hyper,grp_led:caps
-#}
+input "*" {
+    xkb_layout us,ar
+    xkb_variant altgr-intl,
+    xkb_options grp:shifts_toggle,caps:hyper,grp_led:caps
+}
 
 #
 # There also is the (new) i3-dmenu-desktop which only displays applications
@@ -183,7 +195,7 @@ bindsym $mod+Shift+F12 move container to workspace $ws12
 
 # reload the configuration file
 # restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
-bindsym $mod+Shift+r restart
+bindsym $mod+Shift+r exec 'pkill -f i3events.py sleep 2', restart
 # exit i3 (logs you out of your X session)
 bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -b 'Yes, exit i3' 'i3-msg exit'"
 
@@ -218,13 +230,21 @@ bindsym $mod+g mode "resize"
 bar {
 #  status_command i3blocks -c ~/.config/i3blocks/config
   status_command  python3 ~/.config/i3/status.py
-  tray_bindcode 273 Activate
   position top
   colors {
     background #232323
     statusline #DCDCDC
   }
 }
+#bar {
+#    swaybar_command waybar
+#}
+#for_window [app_id="waybar" floating] {
+#    mark ContextMenu
+#    move position cursor
+#    move down 80px
+#    focus
+#}
 
 assign [class="URxvt" instance="urxvt"] $ws1
 assign [class="xterm"] $ws1
@@ -236,14 +256,17 @@ assign [class="Skype"] $ws2
 assign [class="webogram"] $ws2
 assign [class="Gajim"] $ws2
 assign [class="Telegram"] $ws2
-assign [app_id="telegram-desktop"] $ws2
+assign [app_id="telegramdesktop"] $ws2
 assign [class="Firefox" instance="Navigator"] $ws3
+assign [class="firefox" instance="Navigator"] $ws3
+assign [app_id="firefox"] $ws3
 assign [class="Chrome"] $ws3
 assign [class="Chromium"] $ws3
 assign [class="Thunderbird"] $ws4
 assign [class="Evolution"] $ws4
 assign [class="Pcmanfm"] $ws5
 assign [class="Files"] $ws5
+assign [app_id="files"] $ws5
 assign [class="Thunar"] $ws5
 assign [class="Nautilus"] $ws5
 assign [class="jetbrains-pycharm-ce"] $ws6
@@ -260,10 +283,12 @@ assign [class="Spotify" instance="Spotify"] $ws7
 assign [class="mpv"] $ws7
 assign [class="winbox.exe"] $ws8
 assign [class="zoom"] $ws9
+assign [class="org.keepassxc.KeePassXC"] $ws9
 assign [class="kodimote"] $ws10
 assign [app_id="kodimote"] $ws10
 for_window [class="Float"] floating enable
 for_window [app_id="Float"] floating enable
+ for_window [title="Firefox - Sharing Indicator"] floating enable
 for_window [class="zoom"] floating enable
 for_window [class="Pavucontrol"] floating enable
 for_window [app_id="pavucontrol"] floating enable
@@ -276,6 +301,7 @@ mode "$mode_system" {
     bindsym l exec --no-startup-id xlock force, mode "default"
     bindsym e exec bash -c "loginctl terminate-session $(loginctl show-seat seat0 -p ActiveSession | cut -d = -f 2)", mode "default"
     bindsym c reload, mode "default"
+    bindsym o output * dpms off, mode "default"
     bindsym s exec xlock force; exec systemctl suspend -i, mode "default"
     bindsym h exec xlock force; exec systemctl hybrid-sleep, mode "default"
     bindsym r exec --no-startup-id systemctl reboot -i, mode "default"
@@ -286,6 +312,17 @@ mode "$mode_system" {
     bindsym Escape mode "default"
 }
 bindsym $mod+s mode "$mode_system"
+
+set $mode_phone Connect (c) Unlock (u) Display (d) Reset (r) Locate (l)
+mode "$mode_phone" {
+    bindsym c exec phone display --connect, mode "default"
+    bindsym u exec phone display --unlock, mode "default"
+    bindsym d exec phone display --display, mode "default"
+    bindsym r exec phone display --reset, mode "default"
+    bindsym l exec phone locate, mode "default"
+    bindsym Escape mode "default"
+}
+bindsym $mod+y mode "$mode_phone"
 
 set $mode_workspace Workspace Management (r) Rename, (Left/Right) Move screen
 mode "$mode_workspace" {
@@ -366,4 +403,12 @@ bindsym --locked XF86AudioMicMute exec bluehead mictoggle
 #exec dex -a -s /home/Jo/.config/autostart
 exec python3 ~/mygit/source/i3events/i3events.py 
 exec mako
-exec clipmenud
+exec keepassxc
+exec wl-paste -t text --watch clipman store -P
+exec swayidle -w \
+    timeout 600 'xlock force' \
+    timeout 900 'swaymsg "output * dpms off"' \
+    resume 'swaymsg "output * dpms on"' \
+    timeout 15 'if pgrep -x swaylock; then swaymsg "output * dpms off"; fi' \
+    resume 'swaymsg "output * dpms on"' \
+    before-sleep 'xlock force'
