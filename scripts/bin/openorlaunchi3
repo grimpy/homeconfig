@@ -12,12 +12,22 @@ if "WAYLAND_DISPLAY" in os.environ:
 else:
     msgcmd = 'i3-msg'
 
-proc = subprocess.Popen([msgcmd, '-t', 'get_workspaces'], stdout=subprocess.PIPE)
-workspaces = json.load(proc.stdout)
-for workspace in workspaces:
-    if workspace['name'] == tag:
-        subprocess.Popen([msgcmd, 'workspace', tag])
-        sys.exit(0)
+
+def get_workspace(nodes):
+    for node in nodes:
+        if node["type"] == "workspace" and node["name"] == tag:
+            return node
+        possiblenode = get_workspace(node["nodes"])
+        if possiblenode:
+            return possiblenode
+
+
+proc = subprocess.Popen([msgcmd, '-t', 'get_tree'], stdout=subprocess.PIPE)
+root = json.load(proc.stdout)
+workspace = get_workspace(root["nodes"])
+if workspace and workspace["nodes"]:
+    subprocess.Popen([msgcmd, 'workspace', tag])
+    sys.exit(0)
 
 subprocess.Popen([msgcmd, 'workspace', tag])
 os.execlp(cmd.split()[0], *cmd.split())
