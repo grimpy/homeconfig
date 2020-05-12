@@ -18,6 +18,7 @@
     dsf = "!git diff --color $@ | diff-so-fancy | less -R" 
     cleanup = "!git branch -vv | grep ': gone]' | awk '{print $1}' | xargs git branch -D"
     master = "!git checkout master && git pull && git cleanup"
+    dev = "!git checkout development && git pull && git cleanup"
     cleanupremote = "!git branch --remote --merged | grep -v 'origin/master$' | cut -d '/' -f 2 | xargs -I@ git push origin :@"
     noremote = "!git branch -vv | grep -v 'origin' | awk '{print $1}' | xargs git branch -D"
 
