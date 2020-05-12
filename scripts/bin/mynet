@@ -1,2 +1,2 @@
 #!/bin/bash
-fterm 160 40 --session=$HOME/mygit/scripts/mynetsession
+fterm 180 40 sudo bandwhich
