@@ -3,8 +3,7 @@ if [ -z $@ ]; then
     ls -1 ~/.config/snippets
 else
     if [ -n "$WAYLAND_DISPLAY" ]; then
-        cat ~/.config/snippets/$1 | wl-copy
-        pkill rofi
+        cat ~/.config/snippets/$1 | clipman store
     else
         cat ~/.config/snippets/$1 | xsel -i -b
     fi
