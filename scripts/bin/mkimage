@@ -1,1 +1,0 @@
-cdrdao read-cd --read-raw --datafile $1.bin --device $2  --driver generic-mmc-raw $1.toc 
