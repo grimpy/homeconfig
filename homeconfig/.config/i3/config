@@ -221,7 +221,7 @@ assign [class="Firefox" instance="Navigator"] $ws3
 assign [class="firefox" instance="Navigator"] $ws3
 assign [class="Chrome"] $ws3
 assign [class="Chromium"] $ws3
-assign [class="Thunderbird"] $ws4
+assign [class="Thunderbird"] $ws2
 assign [class="Evolution"] $ws4
 assign [class="Pcmanfm"] $ws5
 assign [class="Files"] $ws5
@@ -254,12 +254,13 @@ for_window [class="Thunderbird" instance="Calendar"] floating enable
 for_window [class="Thunderbird" window_role="addressbook"] floating enable
 for_window [class="keepassxc" title="Unlock Database - KeePassXC"] floating enable
 
-set $mode_system System (l) lock, (e) logout, (s) suspend, (h) hibernate, (r) reboot, (c) reload config, (mod+c) restart i3, (p) shutdown
+set $mode_system System (l) lock, (e) logout, (d) displays off, (s) suspend, (h) hibernate, (r) reboot, (c) reload config, (mod+c) restart i3, (p) shutdown
 mode "$mode_system" {
     bindsym l exec --no-startup-id xlock force, mode "default"
     bindsym e exec bash -c "loginctl terminate-session $(loginctl show-seat seat0 -p ActiveSession | cut -d = -f 2) && pkill i3", mode "default"
     bindsym c reload, mode "default"
     bindsym $mod+c restart, mode "default"
+    bindsym d exec xset dpms force off, mode "default"
     bindsym s exec xlock force; exec systemctl suspend -i, mode "default"
     bindsym h exec xlock force; exec systemctl hybrid-sleep, mode "default"
     bindsym r exec --no-startup-id systemctl reboot -i, mode "default"
@@ -348,6 +349,8 @@ bindsym $mod+m mode "$mode_mouse"
 #screen
 bindsym XF86MonBrightnessUp exec brillo -A 10
 bindsym XF86MonBrightnessDown exec brillo -U 10
+bindsym XF86Display exec autorandr --current --force -c
+bindsym Mod5+F7 exec autorandr --current --force -c
 bindsym --release Print exec caputereimg.sh
 bindsym $winkey+o exec rotatescreen
 
@@ -356,9 +359,13 @@ bindsym $mod+1 exec musiccontrol Prev
 bindsym $mod+2 exec musiccontrol PlayPause
 bindsym XF86AudioPlay exec musiccontrol PlayPause
 bindsym $mod+3 exec musiccontrol Next
-bindsym $mod+0 exec mediakeys -k 113
-bindsym $mod+minus exec mediakeys -k 114
-bindsym $mod+plus exec mediakeys -k 115
+bindsym $mod+0 exec mediakeys -k 113 # mute
+bindsym $mod+minus exec mediakeys -k 114 # min volume
+bindsym $mod+plus exec mediakeys -k 115 # plus volume
+bindsym XF86AudioLowerVolume exec mediakeys -k 114
+bindsym XF86AudioRaiseVolume exec mediakeys -k 115
+bindsym XF86AudioMute exec mediakeys -k 113
+bindsym XF86AudioMicMute exec bluehead mictoggle
 
 # koditools remote
 bindsym Mod5+F1 exec kodiremote -k "KEY_F1"
@@ -373,8 +380,7 @@ bindsym Mod5+Down exec kodiremote -k "KEY_DOWN"
 bindsym Mod5+Left exec kodiremote -k "KEY_LEFT"
 bindsym Mod5+Right exec kodiremote -k "KEY_RIGHT"
 
-bindsym XF86AudioMicMute exec bluehead mictoggle
 exec dex -a -s /home/Jo/.config/autostart
 exec python3 ~/mygit/source/i3events/i3events.py 
 exec dunst
-exec compton
+exec picom

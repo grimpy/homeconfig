@@ -133,6 +133,11 @@ class PulseMic(Module):
     settings = ("format",)
     format = "{icon}"
     on_rightclick = "switch_mute"
+    on_leftclick = "switch_noise"
+    modules = [("module-null-sink", "sink_name=nui_mic_denoised_out rate=48000"),
+               ("module-ladspa-sink", "sink_name=nui_mic_raw_in sink_master=nui_mic_denoised_out label=noise_suppressor_mono plugin=/usr/lib/librnnoise_ladspa.so control=95"),
+               ("module-loopback", "source=alsa_input.pci-0000_00_1f.3.analog-stereo sink=nui_mic_raw_in channels=1 latency_msec=1"),
+               ("module-remap-source", "master=nui_mic_denoised_out.monitor source_name=nui_mic_remap source_properties=device.description=NoiseTorch")]
 
     def __init__(self, *args, pulser=None, **kwargs):
         self.pulser = pulser or Pulser()
@@ -152,8 +157,11 @@ class PulseMic(Module):
         else:
             micicon = ""
             miccolor = "#ffffff"
-        if mic.state == pulsectl.PulseStateEnum.running:
-            miccolor = "#00ff00"
+        with self.pulser as api:
+            if self._find_module(api, self.modules[-2]):
+                miccolor = "#ff00ff"
+            elif mic.state == pulsectl.PulseStateEnum.running:
+                miccolor = "#00ff00"
 
         self.output = {
             "color": miccolor,
@@ -169,6 +177,27 @@ class PulseMic(Module):
                 api.source_mute(mic.index, False)
             else:
                 api.source_mute(mic.index, True)
+
+    def _find_module(self, api, module, modules=None):
+        if modules is None:
+            modules = api.module_list()
+
+        for loaded_mod in modules:
+            if loaded_mod.name == module[0] and loaded_mod.argument == module[1]:
+                return loaded_mod
+        return None
+
+    def switch_noise(self):
+        with self.pulser as api:
+            loaded_modules = api.module_list()
+            if not self._find_module(api, self.modules[-2], loaded_modules):
+                for modname, args in self.modules:
+                    api.module_load(modname, args)
+            else:
+                for modname, args in self.modules[::-1]:
+                    mod = self._find_module(api, (modname, args), loaded_modules)
+                    if mod:
+                        api.module_unload(mod.index)
 
 
 class PulseBluetooth(IntervalModule):

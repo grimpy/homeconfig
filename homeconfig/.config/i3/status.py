@@ -5,6 +5,7 @@ import netifaces
 import os
 from isp_status import TelecomEgypt, VodaFone
 import pulse
+import now_playing2
 
 
 class KernelStatus(IntervalModule):
@@ -54,7 +55,7 @@ status.register(
     status={"play": "", "pause": "", "stop": ""},
     on_downscroll=["mpd_command", "seekcur +10"],
 )
-status.register("now_playing", status={"play": "", "pause": "", "stop": ""})
+status.register(now_playing2.NowPlaying, status={"play": "", "pause": "", "stop": ""})
 status.register(
     "temp", format="{temp:.0f}°C",
 )
@@ -124,7 +125,7 @@ status.register(
     format="{bond}",
 )
 status.register(VodaFone, on_leftclick="refresh", interval=3601)
-status.register(TelecomEgypt, on_leftclick="refresh", interval=3600)
+#status.register(TelecomEgypt, on_leftclick="refresh", interval=3600)
 status.register(KernelStatus, interval=3600)
 
 status.run()
