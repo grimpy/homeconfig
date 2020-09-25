@@ -16,6 +16,7 @@ case $1 in
         iwctl station wlan0 disconnect
         sleep 3
         iwctl station wlan0 connect $2
+        sudo systemctl restart dhcpcd
         ;;
     reconnect)
         iwctl station wlan0 scan on
