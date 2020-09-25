@@ -16,6 +16,7 @@ Plug 'ruanyl/vim-gh-line'
 " Tim's stuff
 Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-surround'
+Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-sensible'
 " Guake like terminal
 Plug 'Lenovsky/nuake'
