@@ -17,7 +17,7 @@ def get_workspace(nodes):
     for node in nodes:
         if node["type"] == "workspace" and node["name"] == tag:
             return node
-        possiblenode = get_workspace(node["nodes"])
+        possiblenode = get_workspace(node.get("nodes", []))
         if possiblenode:
             return possiblenode
 
