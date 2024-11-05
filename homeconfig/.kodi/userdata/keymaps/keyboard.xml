@@ -60,7 +60,6 @@
       <enter>Select</enter>
       <backspace>Back</backspace>
       <key id='65446'>Back</key>
-      <key id='65307'>Back</key> <!-- white remote -->
       <m>ActivateWindow(PlayerControls)</m>
       <s>ActivateWindow(shutdownmenu)</s>
       <escape>Back</escape>
@@ -82,7 +81,7 @@
       <equals>VolumeUp</equals>
       <zero>Number0</zero>
       <one>Number1</one>
-      <two>Number2</two>
+      <two>Stop</two>
       <three>Number3</three>
       <four>Number4</four>
       <five>Number5</five>
@@ -110,6 +109,7 @@
       <t>XBMC.ActivateWindow(Videos, TvShowTitles)</t>
       <m>XBMC.ActivateWindow(Videos, MovieTitles)</m>
       <v>XBMC.ActivateWindow(Videos, MovieTitles)</v>
+      <key id='61952'>XBMC.ActivateWindow(Videos, MovieTitles)</key>
       <!-- Multimedia keyboard keys -->
       <browser_back>Back</browser_back>
       <browser_forward/>
@@ -117,7 +117,9 @@
       <browser_stop/>
       <browser_search/>
       <browser_favorites>ActivateWindow(Favourites)</browser_favorites>
-      <browser_home>XBMC.ActivateWindow(Videos, MovieTitles)</browser_home>
+      <f2>ActivateWindow(Favourites)</f2>
+      <f3>RunScript(script.globalsearch,movies=true&amp;tvhows=true)</f3>
+      <browser_home>XBMC.ActivateWindow(Home)</browser_home>
       <volume_mute>Mute</volume_mute>
       <volume_down>VolumeDown</volume_down>
       <volume_up>VolumeUp</volume_up>
@@ -165,8 +167,6 @@
   <Home>
     <keyboard>
       <escape>ActivateWindow(Favourites)</escape>
-      <volume_up>ActivateWindow(Videos, MovieTitles)</volume_up>
-      <volume_down>ActivateWindow(Videos, TvShowTitles)</volume_down>
       <i>info</i>
       <end mod="ctrl">XBMC.ShutDown()</end>
     </keyboard>
@@ -426,9 +426,6 @@
   </VideoBookmarks>
   <MyVideoLibrary>
     <keyboard>
-      <escape>ActivateWindow(Favourites)</escape>
-      <volume_up>ActivateWindow(Videos, MovieTitles)</volume_up>
-      <volume_down>ActivateWindow(Videos, TvShowTitles)</volume_down>
       <delete>Delete</delete>
       <space>Playlist</space>
       <w>ToggleWatched</w>
